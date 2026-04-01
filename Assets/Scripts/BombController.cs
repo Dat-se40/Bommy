@@ -14,10 +14,11 @@ public class BombController : MonoBehaviour
     [SerializeField] int bombRemaining;
     [SerializeField] readonly float bombChargeTime = 3f; 
     [SerializeField] float bombCurrentChargeTime = 0f;
-
+    [SerializeField] MovementController movementController;
     private void OnEnable()
     {
         bombRemaining = bombAmount;
+        movementController = GetComponent<MovementController>();
     }
     private void Update()
     {
@@ -30,7 +31,8 @@ public class BombController : MonoBehaviour
             bombRemaining = bombRemaining >= bombAmount ? bombAmount : bombRemaining + 1;  
             Debug.Log($"Bomb recharged! Remaining bombs: {bombRemaining}"); 
         }
-        if (keyboard.spaceKey.wasPressedThisFrame && bombRemaining > 0) 
+        // Khi di chuyển ko được đặt bom
+        if (keyboard.spaceKey.wasPressedThisFrame && bombRemaining > 0 && !movementController.isMoving) 
         {
             StartCoroutine(PlaceBomb());
         }
