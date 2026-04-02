@@ -88,7 +88,7 @@ public class MovementController : MonoBehaviour
     }
     public bool IsBlocked(Vector2 position)
     {
-        Collider2D hit = Physics2D.OverlapCircle(position, 0.1f, LayerMask.GetMask("Block"));
+        Collider2D hit = Physics2D.OverlapCircle(position, 0.1f, LayerMask.GetMask("Indestructibles","Block", "Destructibles"));
         return hit != null;
     }
 }

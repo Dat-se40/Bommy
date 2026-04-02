@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 179782560}
   m_Layer: 7
   m_Name: Playground
-  m_TagString: Untagged
+  m_TagString: BlockMovementObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3394,9 +3394,9 @@ GameObject:
   - component: {fileID: 400059663}
   - component: {fileID: 400059662}
   - component: {fileID: 400059664}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Indestructibles
-  m_TagString: Untagged
+  m_TagString: BlockMovementObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4314,9 +4314,9 @@ GameObject:
   - component: {fileID: 547912120}
   - component: {fileID: 547912119}
   - component: {fileID: 547912121}
-  m_Layer: 7
-  m_Name: Decstructibles
-  m_TagString: Untagged
+  m_Layer: 9
+  m_Name: Destructibles
+  m_TagString: BlockMovementObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6751,7 +6751,7 @@ GameObject:
   - component: {fileID: 1398053391}
   m_Layer: 0
   m_Name: Blue Teemo
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
