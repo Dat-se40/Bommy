@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using PurrNet;
+using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MovementController : MonoBehaviour
+public class MovementController : NetworkBehaviour
 {
     public Rigidbody2D rd;
     public Animator animator;
@@ -17,13 +19,14 @@ public class MovementController : MonoBehaviour
         rd = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
-        // Snap vị trí ban đầu vào tâm tile gần nhất
+ 
         targetPosition = SnapToGrid(rd.position);
         rd.position = targetPosition;
     }
 
     void Update()
     {
+        if (!isOwner) return; 
         if (isMoving) return; // Đang di chuyển thì không nhận input
 
         var keyboard = Keyboard.current;
@@ -77,7 +80,6 @@ public class MovementController : MonoBehaviour
         if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) return Vector2.right;
         return Vector2.zero;
     }
-
     void UpdateAnimation(Vector2 direction)
     {
         animator.SetBool("Go Up", direction == Vector2.up);
@@ -88,7 +90,7 @@ public class MovementController : MonoBehaviour
     }
     public bool IsBlocked(Vector2 position)
     {
-        Collider2D hit = Physics2D.OverlapCircle(position, 0.1f, LayerMask.GetMask("Indestructibles","Block", "Destructibles"));
+        Collider2D hit = Physics2D.OverlapCircle(position, 0.1f, LayerMask.GetMask("Indestructibles","Block", "Destructibles", "Player"));
         return hit != null;
     }
 }
