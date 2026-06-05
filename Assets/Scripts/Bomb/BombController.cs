@@ -1,7 +1,8 @@
-﻿using PurrNet;
+using PurrNet;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // BombController.cs
 public class BombController : NetworkBehaviour
@@ -80,7 +81,7 @@ public class BombController : NetworkBehaviour
         // - Nhấn Space
         // - Còn bomb
         // - Nhân vật đang đứng yên
-        if (Input.GetKeyDown(KeyCode.Space) &&
+        if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame &&
             bombRemaining > 0 &&
             !movementController.isMoving)
         {
