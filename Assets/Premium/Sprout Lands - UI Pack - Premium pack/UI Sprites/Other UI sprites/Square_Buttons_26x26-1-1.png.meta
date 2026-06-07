@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: de6cd23a118c63544b84474a9d9adae4
+guid: a3fabe39c18a96b49abb4c22f2ea77d1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Square Buttons 26x26_0
+      name: Square_Buttons_26x26-1-1_0
       rect:
         serializedVersion: 2
         x: 11
@@ -105,20 +105,20 @@ TextureImporter:
         width: 26
         height: 28
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4476c89d3b2fee74296280415cc93502
-      internalID: 1108356400
+      spriteID: 3543f14fed3d06041a6247601ff63b0d
+      internalID: -826266347
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Square Buttons 26x26_1
+      name: Square_Buttons_26x26-1-1_1
       rect:
         serializedVersion: 2
         x: 59
@@ -126,20 +126,20 @@ TextureImporter:
         width: 26
         height: 26
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b101372fb9641b54584800afb2f3e88c
-      internalID: 1446154902
+      spriteID: 717598b322facbf45b6358af92f612b9
+      internalID: -798057495
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Square Buttons 26x26_2
+      name: Square_Buttons_26x26-1-1_2
       rect:
         serializedVersion: 2
         x: 11
@@ -147,20 +147,20 @@ TextureImporter:
         width: 26
         height: 28
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c28596f3ad69f904a9933f41c7f28c06
-      internalID: -1509708584
+      spriteID: 1c540b291a0679c459692335c08f6eae
+      internalID: -321352231
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Square Buttons 26x26_3
+      name: Square_Buttons_26x26-1-1_3
       rect:
         serializedVersion: 2
         x: 59
@@ -168,20 +168,20 @@ TextureImporter:
         width: 26
         height: 26
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 4, y: 4, z: 4, w: 4}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 89f518cd4aa52884288166059131b4e8
-      internalID: -1195704561
+      spriteID: 0e5c7c53bb9ffea41b10db5f92abcb62
+      internalID: -1779350913
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Square Buttons 26x26_4
+      name: Square_Buttons_26x26-1-1_4
       rect:
         serializedVersion: 2
         x: 11
@@ -189,20 +189,20 @@ TextureImporter:
         width: 26
         height: 28
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 61754f2889ea47944ac23bd2893f981b
-      internalID: -2115901958
+      spriteID: a5a7ded0d5b8d5a45b860efd80294d4a
+      internalID: 1257690934
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Square Buttons 26x26_5
+      name: Square_Buttons_26x26-1-1_5
       rect:
         serializedVersion: 2
         x: 59
@@ -210,20 +210,20 @@ TextureImporter:
         width: 26
         height: 26
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c0dacbfe2cdc974da8b9c00823aba7d
-      internalID: -2053229029
+      spriteID: 2cb26e17ce78ed345846e9005c54894c
+      internalID: 504102842
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Square Buttons 26x26_6
+      name: Square_Buttons_26x26-1-1_6
       rect:
         serializedVersion: 2
         x: 11
@@ -231,20 +231,20 @@ TextureImporter:
         width: 26
         height: 28
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d037ef3650430004aa92c3ede821371a
-      internalID: 96574480
+      spriteID: 26a1fdafc8b582945b02b407ae3964d8
+      internalID: 639453093
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Square Buttons 26x26_7
+      name: Square_Buttons_26x26-1-1_7
       rect:
         serializedVersion: 2
         x: 59
@@ -252,14 +252,14 @@ TextureImporter:
         width: 26
         height: 26
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 558a960204a064e4e846fbad528cabfb
-      internalID: -2112766574
+      spriteID: 824bc1b8325ab6d44a69909316c76cc0
+      internalID: 1134763118
       vertices: []
       indices: 
       edges: []
@@ -275,14 +275,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Square Buttons 26x26_0: 1108356400
-      Square Buttons 26x26_1: 1446154902
-      Square Buttons 26x26_2: -1509708584
-      Square Buttons 26x26_3: -1195704561
-      Square Buttons 26x26_4: -2115901958
-      Square Buttons 26x26_5: -2053229029
-      Square Buttons 26x26_6: 96574480
-      Square Buttons 26x26_7: -2112766574
+      Square_Buttons_26x26-1-1_0: -826266347
+      Square_Buttons_26x26-1-1_1: -798057495
+      Square_Buttons_26x26-1-1_2: -321352231
+      Square_Buttons_26x26-1-1_3: -1779350913
+      Square_Buttons_26x26-1-1_4: 1257690934
+      Square_Buttons_26x26-1-1_5: 504102842
+      Square_Buttons_26x26-1-1_6: 639453093
+      Square_Buttons_26x26-1-1_7: 1134763118
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
