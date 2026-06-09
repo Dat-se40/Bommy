@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // BombController.cs
 public class BombController : NetworkBehaviour
@@ -76,11 +77,14 @@ public class BombController : NetworkBehaviour
 
         RechargeBomb();
 
+        var keyboard = Keyboard.current;
+
         // Chỉ đặt bomb khi:
         // - Nhấn Space
         // - Còn bomb
         // - Nhân vật đang đứng yên
-        if (Input.GetKeyDown(KeyCode.Space) &&
+        if (keyboard != null &&
+            keyboard.spaceKey.wasPressedThisFrame &&
             bombRemaining > 0 &&
             !movementController.isMoving)
         {

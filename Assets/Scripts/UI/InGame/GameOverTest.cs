@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameOverTest : MonoBehaviour
 {
@@ -6,7 +7,8 @@ public class GameOverTest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        var keyboard = Keyboard.current;
+        if (keyboard != null && keyboard.gKey.wasPressedThisFrame)
         {
             gameOverUIController.ShowDemoGameOver();
         }
