@@ -1,6 +1,6 @@
-﻿using PurrNet;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using PurrNet;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,9 +8,14 @@ using UnityEngine.UI;
 // Chuyển về MonoBehaviour vì đây thuần túy là code xử lý giao diện
 public class PlayerInforUI : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI textName;
-    [SerializeField] Image avt;
-    [SerializeField] Image hp;
+    [SerializeField]
+    TextMeshProUGUI textName;
+
+    [SerializeField]
+    Image avt;
+
+    [SerializeField]
+    Image hp;
 
     public int index;
     public bool isSet { get; private set; } = false;
@@ -29,7 +34,7 @@ public class PlayerInforUI : MonoBehaviour
             //textName.text = playerInfor.;
             //ownerName = playerInfor.name;
             textName.text = playerInfor?.playerName;
-            ownerName = playerInfor?.playerName; 
+            ownerName = playerInfor?.playerName;
         }
         this.gameObject.SetActive(isSet);
     }
