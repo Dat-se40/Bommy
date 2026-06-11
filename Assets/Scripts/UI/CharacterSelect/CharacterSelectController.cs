@@ -76,7 +76,7 @@ public class CharacterSelectController : MonoBehaviour
         }
 
         if (leftbtn != null)
-        {
+        {   
             leftbtn.onClick.RemoveAllListeners();
             leftbtn.onClick.AddListener(PreviousCharacter);
         }

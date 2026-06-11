@@ -17,11 +17,11 @@ TagManager:
   - Indestructibles
   - Destructibles
   - Player
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Explosion
+  - Obstacle
+  - Destructible
+  - Ground
+  - Decoration
   - 
   - 
   - 
@@ -41,9 +41,6 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Buff
-    uniqueID: 1334290755
     locked: 0
   m_RenderingLayers:
   - Default
