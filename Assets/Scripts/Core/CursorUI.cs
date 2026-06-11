@@ -1,3 +1,4 @@
+﻿using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,14 +8,17 @@ public class CursorUI : MonoBehaviour
 {
     private RectTransform _cursorTransform; 
     private Canvas _parentCavans; 
-    private RectTransform _canvasRectTransform; 
-    [SerializeField] private Camera _canvasCamera;
-    [SerializeField] private InputActionReference _pointerPositionAction; 
+    private RectTransform _canvasRectTransform;     
+    [Header("Cursor GameObjects")]  
     [SerializeField] private GameObject _normalCursor;
     [SerializeField] private GameObject _selectorCursor;
-    [SerializeField] private GameObject player; 
+    [SerializeField] private Camera _canvasCamera;
+    [Header("Keyboard Actions")]
+    [SerializeField] private InputActionReference _quickSwitchAction;
+    [SerializeField] private InputActionReference _defaultCursorAction;
+    [SerializeField] private InputActionReference _pointerPositionAction;
     private Vector2 tileOffset = new Vector2(0.5f, 0.5f);
-    bool isSelectorMode = false;    
+    bool isSelectorMode = false;        
 
     private void Awake()
     {
@@ -29,35 +33,17 @@ public class CursorUI : MonoBehaviour
       //  _canvasCamera = _parentCavans.renderMode == RenderMode.ScreenSpaceCamera ? _parentCavans.worldCamera : null;    
         _selectorCursor.SetActive(isSelectorMode);
     }
-    public void Update()
+    private void OnDefaultCursor(InputAction.CallbackContext context)
     {
-        var keyword = Keyboard.current; 
-        if (keyword.qKey.isPressed) 
-        {
-            QuickSwitchMode();
-        }else if (keyword.altKey.isPressed) 
-        {
-            UseDefaultCursor();
-        }
+        UseDefaultCursor();
     }
-    public void OnEnable()
+
+    private void OnQuickSwitch(InputAction.CallbackContext context)
     {
-        Cursor.visible = false; 
-        if (_pointerPositionAction != null)
-        {
-            _pointerPositionAction.action.Enable();
-            _pointerPositionAction.action.performed += OnPointerPositionChanged;
-        }
-    }   
-    public void OnDisable()
-    {
-        Cursor.visible = true; 
-        if (_pointerPositionAction != null)
-        {
-            _pointerPositionAction.action.performed -= OnPointerPositionChanged;
-            _pointerPositionAction.action.Disable();
-        }
+        QuickSwitchMode();
     }
+
+    
     private void OnPointerPositionChanged(InputAction.CallbackContext ctx   )
     {
         if (_cursorTransform == null || _canvasRectTransform == null)
@@ -68,19 +54,9 @@ public class CursorUI : MonoBehaviour
         Vector2 mousePosition = ctx.ReadValue<Vector2>();
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(_canvasRectTransform, mousePosition, _canvasCamera, out var localPoint))
         {
-            if (isSelectorMode)
-            {
-                localPoint = SnapToGrid(localPoint);
-            }
+            
             _cursorTransform.anchoredPosition = localPoint;
         }
-    }
-    Vector2 SnapToGrid(Vector2 pos)
-    {
-        return new Vector2(
-            Mathf.Floor(pos.x) + tileOffset.x,
-            Mathf.Floor(pos.y) + tileOffset.y
-        );
     }
     public void QuickSwitchMode() 
     {
@@ -89,21 +65,68 @@ public class CursorUI : MonoBehaviour
         _normalCursor.SetActive(!isSelectorMode);
         Cursor.visible = false;
     }
-    public void UseDefaultCursor() 
+    public void UseDefaultCursor()
     {
-        isSelectorMode = false;   
-        _selectorCursor.SetActive(false);  
+        isSelectorMode = false;
+        _selectorCursor.SetActive(false);
         _normalCursor.SetActive(false);
         Cursor.visible = true;
     }
-
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
+    public Vector3 CurrentMouseWorldPosition
     {
-        if (isSelectorMode)
+        get
         {
-            Gizmos.DrawWireSphere(_canvasCamera.transform.position, 2);
+            Vector2 mousePos = Mouse.current.position.ReadValue();
+
+            Vector3 worldPos =
+                Camera.main.ScreenToWorldPoint(
+                    new Vector3(mousePos.x, mousePos.y,
+                    Mathf.Abs(Camera.main.transform.position.z)));
+
+            worldPos.z = 0;
+
+            return worldPos;
         }
     }
-#endif
+    public void OnEnable()
+    {
+        Cursor.visible = false;
+        if (_pointerPositionAction != null)
+        {
+            _pointerPositionAction.action.Enable();
+            _pointerPositionAction.action.performed += OnPointerPositionChanged;
+        }
+        if (_quickSwitchAction != null)
+        {
+            _quickSwitchAction.action.Enable();
+            _quickSwitchAction.action.performed += OnQuickSwitch; // Khi nhấn phím, gọi hàm OnQuickSwitch
+        }
+
+        // Đăng ký sự kiện cho phím Alt
+        if (_defaultCursorAction != null)
+        {
+            _defaultCursorAction.action.Enable();
+            _defaultCursorAction.action.performed += OnDefaultCursor; // Khi nhấn phím, gọi hàm OnDefaultCursor
+        }
+    }
+    public void OnDisable()
+    {
+        Cursor.visible = true;
+        if (_pointerPositionAction != null)
+        {
+            _pointerPositionAction.action.performed -= OnPointerPositionChanged;
+            _pointerPositionAction.action.Disable();
+        }
+        if (_quickSwitchAction != null)
+        {
+            _quickSwitchAction.action.performed -= OnQuickSwitch;
+            _quickSwitchAction.action.Disable();
+        }
+
+        if (_defaultCursorAction != null)
+        {
+            _defaultCursorAction.action.performed -= OnDefaultCursor;
+            _defaultCursorAction.action.Disable();
+        }
+    }
 }

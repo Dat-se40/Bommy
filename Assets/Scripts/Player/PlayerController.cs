@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerController : NetworkBehaviour
 {
     [SerializeField] public PlayerInfor playerInfor; 
-
+    [SerializeField] public float distance = 4;
     protected override void OnSpawned()
     {
         base.OnSpawned();
@@ -15,5 +15,11 @@ public class PlayerController : NetworkBehaviour
     {
         base.OnDespawned();
         RoomManager.Instance.DisconnectPlayer(playerInfor);
+    }
+    public void Update()
+    {
+        if (!isOwner) return;
+        // Các logic điều khiển chung của player sẽ được đặt ở đây
+    
     }
 }

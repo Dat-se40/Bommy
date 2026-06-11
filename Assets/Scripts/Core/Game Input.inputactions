@@ -35,24 +35,44 @@
             "id": "7213aaa3-649d-480c-a5bc-930891db2ea5",
             "actions": [
                 {
-                    "name": "New action",
-                    "type": "Value",
+                    "name": "QuickSwtich",
+                    "type": "Button",
                     "id": "4bc62012-e934-46c8-8560-9aaf9b005a9b",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "DefultCursor",
+                    "type": "Button",
+                    "id": "d59ebb77-cb9a-4a23-a528-823d15017886",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "223ebb18-b515-4734-ac3e-4774218f7f5d",
-                    "path": "",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "QuickSwtich",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fbeba648-7f55-4ad1-93b8-ac9b398ec093",
+                    "path": "<Keyboard>/alt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DefultCursor",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
