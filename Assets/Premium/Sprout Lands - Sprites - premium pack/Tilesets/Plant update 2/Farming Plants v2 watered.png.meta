@@ -1,0 +1,3965 @@
+fileFormatVersion: 2
+guid: 815248e8ac688eb48a43846dc76d6d48
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 666397315563019807
+    second: Farming Plants v2 watered_0
+  - first:
+      213: 3491137982947959867
+    second: Farming Plants v2 watered_1
+  - first:
+      213: 1014166509111506066
+    second: Farming Plants v2 watered_2
+  - first:
+      213: 3299219996118320696
+    second: Farming Plants v2 watered_3
+  - first:
+      213: -7026551356750699625
+    second: Farming Plants v2 watered_4
+  - first:
+      213: -8651150226431134090
+    second: Farming Plants v2 watered_5
+  - first:
+      213: -8947223676873454415
+    second: Farming Plants v2 watered_6
+  - first:
+      213: -3746453795497037222
+    second: Farming Plants v2 watered_7
+  - first:
+      213: 6323239332371527978
+    second: Farming Plants v2 watered_8
+  - first:
+      213: -7350565876878431347
+    second: Farming Plants v2 watered_9
+  - first:
+      213: 5892552777462619334
+    second: Farming Plants v2 watered_10
+  - first:
+      213: 1139178448362168608
+    second: Farming Plants v2 watered_11
+  - first:
+      213: 3438751497164096939
+    second: Farming Plants v2 watered_12
+  - first:
+      213: 1284974253751578566
+    second: Farming Plants v2 watered_13
+  - first:
+      213: 7527142272473701844
+    second: Farming Plants v2 watered_14
+  - first:
+      213: 8242796269247672676
+    second: Farming Plants v2 watered_15
+  - first:
+      213: -5477561477216715820
+    second: Farming Plants v2 watered_16
+  - first:
+      213: 8856429849616851041
+    second: Farming Plants v2 watered_17
+  - first:
+      213: -7160070800242345397
+    second: Farming Plants v2 watered_18
+  - first:
+      213: 3241171354240984050
+    second: Farming Plants v2 watered_19
+  - first:
+      213: -412116415375096507
+    second: Farming Plants v2 watered_20
+  - first:
+      213: 5747444155278217162
+    second: Farming Plants v2 watered_21
+  - first:
+      213: -1097289031507553276
+    second: Farming Plants v2 watered_22
+  - first:
+      213: -501341090754290886
+    second: Farming Plants v2 watered_23
+  - first:
+      213: 7223159392769027466
+    second: Farming Plants v2 watered_24
+  - first:
+      213: 1020800829521502090
+    second: Farming Plants v2 watered_25
+  - first:
+      213: 1733560413568543547
+    second: Farming Plants v2 watered_26
+  - first:
+      213: -6749201245043345939
+    second: Farming Plants v2 watered_27
+  - first:
+      213: -7714265950657598823
+    second: Farming Plants v2 watered_28
+  - first:
+      213: -6487348492388050560
+    second: Farming Plants v2 watered_29
+  - first:
+      213: 1740083057044188696
+    second: Farming Plants v2 watered_30
+  - first:
+      213: -3912701678091230265
+    second: Farming Plants v2 watered_31
+  - first:
+      213: 4342106183345916075
+    second: Farming Plants v2 watered_32
+  - first:
+      213: 4249183359342690051
+    second: Farming Plants v2 watered_33
+  - first:
+      213: -1674234838406979702
+    second: Farming Plants v2 watered_34
+  - first:
+      213: -2256099209961511785
+    second: Farming Plants v2 watered_35
+  - first:
+      213: -8917777448995367924
+    second: Farming Plants v2 watered_36
+  - first:
+      213: 4591031245091175016
+    second: Farming Plants v2 watered_37
+  - first:
+      213: 3109228984140855217
+    second: Farming Plants v2 watered_38
+  - first:
+      213: 1420137851896060446
+    second: Farming Plants v2 watered_39
+  - first:
+      213: -174140209199612513
+    second: Farming Plants v2 watered_40
+  - first:
+      213: 2879557215729893184
+    second: Farming Plants v2 watered_41
+  - first:
+      213: -1804152763886716717
+    second: Farming Plants v2 watered_42
+  - first:
+      213: 5626973431278827234
+    second: Farming Plants v2 watered_43
+  - first:
+      213: 103682896720661120
+    second: Farming Plants v2 watered_44
+  - first:
+      213: -1363780566047034721
+    second: Farming Plants v2 watered_45
+  - first:
+      213: 4885694755696489150
+    second: Farming Plants v2 watered_46
+  - first:
+      213: -5246206636204238422
+    second: Farming Plants v2 watered_47
+  - first:
+      213: 660327437646725753
+    second: Farming Plants v2 watered_48
+  - first:
+      213: 713966004303660551
+    second: Farming Plants v2 watered_49
+  - first:
+      213: -2631310265228237487
+    second: Farming Plants v2 watered_50
+  - first:
+      213: 4012026106995291323
+    second: Farming Plants v2 watered_51
+  - first:
+      213: -2888919716456070068
+    second: Farming Plants v2 watered_52
+  - first:
+      213: 7700802878309651438
+    second: Farming Plants v2 watered_53
+  - first:
+      213: 4895202697535465660
+    second: Farming Plants v2 watered_54
+  - first:
+      213: 2013659216457957411
+    second: Farming Plants v2 watered_55
+  - first:
+      213: 1107457461738640545
+    second: Farming Plants v2 watered_56
+  - first:
+      213: 4285066321250871410
+    second: Farming Plants v2 watered_57
+  - first:
+      213: 2469618937354777762
+    second: Farming Plants v2 watered_58
+  - first:
+      213: -5801039025431115042
+    second: Farming Plants v2 watered_59
+  - first:
+      213: -4109248136331510360
+    second: Farming Plants v2 watered_60
+  - first:
+      213: -1575994288549371725
+    second: Farming Plants v2 watered_61
+  - first:
+      213: 4238377483745881363
+    second: Farming Plants v2 watered_62
+  - first:
+      213: 3977364796563240123
+    second: Farming Plants v2 watered_63
+  - first:
+      213: 6375002618401537736
+    second: Farming Plants v2 watered_64
+  - first:
+      213: -3314430913355282307
+    second: Farming Plants v2 watered_65
+  - first:
+      213: 98676878183191234
+    second: Farming Plants v2 watered_66
+  - first:
+      213: -2778832979051170267
+    second: Farming Plants v2 watered_67
+  - first:
+      213: 2057539743707259373
+    second: Farming Plants v2 watered_68
+  - first:
+      213: 3132175477872267785
+    second: Farming Plants v2 watered_69
+  - first:
+      213: -2058043471649344502
+    second: Farming Plants v2 watered_70
+  - first:
+      213: -558055297475665475
+    second: Farming Plants v2 watered_71
+  - first:
+      213: 8086245878086200927
+    second: Farming Plants v2 watered_72
+  - first:
+      213: 2749532424203764722
+    second: Farming Plants v2 watered_73
+  - first:
+      213: -8427837071329483361
+    second: Farming Plants v2 watered_74
+  - first:
+      213: -1012489853659398082
+    second: Farming Plants v2 watered_75
+  - first:
+      213: -8276525450713564801
+    second: Farming Plants v2 watered_76
+  - first:
+      213: 3535830017631581667
+    second: Farming Plants v2 watered_77
+  - first:
+      213: -97761056063418861
+    second: Farming Plants v2 watered_78
+  - first:
+      213: -1924229372247592284
+    second: Farming Plants v2 watered_79
+  - first:
+      213: -1160342574470084043
+    second: Farming Plants v2 watered_80
+  - first:
+      213: -3973414261528624890
+    second: Farming Plants v2 watered_81
+  - first:
+      213: -3880530312136556249
+    second: Farming Plants v2 watered_82
+  - first:
+      213: 115877126189008231
+    second: Farming Plants v2 watered_83
+  - first:
+      213: -4217770220408655132
+    second: Farming Plants v2 watered_84
+  - first:
+      213: 2772487073657678479
+    second: Farming Plants v2 watered_85
+  - first:
+      213: 7805864165698396344
+    second: Farming Plants v2 watered_86
+  - first:
+      213: 6091518987738002621
+    second: Farming Plants v2 watered_87
+  - first:
+      213: -7904719405435414035
+    second: Farming Plants v2 watered_88
+  - first:
+      213: -4680150830386970994
+    second: Farming Plants v2 watered_89
+  - first:
+      213: -3261104066436928755
+    second: Farming Plants v2 watered_90
+  - first:
+      213: -1615666234784786987
+    second: Farming Plants v2 watered_91
+  - first:
+      213: -7380476216288677280
+    second: Farming Plants v2 watered_92
+  - first:
+      213: -8736878488916369402
+    second: Farming Plants v2 watered_93
+  - first:
+      213: 8156072206082260543
+    second: Farming Plants v2 watered_94
+  - first:
+      213: 1101883568702630038
+    second: Farming Plants v2 watered_95
+  - first:
+      213: -5763415251867921132
+    second: Farming Plants v2 watered_96
+  - first:
+      213: -4421351959978151699
+    second: Farming Plants v2 watered_97
+  - first:
+      213: -5320625041046603803
+    second: Farming Plants v2 watered_98
+  - first:
+      213: -4228173893797962911
+    second: Farming Plants v2 watered_99
+  - first:
+      213: -1677808598408515547
+    second: Farming Plants v2 watered_100
+  - first:
+      213: -2774216287270594489
+    second: Farming Plants v2 watered_101
+  - first:
+      213: -7381838441178301546
+    second: Farming Plants v2 watered_102
+  - first:
+      213: 38289591812006782
+    second: Farming Plants v2 watered_103
+  - first:
+      213: -6748049992683650434
+    second: Farming Plants v2 watered_104
+  - first:
+      213: 457007359388430630
+    second: Farming Plants v2 watered_105
+  - first:
+      213: -4909196733330568041
+    second: Farming Plants v2 watered_106
+  - first:
+      213: -4384102034002831714
+    second: Farming Plants v2 watered_107
+  - first:
+      213: 4960967261315658604
+    second: Farming Plants v2 watered_108
+  - first:
+      213: 2397119017986421714
+    second: Farming Plants v2 watered_109
+  - first:
+      213: -8304768424212921433
+    second: Farming Plants v2 watered_110
+  - first:
+      213: -4138282772281703160
+    second: Farming Plants v2 watered_111
+  - first:
+      213: 1911919398856352258
+    second: Farming Plants v2 watered_112
+  - first:
+      213: 3385511118891647448
+    second: Farming Plants v2 watered_113
+  - first:
+      213: 1465791062998778299
+    second: Farming Plants v2 watered_114
+  - first:
+      213: -6912430222933443867
+    second: Farming Plants v2 watered_115
+  - first:
+      213: -8986134511060793324
+    second: Farming Plants v2 watered_116
+  - first:
+      213: -4569103151896211522
+    second: Farming Plants v2 watered_117
+  - first:
+      213: 5664139018541678157
+    second: Farming Plants v2 watered_118
+  - first:
+      213: -2422102255617855651
+    second: Farming Plants v2 watered_119
+  - first:
+      213: -5308914913555264439
+    second: Farming Plants v2 watered_120
+  - first:
+      213: 2715754861357922129
+    second: Farming Plants v2 watered_121
+  - first:
+      213: 1559479905805495943
+    second: Farming Plants v2 watered_122
+  - first:
+      213: -4017471734074998750
+    second: Farming Plants v2 watered_123
+  - first:
+      213: 7348581235895041590
+    second: Farming Plants v2 watered_124
+  - first:
+      213: 2481178461356571906
+    second: Farming Plants v2 watered_125
+  - first:
+      213: 2229190810255636350
+    second: Farming Plants v2 watered_126
+  - first:
+      213: -7593382560500987029
+    second: Farming Plants v2 watered_127
+  - first:
+      213: 8505379200883125337
+    second: Farming Plants v2 watered_128
+  - first:
+      213: 8020447178829452157
+    second: Farming Plants v2 watered_129
+  - first:
+      213: 6650460938887257572
+    second: Farming Plants v2 watered_130
+  - first:
+      213: -3665961320168965707
+    second: Farming Plants v2 watered_131
+  - first:
+      213: -4399902425594137518
+    second: Farming Plants v2 watered_132
+  - first:
+      213: 1143967749361485860
+    second: Farming Plants v2 watered_133
+  - first:
+      213: -2390057578755660589
+    second: Farming Plants v2 watered_134
+  - first:
+      213: -11980476114001816
+    second: Farming Plants v2 watered_135
+  - first:
+      213: -6620029173160041229
+    second: Farming Plants v2 watered_136
+  - first:
+      213: 3101387655839242928
+    second: Farming Plants v2 watered_137
+  - first:
+      213: -6661815283781486312
+    second: Farming Plants v2 watered_138
+  - first:
+      213: 6772976596849023495
+    second: Farming Plants v2 watered_139
+  - first:
+      213: -4192385338843284853
+    second: Farming Plants v2 watered_140
+  - first:
+      213: -846568316889269033
+    second: Farming Plants v2 watered_141
+  - first:
+      213: 1041466289320499747
+    second: Farming Plants v2 watered_142
+  - first:
+      213: -8935618693356734957
+    second: Farming Plants v2 watered_143
+  - first:
+      213: 6699427632025545596
+    second: Farming Plants v2 watered_144
+  - first:
+      213: -7601320739699259215
+    second: Farming Plants v2 watered_145
+  - first:
+      213: 5595433612689908470
+    second: Farming Plants v2 watered_146
+  - first:
+      213: -4423750139385083012
+    second: Farming Plants v2 watered_147
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 496
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1e5869e3d48f3900800000000000000
+      internalID: 666397315563019807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_1
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 496
+        width: 12
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b34ac77af73037030800000000000000
+      internalID: 3491137982947959867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_2
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 496
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29470b6111b031e00800000000000000
+      internalID: 1014166509111506066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_3
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 496
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8368f704b1f29cd20800000000000000
+      internalID: 3299219996118320696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_4
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 496
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 793e5d0f4ccac7e90800000000000000
+      internalID: -7026551356750699625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 496
+        width: 17
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 676380f64b0f0f780800000000000000
+      internalID: -8651150226431134090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 496
+        width: 16
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bc4ef5687315d380800000000000000
+      internalID: -8947223676873454415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_7
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 480
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a523cff5f1ce10cc0800000000000000
+      internalID: -3746453795497037222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_8
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 480
+        width: 12
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2978cbbba8a0c750800000000000000
+      internalID: 6323239332371527978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_9
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 480
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8bad8aa74b8df990800000000000000
+      internalID: -7350565876878431347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_10
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 480
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cc96e0f78d86c150800000000000000
+      internalID: 5892552777462619334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_11
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 479
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 021686e53cc2fcf00800000000000000
+      internalID: 1139178448362168608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_12
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 479
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba50f437446e8bf20800000000000000
+      internalID: 3438751497164096939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 464
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cfa264964525d110800000000000000
+      internalID: 1284974253751578566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_14
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 464
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dd1f9c2408c57860800000000000000
+      internalID: 7527142272473701844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_15
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 464
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4613c60e88b446270800000000000000
+      internalID: 8242796269247672676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_16
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 464
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4db322b9bdacbf3b0800000000000000
+      internalID: -5477561477216715820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_17
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 464
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 160249c560c58ea70800000000000000
+      internalID: 8856429849616851041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_18
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 464
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4a78e8fa8152ac90800000000000000
+      internalID: -7160070800242345397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_19
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 447
+        width: 16
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f3a4b99c24fafc20800000000000000
+      internalID: 3241171354240984050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 448
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 545c57fbd4ed74af0800000000000000
+      internalID: -412116415375096507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_21
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 448
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acfc0c9020603cf40800000000000000
+      internalID: 5747444155278217162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_22
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 448
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4045f058075a5c0f0800000000000000
+      internalID: -1097289031507553276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_23
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 448
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3b98462fe0ea09f0800000000000000
+      internalID: -501341090754290886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_24
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 447
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8d2602a231dd3460800000000000000
+      internalID: 7223159392769027466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_25
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 431
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8f9d0e22fc9a2e00800000000000000
+      internalID: 1020800829521502090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_26
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 432
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3bae67e208de0810800000000000000
+      internalID: 1733560413568543547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_27
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 432
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de53197f9350652a0800000000000000
+      internalID: -6749201245043345939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_28
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 432
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99aa9246dfb61f490800000000000000
+      internalID: -7714265950657598823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_29
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 432
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0895b09eaee48f5a0800000000000000
+      internalID: -6487348492388050560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_30
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 432
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81e6bce2254062810800000000000000
+      internalID: 1740083057044188696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_31
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 416
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c32c4ddd8a43b9c0800000000000000
+      internalID: -3912701678091230265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_32
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 416
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba84c5b7192424c30800000000000000
+      internalID: 4342106183345916075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_33
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 416
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30f3f1f80c128fa30800000000000000
+      internalID: 4249183359342690051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_34
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 416
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8f1b22f84ce3c8e0800000000000000
+      internalID: -1674234838406979702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_35
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 416
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 794643cc8b9b0b0e0800000000000000
+      internalID: -2256099209961511785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_36
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 416
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0454a698a0bd3480800000000000000
+      internalID: -8917777448995367924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_37
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 400
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86af064d79e96bf30800000000000000
+      internalID: 4591031245091175016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_38
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 400
+        width: 12
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b77015a943362b20800000000000000
+      internalID: 3109228984140855217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_39
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 400
+        width: 12
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1ad9522ad755b310800000000000000
+      internalID: 1420137851896060446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_40
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 400
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9d7b810764559df0800000000000000
+      internalID: -174140209199612513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_41
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04f3ef9f70e36f720800000000000000
+      internalID: 2879557215729893184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_42
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 400
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d83efbbe9c56f6e0800000000000000
+      internalID: -1804152763886716717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_43
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 400
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e67fe3d586071e40800000000000000
+      internalID: 5626973431278827234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_44
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 384
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08a81549b0b507100800000000000000
+      internalID: 103682896720661120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_45
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 384
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f927f210dc0e21de0800000000000000
+      internalID: -1363780566047034721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_46
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 384
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb2374aae797dc340800000000000000
+      internalID: 4885694755696489150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_47
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 384
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa9dfb62cdab137b0800000000000000
+      internalID: -5246206636204238422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_48
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 384
+        width: 17
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97280645e44f92900800000000000000
+      internalID: 660327437646725753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_49
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 367
+        width: 34
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70689345c4488e900800000000000000
+      internalID: 713966004303660551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_50
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 368
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1556b3b4145bb7bd0800000000000000
+      internalID: -2631310265228237487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_51
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 368
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb43c09dc749da730800000000000000
+      internalID: 4012026106995291323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_52
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 368
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c448304f2de78e7d0800000000000000
+      internalID: -2888919716456070068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_53
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 367
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee3d3feca6fbeda60800000000000000
+      internalID: 7700802878309651438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_54
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 351
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb8a222eae04fe340800000000000000
+      internalID: 4895202697535465660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_55
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 352
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3200ba77364f1fb10800000000000000
+      internalID: 2013659216457957411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_56
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 352
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a499c2a1ba7e5f00800000000000000
+      internalID: 1107457461738640545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_57
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 352
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 278e52dad1d977b30800000000000000
+      internalID: 4285066321250871410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_58
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 352
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a4fb93c659d54220800000000000000
+      internalID: 2469618937354777762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_59
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 351
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eda0009ddb19e7fa0800000000000000
+      internalID: -5801039025431115042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_60
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 336
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ad360c779409f6c0800000000000000
+      internalID: -4109248136331510360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_61
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 336
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b068f66b81f02ae0800000000000000
+      internalID: -1575994288549371725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_62
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 336
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31defa69dddb1da30800000000000000
+      internalID: 4238377483745881363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_63
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 336
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb4bb41a530723730800000000000000
+      internalID: 3977364796563240123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_64
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 335
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ce3200fa1f887850800000000000000
+      internalID: 6375002618401537736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_65
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 303
+        width: 18
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7882e815a6c002d0800000000000000
+      internalID: -3314430913355282307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_66
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c257af09129e5100800000000000000
+      internalID: 98676878183191234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_67
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 319
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 526b381e02a9f69d0800000000000000
+      internalID: -2778832979051170267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_68
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 320
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de16beede79dd8c10800000000000000
+      internalID: 2057539743707259373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_69
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 320
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90214cc8009b77b20800000000000000
+      internalID: 3132175477872267785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_70
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 304
+        width: 17
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a047704dd5c5073e0800000000000000
+      internalID: -2058043471649344502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_71
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 304
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db120f4e9a36148f0800000000000000
+      internalID: -558055297475665475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_72
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 304
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5e6bc988cd183070800000000000000
+      internalID: 8086245878086200927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_73
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 304
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f385131c2d482620800000000000000
+      internalID: 2749532424203764722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_74
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 304
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f95a98216de4a0b80800000000000000
+      internalID: -8427837071329483361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_75
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 256
+        width: 18
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e30c1fda7d9e2f1f0800000000000000
+      internalID: -1012489853659398082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_76
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 288
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f79fcb714ffd32d80800000000000000
+      internalID: -8276525450713564801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_77
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 288
+        width: 12
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e5f71bdaaac11130800000000000000
+      internalID: 3535830017631581667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_78
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 287
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31e097466dea4aef0800000000000000
+      internalID: -97761056063418861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_79
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 287
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a23fc8b493cb45e0800000000000000
+      internalID: -1924229372247592284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_80
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 287
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53ac2f68392a5efe0800000000000000
+      internalID: -1160342574470084043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_81
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 257
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6018d1cf7c89bd8c0800000000000000
+      internalID: -3973414261528624890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_82
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 256
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72107f4bd36952ac0800000000000000
+      internalID: -3880530312136556249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_83
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 256
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 765c610e1adab9100800000000000000
+      internalID: 115877126189008231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_84
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 175
+        width: 50
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e2325cc4587775c0800000000000000
+      internalID: -4217770220408655132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_85
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 256
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8a6ab1ed4ad97620800000000000000
+      internalID: 2772487073657678479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_86
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 256
+        width: 15
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b06769f910045c60800000000000000
+      internalID: 7805864165698396344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_87
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 241
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db4bbaebe3c698450800000000000000
+      internalID: 6091518987738002621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_88
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 240
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de992ede49bcc4290800000000000000
+      internalID: -7904719405435414035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_89
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8ef883cd93cc0fb0800000000000000
+      internalID: -4680150830386970994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_90
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 224
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0be170312b3eb2d0800000000000000
+      internalID: -3261104066436928755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_91
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 224
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d55f00ae100499e0800000000000000
+      internalID: -1615666234784786987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_92
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 224
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 062f4e61cf7439990800000000000000
+      internalID: -7380476216288677280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_93
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 208
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6006366ed4f50c680800000000000000
+      internalID: -8736878488916369402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_94
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 208
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3e38fd6570303170800000000000000
+      internalID: 8156072206082260543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_95
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 208
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6982c58844daa4f00800000000000000
+      internalID: 1101883568702630038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_96
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41518534d5c3400b0800000000000000
+      internalID: -5763415251867921132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_97
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 192
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de0768651d334a2c0800000000000000
+      internalID: -4421351959978151699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_98
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 192
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e77e5d07b75926b0800000000000000
+      internalID: -5320625041046603803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_99
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 176
+        width: 15
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16b9793de328255c0800000000000000
+      internalID: -4228173893797962911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_100
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 176
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 520b3ca18f937b8e0800000000000000
+      internalID: -1677808598408515547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_101
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 176
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74812233cf00089d0800000000000000
+      internalID: -2774216287270594489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_102
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 144
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69b7e346c017e8990800000000000000
+      internalID: -7381838441178301546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_103
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 144
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e73ac8e4e28088000800000000000000
+      internalID: 38289591812006782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_104
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 144
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e72838bc84c1a52a0800000000000000
+      internalID: -6748049992683650434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_105
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 144
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6213614a5cd975600800000000000000
+      internalID: 457007359388430630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_106
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79cc251c4970fdbb0800000000000000
+      internalID: -4909196733330568041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_107
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 144
+        width: 18
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9691349d6a8823c0800000000000000
+      internalID: -4384102034002831714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_108
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 128
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c63ff099075e8d440800000000000000
+      internalID: 4960967261315658604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_109
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 111
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d3f96fdb07444120800000000000000
+      internalID: 2397119017986421714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_110
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 96
+        width: 34
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a388e46e198fbc80800000000000000
+      internalID: -8304768424212921433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_111
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 112
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 805c7028ebdd196c0800000000000000
+      internalID: -4138282772281703160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_112
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 112
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 202e2004090888a10800000000000000
+      internalID: 1911919398856352258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_113
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 111
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d10ca8ec60cbfe20800000000000000
+      internalID: 3385511118891647448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_114
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 96
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb10cf8a439875410800000000000000
+      internalID: 1465791062998778299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_115
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 96
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5eab06bf55d1210a0800000000000000
+      internalID: -6912430222933443867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_116
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 96
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 418c754d546da4380800000000000000
+      internalID: -8986134511060793324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_117
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 96
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebfcb1934e84790c0800000000000000
+      internalID: -4569103151896211522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_118
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 79
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4e3b9e6d601b9e40800000000000000
+      internalID: 5664139018541678157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_119
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 80
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5fa934d4d6f26ed0800000000000000
+      internalID: -2422102255617855651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_120
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 80
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94cc3c29302f256b0800000000000000
+      internalID: -5308914913555264439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_121
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 79
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 157774068ac40b520800000000000000
+      internalID: 2715754861357922129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_122
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 79
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78e65eb36b264a510800000000000000
+      internalID: 1559479905805495943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_123
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 79
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 220894b4eb21f38c0800000000000000
+      internalID: -4017471734074998750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_124
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 48
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63eff9813b76bf560800000000000000
+      internalID: 7348581235895041590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_125
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 48
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20d328d2aaaee6220800000000000000
+      internalID: 2481178461356571906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_126
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 48
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e773add2b3dafee10800000000000000
+      internalID: 2229190810255636350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_127
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 48
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6b41bdeac2ee9690800000000000000
+      internalID: -7593382560500987029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_128
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95c62acd15d290670800000000000000
+      internalID: 8505379200883125337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_129
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 48
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d73d9e9073a5e4f60800000000000000
+      internalID: 8020447178829452157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_130
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 33
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ed5cfefcfe2b4c50800000000000000
+      internalID: 6650460938887257572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_131
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 32
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b9b1073a93ef1dc0800000000000000
+      internalID: -3665961320168965707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_132
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 32
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 254f41c3e0860f2c0800000000000000
+      internalID: -4399902425594137518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_133
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 32
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 428c1376b9030ef00800000000000000
+      internalID: 1143967749361485860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_134
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 32
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d4e9819b4fc4ded0800000000000000
+      internalID: -2390057578755660589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_135
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8602cf802df65dff0800000000000000
+      internalID: -11980476114001816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_136
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 16
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f4a21b9a8ee024a0800000000000000
+      internalID: -6620029173160041229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_137
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 16
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ba541124a75a0b20800000000000000
+      internalID: 3101387655839242928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_138
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 16
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 819bfe29b4a7c83a0800000000000000
+      internalID: -6661815283781486312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_139
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 15
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70a583f74527efd50800000000000000
+      internalID: 6772976596849023495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_140
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 15
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8ab0bc1fb7a1d5c0800000000000000
+      internalID: -4192385338843284853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_141
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 15
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7dcf6b1e9926044f0800000000000000
+      internalID: -846568316889269033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_142
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32a1e7c7218047e00800000000000000
+      internalID: 1041466289320499747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_143
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 316b12e242e4ef380800000000000000
+      internalID: -8935618693356734957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_144
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 0
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7ba15dafe529fc50800000000000000
+      internalID: 6699427632025545596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_145
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 0
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b88a6e8f0fa28690800000000000000
+      internalID: -7601320739699259215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_146
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 0
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f2a9a09939f6ad40800000000000000
+      internalID: 5595433612689908470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2 watered_147
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 0
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7b0edeafaeab92c0800000000000000
+      internalID: -4423750139385083012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Farming Plants v2 watered_0: 666397315563019807
+      Farming Plants v2 watered_1: 3491137982947959867
+      Farming Plants v2 watered_10: 5892552777462619334
+      Farming Plants v2 watered_100: -1677808598408515547
+      Farming Plants v2 watered_101: -2774216287270594489
+      Farming Plants v2 watered_102: -7381838441178301546
+      Farming Plants v2 watered_103: 38289591812006782
+      Farming Plants v2 watered_104: -6748049992683650434
+      Farming Plants v2 watered_105: 457007359388430630
+      Farming Plants v2 watered_106: -4909196733330568041
+      Farming Plants v2 watered_107: -4384102034002831714
+      Farming Plants v2 watered_108: 4960967261315658604
+      Farming Plants v2 watered_109: 2397119017986421714
+      Farming Plants v2 watered_11: 1139178448362168608
+      Farming Plants v2 watered_110: -8304768424212921433
+      Farming Plants v2 watered_111: -4138282772281703160
+      Farming Plants v2 watered_112: 1911919398856352258
+      Farming Plants v2 watered_113: 3385511118891647448
+      Farming Plants v2 watered_114: 1465791062998778299
+      Farming Plants v2 watered_115: -6912430222933443867
+      Farming Plants v2 watered_116: -8986134511060793324
+      Farming Plants v2 watered_117: -4569103151896211522
+      Farming Plants v2 watered_118: 5664139018541678157
+      Farming Plants v2 watered_119: -2422102255617855651
+      Farming Plants v2 watered_12: 3438751497164096939
+      Farming Plants v2 watered_120: -5308914913555264439
+      Farming Plants v2 watered_121: 2715754861357922129
+      Farming Plants v2 watered_122: 1559479905805495943
+      Farming Plants v2 watered_123: -4017471734074998750
+      Farming Plants v2 watered_124: 7348581235895041590
+      Farming Plants v2 watered_125: 2481178461356571906
+      Farming Plants v2 watered_126: 2229190810255636350
+      Farming Plants v2 watered_127: -7593382560500987029
+      Farming Plants v2 watered_128: 8505379200883125337
+      Farming Plants v2 watered_129: 8020447178829452157
+      Farming Plants v2 watered_13: 1284974253751578566
+      Farming Plants v2 watered_130: 6650460938887257572
+      Farming Plants v2 watered_131: -3665961320168965707
+      Farming Plants v2 watered_132: -4399902425594137518
+      Farming Plants v2 watered_133: 1143967749361485860
+      Farming Plants v2 watered_134: -2390057578755660589
+      Farming Plants v2 watered_135: -11980476114001816
+      Farming Plants v2 watered_136: -6620029173160041229
+      Farming Plants v2 watered_137: 3101387655839242928
+      Farming Plants v2 watered_138: -6661815283781486312
+      Farming Plants v2 watered_139: 6772976596849023495
+      Farming Plants v2 watered_14: 7527142272473701844
+      Farming Plants v2 watered_140: -4192385338843284853
+      Farming Plants v2 watered_141: -846568316889269033
+      Farming Plants v2 watered_142: 1041466289320499747
+      Farming Plants v2 watered_143: -8935618693356734957
+      Farming Plants v2 watered_144: 6699427632025545596
+      Farming Plants v2 watered_145: -7601320739699259215
+      Farming Plants v2 watered_146: 5595433612689908470
+      Farming Plants v2 watered_147: -4423750139385083012
+      Farming Plants v2 watered_15: 8242796269247672676
+      Farming Plants v2 watered_16: -5477561477216715820
+      Farming Plants v2 watered_17: 8856429849616851041
+      Farming Plants v2 watered_18: -7160070800242345397
+      Farming Plants v2 watered_19: 3241171354240984050
+      Farming Plants v2 watered_2: 1014166509111506066
+      Farming Plants v2 watered_20: -412116415375096507
+      Farming Plants v2 watered_21: 5747444155278217162
+      Farming Plants v2 watered_22: -1097289031507553276
+      Farming Plants v2 watered_23: -501341090754290886
+      Farming Plants v2 watered_24: 7223159392769027466
+      Farming Plants v2 watered_25: 1020800829521502090
+      Farming Plants v2 watered_26: 1733560413568543547
+      Farming Plants v2 watered_27: -6749201245043345939
+      Farming Plants v2 watered_28: -7714265950657598823
+      Farming Plants v2 watered_29: -6487348492388050560
+      Farming Plants v2 watered_3: 3299219996118320696
+      Farming Plants v2 watered_30: 1740083057044188696
+      Farming Plants v2 watered_31: -3912701678091230265
+      Farming Plants v2 watered_32: 4342106183345916075
+      Farming Plants v2 watered_33: 4249183359342690051
+      Farming Plants v2 watered_34: -1674234838406979702
+      Farming Plants v2 watered_35: -2256099209961511785
+      Farming Plants v2 watered_36: -8917777448995367924
+      Farming Plants v2 watered_37: 4591031245091175016
+      Farming Plants v2 watered_38: 3109228984140855217
+      Farming Plants v2 watered_39: 1420137851896060446
+      Farming Plants v2 watered_4: -7026551356750699625
+      Farming Plants v2 watered_40: -174140209199612513
+      Farming Plants v2 watered_41: 2879557215729893184
+      Farming Plants v2 watered_42: -1804152763886716717
+      Farming Plants v2 watered_43: 5626973431278827234
+      Farming Plants v2 watered_44: 103682896720661120
+      Farming Plants v2 watered_45: -1363780566047034721
+      Farming Plants v2 watered_46: 4885694755696489150
+      Farming Plants v2 watered_47: -5246206636204238422
+      Farming Plants v2 watered_48: 660327437646725753
+      Farming Plants v2 watered_49: 713966004303660551
+      Farming Plants v2 watered_5: -8651150226431134090
+      Farming Plants v2 watered_50: -2631310265228237487
+      Farming Plants v2 watered_51: 4012026106995291323
+      Farming Plants v2 watered_52: -2888919716456070068
+      Farming Plants v2 watered_53: 7700802878309651438
+      Farming Plants v2 watered_54: 4895202697535465660
+      Farming Plants v2 watered_55: 2013659216457957411
+      Farming Plants v2 watered_56: 1107457461738640545
+      Farming Plants v2 watered_57: 4285066321250871410
+      Farming Plants v2 watered_58: 2469618937354777762
+      Farming Plants v2 watered_59: -5801039025431115042
+      Farming Plants v2 watered_6: -8947223676873454415
+      Farming Plants v2 watered_60: -4109248136331510360
+      Farming Plants v2 watered_61: -1575994288549371725
+      Farming Plants v2 watered_62: 4238377483745881363
+      Farming Plants v2 watered_63: 3977364796563240123
+      Farming Plants v2 watered_64: 6375002618401537736
+      Farming Plants v2 watered_65: -3314430913355282307
+      Farming Plants v2 watered_66: 98676878183191234
+      Farming Plants v2 watered_67: -2778832979051170267
+      Farming Plants v2 watered_68: 2057539743707259373
+      Farming Plants v2 watered_69: 3132175477872267785
+      Farming Plants v2 watered_7: -3746453795497037222
+      Farming Plants v2 watered_70: -2058043471649344502
+      Farming Plants v2 watered_71: -558055297475665475
+      Farming Plants v2 watered_72: 8086245878086200927
+      Farming Plants v2 watered_73: 2749532424203764722
+      Farming Plants v2 watered_74: -8427837071329483361
+      Farming Plants v2 watered_75: -1012489853659398082
+      Farming Plants v2 watered_76: -8276525450713564801
+      Farming Plants v2 watered_77: 3535830017631581667
+      Farming Plants v2 watered_78: -97761056063418861
+      Farming Plants v2 watered_79: -1924229372247592284
+      Farming Plants v2 watered_8: 6323239332371527978
+      Farming Plants v2 watered_80: -1160342574470084043
+      Farming Plants v2 watered_81: -3973414261528624890
+      Farming Plants v2 watered_82: -3880530312136556249
+      Farming Plants v2 watered_83: 115877126189008231
+      Farming Plants v2 watered_84: -4217770220408655132
+      Farming Plants v2 watered_85: 2772487073657678479
+      Farming Plants v2 watered_86: 7805864165698396344
+      Farming Plants v2 watered_87: 6091518987738002621
+      Farming Plants v2 watered_88: -7904719405435414035
+      Farming Plants v2 watered_89: -4680150830386970994
+      Farming Plants v2 watered_9: -7350565876878431347
+      Farming Plants v2 watered_90: -3261104066436928755
+      Farming Plants v2 watered_91: -1615666234784786987
+      Farming Plants v2 watered_92: -7380476216288677280
+      Farming Plants v2 watered_93: -8736878488916369402
+      Farming Plants v2 watered_94: 8156072206082260543
+      Farming Plants v2 watered_95: 1101883568702630038
+      Farming Plants v2 watered_96: -5763415251867921132
+      Farming Plants v2 watered_97: -4421351959978151699
+      Farming Plants v2 watered_98: -5320625041046603803
+      Farming Plants v2 watered_99: -4228173893797962911
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
