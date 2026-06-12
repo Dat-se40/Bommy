@@ -43,7 +43,7 @@ public class PlayerController : NetworkBehaviour
                 return;
 
             RequestPlaceBomb(movementController.CurrentCell);
-        }
+    }
     }
 
     bool IsReady =>
@@ -104,6 +104,7 @@ public class PlayerController : NetworkBehaviour
 
         if (alreadyHasBomb)
             return;
+
         BombController bomb = Instantiate(
             bombPrefab,
             bombPosition,

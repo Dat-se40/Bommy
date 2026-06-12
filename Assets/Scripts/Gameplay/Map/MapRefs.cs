@@ -12,6 +12,7 @@ public class MapRefs : MonoBehaviour
 
     [Header("Spawn Points")]
     [SerializeField] private Transform[] spawnPoints;
+
     public Tilemap Background => background;
     public Tilemap Playground => playground;
     public Tilemap Indestructibles => indestructibles;

@@ -90,8 +90,12 @@ public class MovementController : NetworkBehaviour
             direction = 0;
         }
 
-        if (inputDirection == Vector3Int.zero)
+        if (inputDirection == Vector3Int.zero) 
+        {
+            direction = 0;
             return;
+        }
+            
 
         TryStartMove(inputDirection);
     }
@@ -231,6 +235,10 @@ public class MovementController : NetworkBehaviour
 
         animator.SetBool("IsMoving", isMoving);
         animator.SetInteger("Direction", direction);
+        if(!isMoving && direction == 0) 
+        {
+            Debug.Log("Sao lai ko dung iM???");
+        }
     }
 
     private void OnDrawGizmosSelected()

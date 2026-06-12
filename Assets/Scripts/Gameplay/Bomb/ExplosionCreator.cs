@@ -1,6 +1,7 @@
 using PurrNet;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.Tilemaps;
 
 public class ExplosionCreator : NetworkBehaviour
 {
@@ -52,9 +53,10 @@ public class ExplosionCreator : NetworkBehaviour
         Spread(Vector3Int.left, originCell);
         Spread(Vector3Int.right, originCell);
     }
-
+    [ServerRpc(requireOwnership:false)]
     private void SpawnExplosionVisual(Vector3Int cell)
     {
+        if (!isServer) return; 
         if (explosionPrefab == null)
         {
             Debug.LogWarning("Explosion Prefab is not assigned.");
@@ -63,7 +65,8 @@ public class ExplosionCreator : NetworkBehaviour
 
         Vector3 position = grid.GetCellCenterWorld(cell);
 
-        Instantiate(explosionPrefab, position, Quaternion.identity, explosionParent);
+        var explo = Instantiate(explosionPrefab, position, Quaternion.identity, explosionParent);
+        networkManager.Spawn(explo.gameObject);
     }
 
     private void Spread(Vector3Int direction, Vector3Int originCell)

@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Lobby.unity
     guid: 398af9a19b974ae4cb81a440f18c83db
   - enabled: 1
-    path: Assets/Scenes/RandomMatchDemo.unity
+    path: Assets/Scenes/RandomMatch.unity
     guid: eb794374e348a8849b57fae0951b26cc
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity

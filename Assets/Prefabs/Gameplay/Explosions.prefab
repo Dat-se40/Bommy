@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3689532808849363403}
   - component: {fileID: 4571887505912588651}
   - component: {fileID: -1920956364927832846}
+  - component: {fileID: -121029845047063150}
   m_Layer: 0
   m_Name: Explosions
   m_TagString: Untagged
@@ -108,7 +109,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 7
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 4585791342908316790, guid: 4f7802531a09fb148bcfac1654a722b9, type: 3}
+  m_Sprite: {fileID: 4585791342908316790, guid: 358877f341143c7408bd3192f48ca5bb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -116,7 +117,7 @@ SpriteRenderer:
   m_Size: {x: 0.375, y: 0.375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
 --- !u!61 &6237622340460232175
 BoxCollider2D:
@@ -176,6 +177,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 680717267c6f35e47a017031410a448f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Explosion
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
   lifeTime: 0.35
 --- !u!114 &4571887505912588651
 MonoBehaviour:
@@ -234,3 +244,24 @@ MonoBehaviour:
   _characterControllerPatch: 0
   _ownerAuth: 1
   _interpolationTiming: 0
+--- !u!114 &-121029845047063150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2800762154627415703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5681fe548eb84304ea28a286062791f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PurrNet.Runtime::PurrNet.NetworkIdentity
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
