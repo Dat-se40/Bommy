@@ -17,11 +17,11 @@ public class CharacterCardUI : MonoBehaviour
     [SerializeField] private Sprite normalSprite;
     [SerializeField] private Sprite selectedSprite;
 
-    private Button button;
-    private CharacterSelectShopController owner;
-    private int index;
+    Button button;
+    CharacterSelectShopController owner;
+    int index;
 
-    private void Awake()
+    void Awake()
     {
         button = GetComponent<Button>();
 
@@ -32,7 +32,7 @@ public class CharacterCardUI : MonoBehaviour
     public void Setup(
         CharacterSelectShopController controller,
         int cardIndex,
-        CharacterSelectShopController.CharacterInfo data,
+        CharacterDefinition data,
         bool owned,
         bool levelUnlocked,
         bool selected
@@ -41,17 +41,23 @@ public class CharacterCardUI : MonoBehaviour
         owner = controller;
         index = cardIndex;
 
+        if (data == null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
         if (icon != null)
-            icon.sprite = data.icon;
+            icon.sprite = data.Icon;
 
         if (characterNamelbl != null)
-            characterNamelbl.text = data.characterName;
+            characterNamelbl.text = data.CharacterName;
 
         if (pricelbl != null)
             pricelbl.text = GetPriceText(data, owned);
 
         if (requiredLevellbl != null)
-            requiredLevellbl.text = "LV " + data.requiredLevel + "+";
+            requiredLevellbl.text = "LV " + data.RequiredLevel + "+";
 
         if (statuslbl != null)
             statuslbl.text = GetStatusText(owned, levelUnlocked);
@@ -63,18 +69,18 @@ public class CharacterCardUI : MonoBehaviour
         SetupButton();
     }
 
-    private string GetPriceText(CharacterSelectShopController.CharacterInfo data, bool owned)
+    static string GetPriceText(CharacterDefinition data, bool owned)
     {
         if (owned)
             return "OWNED";
 
-        if (data.price <= 0)
+        if (data.Price <= 0)
             return "FREE";
 
-        return "Gold: " + data.price;
+        return "Gold: " + data.Price;
     }
 
-    private string GetStatusText(bool owned, bool levelUnlocked)
+    static string GetStatusText(bool owned, bool levelUnlocked)
     {
         if (owned)
             return "READY";
@@ -85,7 +91,7 @@ public class CharacterCardUI : MonoBehaviour
         return "BUY";
     }
 
-    private void ApplyCardVisual(bool selected)
+    void ApplyCardVisual(bool selected)
     {
         if (cardImage == null)
             return;
@@ -100,7 +106,7 @@ public class CharacterCardUI : MonoBehaviour
             cardImage.sprite = normalSprite;
     }
 
-    private void SetupButton()
+    void SetupButton()
     {
         if (button == null)
             return;
@@ -109,9 +115,8 @@ public class CharacterCardUI : MonoBehaviour
         button.onClick.AddListener(OnClick);
     }
 
-    private void OnClick()
+    void OnClick()
     {
-        if (owner != null)
-            owner.SelectCharacter(index);
+        owner?.SelectCharacter(index);
     }
 }

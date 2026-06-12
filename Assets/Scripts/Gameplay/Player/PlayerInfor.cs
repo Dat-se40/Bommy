@@ -4,6 +4,8 @@ public class PlayerInfor : MonoBehaviour
 {
     [Header("Identity")]
     [SerializeField] private int playerIndex;
+    [SerializeField] private int characterId;
+    [SerializeField] private int catalogIndex;
     [SerializeField] private string playerName = "Player";
     [SerializeField] private bool isLocalPlayer = true;
 
@@ -26,6 +28,8 @@ public class PlayerInfor : MonoBehaviour
     [SerializeField] private int deaths;
 
     public int PlayerIndex => playerIndex;
+    public int CharacterId => characterId;
+    public int CatalogIndex => catalogIndex;
     public string PlayerName => playerName;
     public bool IsLocalPlayer => isLocalPlayer;
 
@@ -49,20 +53,45 @@ public class PlayerInfor : MonoBehaviour
     private void Start()
     {
         if (isLocalPlayer)
-            LoadSelectedCharacterStats();
+            ApplyLocalProfileFromBroker();
 
         ResetForMatch();
     }
 
-    private void LoadSelectedCharacterStats()
+    public void ApplyMatchProfile(PlayerMatchProfile profile)
+    {
+        playerIndex = profile.slotIndex;
+        characterId = profile.characterId;
+        catalogIndex = profile.catalogIndex;
+        playerName = profile.displayName;
+        maxHp = profile.hp;
+        maxBombs = profile.bomb;
+
+        // TODO[SETUP] Áp profile.speed lên MovementController.
+    }
+
+    void ApplyLocalProfileFromBroker()
+    {
+        PlayerMatchProfile profile = MatchSessionBroker.GetLocalPlayer();
+
+        if (profile.characterId <= 0)
+            MatchSessionBroker.LoadLocalFromPlayerPrefs(MatchSessionBroker.CharacterCatalog);
+
+        profile = MatchSessionBroker.GetLocalPlayer();
+
+        if (profile.characterId > 0)
+            ApplyMatchProfile(profile);
+        else
+            LoadSelectedCharacterStatsLegacy();
+    }
+
+    void LoadSelectedCharacterStatsLegacy()
     {
         playerName = PlayerPrefs.GetString("SelectedCharacterName", playerName);
-
+        characterId = PlayerPrefs.GetInt("SelectedCharacterId", characterId);
+        catalogIndex = PlayerPrefs.GetInt("SelectedCharacterIndex", catalogIndex);
         maxHp = PlayerPrefs.GetInt("SelectedCharacterHp", maxHp);
         maxBombs = PlayerPrefs.GetInt("SelectedCharacterBomb", maxBombs);
-
-        // Nếu sau này speed nằm ở MovementController thì không cần xử lý ở đây.
-        // int speed = PlayerPrefs.GetInt("SelectedCharacterSpeed", 60);
     }
 
     public void ResetForMatch()
@@ -74,6 +103,14 @@ public class PlayerInfor : MonoBehaviour
         score = 0;
         kills = 0;
         deaths = 0;
+
+        PublishBoardState();
+    }
+
+    void PublishBoardState()
+    {
+        if (TryGetComponent(out PlayerBoardState boardState))
+            boardState.PublishFromInfor(this);
     }
 
     public void TakeDamage(int damage)
@@ -91,6 +128,8 @@ public class PlayerInfor : MonoBehaviour
             currentHp = 0;
             LoseLife();
         }
+
+        PublishBoardState();
     }
 
     private void LoseLife()
@@ -116,11 +155,13 @@ public class PlayerInfor : MonoBehaviour
         // transform.position = spawnPoint.position;
 
         Debug.Log(playerName + " respawned. Lives left: " + currentLives);
+        PublishBoardState();
     }
 
     private void Eliminate()
     {
         Debug.Log(playerName + " eliminated.");
+        PublishBoardState();
         gameObject.SetActive(false);
     }
 
@@ -136,6 +177,8 @@ public class PlayerInfor : MonoBehaviour
 
         if (currentHp > maxHp)
             currentHp = maxHp;
+
+        PublishBoardState();
     }
 
     public void AddLife(int amount)
@@ -164,12 +207,14 @@ public class PlayerInfor : MonoBehaviour
             return;
 
         score += amount;
+        PublishBoardState();
     }
 
     public void AddKill()
     {
         kills++;
         AddScore(300);
+        PublishBoardState();
     }
 
     public void AddBombCapacity(int amount)
