@@ -1,43 +1,62 @@
-using PurrNet;
+﻿using PurrNet;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.Tilemaps;
 
+/// <summary>
+/// Server authority phá gạch. State ô đã phá nằm trong SyncList — client/late join replay từ list.
+/// Tilemap chỉ là view local (MapRefs / destructibleTilemap).
+/// </summary>
 public class ExplosionCreator : NetworkBehaviour
 {
     [Header("References")]
-    [SerializeField]
-    private Grid grid;
-
-    [SerializeField]
-    private Explosion explosionPrefab;
-
-    [SerializeField]
-    private Transform explosionParent;
+    [SerializeField] private Grid grid;
+    [SerializeField] private Explosion explosionPrefab;
+    [SerializeField] private Transform explosionParent;
 
     [Header("Tilemaps")]
-    [SerializeField]
-    private Tilemap indestructibleTilemap;
-
-    [SerializeField]
-    private Tilemap destructibleTilemap;
+    [SerializeField] private Tilemap indestructibleTilemap;
+    [SerializeField] private Tilemap destructibleTilemap;
 
     [Header("Optional")]
-    [SerializeField]
-    private ItemDropper itemDropper;
+    [SerializeField] private ItemDropper itemDropper;
 
     [Header("Explosion Settings")]
-    [SerializeField]
-    private int explosionRange = 2;
+    [SerializeField] private int explosionRange = 2;
+    [SerializeField] private int damage = 1;
+    [SerializeField] private LayerMask playerLayer;
 
-    [SerializeField]
-    private int damage = 1;
+    /// <summary>
+    /// Danh sách ô đã phá (server append-only). Late joiner nhận full list khi spawn.
+    /// Dùng SyncList thay SyncQueue vì không dequeue — chỉ cần "tập ô đã hủy".
+    /// </summary>
+    readonly SyncList<Vector3Int> destroyedCells = new();
 
-    [SerializeField]
-    private LayerMask playerLayer;
+    public static ExplosionCreator Instance { get; private set; }
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    protected override void OnSpawned()
+    {
+        base.OnSpawned();
+
+        destroyedCells.onChanged += OnDestroyedCellsChanged;
+        ReplayAllDestroyedCells();
+    }
+
+    protected override void OnDespawned()
+    {
+        destroyedCells.onChanged -= OnDestroyedCellsChanged;
+        base.OnDespawned();
+    }
 
     public void CreateExplosionAtCell(Vector3Int originCell)
     {
+        if (!isServer)
+            return;
+
         if (grid == null)
         {
             Debug.LogWarning("Grid is not assigned.");
@@ -45,31 +64,24 @@ public class ExplosionCreator : NetworkBehaviour
         }
 
         SpawnExplosionVisual(originCell);
-
         AffectCell(originCell);
-
         Spread(Vector3Int.up, originCell);
         Spread(Vector3Int.down, originCell);
         Spread(Vector3Int.left, originCell);
         Spread(Vector3Int.right, originCell);
     }
-    [ServerRpc(requireOwnership:false)]
-    private void SpawnExplosionVisual(Vector3Int cell)
+
+    void SpawnExplosionVisual(Vector3Int cell)
     {
-        if (!isServer) return; 
         if (explosionPrefab == null)
-        {
-            Debug.LogWarning("Explosion Prefab is not assigned.");
             return;
-        }
 
         Vector3 position = grid.GetCellCenterWorld(cell);
-
-        var explo = Instantiate(explosionPrefab, position, Quaternion.identity, explosionParent);
+        Explosion explo = Instantiate(explosionPrefab, position, Quaternion.identity, explosionParent);
         networkManager.Spawn(explo.gameObject);
     }
 
-    private void Spread(Vector3Int direction, Vector3Int originCell)
+    void Spread(Vector3Int direction, Vector3Int originCell)
     {
         for (int i = 1; i <= explosionRange; i++)
         {
@@ -88,12 +100,9 @@ public class ExplosionCreator : NetworkBehaviour
         }
     }
 
-    private void AffectCell(Vector3Int cell)
-    {
-        DamagePlayersAtCell(cell);
-    }
+    void AffectCell(Vector3Int cell) => DamagePlayersAtCell(cell);
 
-    private void DamagePlayersAtCell(Vector3Int cell)
+    void DamagePlayersAtCell(Vector3Int cell)
     {
         Vector3 center = grid.GetCellCenterWorld(cell);
 
@@ -106,39 +115,63 @@ public class ExplosionCreator : NetworkBehaviour
 
         for (int i = 0; i < hits.Length; i++)
         {
-            PlayerInfor playerInfor = hits[i].GetComponent<PlayerInfor>();
-
-            DamagePlayersRpc(playerInfor);
+            if (hits[i].TryGetComponent(out PlayerInfor playerInfor))
+                playerInfor.TakeDamage(damage);
         }
     }
 
-    [ServerRpc(requireOwnership: false)]
-    void DamagePlayersRpc(PlayerInfor playerInfor, RPCInfo rpcInfo = default)
-    {
-        if (playerInfor != null)
-            playerInfor.TakeDamage(damage);
-    }
-    private void DestroyDestructible(Vector3Int cell)
+    /// <summary>Server: ghi state + tilemap authority (server tilemap cho physics).</summary>
+    void DestroyDestructible(Vector3Int cell)
     {
         if (!isServer)
             return;
 
-        if (destructibleTilemap == null)
+        if (destructibleTilemap == null || !destructibleTilemap.HasTile(cell))
             return;
 
-        if (!destructibleTilemap.HasTile(cell))
+        if (ContainsDestroyedCell(cell))
             return;
 
-        SyncDestroyTileRpc(cell);
+        destructibleTilemap.SetTile(cell, null);
+        destroyedCells.Add(cell);
 
         if (itemDropper != null)
             itemDropper.TryDropAt(grid.GetCellCenterWorld(cell));
     }
 
-    [ObserversRpc]
-    void SyncDestroyTileRpc(Vector3Int cell) => destructibleTilemap.SetTile(cell, null);
+    bool ContainsDestroyedCell(Vector3Int cell)
+    {
+        for (int i = 0; i < destroyedCells.Count; i++)
+        {
+            if (destroyedCells[i] == cell)
+                return true;
+        }
 
-    private bool HasTile(Tilemap tilemap, Vector3Int cell)
+        return false;
+    }
+
+    void OnDestroyedCellsChanged(SyncListChange<Vector3Int> change)
+    {
+        if (change.operation != SyncListOperation.Added)
+            return;
+
+        ApplyDestroyCellLocal(change.value);
+    }
+
+    /// <summary>Late join / OnSpawned: áp toàn bộ ô đã phá lên tilemap local.</summary>
+    void ReplayAllDestroyedCells()
+    {
+        for (int i = 0; i < destroyedCells.Count; i++)
+            ApplyDestroyCellLocal(destroyedCells[i]);
+    }
+
+    static void ApplyDestroyCellLocal(Vector3Int cell)
+    {
+        if (MapRefs.Instance != null)
+            MapRefs.Instance.DestroyCell(cell);
+    }
+
+    static bool HasTile(Tilemap tilemap, Vector3Int cell)
     {
         return tilemap != null && tilemap.HasTile(cell);
     }
@@ -152,12 +185,5 @@ public class ExplosionCreator : NetworkBehaviour
         grid = newGrid;
         indestructibleTilemap = newIndestructibleTilemap;
         destructibleTilemap = newDestructibleTilemap;
-    }
-
-    public static ExplosionCreator Instance;
-
-    private void Awake()
-    {
-        Instance = this;
     }
 }

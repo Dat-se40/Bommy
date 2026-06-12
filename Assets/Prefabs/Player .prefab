@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 3864212903844649709}
   - component: {fileID: 9090291723869782262}
   - component: {fileID: -4935702196922611872}
+  - component: {fileID: -8743441707455209462}
+  - component: {fileID: 6952297810667769747}
   m_Layer: 10
   m_Name: 'Player '
   m_TagString: Untagged
@@ -188,6 +190,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   playerIndex: 0
+  characterId: 0
+  catalogIndex: 0
   playerName: Player
   isLocalPlayer: 1
   maxHp: 3
@@ -277,6 +281,39 @@ MonoBehaviour:
   effects:
     _ownerAuth: 0
     _sendIntervalInSeconds: 0
+--- !u!114 &-8743441707455209462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24528305369907493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722f4d672ece3b741814ff0a5826eeba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawnSetup
+--- !u!114 &6952297810667769747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24528305369907493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c472afada1d3b44a8e1994314a4e832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerBoardState
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
 --- !u!1 &2529373971499327456
 GameObject:
   m_ObjectHideFlags: 0

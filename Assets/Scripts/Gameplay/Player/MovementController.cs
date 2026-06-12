@@ -235,10 +235,6 @@ public class MovementController : NetworkBehaviour
 
         animator.SetBool("IsMoving", isMoving);
         animator.SetInteger("Direction", direction);
-        if(!isMoving && direction == 0) 
-        {
-            Debug.Log("Sao lai ko dung iM???");
-        }
     }
 
     private void OnDrawGizmosSelected()
@@ -270,4 +266,8 @@ public class MovementController : NetworkBehaviour
 
     public bool IsMapReady => grid != null;
 
+    public void SetSpeed(float value)
+    {
+        this.moveSpeed = value; 
+    }
 }

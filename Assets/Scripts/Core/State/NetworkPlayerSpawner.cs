@@ -35,10 +35,16 @@ public class NetworkPlayerSpawner : NetworkBehaviour
         base.OnDespawned();
     }
 
+    /// <summary>
+    /// Callback server từ PurrNet — KHÔNG phải ServerRpc.
+    /// ServerRpc chỉ chạy khi client gọi qua mạng; event này đã chạy trên server rồi.
+    /// </summary>
     void SpawnPlayer(PlayerID player, bool isReconnect, bool asServer)
     {
         if (!asServer)
             return;
+
+        Debug.Log($"[FLOW:NETWORK] SpawnPlayer start id={player.id}");
 
         PlayerMatchProfile profile = ResolveSpawnProfile(player);
 
@@ -72,18 +78,20 @@ public class NetworkPlayerSpawner : NetworkBehaviour
 
         newPlayer.transform.SetParent(players.transform);
 
+        if (!newPlayer.TryGetComponent(out PlayerController playerController))
+            return;
+
+        playerController.GiveOwnership(player);
+        networkManager.Spawn(newPlayer);
+        playerControllers.Add(playerController);
+
+        // Apply + init board SAU Spawn — NetworkBehaviour phải spawned mới ghi SyncVar/RPC được.
         if (newPlayer.TryGetComponent(out PlayerSpawnSetup spawnSetup))
             spawnSetup.Apply(profile);
 
-        if (newPlayer.TryGetComponent(out PlayerController playerController))
-        {
-            playerController.GiveOwnership(player);
-            networkManager.Spawn(newPlayer);
-            playerControllers.Add(playerController);
-
-            // TODO[NETWORK] Broadcast profile lên PlayerBoardHub qua ObserversRpc.
-            RegisterPlayerOnHubRpc(profile);
-        }
+        // Host: refresh ngay. Client: PlayerBoardState SyncVar → RegisterBoardState.
+        if (PlayerBoardHub.Instance != null)
+            PlayerBoardHub.Instance.OnNetworkPlayerRegistered(profile);
     }
 
     PlayerMatchProfile ResolveSpawnProfile(PlayerID player)
@@ -92,17 +100,9 @@ public class NetworkPlayerSpawner : NetworkBehaviour
         MatchSessionBroker.LoadLocalFromPlayerPrefs(characterDatabase);
 
         PlayerMatchProfile profile = MatchSessionBroker.GetLocalPlayer();
-        profile.isLocal = true;
+        profile.isLocal = false;
 
         return profile;
     }
 
-    [ObserversRpc]
-    void RegisterPlayerOnHubRpc(PlayerMatchProfile profile, RPCInfo rpcInfo = default)
-    {
-        PlayerBoardHub hub = FindFirstObjectByType<PlayerBoardHub>();
-
-        if (hub != null)
-            hub.OnNetworkPlayerRegistered(profile);
-    }
 }

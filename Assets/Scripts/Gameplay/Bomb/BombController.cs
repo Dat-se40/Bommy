@@ -46,6 +46,9 @@ public class BombController : NetworkBehaviour
 
         exploded = true;
 
+        if (!isServer)
+            return;
+
         if (explosionCreator != null)
             explosionCreator.CreateExplosionAtCell(bombCell);
 

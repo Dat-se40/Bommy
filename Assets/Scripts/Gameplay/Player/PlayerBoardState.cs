@@ -38,9 +38,12 @@ public class PlayerBoardState : NetworkBehaviour
     {
         base.OnSpawned();
 
+        slotIndex.onChanged += OnSlotIndexChanged;
         slotIndex.onChanged += OnAnyChanged;
+        characterId.onChanged += OnIdentityChanged;
         characterId.onChanged += OnAnyChanged;
         catalogIndex.onChanged += OnAnyChanged;
+        displayName.onChanged += OnIdentityChanged;
         displayName.onChanged += OnAnyChanged;
         currentHp.onChanged += OnAnyChanged;
         maxHp.onChanged += OnAnyChanged;
@@ -49,13 +52,18 @@ public class PlayerBoardState : NetworkBehaviour
         score.onChanged += OnAnyChanged;
         kills.onChanged += OnAnyChanged;
         isEliminated.onChanged += OnAnyChanged;
+
+        TryRegisterWithHub();
     }
 
     protected override void OnDespawned()
     {
+        slotIndex.onChanged -= OnSlotIndexChanged;
         slotIndex.onChanged -= OnAnyChanged;
+        characterId.onChanged -= OnIdentityChanged;
         characterId.onChanged -= OnAnyChanged;
         catalogIndex.onChanged -= OnAnyChanged;
+        displayName.onChanged -= OnIdentityChanged;
         displayName.onChanged -= OnAnyChanged;
         currentHp.onChanged -= OnAnyChanged;
         maxHp.onChanged -= OnAnyChanged;
@@ -65,9 +73,29 @@ public class PlayerBoardState : NetworkBehaviour
         kills.onChanged -= OnAnyChanged;
         isEliminated.onChanged -= OnAnyChanged;
 
+        if (PlayerBoardHub.Instance != null)
+            PlayerBoardHub.Instance.OnBoardStateDespawned(SlotIndex);
+
         base.OnDespawned();
     }
 
+    void OnSlotIndexChanged(int _) => TryRegisterWithHub();
+    void OnIdentityChanged(int _) => TryRegisterWithHub();
+    void OnIdentityChanged(string _) => TryRegisterWithHub();
+
+    void TryRegisterWithHub()
+    {
+        if (characterId.value <= 0)
+            return;
+
+        if (PlayerBoardHub.Instance == null)
+            return;
+
+        PlayerBoardHub.Instance.RegisterBoardState(this);
+    }
+    /// <summary>
+    /// Server gọi trực tiếp sau networkManager.Spawn — không dùng ServerRpc ở đây.
+    /// </summary>
     public void InitializeFromProfile(PlayerMatchProfile profile)
     {
         if (!isServer)
@@ -103,4 +131,5 @@ public class PlayerBoardState : NetworkBehaviour
     void OnAnyChanged(int _) => Changed?.Invoke();
     void OnAnyChanged(string _) => Changed?.Invoke();
     void OnAnyChanged(bool _) => Changed?.Invoke();
+
 }

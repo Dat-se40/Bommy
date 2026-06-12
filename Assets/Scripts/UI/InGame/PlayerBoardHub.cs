@@ -8,6 +8,24 @@ public class PlayerBoardHub : MonoBehaviour
     [SerializeField] private CharacterDatabase characterDatabase;
     [SerializeField] private PlayerBoardSlotUI[] slots;
 
+    public static PlayerBoardHub Instance { get; private set; }
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
+    }
     void OnEnable()
     {
         MatchSessionBroker.RosterChanged += RefreshStaticRoster;
@@ -29,7 +47,28 @@ public class PlayerBoardHub : MonoBehaviour
     public void OnNetworkPlayerRegistered(PlayerMatchProfile profile)
     {
         MatchSessionBroker.RegisterRemotePlayer(profile);
-        BindSlot(profile.slotIndex, profile.isLocal);
+        RebindAllFromScene();
+    }
+
+    /// <summary>
+    /// Gọi từ PlayerBoardState khi SyncVar identity đã replicate (mọi client).
+    /// Không phụ thuộc ObserversRpc từ spawner.
+    /// </summary>
+    public void RegisterBoardState(PlayerBoardState state)
+    {
+        if (state == null || slots == null)
+            return;
+
+        int index = state.SlotIndex;
+
+        if (!FlowGuard.IsValidSlotIndex(index, slots.Length, out string reason))
+        {
+            FlowGuard.Error(FlowGuard.TagHud, reason, this);
+            return;
+        }
+
+        bool isLocal = state.isOwner;
+        slots[index].AssignPlayer(state, characterDatabase, isLocal);
     }
 
     public void BindSlot(int index, bool isLocal = false)
@@ -58,7 +97,7 @@ public class PlayerBoardHub : MonoBehaviour
         }
     }
 
-    void RebindAllFromScene()
+    public void RebindAllFromScene()
     {
         if (slots == null)
             return;
@@ -82,6 +121,7 @@ public class PlayerBoardHub : MonoBehaviour
             {
                 bool isLocal = match.isOwner;
                 slots[i].AssignPlayer(match, characterDatabase, isLocal);
+                
             }
             else
             {
@@ -93,6 +133,14 @@ public class PlayerBoardHub : MonoBehaviour
     void RefreshStaticRoster()
     {
         RebindAllFromScene();
+    }
+
+    public void OnBoardStateDespawned(int slotIndex)
+    {
+        if (slots == null || !FlowGuard.IsValidSlotIndex(slotIndex, slots.Length, out _))
+            return;
+
+        slots[slotIndex].SetEmpty();
     }
 
     static PlayerBoardState FindBoardState(int slotIndex)

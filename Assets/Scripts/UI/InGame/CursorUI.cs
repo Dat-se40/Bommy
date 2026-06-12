@@ -32,6 +32,13 @@ public class CursorUI : MonoBehaviour
         _canvasRectTransform = _parentCavans.GetComponent<RectTransform>();
       //  _canvasCamera = _parentCavans.renderMode == RenderMode.ScreenSpaceCamera ? _parentCavans.worldCamera : null;    
         _selectorCursor.SetActive(isSelectorMode);
+        Canvas canvas = GetComponent<Canvas>();
+        if (canvas != null) 
+        {
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = 9999; 
+        }
+        
     }
     private void OnDefaultCursor(InputAction.CallbackContext context)
     {
@@ -42,7 +49,7 @@ public class CursorUI : MonoBehaviour
     {
         QuickSwitchMode();
     }
-
+       
     
     private void OnPointerPositionChanged(InputAction.CallbackContext ctx   )
     {

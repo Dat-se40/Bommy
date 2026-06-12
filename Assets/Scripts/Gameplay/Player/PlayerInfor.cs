@@ -67,7 +67,11 @@ public class PlayerInfor : MonoBehaviour
         maxHp = profile.hp;
         maxBombs = profile.bomb;
 
-        // TODO[SETUP] Áp profile.speed lên MovementController.
+        if(TryGetComponent(out MovementController move)) 
+        {
+            move.SetSpeed(profile.speed);
+        }
+        Debug.Log($"[PLayer Infor] player {profile.displayName} completed apply match profile");
     }
 
     void ApplyLocalProfileFromBroker()

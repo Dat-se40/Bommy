@@ -25,6 +25,7 @@ public class PlayerBoardSlotUI : MonoBehaviour
         PlayerBoardState state,
         CharacterDatabase database,
         bool isLocal = false
+
     )
     {
         Unsubscribe();
@@ -66,6 +67,7 @@ public class PlayerBoardSlotUI : MonoBehaviour
 
         if (avatar != null)
             avatar.enabled = false;
+        this.gameObject.SetActive(false);
     }
 
     void RefreshFromState()
@@ -75,7 +77,7 @@ public class PlayerBoardSlotUI : MonoBehaviour
             SetEmpty();
             return;
         }
-
+        this.gameObject.SetActive(true);   
         if (emptyState != null)
             emptyState.SetActive(false);
 
@@ -108,6 +110,7 @@ public class PlayerBoardSlotUI : MonoBehaviour
 
         if (trackedState.IsEliminated && nameLabel != null)
             nameLabel.text += " (OUT)";
+
     }
 
     void OnDisable()
