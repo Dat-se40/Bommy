@@ -1,0 +1,4017 @@
+fileFormatVersion: 2
+guid: 13c7863c37cba8244bffb11cdb6f7841
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3734557540895938678
+    second: Farming Plants v2_0
+  - first:
+      213: 2440469791751775777
+    second: Farming Plants v2_1
+  - first:
+      213: 3232323682578932667
+    second: Farming Plants v2_2
+  - first:
+      213: 5182505160503709431
+    second: Farming Plants v2_3
+  - first:
+      213: 6042503658561507216
+    second: Farming Plants v2_4
+  - first:
+      213: 7515593721007647191
+    second: Farming Plants v2_5
+  - first:
+      213: -7247617545853151213
+    second: Farming Plants v2_6
+  - first:
+      213: 4181888372411103800
+    second: Farming Plants v2_7
+  - first:
+      213: 8392965559478856942
+    second: Farming Plants v2_8
+  - first:
+      213: 4119805904255188223
+    second: Farming Plants v2_9
+  - first:
+      213: 568541584943055948
+    second: Farming Plants v2_10
+  - first:
+      213: 779046655663545624
+    second: Farming Plants v2_11
+  - first:
+      213: -1348085908281859385
+    second: Farming Plants v2_12
+  - first:
+      213: 8859101358196674694
+    second: Farming Plants v2_13
+  - first:
+      213: -4299238847165222154
+    second: Farming Plants v2_14
+  - first:
+      213: -2684343273860893873
+    second: Farming Plants v2_15
+  - first:
+      213: -644493228121386292
+    second: Farming Plants v2_16
+  - first:
+      213: 908988079453269994
+    second: Farming Plants v2_17
+  - first:
+      213: -5586184564377737008
+    second: Farming Plants v2_18
+  - first:
+      213: -8840440949987904535
+    second: Farming Plants v2_19
+  - first:
+      213: -8373987676481377797
+    second: Farming Plants v2_20
+  - first:
+      213: -6989997256172357789
+    second: Farming Plants v2_21
+  - first:
+      213: -6752515688695732953
+    second: Farming Plants v2_22
+  - first:
+      213: 8185008857240285399
+    second: Farming Plants v2_23
+  - first:
+      213: 8560440366332553143
+    second: Farming Plants v2_24
+  - first:
+      213: 2993710167911971721
+    second: Farming Plants v2_25
+  - first:
+      213: 6487273133558081612
+    second: Farming Plants v2_26
+  - first:
+      213: -3789741450562336408
+    second: Farming Plants v2_27
+  - first:
+      213: -4436121794862608247
+    second: Farming Plants v2_28
+  - first:
+      213: -2179122045045409569
+    second: Farming Plants v2_29
+  - first:
+      213: 9142897760286085552
+    second: Farming Plants v2_30
+  - first:
+      213: 3633639907025156748
+    second: Farming Plants v2_31
+  - first:
+      213: -4858682701856183007
+    second: Farming Plants v2_32
+  - first:
+      213: -4961239200668609036
+    second: Farming Plants v2_33
+  - first:
+      213: 1073983259366885314
+    second: Farming Plants v2_34
+  - first:
+      213: -8099897632593619227
+    second: Farming Plants v2_35
+  - first:
+      213: -6760400908944534125
+    second: Farming Plants v2_36
+  - first:
+      213: -2474563015160191891
+    second: Farming Plants v2_37
+  - first:
+      213: -4920041595969365577
+    second: Farming Plants v2_38
+  - first:
+      213: 7420780172864548830
+    second: Farming Plants v2_39
+  - first:
+      213: -8970948799919069272
+    second: Farming Plants v2_40
+  - first:
+      213: 1488470213980839983
+    second: Farming Plants v2_41
+  - first:
+      213: -6720851642466847762
+    second: Farming Plants v2_42
+  - first:
+      213: 7716611716454921194
+    second: Farming Plants v2_43
+  - first:
+      213: -746098552063406012
+    second: Farming Plants v2_44
+  - first:
+      213: 3087514152443709946
+    second: Farming Plants v2_45
+  - first:
+      213: 1462910777473001466
+    second: Farming Plants v2_46
+  - first:
+      213: -5303074482241403744
+    second: Farming Plants v2_47
+  - first:
+      213: 8890750917245045557
+    second: Farming Plants v2_48
+  - first:
+      213: 2669051130309423896
+    second: Farming Plants v2_49
+  - first:
+      213: -7144939942012141354
+    second: Farming Plants v2_50
+  - first:
+      213: -6405151323998063163
+    second: Farming Plants v2_51
+  - first:
+      213: -4586630227137780309
+    second: Farming Plants v2_52
+  - first:
+      213: -1301295505227026534
+    second: Farming Plants v2_53
+  - first:
+      213: -9149798401520852251
+    second: Farming Plants v2_54
+  - first:
+      213: -3789835460045379964
+    second: Farming Plants v2_55
+  - first:
+      213: -2381489172831826401
+    second: Farming Plants v2_56
+  - first:
+      213: 5889838118952122292
+    second: Farming Plants v2_57
+  - first:
+      213: -2002191567230367658
+    second: Farming Plants v2_58
+  - first:
+      213: 7174449239579002092
+    second: Farming Plants v2_59
+  - first:
+      213: 2673391482120289737
+    second: Farming Plants v2_60
+  - first:
+      213: 2841859168360477637
+    second: Farming Plants v2_61
+  - first:
+      213: 4405883041417185386
+    second: Farming Plants v2_62
+  - first:
+      213: -5534056585774238858
+    second: Farming Plants v2_63
+  - first:
+      213: -7541452425004022716
+    second: Farming Plants v2_64
+  - first:
+      213: 446508652277845255
+    second: Farming Plants v2_65
+  - first:
+      213: -2135471336892061309
+    second: Farming Plants v2_66
+  - first:
+      213: -6074367829741901168
+    second: Farming Plants v2_67
+  - first:
+      213: -1452359994784660756
+    second: Farming Plants v2_68
+  - first:
+      213: 5943273418150138155
+    second: Farming Plants v2_69
+  - first:
+      213: 2841739891060942056
+    second: Farming Plants v2_70
+  - first:
+      213: 6216842311519841527
+    second: Farming Plants v2_71
+  - first:
+      213: 6596323619038456068
+    second: Farming Plants v2_72
+  - first:
+      213: -1094437183636410287
+    second: Farming Plants v2_73
+  - first:
+      213: -1963764430170720869
+    second: Farming Plants v2_74
+  - first:
+      213: 4489820486543438574
+    second: Farming Plants v2_75
+  - first:
+      213: -3273047242092511272
+    second: Farming Plants v2_76
+  - first:
+      213: -4880169615428888881
+    second: Farming Plants v2_77
+  - first:
+      213: 9107640493575536395
+    second: Farming Plants v2_78
+  - first:
+      213: -7284542410095024706
+    second: Farming Plants v2_79
+  - first:
+      213: 2462814722562859725
+    second: Farming Plants v2_80
+  - first:
+      213: 8541697345196079393
+    second: Farming Plants v2_81
+  - first:
+      213: -8345044333686091947
+    second: Farming Plants v2_82
+  - first:
+      213: -6994473425350694802
+    second: Farming Plants v2_83
+  - first:
+      213: 1365265856531451642
+    second: Farming Plants v2_84
+  - first:
+      213: 2641033657893849319
+    second: Farming Plants v2_85
+  - first:
+      213: 5731871060217271685
+    second: Farming Plants v2_86
+  - first:
+      213: -9177535279577242204
+    second: Farming Plants v2_87
+  - first:
+      213: -352624158058273973
+    second: Farming Plants v2_88
+  - first:
+      213: 6300567083493453777
+    second: Farming Plants v2_89
+  - first:
+      213: 687051386667499047
+    second: Farming Plants v2_90
+  - first:
+      213: -4164075871568840557
+    second: Farming Plants v2_91
+  - first:
+      213: 2625796203651212842
+    second: Farming Plants v2_92
+  - first:
+      213: 674245731027707017
+    second: Farming Plants v2_93
+  - first:
+      213: 4134613797489430153
+    second: Farming Plants v2_94
+  - first:
+      213: 7749560372295668329
+    second: Farming Plants v2_95
+  - first:
+      213: 6251465889910261928
+    second: Farming Plants v2_96
+  - first:
+      213: -8088521083496211008
+    second: Farming Plants v2_97
+  - first:
+      213: -3617048392157049318
+    second: Farming Plants v2_98
+  - first:
+      213: -1154593029099442277
+    second: Farming Plants v2_99
+  - first:
+      213: -3276244805157968416
+    second: Farming Plants v2_100
+  - first:
+      213: -3759935312881419989
+    second: Farming Plants v2_101
+  - first:
+      213: 3239667635982284651
+    second: Farming Plants v2_102
+  - first:
+      213: -823212348817262528
+    second: Farming Plants v2_103
+  - first:
+      213: 5336599034925981883
+    second: Farming Plants v2_104
+  - first:
+      213: -6357206225558413433
+    second: Farming Plants v2_105
+  - first:
+      213: 371059800008046761
+    second: Farming Plants v2_106
+  - first:
+      213: 5616534628499520754
+    second: Farming Plants v2_107
+  - first:
+      213: 3037071409981180359
+    second: Farming Plants v2_108
+  - first:
+      213: 3555037610908606073
+    second: Farming Plants v2_109
+  - first:
+      213: -4031692912309592359
+    second: Farming Plants v2_110
+  - first:
+      213: 7306308631062496721
+    second: Farming Plants v2_111
+  - first:
+      213: -3046331407994610477
+    second: Farming Plants v2_112
+  - first:
+      213: -6271943464759170233
+    second: Farming Plants v2_113
+  - first:
+      213: -4021125743453113521
+    second: Farming Plants v2_114
+  - first:
+      213: -175777085557487717
+    second: Farming Plants v2_115
+  - first:
+      213: -4462457895831287496
+    second: Farming Plants v2_116
+  - first:
+      213: -6685471979802636781
+    second: Farming Plants v2_117
+  - first:
+      213: -1988628002356347165
+    second: Farming Plants v2_118
+  - first:
+      213: -5112740797777485226
+    second: Farming Plants v2_119
+  - first:
+      213: -7756142358999469633
+    second: Farming Plants v2_120
+  - first:
+      213: 736026225670144502
+    second: Farming Plants v2_121
+  - first:
+      213: 299290377044748044
+    second: Farming Plants v2_122
+  - first:
+      213: -5779896330739944095
+    second: Farming Plants v2_123
+  - first:
+      213: -5977636496190344798
+    second: Farming Plants v2_124
+  - first:
+      213: 1515403978646276989
+    second: Farming Plants v2_125
+  - first:
+      213: -4847400502682764784
+    second: Farming Plants v2_126
+  - first:
+      213: 867777255799585790
+    second: Farming Plants v2_127
+  - first:
+      213: -4808979097932169293
+    second: Farming Plants v2_128
+  - first:
+      213: 7579079224621844398
+    second: Farming Plants v2_129
+  - first:
+      213: 653623948920437741
+    second: Farming Plants v2_130
+  - first:
+      213: -2973964778639238900
+    second: Farming Plants v2_131
+  - first:
+      213: -781288078810831765
+    second: Farming Plants v2_132
+  - first:
+      213: -2604998594138776702
+    second: Farming Plants v2_133
+  - first:
+      213: -4238186056868325944
+    second: Farming Plants v2_134
+  - first:
+      213: 5264296177368755178
+    second: Farming Plants v2_135
+  - first:
+      213: 7788778592453813983
+    second: Farming Plants v2_136
+  - first:
+      213: -1828593329413044318
+    second: Farming Plants v2_137
+  - first:
+      213: 4013804515121869841
+    second: Farming Plants v2_138
+  - first:
+      213: 589282478944853751
+    second: Farming Plants v2_139
+  - first:
+      213: -3321812965019738219
+    second: Farming Plants v2_140
+  - first:
+      213: 6788356150928573542
+    second: Farming Plants v2_141
+  - first:
+      213: -7285039888729780128
+    second: Farming Plants v2_142
+  - first:
+      213: -8634239864944816598
+    second: Farming Plants v2_143
+  - first:
+      213: -4465331057994005374
+    second: Farming Plants v2_144
+  - first:
+      213: 4144122503210660435
+    second: Farming Plants v2_145
+  - first:
+      213: -4590387879140343896
+    second: Farming Plants v2_146
+  - first:
+      213: 2012174507684595938
+    second: Farming Plants v2_147
+  - first:
+      213: -125677231821089933
+    second: Farming Plants v2_148
+  - first:
+      213: -5115562613289457035
+    second: Farming Plants v2_149
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Farming Plants v2_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 480
+        width: 26
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8724adf3bf2c2cc0800000000000000
+      internalID: -3734557540895938678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_1
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 496
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 126af6e685a4ed120800000000000000
+      internalID: 2440469791751775777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_2
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 496
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb3233383458bdc20800000000000000
+      internalID: 3232323682578932667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_3
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 496
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fec3724cf4fbe740800000000000000
+      internalID: 5182505160503709431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_4
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 496
+        width: 17
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09f8e8a10194bd350800000000000000
+      internalID: 6042503658561507216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_5
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 496
+        width: 16
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d921d08ba0cc4860800000000000000
+      internalID: 7515593721007647191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 480
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 318d887dd3a4b6b90800000000000000
+      internalID: -7247617545853151213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_7
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 480
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83a76ef615d090a30800000000000000
+      internalID: 4181888372411103800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_8
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 480
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eec23d065bdc97470800000000000000
+      internalID: 8392965559478856942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_9
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 479
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffcffaa64ad7c2930800000000000000
+      internalID: 4119805904255188223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_10
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 479
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c44819a2f8dd3e700800000000000000
+      internalID: 568541584943055948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 467
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81d18464ecabfca00800000000000000
+      internalID: 779046655663545624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_12
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 465
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c266264203aa4de0800000000000000
+      internalID: -1348085908281859385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_13
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 464
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6805e7c6fb9d1fa70800000000000000
+      internalID: 8859101358196674694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_14
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 464
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f2382efb090654c0800000000000000
+      internalID: -4299238847165222154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_15
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 464
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f43ff42c30c4fbad0800000000000000
+      internalID: -2684343273860893873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_16
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 464
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc21eadd2dc4e07f0800000000000000
+      internalID: -644493228121386292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_17
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 464
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aef60ec97df5d9c00800000000000000
+      internalID: 908988079453269994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 432
+        width: 28
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d8ae7e4cb2e972b0800000000000000
+      internalID: -5586184564377737008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_19
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 448
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e3772e6bc1705580800000000000000
+      internalID: -8840440949987904535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_20
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 448
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf924d5539e99cb80800000000000000
+      internalID: -8373987676481377797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_21
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 447
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36734e4b78a8efe90800000000000000
+      internalID: -6989997256172357789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_22
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 447
+        width: 16
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 725e90be1ce3a42a0800000000000000
+      internalID: -6752515688695732953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_23
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 431
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d0bb3b803ef69170800000000000000
+      internalID: 8185008857240285399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_24
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 432
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b7aa24782bccc670800000000000000
+      internalID: 8560440366332553143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_25
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 432
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98b3ede498bcb8920800000000000000
+      internalID: 2993710167911971721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_26
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 432
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c482aae3b8c670a50800000000000000
+      internalID: 6487273133558081612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_27
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 400
+        width: 14
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86988a8ca32286bc0800000000000000
+      internalID: -3789741450562336408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_28
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 384
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98098dc2bbabf62c0800000000000000
+      internalID: -4436121794862608247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_29
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 416
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd878d6ab0432c1e0800000000000000
+      internalID: -2179122045045409569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_30
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 416
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b11193621912ee70800000000000000
+      internalID: 9142897760286085552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_31
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 400
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8afaeb5e384d6230800000000000000
+      internalID: 3633639907025156748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_32
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 400
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12de68733dd729cb0800000000000000
+      internalID: -4858682701856183007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_33
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 416
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f597669b33262bb0800000000000000
+      internalID: -4961239200668609036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_34
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c7874d851e87ee00800000000000000
+      internalID: 1073983259366885314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_35
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 400
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e6da3ca402679f80800000000000000
+      internalID: -8099897632593619227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_36
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 416
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3951223013b3e22a0800000000000000
+      internalID: -6760400908944534125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_37
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 400
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d64ae0b6c0698add0800000000000000
+      internalID: -2474563015160191891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_38
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 384
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b999186c3088bbb0800000000000000
+      internalID: -4920041595969365577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_39
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 416
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edf6adf0048ebf660800000000000000
+      internalID: 7420780172864548830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_40
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 384
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a76b9ab899c08380800000000000000
+      internalID: -8970948799919069272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_41
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 384
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f20e31bf5cb18a410800000000000000
+      internalID: 1488470213980839983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_42
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 384
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee3b9ae2a0dbab2a0800000000000000
+      internalID: -6720851642466847762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_43
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 384
+        width: 17
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae3b9e4c879e61b60800000000000000
+      internalID: 7716611716454921194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_44
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 367
+        width: 34
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 440d3d4e15355a5f0800000000000000
+      internalID: -746098552063406012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_45
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 368
+        width: 27
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af9066763cd09da20800000000000000
+      internalID: 3087514152443709946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_46
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 368
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af76e5de99d4d4410800000000000000
+      internalID: 1462910777473001466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_47
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 367
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a40094fad1b766b0800000000000000
+      internalID: -5303074482241403744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_48
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 351
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53b8ed0aada426b70800000000000000
+      internalID: 8890750917245045557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_49
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 354
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 813b27d9cdf5a0520800000000000000
+      internalID: 2669051130309423896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_50
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 352
+        width: 19
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d0cdde6af218dc90800000000000000
+      internalID: -7144939942012141354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_51
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 352
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c5f8788ec45c17a0800000000000000
+      internalID: -6405151323998063163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_52
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 352
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba522630c140950c0800000000000000
+      internalID: -4586630227137780309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_53
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 351
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9f612fe1aed0fde0800000000000000
+      internalID: -1301295505227026534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_54
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 336
+        width: 27
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e2a9eed4d2650180800000000000000
+      internalID: -9149798401520852251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_55
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 336
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 486e0de7abcc76bc0800000000000000
+      internalID: -3789835460045379964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_56
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 336
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1e8be8073043fed0800000000000000
+      internalID: -2381489172831826401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_57
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 336
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b732b04098ecb150800000000000000
+      internalID: 5889838118952122292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_58
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 336
+        width: 18
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65883fea069c634e0800000000000000
+      internalID: -2002191567230367658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_59
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 303
+        width: 17
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce48d205293c09360800000000000000
+      internalID: 7174449239579002092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 27
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cdb555836bc91520800000000000000
+      internalID: 2673391482120289737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_61
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 320
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c330d75bdf407720800000000000000
+      internalID: 2841859168360477637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_62
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 320
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a68c6956847d42d30800000000000000
+      internalID: 4405883041417185386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_63
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 305
+        width: 17
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 673f30e1bd41333b0800000000000000
+      internalID: -5534056585774238858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_64
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 307
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 444802dc9f0675790800000000000000
+      internalID: -7541452425004022716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_65
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 288
+        width: 27
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70dc828e041523600800000000000000
+      internalID: 446508652277845255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_66
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 309
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 389258022284d52e0800000000000000
+      internalID: -2135471336892061309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_67
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 304
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09a6c2964a283bba0800000000000000
+      internalID: -6074367829741901168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_68
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 305
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce24fd8974e28dbe0800000000000000
+      internalID: -1452359994784660756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_69
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 305
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b215cdb5fafba7250800000000000000
+      internalID: 5943273418150138155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_70
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 288
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e4aebeef53ef6720800000000000000
+      internalID: 2841739891060942056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_71
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 288
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fc22c2e429a64650800000000000000
+      internalID: 6216842311519841527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_72
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 287
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4096e48f169da8b50800000000000000
+      internalID: 6596323619038456068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_73
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 257
+        width: 18
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1507f581e27cfc0f0800000000000000
+      internalID: -1094437183636410287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_74
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 259
+        width: 13
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b95702db7ae4fb4e0800000000000000
+      internalID: -1963764430170720869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_75
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 257
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee271b5c1fb0f4e30800000000000000
+      internalID: 4489820486543438574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_76
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 257
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8dff00aefdcc392d0800000000000000
+      internalID: -3273047242092511272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_77
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 256
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc6d4bc4797264cb0800000000000000
+      internalID: -4880169615428888881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_78
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 257
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0f788946c6d46e70800000000000000
+      internalID: 9107640493575536395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_79
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 257
+        width: 13
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb5a40fe54b18ea90800000000000000
+      internalID: -7284542410095024706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_80
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 241
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc226fd01fcad2220800000000000000
+      internalID: 2462814722562859725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_81
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 241
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1293f47ca743a8670800000000000000
+      internalID: 8541697345196079393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_82
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 244
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55f01c77462703c80800000000000000
+      internalID: -8345044333686091947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_83
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 240
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e68ef0b5a73aeee90800000000000000
+      internalID: -6994473425350694802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_84
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 243
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afec682201662f210800000000000000
+      internalID: 1365265856531451642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_85
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 240
+        width: 18
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e80d9a7e16d6a420800000000000000
+      internalID: 2641033657893849319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_86
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 176
+        width: 34
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 585979a4c52bb8f40800000000000000
+      internalID: 5731871060217271685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_87
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 225
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a5ee23b948d2a080800000000000000
+      internalID: -9177535279577242204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_88
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 231
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4327bf423a3b1bf0800000000000000
+      internalID: -352624158058273973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_89
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 224
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1df652f616c107750800000000000000
+      internalID: 6300567083493453777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_90
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 224
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72e71c49895e88900800000000000000
+      internalID: 687051386667499047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_91
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 224
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3983d599e0b3636c0800000000000000
+      internalID: -4164075871568840557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_92
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 208
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2623333cb3b07420800000000000000
+      internalID: 2625796203651212842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_93
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 208
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 984ea398be66b5900800000000000000
+      internalID: 674245731027707017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_94
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 208
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98e49cab759116930800000000000000
+      internalID: 4134613797489430153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_95
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 207
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96290248918fb8b60800000000000000
+      internalID: 7749560372295668329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_96
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 193
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a8829dea1ba1c650800000000000000
+      internalID: 6251465889910261928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_97
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 192
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cd53fbedeccfbf80800000000000000
+      internalID: -8088521083496211008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_98
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 192
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1ec41ab6a9adcdc0800000000000000
+      internalID: -3617048392157049318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_99
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 192
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9fa260e1cf0affe0800000000000000
+      internalID: -1154593029099442277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_100
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 192
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e5275f35b07882d0800000000000000
+      internalID: -3276244805157968416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_101
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 176
+        width: 28
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b29714101c602dbc0800000000000000
+      internalID: -3759935312881419989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_102
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 176
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b67bd09ec8c95fc20800000000000000
+      internalID: 3239667635982284651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_103
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0483806fabc5394f0800000000000000
+      internalID: -823212348817262528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_104
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 144
+        width: 13
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb0a4793c886f0a40800000000000000
+      internalID: 5336599034925981883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_105
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 148
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78f50b9ae9aa6c7a0800000000000000
+      internalID: -6357206225558413433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_106
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 144
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a838e11ce4462500800000000000000
+      internalID: 371059800008046761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_107
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 144
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fcf468ac70f1fd40800000000000000
+      internalID: 5616534628499520754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_108
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 144
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c94c653b58d52a20800000000000000
+      internalID: 3037071409981180359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_109
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97e5c592fd7065130800000000000000
+      internalID: 3555037610908606073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_110
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 144
+        width: 18
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9de935638ac8c08c0800000000000000
+      internalID: -4031692912309592359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_111
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 128
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d5c9dd4df8356560800000000000000
+      internalID: 7306308631062496721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_112
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 111
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dc9d5e79b149b5d0800000000000000
+      internalID: -3046331407994610477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_113
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 111
+        width: 15
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74b62b326a495f8a0800000000000000
+      internalID: -6271943464759170233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_114
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 96
+        width: 18
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f437c40f0771238c0800000000000000
+      internalID: -4021125743453113521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_115
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 112
+        width: 27
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9741b70ca38f8df0800000000000000
+      internalID: -175777085557487717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_116
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 111
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 839c6d5df2a2212c0800000000000000
+      internalID: -4462457895831287496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_117
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 96
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31e4900d7ae6833a0800000000000000
+      internalID: -6685471979802636781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_118
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 96
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3eeb7293e59f664e0800000000000000
+      internalID: -1988628002356347165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_119
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 96
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65263d73555eb09b0800000000000000
+      internalID: -5112740797777485226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_120
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 96
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb1f9784e95ac5490800000000000000
+      internalID: -7756142358999469633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_121
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 96
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f1c07ed3f3e63a00800000000000000
+      internalID: 736026225670144502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_122
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 79
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c07e170230b472400800000000000000
+      internalID: 299290377044748044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_123
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 80
+        width: 27
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16579af09eea9cfa0800000000000000
+      internalID: -5779896330739944095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_124
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 80
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a1f920174b2b0da0800000000000000
+      internalID: -5977636496190344798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_125
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 80
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7bcc6eb3ebc70510800000000000000
+      internalID: 1515403978646276989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_126
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 79
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01a3b89ece29abcb0800000000000000
+      internalID: -4847400502682764784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_127
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 35
+        width: 27
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efbf81401d6fa0c00800000000000000
+      internalID: 867777255799585790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_128
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 48
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bf797f4df2134db0800000000000000
+      internalID: -4808979097932169293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_129
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 48
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea7c02c266c4e2960800000000000000
+      internalID: 7579079224621844398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_130
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: deb371cb483221900800000000000000
+      internalID: 653623948920437741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_131
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 48
+        width: 17
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c095fa26aca5ab6d0800000000000000
+      internalID: -2973964778639238900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_132
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 33
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b64ab3bb1ae4825f0800000000000000
+      internalID: -781288078810831765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_133
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 32
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28b57fb949f29dbd0800000000000000
+      internalID: -2604998594138776702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_134
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 32
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c599547c30fe25c0800000000000000
+      internalID: -4238186056868325944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_135
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 32
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aebe28c5b798e0940800000000000000
+      internalID: 5264296177368755178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_136
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 32
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd66065fcdc471c60800000000000000
+      internalID: 7788778592453813983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_137
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a7cfa12e088f96e0800000000000000
+      internalID: -1828593329413044318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_138
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 17
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 114b2b1c0f5e3b730800000000000000
+      internalID: 4013804515121869841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_139
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 16
+        width: 20
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fe9eddda4d8d2800800000000000000
+      internalID: 589282478944853751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_140
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 16
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59f16b145bc86e1d0800000000000000
+      internalID: -3321812965019738219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_141
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 16
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6648fe8f3f5153e50800000000000000
+      internalID: 6788356150928573542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_142
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 15
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 060d5b9a1d656ea90800000000000000
+      internalID: -7285039888729780128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_143
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 15
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2e8278c6940d2880800000000000000
+      internalID: -8634239864944816598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_144
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 2
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2848fb3af05f702c0800000000000000
+      internalID: -4465331057994005374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_145
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 0
+        width: 19
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 352f29dc571e28930800000000000000
+      internalID: 4144122503210660435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_146
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 1
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8afb49a7b8aab40c0800000000000000
+      internalID: -4590387879140343896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_147
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 1
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e803a4cd0eaceb10800000000000000
+      internalID: 2012174507684595938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_148
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 1
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37313f83931814ef0800000000000000
+      internalID: -125677231821089933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Farming Plants v2_149
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 1
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57aec9818eed109b0800000000000000
+      internalID: -5115562613289457035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Farming Plants v2_0: -3734557540895938678
+      Farming Plants v2_1: 2440469791751775777
+      Farming Plants v2_10: 568541584943055948
+      Farming Plants v2_100: -3276244805157968416
+      Farming Plants v2_101: -3759935312881419989
+      Farming Plants v2_102: 3239667635982284651
+      Farming Plants v2_103: -823212348817262528
+      Farming Plants v2_104: 5336599034925981883
+      Farming Plants v2_105: -6357206225558413433
+      Farming Plants v2_106: 371059800008046761
+      Farming Plants v2_107: 5616534628499520754
+      Farming Plants v2_108: 3037071409981180359
+      Farming Plants v2_109: 3555037610908606073
+      Farming Plants v2_11: 779046655663545624
+      Farming Plants v2_110: -4031692912309592359
+      Farming Plants v2_111: 7306308631062496721
+      Farming Plants v2_112: -3046331407994610477
+      Farming Plants v2_113: -6271943464759170233
+      Farming Plants v2_114: -4021125743453113521
+      Farming Plants v2_115: -175777085557487717
+      Farming Plants v2_116: -4462457895831287496
+      Farming Plants v2_117: -6685471979802636781
+      Farming Plants v2_118: -1988628002356347165
+      Farming Plants v2_119: -5112740797777485226
+      Farming Plants v2_12: -1348085908281859385
+      Farming Plants v2_120: -7756142358999469633
+      Farming Plants v2_121: 736026225670144502
+      Farming Plants v2_122: 299290377044748044
+      Farming Plants v2_123: -5779896330739944095
+      Farming Plants v2_124: -5977636496190344798
+      Farming Plants v2_125: 1515403978646276989
+      Farming Plants v2_126: -4847400502682764784
+      Farming Plants v2_127: 867777255799585790
+      Farming Plants v2_128: -4808979097932169293
+      Farming Plants v2_129: 7579079224621844398
+      Farming Plants v2_13: 8859101358196674694
+      Farming Plants v2_130: 653623948920437741
+      Farming Plants v2_131: -2973964778639238900
+      Farming Plants v2_132: -781288078810831765
+      Farming Plants v2_133: -2604998594138776702
+      Farming Plants v2_134: -4238186056868325944
+      Farming Plants v2_135: 5264296177368755178
+      Farming Plants v2_136: 7788778592453813983
+      Farming Plants v2_137: -1828593329413044318
+      Farming Plants v2_138: 4013804515121869841
+      Farming Plants v2_139: 589282478944853751
+      Farming Plants v2_14: -4299238847165222154
+      Farming Plants v2_140: -3321812965019738219
+      Farming Plants v2_141: 6788356150928573542
+      Farming Plants v2_142: -7285039888729780128
+      Farming Plants v2_143: -8634239864944816598
+      Farming Plants v2_144: -4465331057994005374
+      Farming Plants v2_145: 4144122503210660435
+      Farming Plants v2_146: -4590387879140343896
+      Farming Plants v2_147: 2012174507684595938
+      Farming Plants v2_148: -125677231821089933
+      Farming Plants v2_149: -5115562613289457035
+      Farming Plants v2_15: -2684343273860893873
+      Farming Plants v2_16: -644493228121386292
+      Farming Plants v2_17: 908988079453269994
+      Farming Plants v2_18: -5586184564377737008
+      Farming Plants v2_19: -8840440949987904535
+      Farming Plants v2_2: 3232323682578932667
+      Farming Plants v2_20: -8373987676481377797
+      Farming Plants v2_21: -6989997256172357789
+      Farming Plants v2_22: -6752515688695732953
+      Farming Plants v2_23: 8185008857240285399
+      Farming Plants v2_24: 8560440366332553143
+      Farming Plants v2_25: 2993710167911971721
+      Farming Plants v2_26: 6487273133558081612
+      Farming Plants v2_27: -3789741450562336408
+      Farming Plants v2_28: -4436121794862608247
+      Farming Plants v2_29: -2179122045045409569
+      Farming Plants v2_3: 5182505160503709431
+      Farming Plants v2_30: 9142897760286085552
+      Farming Plants v2_31: 3633639907025156748
+      Farming Plants v2_32: -4858682701856183007
+      Farming Plants v2_33: -4961239200668609036
+      Farming Plants v2_34: 1073983259366885314
+      Farming Plants v2_35: -8099897632593619227
+      Farming Plants v2_36: -6760400908944534125
+      Farming Plants v2_37: -2474563015160191891
+      Farming Plants v2_38: -4920041595969365577
+      Farming Plants v2_39: 7420780172864548830
+      Farming Plants v2_4: 6042503658561507216
+      Farming Plants v2_40: -8970948799919069272
+      Farming Plants v2_41: 1488470213980839983
+      Farming Plants v2_42: -6720851642466847762
+      Farming Plants v2_43: 7716611716454921194
+      Farming Plants v2_44: -746098552063406012
+      Farming Plants v2_45: 3087514152443709946
+      Farming Plants v2_46: 1462910777473001466
+      Farming Plants v2_47: -5303074482241403744
+      Farming Plants v2_48: 8890750917245045557
+      Farming Plants v2_49: 2669051130309423896
+      Farming Plants v2_5: 7515593721007647191
+      Farming Plants v2_50: -7144939942012141354
+      Farming Plants v2_51: -6405151323998063163
+      Farming Plants v2_52: -4586630227137780309
+      Farming Plants v2_53: -1301295505227026534
+      Farming Plants v2_54: -9149798401520852251
+      Farming Plants v2_55: -3789835460045379964
+      Farming Plants v2_56: -2381489172831826401
+      Farming Plants v2_57: 5889838118952122292
+      Farming Plants v2_58: -2002191567230367658
+      Farming Plants v2_59: 7174449239579002092
+      Farming Plants v2_6: -7247617545853151213
+      Farming Plants v2_60: 2673391482120289737
+      Farming Plants v2_61: 2841859168360477637
+      Farming Plants v2_62: 4405883041417185386
+      Farming Plants v2_63: -5534056585774238858
+      Farming Plants v2_64: -7541452425004022716
+      Farming Plants v2_65: 446508652277845255
+      Farming Plants v2_66: -2135471336892061309
+      Farming Plants v2_67: -6074367829741901168
+      Farming Plants v2_68: -1452359994784660756
+      Farming Plants v2_69: 5943273418150138155
+      Farming Plants v2_7: 4181888372411103800
+      Farming Plants v2_70: 2841739891060942056
+      Farming Plants v2_71: 6216842311519841527
+      Farming Plants v2_72: 6596323619038456068
+      Farming Plants v2_73: -1094437183636410287
+      Farming Plants v2_74: -1963764430170720869
+      Farming Plants v2_75: 4489820486543438574
+      Farming Plants v2_76: -3273047242092511272
+      Farming Plants v2_77: -4880169615428888881
+      Farming Plants v2_78: 9107640493575536395
+      Farming Plants v2_79: -7284542410095024706
+      Farming Plants v2_8: 8392965559478856942
+      Farming Plants v2_80: 2462814722562859725
+      Farming Plants v2_81: 8541697345196079393
+      Farming Plants v2_82: -8345044333686091947
+      Farming Plants v2_83: -6994473425350694802
+      Farming Plants v2_84: 1365265856531451642
+      Farming Plants v2_85: 2641033657893849319
+      Farming Plants v2_86: 5731871060217271685
+      Farming Plants v2_87: -9177535279577242204
+      Farming Plants v2_88: -352624158058273973
+      Farming Plants v2_89: 6300567083493453777
+      Farming Plants v2_9: 4119805904255188223
+      Farming Plants v2_90: 687051386667499047
+      Farming Plants v2_91: -4164075871568840557
+      Farming Plants v2_92: 2625796203651212842
+      Farming Plants v2_93: 674245731027707017
+      Farming Plants v2_94: 4134613797489430153
+      Farming Plants v2_95: 7749560372295668329
+      Farming Plants v2_96: 6251465889910261928
+      Farming Plants v2_97: -8088521083496211008
+      Farming Plants v2_98: -3617048392157049318
+      Farming Plants v2_99: -1154593029099442277
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "com.boxqkrtm.ide.cursor": "https://github.com/boxqkrtm/com.unity.ide.cursor.git",
+    "com.edgegap.unity-servers-plugin": "https://github.com/edgegap/edgegap-unity-plugin.git#partner/purrnet-source",
     "com.unity.collab-proxy": "2.12.4",
     "com.unity.feature.2d": "2.0.2",
     "com.unity.ide.rider": "3.0.40",
@@ -11,6 +13,8 @@
     "com.unity.timeline": "1.8.12",
     "com.unity.ugui": "2.0.0",
     "com.unity.visualscripting": "1.9.11",
+    "dev.purrnet.purrdiction": "https://github.com/PurrNet/PurrDiction.git?path=/Assets/PurrDiction#v1.3.0-beta.31",
+    "dev.purrnet.purrnet": "https://github.com/PurrNet/PurrNet.git?path=/Assets/PurrNet#v1.20.0-beta.212",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.adaptiveperformance": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
@@ -44,9 +48,6 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0",
-    "dev.purrnet.purrnet": "https://github.com/PurrNet/PurrNet.git?path=/Assets/PurrNet#v1.20.0-beta.212",
-    "dev.purrnet.purrdiction": "https://github.com/PurrNet/PurrDiction.git?path=/Assets/PurrDiction#v1.3.0-beta.31",
-    "com.edgegap.unity-servers-plugin": "https://github.com/edgegap/edgegap-unity-plugin.git#partner/purrnet-source"
+    "com.unity.modules.xr": "1.0.0"
   }
 }

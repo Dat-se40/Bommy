@@ -1,0 +1,3601 @@
+fileFormatVersion: 2
+guid: 57c46de892c2e0a44b9cb0ac8e03a6a9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8074773747144553246
+    second: fishing animation side_0
+  - first:
+      213: -3668826882047558278
+    second: fishing animation side_1
+  - first:
+      213: -1632976702031872481
+    second: fishing animation side_2
+  - first:
+      213: -5691895902354868951
+    second: fishing animation side_3
+  - first:
+      213: 2331998610039191062
+    second: fishing animation side_4
+  - first:
+      213: -4706921831737679530
+    second: fishing animation side_5
+  - first:
+      213: 2028412780960357716
+    second: fishing animation side_6
+  - first:
+      213: 1083679989256501168
+    second: fishing animation side_7
+  - first:
+      213: 6273974545964566339
+    second: fishing animation side_8
+  - first:
+      213: 2183999834412053054
+    second: fishing animation side_9
+  - first:
+      213: -2698493301553286575
+    second: fishing animation side_10
+  - first:
+      213: 7465666633129696998
+    second: fishing animation side_11
+  - first:
+      213: -2856263800981877765
+    second: fishing animation side_12
+  - first:
+      213: -2252498106651168082
+    second: fishing animation side_13
+  - first:
+      213: 7883991546193380761
+    second: fishing animation side_14
+  - first:
+      213: 3260814076594753609
+    second: fishing animation side_15
+  - first:
+      213: -840264641703224640
+    second: fishing animation side_16
+  - first:
+      213: -5174071250384626566
+    second: fishing animation side_17
+  - first:
+      213: 7380119087931649501
+    second: fishing animation side_18
+  - first:
+      213: 1702308011060366257
+    second: fishing animation side_19
+  - first:
+      213: -559718744279252807
+    second: fishing animation side_20
+  - first:
+      213: 173960908762907774
+    second: fishing animation side_21
+  - first:
+      213: 8595229098439879941
+    second: fishing animation side_22
+  - first:
+      213: -5106512990592073994
+    second: fishing animation side_23
+  - first:
+      213: 6473363036000064547
+    second: fishing animation side_24
+  - first:
+      213: 2209754857686456223
+    second: fishing animation side_25
+  - first:
+      213: 2104758255205682480
+    second: fishing animation side_26
+  - first:
+      213: -3989021180077503637
+    second: fishing animation side_27
+  - first:
+      213: 8669836650472738795
+    second: fishing animation side_28
+  - first:
+      213: -654054436386399257
+    second: fishing animation side_29
+  - first:
+      213: 3296256663432786748
+    second: fishing animation side_30
+  - first:
+      213: -5063573330328867801
+    second: fishing animation side_31
+  - first:
+      213: 8647829939587952328
+    second: fishing animation side_32
+  - first:
+      213: 4551546121675074784
+    second: fishing animation side_33
+  - first:
+      213: -3612590536612784540
+    second: fishing animation side_34
+  - first:
+      213: 1019424273175638086
+    second: fishing animation side_35
+  - first:
+      213: -4445439820530686019
+    second: fishing animation side_36
+  - first:
+      213: 2984136391849319837
+    second: fishing animation side_37
+  - first:
+      213: -7456241801957581432
+    second: fishing animation side_38
+  - first:
+      213: -7566046628575122317
+    second: fishing animation side_39
+  - first:
+      213: -7720598545252341594
+    second: fishing animation side_40
+  - first:
+      213: -7822180127303813363
+    second: fishing animation side_41
+  - first:
+      213: -1853968801968282149
+    second: fishing animation side_42
+  - first:
+      213: -6220751258300734529
+    second: fishing animation side_43
+  - first:
+      213: 6454835593804575578
+    second: fishing animation side_44
+  - first:
+      213: -6163105974012143225
+    second: fishing animation side_45
+  - first:
+      213: 2772362108232211975
+    second: fishing animation side_46
+  - first:
+      213: 2898905295256589651
+    second: fishing animation side_47
+  - first:
+      213: 3565258722902212064
+    second: fishing animation side_48
+  - first:
+      213: -7134998985986371751
+    second: fishing animation side_49
+  - first:
+      213: 4001430658745301055
+    second: fishing animation side_50
+  - first:
+      213: 479042758500322854
+    second: fishing animation side_51
+  - first:
+      213: -4346241894580716726
+    second: fishing animation side_52
+  - first:
+      213: -8216872506607816291
+    second: fishing animation side_53
+  - first:
+      213: -6887060711354420766
+    second: fishing animation side_54
+  - first:
+      213: 6276818845177347716
+    second: fishing animation side_55
+  - first:
+      213: 4389892514791288620
+    second: fishing animation side_56
+  - first:
+      213: 7398662667829469273
+    second: fishing animation side_57
+  - first:
+      213: 5053946582117343650
+    second: fishing animation side_58
+  - first:
+      213: -7175137994149461899
+    second: fishing animation side_59
+  - first:
+      213: 3463385059059914778
+    second: fishing animation side_60
+  - first:
+      213: 4435090969503317964
+    second: fishing animation side_61
+  - first:
+      213: 4644327829317892981
+    second: fishing animation side_62
+  - first:
+      213: -6180474518577282445
+    second: fishing animation side_63
+  - first:
+      213: -7527353436026477878
+    second: fishing animation side_64
+  - first:
+      213: -3637532389323804254
+    second: fishing animation side_65
+  - first:
+      213: 154793096348495466
+    second: fishing animation side_66
+  - first:
+      213: 1843289852773094036
+    second: fishing animation side_67
+  - first:
+      213: 5613173927966556913
+    second: fishing animation side_68
+  - first:
+      213: -7230610569776197411
+    second: fishing animation side_69
+  - first:
+      213: 9045015330240720621
+    second: fishing animation side_70
+  - first:
+      213: -210504823795084605
+    second: fishing animation side_71
+  - first:
+      213: 3302939793129411491
+    second: fishing animation side_72
+  - first:
+      213: -3002378342295856941
+    second: fishing animation side_73
+  - first:
+      213: -6998554908404068133
+    second: fishing animation side_74
+  - first:
+      213: -2765874797240447900
+    second: fishing animation side_75
+  - first:
+      213: 6510144067169298541
+    second: fishing animation side_76
+  - first:
+      213: -937802369870709211
+    second: fishing animation side_77
+  - first:
+      213: 3054639993432915112
+    second: fishing animation side_78
+  - first:
+      213: 1659609123020111112
+    second: fishing animation side_79
+  - first:
+      213: -6388795200211928487
+    second: fishing animation side_80
+  - first:
+      213: -289885178672858269
+    second: fishing animation side_81
+  - first:
+      213: -938274163791402772
+    second: fishing animation side_82
+  - first:
+      213: -2806818979100708117
+    second: fishing animation side_83
+  - first:
+      213: 2784959194266191326
+    second: fishing animation side_84
+  - first:
+      213: 1933429641847228381
+    second: fishing animation side_85
+  - first:
+      213: 4023801845956802083
+    second: fishing animation side_86
+  - first:
+      213: -1062043299426550767
+    second: fishing animation side_87
+  - first:
+      213: 247504845766785596
+    second: fishing animation side_88
+  - first:
+      213: 1111493328850999302
+    second: fishing animation side_89
+  - first:
+      213: 7613904478820972799
+    second: fishing animation side_90
+  - first:
+      213: -4019813406322325104
+    second: fishing animation side_91
+  - first:
+      213: -2185517704028506474
+    second: fishing animation side_92
+  - first:
+      213: 1568476921590616897
+    second: fishing animation side_93
+  - first:
+      213: 5259177157698613755
+    second: fishing animation side_94
+  - first:
+      213: -2278703208261718093
+    second: fishing animation side_95
+  - first:
+      213: 1630940232688026547
+    second: fishing animation side_96
+  - first:
+      213: -607376758896338360
+    second: fishing animation side_97
+  - first:
+      213: 3473757776265942167
+    second: fishing animation side_98
+  - first:
+      213: 2484610979487509845
+    second: fishing animation side_99
+  - first:
+      213: -3182762948583374765
+    second: fishing animation side_100
+  - first:
+      213: -2053302348160523632
+    second: fishing animation side_101
+  - first:
+      213: -5873792433495210744
+    second: fishing animation side_102
+  - first:
+      213: -3076583339591776908
+    second: fishing animation side_103
+  - first:
+      213: 8971335283106188738
+    second: fishing animation side_104
+  - first:
+      213: -150038260506775447
+    second: fishing animation side_105
+  - first:
+      213: -19982557560536539
+    second: fishing animation side_106
+  - first:
+      213: 2377687090399959092
+    second: fishing animation side_107
+  - first:
+      213: 5243225416972806261
+    second: fishing animation side_108
+  - first:
+      213: -2343807774072382611
+    second: fishing animation side_109
+  - first:
+      213: -6859188801741591852
+    second: fishing animation side_110
+  - first:
+      213: -1137367038425520088
+    second: fishing animation side_111
+  - first:
+      213: 4642578254630301760
+    second: fishing animation side_112
+  - first:
+      213: -2437476979940507779
+    second: fishing animation side_113
+  - first:
+      213: -1886838281383318521
+    second: fishing animation side_114
+  - first:
+      213: -6476560692917931872
+    second: fishing animation side_115
+  - first:
+      213: 5317199084051924516
+    second: fishing animation side_116
+  - first:
+      213: 461186329461469503
+    second: fishing animation side_117
+  - first:
+      213: 5788087832743490918
+    second: fishing animation side_118
+  - first:
+      213: 8863887986950676732
+    second: fishing animation side_119
+  - first:
+      213: 4567753552056510877
+    second: fishing animation side_120
+  - first:
+      213: -5990430643817713483
+    second: fishing animation side_121
+  - first:
+      213: 5811566067038867131
+    second: fishing animation side_122
+  - first:
+      213: -4423707673773123644
+    second: fishing animation side_123
+  - first:
+      213: 4236926466337118934
+    second: fishing animation side_124
+  - first:
+      213: 6817979229677031162
+    second: fishing animation side_125
+  - first:
+      213: 1325490513083148747
+    second: fishing animation side_126
+  - first:
+      213: -404114615706308239
+    second: fishing animation side_127
+  - first:
+      213: 6484231401955536693
+    second: fishing animation side_128
+  - first:
+      213: -5804319738221884839
+    second: fishing animation side_129
+  - first:
+      213: 813549952017071834
+    second: fishing animation side_130
+  - first:
+      213: 2877741655634246318
+    second: fishing animation side_131
+  - first:
+      213: 3663660630270594167
+    second: fishing animation side_132
+  - first:
+      213: -2990545203612398919
+    second: fishing animation side_133
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: fishing animation side_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 255
+        width: 22
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ec8cc71f04a0ff80800000000000000
+      internalID: -8074773747144553246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_1
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 255
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7db6299365b51dc0800000000000000
+      internalID: -3668826882047558278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_2
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 255
+        width: 17
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1eb6e467508659e0800000000000000
+      internalID: -1632976702031872481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_3
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 255
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 925f2a175d25201b0800000000000000
+      internalID: -5691895902354868951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_4
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 257
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6163710616cec5020800000000000000
+      internalID: 2331998610039191062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_5
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 258
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 651aeb94887adaeb0800000000000000
+      internalID: -4706921831737679530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_6
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 256
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45d11036dae562c10800000000000000
+      internalID: 2028412780960357716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_7
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 259
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b735d965310a0f00800000000000000
+      internalID: 1083679989256501168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_8
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 259
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3478f0ecb92a11750800000000000000
+      internalID: 6273974545964566339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_9
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 257
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3274af27402f4e10800000000000000
+      internalID: 2183999834412053054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_10
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 255
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1523524b3a60d8ad0800000000000000
+      internalID: -2698493301553286575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_11
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 255
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ee9e2f7f306b9760800000000000000
+      internalID: 7465666633129696998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_12
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 255
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfb0ba5c4338c58d0800000000000000
+      internalID: -2856263800981877765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_13
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 255
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea231dff7e48db0e0800000000000000
+      internalID: -2252498106651168082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_14
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 255
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9950a034a80996d60800000000000000
+      internalID: 7883991546193380761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_15
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 255
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 940160a402db04d20800000000000000
+      internalID: 3260814076594753609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_16
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 207
+        width: 22
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ca55f1a2c7c654f0800000000000000
+      internalID: -840264641703224640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_17
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 207
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7c53467c910238b0800000000000000
+      internalID: -5174071250384626566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_18
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 207
+        width: 22
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dddee3c75337b6660800000000000000
+      internalID: 7380119087931649501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_19
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 207
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bb0e89ed10df9710800000000000000
+      internalID: 1702308011060366257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_20
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 207
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b08b1184ca7b38f0800000000000000
+      internalID: -559718744279252807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_21
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 209
+        width: 20
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e740e9b56880a6200800000000000000
+      internalID: 173960908762907774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_22
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 207
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50d2c975353684770800000000000000
+      internalID: 8595229098439879941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_23
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 208
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fe77d29d750229b0800000000000000
+      internalID: -5106512990592073994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_24
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 207
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3249de6426106d950800000000000000
+      internalID: 6473363036000064547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_25
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 160
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f975815d550aaae10800000000000000
+      internalID: 2209754857686456223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_26
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 159
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03d0b9b4b7a953d10800000000000000
+      internalID: 2104758255205682480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_27
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 161
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6b88f71f5624a8c0800000000000000
+      internalID: -3989021180077503637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_28
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 159
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bef0714bf72715870800000000000000
+      internalID: 8669836650472738795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_29
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 161
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7eb9b6794f45ce6f0800000000000000
+      internalID: -654054436386399257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_30
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 159
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c33fc6898f7aebd20800000000000000
+      internalID: 3296256663432786748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_31
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 161
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72c2b9f42e29ab9b0800000000000000
+      internalID: -5063573330328867801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_32
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 159
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cea02b0383430870800000000000000
+      internalID: 8647829939587952328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_33
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 162
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ecef3125175a2f30800000000000000
+      internalID: 4551546121675074784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_34
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 159
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 466d14a1c008dddc0800000000000000
+      internalID: -3612590536612784540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_35
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 163
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6407b0ea9f8b52e00800000000000000
+      internalID: 1019424273175638086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_36
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 159
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db764e24900ae42c0800000000000000
+      internalID: -4445439820530686019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_37
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 163
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9d9e7ddc38c96920800000000000000
+      internalID: 2984136391849319837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_38
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 159
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88d56e2069b168890800000000000000
+      internalID: -7456241801957581432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_39
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 163
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37cecbd8da0000790800000000000000
+      internalID: -7566046628575122317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_40
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 159
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a826d0578cead490800000000000000
+      internalID: -7720598545252341594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_41
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 162
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d07bfee2e98027390800000000000000
+      internalID: -7822180127303813363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_42
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 159
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd5260682316546e0800000000000000
+      internalID: -1853968801968282149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_43
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 161
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb3abe480b37ba9a0800000000000000
+      internalID: -6220751258300734529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_44
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 159
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a53f44cf5ce249950800000000000000
+      internalID: 6454835593804575578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_45
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 161
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7891be925cf387aa0800000000000000
+      internalID: -6163105974012143225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_46
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 159
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70e1fe916a8697620800000000000000
+      internalID: 2772362108232211975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_47
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 161
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3559449c10bfa3820800000000000000
+      internalID: 2898905295256589651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_48
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 159
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0edf2fe3be75a7130800000000000000
+      internalID: 3565258722902212064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_49
+      rect:
+        serializedVersion: 2
+        x: 583
+        y: 162
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95f828f99346bfc90800000000000000
+      internalID: -7134998985986371751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_50
+      rect:
+        serializedVersion: 2
+        x: 595
+        y: 159
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f38fedfcbffe78730800000000000000
+      internalID: 4001430658745301055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_51
+      rect:
+        serializedVersion: 2
+        x: 631
+        y: 163
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62e82acc9d6e5a600800000000000000
+      internalID: 479042758500322854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_52
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 159
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4b7895360c0fa3c0800000000000000
+      internalID: -4346241894580716726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_53
+      rect:
+        serializedVersion: 2
+        x: 679
+        y: 163
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d91b7f67dfdc7fd80800000000000000
+      internalID: -8216872506607816291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_54
+      rect:
+        serializedVersion: 2
+        x: 691
+        y: 159
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e1bb21b5ce3c60a0800000000000000
+      internalID: -6887060711354420766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_55
+      rect:
+        serializedVersion: 2
+        x: 727
+        y: 163
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48ef542db7dbb1750800000000000000
+      internalID: 6276818845177347716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_56
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 159
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2fe74acbf70cec30800000000000000
+      internalID: 4389892514791288620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_57
+      rect:
+        serializedVersion: 2
+        x: 775
+        y: 162
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9506be02f745da660800000000000000
+      internalID: 7398662667829469273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_58
+      rect:
+        serializedVersion: 2
+        x: 787
+        y: 159
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a167e4b3a9332640800000000000000
+      internalID: 5053946582117343650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_59
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 111
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5700054820acc6c90800000000000000
+      internalID: -7175137994149461899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_60
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 111
+        width: 18
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1859a58c5a601030800000000000000
+      internalID: 3463385059059914778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_61
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 111
+        width: 18
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccfb9c71dbb9c8d30800000000000000
+      internalID: 4435090969503317964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_62
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 111
+        width: 19
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57b34f6dd87f37040800000000000000
+      internalID: 4644327829317892981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_63
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 111
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37209d0cb2b8a3aa0800000000000000
+      internalID: -6180474518577282445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_64
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 111
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac263da7ee7798790800000000000000
+      internalID: -7527353436026477878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_65
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 111
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a1706b7093e48dc0800000000000000
+      internalID: -3637532389323804254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_66
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 111
+        width: 18
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6ee881408fe52200800000000000000
+      internalID: 154793096348495466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_67
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 111
+        width: 18
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4925f9cda5ea49910800000000000000
+      internalID: 1843289852773094036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_68
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 111
+        width: 19
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f24ee692fff5ed40800000000000000
+      internalID: 5613173927966556913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_69
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 111
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd01e470ff5b7ab90800000000000000
+      internalID: -7230610569776197411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_70
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 89
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: deee5f23589568d70800000000000000
+      internalID: 9045015330240720621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_71
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 90
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c210326af2241df0800000000000000
+      internalID: -210504823795084605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_72
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 63
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a31bfbfd3666dd20800000000000000
+      internalID: 3302939793129411491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_73
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 65
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d811221ec86556d0800000000000000
+      internalID: -3002378342295856941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_74
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 63
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd05287046320ee90800000000000000
+      internalID: -6998554908404068133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_75
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 65
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46c0741b683ad99d0800000000000000
+      internalID: -2765874797240447900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_76
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 63
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d682e30798da85a50800000000000000
+      internalID: 6510144067169298541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_77
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 63
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52e365a96b14cf2f0800000000000000
+      internalID: -937802369870709211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_78
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 63
+        width: 17
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ac354dc3e2446a20800000000000000
+      internalID: 3054639993432915112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_79
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 63
+        width: 17
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80d7c9354bd180710800000000000000
+      internalID: 1659609123020111112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_80
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 63
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95ab5ac5d907657a0800000000000000
+      internalID: -6388795200211928487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_81
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 63
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36bbd8347fe1afbf0800000000000000
+      internalID: -289885178672858269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_82
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 15
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce869458e949af2f0800000000000000
+      internalID: -938274163791402772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_83
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 33
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be2b0e9720d2c09d0800000000000000
+      internalID: -2806818979100708117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_84
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 36
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed5c130c1a926a620800000000000000
+      internalID: 2784959194266191326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_85
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 15
+        width: 20
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd7c388f30ce4da10800000000000000
+      internalID: 1933429641847228381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_86
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 15
+        width: 20
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 326f0dab57a67d730800000000000000
+      internalID: 4023801845956802083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_87
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 15
+        width: 20
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11cb8910f3dd241f0800000000000000
+      internalID: -1062043299426550767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_88
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 15
+        width: 20
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3afd1c88505f6300800000000000000
+      internalID: 247504845766785596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_89
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 15
+        width: 20
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 608516c2b41dc6f00800000000000000
+      internalID: 1111493328850999302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_90
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff831e588c50aa960800000000000000
+      internalID: 7613904478820972799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_91
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 33
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0990ecc3101c638c0800000000000000
+      internalID: -4019813406322325104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_92
+      rect:
+        serializedVersion: 2
+        x: 545
+        y: 33
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 696bd014a3b7ba1e0800000000000000
+      internalID: -2185517704028506474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_93
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 33
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1439ec5337954c510800000000000000
+      internalID: 1568476921590616897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_94
+      rect:
+        serializedVersion: 2
+        x: 641
+        y: 33
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf17977b2c95cf840800000000000000
+      internalID: 5259177157698613755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_95
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bf6403518b6060e0800000000000000
+      internalID: -2278703208261718093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_96
+      rect:
+        serializedVersion: 2
+        x: 734
+        y: 15
+        width: 20
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b34343208342a610800000000000000
+      internalID: 1630940232688026547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_97
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 15
+        width: 20
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84ad7294e0a2297f0800000000000000
+      internalID: -607376758896338360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_98
+      rect:
+        serializedVersion: 2
+        x: 830
+        y: 15
+        width: 20
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7941512fa44453030800000000000000
+      internalID: 3473757776265942167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_99
+      rect:
+        serializedVersion: 2
+        x: 878
+        y: 15
+        width: 20
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55d6365958c1b7220800000000000000
+      internalID: 2484610979487509845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_100
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 350c96516fd84d3d0800000000000000
+      internalID: -3182762948583374765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_101
+      rect:
+        serializedVersion: 2
+        x: 977
+        y: 33
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 092aa69a4643183e0800000000000000
+      internalID: -2053302348160523632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_102
+      rect:
+        serializedVersion: 2
+        x: 1025
+        y: 33
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 805042507e81c7ea0800000000000000
+      internalID: -5873792433495210744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_103
+      rect:
+        serializedVersion: 2
+        x: 1073
+        y: 33
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4754fb9c0c7cd45d0800000000000000
+      internalID: -3076583339591776908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_104
+      rect:
+        serializedVersion: 2
+        x: 1121
+        y: 33
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cd097668e5908c70800000000000000
+      internalID: 8971335283106188738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_105
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 960b6cb3ff4faedf0800000000000000
+      internalID: -150038260506775447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_106
+      rect:
+        serializedVersion: 2
+        x: 1214
+        y: 15
+        width: 20
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52286e248f109bff0800000000000000
+      internalID: -19982557560536539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_107
+      rect:
+        serializedVersion: 2
+        x: 1262
+        y: 15
+        width: 20
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 438525aafcd3ff020800000000000000
+      internalID: 2377687090399959092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_108
+      rect:
+        serializedVersion: 2
+        x: 1316
+        y: 36
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 578a6f7acbda3c840800000000000000
+      internalID: 5243225416972806261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_109
+      rect:
+        serializedVersion: 2
+        x: 1365
+        y: 36
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6bdd9c5f3f197fd0800000000000000
+      internalID: -2343807774072382611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_110
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 15
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4daead850244fc0a0800000000000000
+      internalID: -6859188801741591852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_111
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 15
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 828a86f54b24730f0800000000000000
+      internalID: -1137367038425520088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_112
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 15
+        width: 16
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 040313d3350cd6040800000000000000
+      internalID: 4642578254630301760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_113
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 15
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7f347ed9975c2ed0800000000000000
+      internalID: -2437476979940507779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_114
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 15
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70ce989749a90d5e0800000000000000
+      internalID: -1886838281383318521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_115
+      rect:
+        serializedVersion: 2
+        x: 446
+        y: 15
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a07e543d52ae16a0800000000000000
+      internalID: -6476560692917931872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_116
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 15
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42682fc256c7ac940800000000000000
+      internalID: 5317199084051924516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_117
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 15
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3131dee586766600800000000000000
+      internalID: 461186329461469503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_118
+      rect:
+        serializedVersion: 2
+        x: 590
+        y: 15
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 665bf6f973b635050800000000000000
+      internalID: 5788087832743490918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_119
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 15
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf02c07492bd20b70800000000000000
+      internalID: 8863887986950676732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_120
+      rect:
+        serializedVersion: 2
+        x: 686
+        y: 15
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d996bd397abe36f30800000000000000
+      internalID: 4567753552056510877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_121
+      rect:
+        serializedVersion: 2
+        x: 926
+        y: 15
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b071af6117bddca0800000000000000
+      internalID: -5990430643817713483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_122
+      rect:
+        serializedVersion: 2
+        x: 974
+        y: 15
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbec0960c84d6a050800000000000000
+      internalID: 5811566067038867131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_123
+      rect:
+        serializedVersion: 2
+        x: 1022
+        y: 15
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c7559afe45db92c0800000000000000
+      internalID: -4423707673773123644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_124
+      rect:
+        serializedVersion: 2
+        x: 1070
+        y: 15
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6da99754c269cca30800000000000000
+      internalID: 4236926466337118934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_125
+      rect:
+        serializedVersion: 2
+        x: 1118
+        y: 15
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afe04e67cf35e9e50800000000000000
+      internalID: 6817979229677031162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_126
+      rect:
+        serializedVersion: 2
+        x: 1166
+        y: 15
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc9a8715996156210800000000000000
+      internalID: 1325490513083148747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_127
+      rect:
+        serializedVersion: 2
+        x: 1310
+        y: 15
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 171384ae5eb446af0800000000000000
+      internalID: -404114615706308239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_128
+      rect:
+        serializedVersion: 2
+        x: 1358
+        y: 15
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53f2efaea1e9cf950800000000000000
+      internalID: 6484231401955536693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_129
+      rect:
+        serializedVersion: 2
+        x: 1360
+        y: 15
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95a0f7063f9e27fa0800000000000000
+      internalID: -5804319738221884839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_130
+      rect:
+        serializedVersion: 2
+        x: 1372
+        y: 15
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ade7309fe5f4a4b00800000000000000
+      internalID: 813549952017071834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_131
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 15
+        width: 16
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eaa7c63f9cacfe720800000000000000
+      internalID: 2877741655634246318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_132
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 15
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77cccdcaeefe7d230800000000000000
+      internalID: 3663660630270594167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing animation side_133
+      rect:
+        serializedVersion: 2
+        x: 1504
+        y: 15
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ba4fed5bf27f76d0800000000000000
+      internalID: -2990545203612398919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      fishing animation side_0: -8074773747144553246
+      fishing animation side_1: -3668826882047558278
+      fishing animation side_10: -2698493301553286575
+      fishing animation side_100: -3182762948583374765
+      fishing animation side_101: -2053302348160523632
+      fishing animation side_102: -5873792433495210744
+      fishing animation side_103: -3076583339591776908
+      fishing animation side_104: 8971335283106188738
+      fishing animation side_105: -150038260506775447
+      fishing animation side_106: -19982557560536539
+      fishing animation side_107: 2377687090399959092
+      fishing animation side_108: 5243225416972806261
+      fishing animation side_109: -2343807774072382611
+      fishing animation side_11: 7465666633129696998
+      fishing animation side_110: -6859188801741591852
+      fishing animation side_111: -1137367038425520088
+      fishing animation side_112: 4642578254630301760
+      fishing animation side_113: -2437476979940507779
+      fishing animation side_114: -1886838281383318521
+      fishing animation side_115: -6476560692917931872
+      fishing animation side_116: 5317199084051924516
+      fishing animation side_117: 461186329461469503
+      fishing animation side_118: 5788087832743490918
+      fishing animation side_119: 8863887986950676732
+      fishing animation side_12: -2856263800981877765
+      fishing animation side_120: 4567753552056510877
+      fishing animation side_121: -5990430643817713483
+      fishing animation side_122: 5811566067038867131
+      fishing animation side_123: -4423707673773123644
+      fishing animation side_124: 4236926466337118934
+      fishing animation side_125: 6817979229677031162
+      fishing animation side_126: 1325490513083148747
+      fishing animation side_127: -404114615706308239
+      fishing animation side_128: 6484231401955536693
+      fishing animation side_129: -5804319738221884839
+      fishing animation side_13: -2252498106651168082
+      fishing animation side_130: 813549952017071834
+      fishing animation side_131: 2877741655634246318
+      fishing animation side_132: 3663660630270594167
+      fishing animation side_133: -2990545203612398919
+      fishing animation side_14: 7883991546193380761
+      fishing animation side_15: 3260814076594753609
+      fishing animation side_16: -840264641703224640
+      fishing animation side_17: -5174071250384626566
+      fishing animation side_18: 7380119087931649501
+      fishing animation side_19: 1702308011060366257
+      fishing animation side_2: -1632976702031872481
+      fishing animation side_20: -559718744279252807
+      fishing animation side_21: 173960908762907774
+      fishing animation side_22: 8595229098439879941
+      fishing animation side_23: -5106512990592073994
+      fishing animation side_24: 6473363036000064547
+      fishing animation side_25: 2209754857686456223
+      fishing animation side_26: 2104758255205682480
+      fishing animation side_27: -3989021180077503637
+      fishing animation side_28: 8669836650472738795
+      fishing animation side_29: -654054436386399257
+      fishing animation side_3: -5691895902354868951
+      fishing animation side_30: 3296256663432786748
+      fishing animation side_31: -5063573330328867801
+      fishing animation side_32: 8647829939587952328
+      fishing animation side_33: 4551546121675074784
+      fishing animation side_34: -3612590536612784540
+      fishing animation side_35: 1019424273175638086
+      fishing animation side_36: -4445439820530686019
+      fishing animation side_37: 2984136391849319837
+      fishing animation side_38: -7456241801957581432
+      fishing animation side_39: -7566046628575122317
+      fishing animation side_4: 2331998610039191062
+      fishing animation side_40: -7720598545252341594
+      fishing animation side_41: -7822180127303813363
+      fishing animation side_42: -1853968801968282149
+      fishing animation side_43: -6220751258300734529
+      fishing animation side_44: 6454835593804575578
+      fishing animation side_45: -6163105974012143225
+      fishing animation side_46: 2772362108232211975
+      fishing animation side_47: 2898905295256589651
+      fishing animation side_48: 3565258722902212064
+      fishing animation side_49: -7134998985986371751
+      fishing animation side_5: -4706921831737679530
+      fishing animation side_50: 4001430658745301055
+      fishing animation side_51: 479042758500322854
+      fishing animation side_52: -4346241894580716726
+      fishing animation side_53: -8216872506607816291
+      fishing animation side_54: -6887060711354420766
+      fishing animation side_55: 6276818845177347716
+      fishing animation side_56: 4389892514791288620
+      fishing animation side_57: 7398662667829469273
+      fishing animation side_58: 5053946582117343650
+      fishing animation side_59: -7175137994149461899
+      fishing animation side_6: 2028412780960357716
+      fishing animation side_60: 3463385059059914778
+      fishing animation side_61: 4435090969503317964
+      fishing animation side_62: 4644327829317892981
+      fishing animation side_63: -6180474518577282445
+      fishing animation side_64: -7527353436026477878
+      fishing animation side_65: -3637532389323804254
+      fishing animation side_66: 154793096348495466
+      fishing animation side_67: 1843289852773094036
+      fishing animation side_68: 5613173927966556913
+      fishing animation side_69: -7230610569776197411
+      fishing animation side_7: 1083679989256501168
+      fishing animation side_70: 9045015330240720621
+      fishing animation side_71: -210504823795084605
+      fishing animation side_72: 3302939793129411491
+      fishing animation side_73: -3002378342295856941
+      fishing animation side_74: -6998554908404068133
+      fishing animation side_75: -2765874797240447900
+      fishing animation side_76: 6510144067169298541
+      fishing animation side_77: -937802369870709211
+      fishing animation side_78: 3054639993432915112
+      fishing animation side_79: 1659609123020111112
+      fishing animation side_8: 6273974545964566339
+      fishing animation side_80: -6388795200211928487
+      fishing animation side_81: -289885178672858269
+      fishing animation side_82: -938274163791402772
+      fishing animation side_83: -2806818979100708117
+      fishing animation side_84: 2784959194266191326
+      fishing animation side_85: 1933429641847228381
+      fishing animation side_86: 4023801845956802083
+      fishing animation side_87: -1062043299426550767
+      fishing animation side_88: 247504845766785596
+      fishing animation side_89: 1111493328850999302
+      fishing animation side_9: 2183999834412053054
+      fishing animation side_90: 7613904478820972799
+      fishing animation side_91: -4019813406322325104
+      fishing animation side_92: -2185517704028506474
+      fishing animation side_93: 1568476921590616897
+      fishing animation side_94: 5259177157698613755
+      fishing animation side_95: -2278703208261718093
+      fishing animation side_96: 1630940232688026547
+      fishing animation side_97: -607376758896338360
+      fishing animation side_98: 3473757776265942167
+      fishing animation side_99: 2484610979487509845
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
