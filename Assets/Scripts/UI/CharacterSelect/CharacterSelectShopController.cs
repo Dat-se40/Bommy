@@ -5,40 +5,17 @@ using UnityEngine.UI;
 
 public class CharacterSelectShopController : MonoBehaviour
 {
-    [System.Serializable]
-    public class CharacterInfo
-    {
-        [Header("Identity")]
-        public string characterId;
-        public string characterName;
-        [TextArea] public string description;
-
-        [Header("Visual")]
-        public Sprite icon;
-        public Sprite preview;
-
-        [Header("Stats")]
-        [Range(1, 5)] public int hp = 3;
-        [Range(1, 5)] public int bomb = 1;
-        [Range(1, 100)] public int speed = 60;
-
-        [Header("Shop")]
-        public bool defaultOwned;
-        public int requiredLevel = 1;
-        public int price;
-    }
-
     [Header("Scenes")]
     [SerializeField] private string mainMenuSceneName = "MainMenu";
     [SerializeField] private string lobbySceneName = "Lobby";
-    [SerializeField] private string randomMatchSceneName = "RandomMatch";
+    [SerializeField] private string randomMatchSceneName = "RandomMatchDemo";
 
     [Header("Player Progress UI")]
     [SerializeField] private TMP_Text goldlbl;
     [SerializeField] private TMP_Text levellbl;
 
-    [Header("Character Data")]
-    [SerializeField] private CharacterInfo[] characters;
+    [Header("Character Database")]
+    [SerializeField] private CharacterDatabase characterDatabase;
 
     [Header("Character Cards")]
     [SerializeField] private CharacterCardUI[] characterCards;
@@ -63,34 +40,32 @@ public class CharacterSelectShopController : MonoBehaviour
     [SerializeField] private int defaultGold = 850;
     [SerializeField] private int defaultLevel = 1;
 
-    private int selectedIndex;
-    private int playerGold;
-    private int playerLevel;
+    int selectedIndex;
+    int playerGold;
+    int playerLevel;
 
-    private const string GoldKey = "PlayerGold";
-    private const string LevelKey = "PlayerLevel";
-    private const string ModeKey = "CharacterSelectMode";
+    const string GoldKey = "PlayerGold";
+    const string LevelKey = "PlayerLevel";
+    const string ModeKey = "CharacterSelectMode";
 
-    private void Start()
+    void Start()
     {
+        if (characterDatabase != null)
+            MatchSessionBroker.SetCharacterCatalog(characterDatabase);
+
         LoadProgress();
         SetupButtons();
-
-        if (characters != null && characters.Length > 0)
-            SelectCharacter(0);
-        else
-            RefreshAllCards();
+        SelectInitialCharacter();
     }
 
-    private void LoadProgress()
+    void LoadProgress()
     {
         playerGold = PlayerPrefs.GetInt(GoldKey, defaultGold);
         playerLevel = PlayerPrefs.GetInt(LevelKey, defaultLevel);
-
         RefreshProgressUI();
     }
 
-    private void RefreshProgressUI()
+    void RefreshProgressUI()
     {
         if (goldlbl != null)
             goldlbl.text = "Gold: " + playerGold;
@@ -99,7 +74,7 @@ public class CharacterSelectShopController : MonoBehaviour
             levellbl.text = "Level: " + playerLevel;
     }
 
-    private void SetupButtons()
+    void SetupButtons()
     {
         if (readybtn != null)
         {
@@ -126,7 +101,21 @@ public class CharacterSelectShopController : MonoBehaviour
         }
     }
 
-    private void RefreshAllCards()
+    void SelectInitialCharacter()
+    {
+        if (characterDatabase == null || characterDatabase.Count == 0)
+        {
+            RefreshAllCards();
+            return;
+        }
+
+        int savedCharacterId = PlayerPrefs.GetInt("SelectedCharacterId", -1);
+        int savedIndex = characterDatabase.GetIndexById(savedCharacterId);
+
+        SelectCharacter(savedIndex >= 0 ? savedIndex : 0);
+    }
+
+    void RefreshAllCards()
     {
         if (characterCards == null)
             return;
@@ -136,7 +125,11 @@ public class CharacterSelectShopController : MonoBehaviour
             if (characterCards[i] == null)
                 continue;
 
-            if (characters == null || i >= characters.Length)
+            CharacterDefinition data = characterDatabase != null
+                ? characterDatabase.GetByIndex(i)
+                : null;
+
+            if (data == null)
             {
                 characterCards[i].gameObject.SetActive(false);
                 continue;
@@ -144,90 +137,84 @@ public class CharacterSelectShopController : MonoBehaviour
 
             characterCards[i].gameObject.SetActive(true);
 
-            CharacterInfo data = characters[i];
-
             bool owned = IsOwned(data);
             bool levelUnlocked = IsLevelUnlocked(data);
             bool selected = i == selectedIndex;
 
-            characterCards[i].Setup(
-                this,
-                i,
-                data,
-                owned,
-                levelUnlocked,
-                selected
-            );
+            characterCards[i].Setup(this, i, data, owned, levelUnlocked, selected);
         }
     }
 
     public void SelectCharacter(int index)
     {
-        if (characters == null || characters.Length == 0)
+        if (characterDatabase == null || characterDatabase.Count == 0)
             return;
 
-        if (index < 0 || index >= characters.Length)
+        CharacterDefinition data = characterDatabase.GetByIndex(index);
+
+        if (data == null)
             return;
 
         selectedIndex = index;
 
-        CharacterInfo data = characters[selectedIndex];
-
         if (characterPreview != null)
-            characterPreview.sprite = data.preview != null ? data.preview : data.icon;
+            characterPreview.sprite = data.Preview;
 
         if (selectedNamelbl != null)
-            selectedNamelbl.text = data.characterName;
+            selectedNamelbl.text = data.CharacterName;
 
         if (selectedDeslbl != null)
-            selectedDeslbl.text = data.description;
+            selectedDeslbl.text = data.Description;
 
         if (hpFill != null)
-            hpFill.fillAmount = data.hp / 5f;
+            hpFill.fillAmount = data.Hp / 5f;
 
         if (bombFill != null)
-            bombFill.fillAmount = data.bomb / 5f;
+            bombFill.fillAmount = data.Bomb / 5f;
 
         if (speedFill != null)
-            speedFill.fillAmount = data.speed / 100f;
+            speedFill.fillAmount = data.Speed / 100f;
 
         UpdateReadyButtonState();
         RefreshAllCards();
     }
 
-    private void PreviousCharacter()
+    void PreviousCharacter()
     {
-        if (characters == null || characters.Length == 0)
+        if (characterDatabase == null || characterDatabase.Count == 0)
             return;
 
         int nextIndex = selectedIndex - 1;
 
         if (nextIndex < 0)
-            nextIndex = characters.Length - 1;
+            nextIndex = characterDatabase.Count - 1;
 
         SelectCharacter(nextIndex);
     }
 
-    private void NextCharacter()
+    void NextCharacter()
     {
-        if (characters == null || characters.Length == 0)
+        if (characterDatabase == null || characterDatabase.Count == 0)
             return;
 
         int nextIndex = selectedIndex + 1;
 
-        if (nextIndex >= characters.Length)
+        if (nextIndex >= characterDatabase.Count)
             nextIndex = 0;
 
         SelectCharacter(nextIndex);
     }
 
-    private void UpdateReadyButtonState()
+    void UpdateReadyButtonState()
     {
-        CharacterInfo data = characters[selectedIndex];
+        CharacterDefinition data = characterDatabase.GetByIndex(selectedIndex);
+
+        if (data == null)
+            return;
 
         bool owned = IsOwned(data);
         bool levelUnlocked = IsLevelUnlocked(data);
-        bool enoughGold = playerGold >= data.price;
+        bool enoughGold = playerGold >= data.Price;
 
         if (owned)
         {
@@ -244,28 +231,28 @@ public class CharacterSelectShopController : MonoBehaviour
             SetReadyButton("LOCKED", false);
 
             if (requirelbl != null)
-                requirelbl.text = "Requires LV " + data.requiredLevel;
+                requirelbl.text = "Requires LV " + data.RequiredLevel;
 
             return;
         }
 
         if (!enoughGold)
         {
-            SetReadyButton("BUY " + data.price, false);
+            SetReadyButton("BUY " + data.Price, false);
 
             if (requirelbl != null)
-                requirelbl.text = "Need " + (data.price - playerGold) + " more gold";
+                requirelbl.text = "Need " + (data.Price - playerGold) + " more gold";
 
             return;
         }
 
-        SetReadyButton("BUY " + data.price, true);
+        SetReadyButton("BUY " + data.Price, true);
 
         if (requirelbl != null)
             requirelbl.text = "Available to buy";
     }
 
-    private void SetReadyButton(string text, bool interactable)
+    void SetReadyButton(string text, bool interactable)
     {
         if (readybtnlbl != null)
             readybtnlbl.text = text;
@@ -274,49 +261,61 @@ public class CharacterSelectShopController : MonoBehaviour
             readybtn.interactable = interactable;
     }
 
-    private void OnReadyButtonClicked()
+    void OnReadyButtonClicked()
     {
-        CharacterInfo data = characters[selectedIndex];
+        CharacterDefinition data = characterDatabase.GetByIndex(selectedIndex);
+
+        if (data == null)
+            return;
 
         if (IsOwned(data))
         {
-            Ready();
+            Ready(data);
             return;
         }
 
         TryBuyCharacter(data);
     }
 
-    private void TryBuyCharacter(CharacterInfo data)
+    void TryBuyCharacter(CharacterDefinition data)
     {
         if (!IsLevelUnlocked(data))
             return;
 
-        if (playerGold < data.price)
+        if (playerGold < data.Price)
             return;
 
-        playerGold -= data.price;
+        playerGold -= data.Price;
 
         PlayerPrefs.SetInt(GoldKey, playerGold);
-        PlayerPrefs.SetInt(GetOwnedKey(data.characterId), 1);
+        PlayerPrefs.SetInt(MatchSessionBroker.GetOwnedKey(data.CharacterId), 1);
         PlayerPrefs.Save();
+
+        // TODO[REST_API] POST /v1/shop/purchase { characterId }
 
         RefreshProgressUI();
         UpdateReadyButtonState();
         RefreshAllCards();
     }
 
-    private void Ready()
+    void Ready(CharacterDefinition data)
     {
-        CharacterInfo data = characters[selectedIndex];
+        string displayName = PlayerPrefs.GetString(
+            "PlayerDisplayName",
+            data.CharacterName
+        );
 
-        PlayerPrefs.SetInt("SelectedCharacterIndex", selectedIndex);
-        PlayerPrefs.SetString("SelectedCharacterId", data.characterId);
-        PlayerPrefs.SetString("SelectedCharacterName", data.characterName);
-        PlayerPrefs.SetInt("SelectedCharacterHp", data.hp);
-        PlayerPrefs.SetInt("SelectedCharacterBomb", data.bomb);
-        PlayerPrefs.SetInt("SelectedCharacterSpeed", data.speed);
-        PlayerPrefs.Save();
+        PlayerMatchProfile profile = PlayerMatchProfile.FromDefinition(
+            data,
+            selectedIndex,
+            slotIndex: 0,
+            isLocal: true,
+            displayNameOverride: displayName
+        );
+
+        MatchSessionBroker.CommitLocalSelection(profile);
+
+        // TODO[NETWORK] Gửi chỉ characterId + displayName lên lobby server.
 
         string mode = PlayerPrefs.GetString(ModeKey, "Play");
 
@@ -326,7 +325,7 @@ public class CharacterSelectShopController : MonoBehaviour
             SceneManager.LoadScene(randomMatchSceneName);
     }
 
-    private void Back()
+    void Back()
     {
         string mode = PlayerPrefs.GetString(ModeKey, "Play");
 
@@ -336,21 +335,16 @@ public class CharacterSelectShopController : MonoBehaviour
             SceneManager.LoadScene(mainMenuSceneName);
     }
 
-    private bool IsOwned(CharacterInfo data)
+    bool IsOwned(CharacterDefinition data)
     {
-        if (data.defaultOwned)
+        if (data.DefaultOwned)
             return true;
 
-        return PlayerPrefs.GetInt(GetOwnedKey(data.characterId), 0) == 1;
+        return PlayerPrefs.GetInt(MatchSessionBroker.GetOwnedKey(data.CharacterId), 0) == 1;
     }
 
-    private bool IsLevelUnlocked(CharacterInfo data)
+    bool IsLevelUnlocked(CharacterDefinition data)
     {
-        return playerLevel >= data.requiredLevel;
-    }
-
-    private string GetOwnedKey(string characterId)
-    {
-        return "CharacterOwned_" + characterId;
+        return playerLevel >= data.RequiredLevel;
     }
 }

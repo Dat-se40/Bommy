@@ -117,7 +117,6 @@ public class ExplosionCreator : NetworkBehaviour
     {
         if (playerInfor != null)
             playerInfor.TakeDamage(damage);
-            // TODO: Sync damage to clients by sync var
     }
     private void DestroyDestructible(Vector3Int cell)
     {
