@@ -1,0 +1,455 @@
+fileFormatVersion: 2
+guid: 9dacf0155d8028d48a49fc10d7f8256f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -202453933328284084
+    second: fishing water splash frames and rod_0
+  - first:
+      213: 7730636102895758795
+    second: fishing water splash frames and rod_1
+  - first:
+      213: -8952711463854191506
+    second: fishing water splash frames and rod_2
+  - first:
+      213: 3693188320213521061
+    second: fishing water splash frames and rod_3
+  - first:
+      213: 8453348491180562583
+    second: fishing water splash frames and rod_4
+  - first:
+      213: 1070203799219622674
+    second: fishing water splash frames and rod_5
+  - first:
+      213: 1055950410911307755
+    second: fishing water splash frames and rod_6
+  - first:
+      213: -8503643306498451500
+    second: fishing water splash frames and rod_7
+  - first:
+      213: -4911209543113298214
+    second: fishing water splash frames and rod_8
+  - first:
+      213: 5552414726963826466
+    second: fishing water splash frames and rod_9
+  - first:
+      213: -682711771637458194
+    second: fishing water splash frames and rod_10
+  - first:
+      213: -195227293534588403
+    second: fishing water splash frames and rod_11
+  - first:
+      213: 924319998405166745
+    second: fishing water splash frames and rod_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: fishing water splash frames and rod_0
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 221
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c464694683db03df0800000000000000
+      internalID: -202453933328284084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing water splash frames and rod_1
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 221
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcd69e0b39cb84b60800000000000000
+      internalID: 7730636102895758795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing water splash frames and rod_2
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 219
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6c476c6b5491c380800000000000000
+      internalID: -8952711463854191506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing water splash frames and rod_3
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 187
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a2d2fab537d04330800000000000000
+      internalID: 3693188320213521061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing water splash frames and rod_4
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 187
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 798d66b3aa3505570800000000000000
+      internalID: 8453348491180562583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing water splash frames and rod_5
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 186
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21352c96fa02ade00800000000000000
+      internalID: 1070203799219622674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing water splash frames and rod_6
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 186
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be7dbc6dd4d77ae00800000000000000
+      internalID: 1055950410911307755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing water splash frames and rod_7
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 155
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d7188b877dfcf980800000000000000
+      internalID: -8503643306498451500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing water splash frames and rod_8
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 155
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ade2935f0f0e7dbb0800000000000000
+      internalID: -4911209543113298214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing water splash frames and rod_9
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 155
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22f8356b6c32e0d40800000000000000
+      internalID: 5552414726963826466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing water splash frames and rod_10
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 155
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eea5297c2458686f0800000000000000
+      internalID: -682711771637458194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing water splash frames and rod_11
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 64
+        width: 17
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d02f8669fc96a4df0800000000000000
+      internalID: -195227293534588403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fishing water splash frames and rod_12
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 12
+        width: 147
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 996cabb2428d3dc00800000000000000
+      internalID: 924319998405166745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      fishing water splash frames and rod_0: -202453933328284084
+      fishing water splash frames and rod_1: 7730636102895758795
+      fishing water splash frames and rod_10: -682711771637458194
+      fishing water splash frames and rod_11: -195227293534588403
+      fishing water splash frames and rod_12: 924319998405166745
+      fishing water splash frames and rod_2: -8952711463854191506
+      fishing water splash frames and rod_3: 3693188320213521061
+      fishing water splash frames and rod_4: 8453348491180562583
+      fishing water splash frames and rod_5: 1070203799219622674
+      fishing water splash frames and rod_6: 1055950410911307755
+      fishing water splash frames and rod_7: -8503643306498451500
+      fishing water splash frames and rod_8: -4911209543113298214
+      fishing water splash frames and rod_9: 5552414726963826466
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

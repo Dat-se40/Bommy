@@ -1,0 +1,481 @@
+fileFormatVersion: 2
+guid: 6bfc418cca359d64a8b1c494b29f434a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6588242078380087145
+    second: big fish 2 swimming in cirkels_0
+  - first:
+      213: 7487279119246922513
+    second: big fish 2 swimming in cirkels_1
+  - first:
+      213: -5410707373991392761
+    second: big fish 2 swimming in cirkels_2
+  - first:
+      213: 2452744430572468829
+    second: big fish 2 swimming in cirkels_3
+  - first:
+      213: -3185290580884903112
+    second: big fish 2 swimming in cirkels_4
+  - first:
+      213: 5786508592466914091
+    second: big fish 2 swimming in cirkels_5
+  - first:
+      213: -3398859992528540651
+    second: big fish 2 swimming in cirkels_6
+  - first:
+      213: -4102570591635308311
+    second: big fish 2 swimming in cirkels_7
+  - first:
+      213: -7873302655025515898
+    second: big fish 2 swimming in cirkels_8
+  - first:
+      213: 3070382722266620210
+    second: big fish 2 swimming in cirkels_9
+  - first:
+      213: 7771517377786619835
+    second: big fish 2 swimming in cirkels_10
+  - first:
+      213: -1167371255793000199
+    second: big fish 2 swimming in cirkels_11
+  - first:
+      213: -7094138173270517436
+    second: big fish 2 swimming in cirkels_12
+  - first:
+      213: -654443350653198347
+    second: big fish 2 swimming in cirkels_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: big fish 2 swimming in cirkels_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 0
+        width: 30
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9675028a3432e6b50800000000000000
+      internalID: 6588242078380087145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big fish 2 swimming in cirkels_1
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 0
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11399ec80b828e760800000000000000
+      internalID: 7487279119246922513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big fish 2 swimming in cirkels_2
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 0
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70a08ad7f4e49e4b0800000000000000
+      internalID: -5410707373991392761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big fish 2 swimming in cirkels_3
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 0
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5af61d7016e90220800000000000000
+      internalID: 2452744430572468829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big fish 2 swimming in cirkels_4
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 1
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83b25f3d7139bc3d0800000000000000
+      internalID: -3185290580884903112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big fish 2 swimming in cirkels_5
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 2
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2b6cb718eecd4050800000000000000
+      internalID: 5786508592466914091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big fish 2 swimming in cirkels_6
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 3
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51cac0048d2d4d0d0800000000000000
+      internalID: -3398859992528540651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big fish 2 swimming in cirkels_7
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 8
+        width: 17
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e00d9388cdb017c0800000000000000
+      internalID: -4102570591635308311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big fish 2 swimming in cirkels_8
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 6
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 682701623f86cb290800000000000000
+      internalID: -7873302655025515898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big fish 2 swimming in cirkels_9
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 4
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 231e23d71d03c9a20800000000000000
+      internalID: 3070382722266620210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big fish 2 swimming in cirkels_10
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 2
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb72fbc31e9f9db60800000000000000
+      internalID: 7771517377786619835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big fish 2 swimming in cirkels_11
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 1
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f0e471270aaccfe0800000000000000
+      internalID: -1167371255793000199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big fish 2 swimming in cirkels_12
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 0
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4491ca2faee8c8d90800000000000000
+      internalID: -7094138173270517436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big fish 2 swimming in cirkels_13
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 0
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ff13be6d33fae6f0800000000000000
+      internalID: -654443350653198347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      big fish 2 swimming in cirkels_0: 6588242078380087145
+      big fish 2 swimming in cirkels_1: 7487279119246922513
+      big fish 2 swimming in cirkels_10: 7771517377786619835
+      big fish 2 swimming in cirkels_11: -1167371255793000199
+      big fish 2 swimming in cirkels_12: -7094138173270517436
+      big fish 2 swimming in cirkels_13: -654443350653198347
+      big fish 2 swimming in cirkels_2: -5410707373991392761
+      big fish 2 swimming in cirkels_3: 2452744430572468829
+      big fish 2 swimming in cirkels_4: -3185290580884903112
+      big fish 2 swimming in cirkels_5: 5786508592466914091
+      big fish 2 swimming in cirkels_6: -3398859992528540651
+      big fish 2 swimming in cirkels_7: -4102570591635308311
+      big fish 2 swimming in cirkels_8: -7873302655025515898
+      big fish 2 swimming in cirkels_9: 3070382722266620210
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
