@@ -2,13 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
 /// <summary>
-/// Một slot trong board HUD.
-/// Slot này theo dõi một PlayerBoardState và tự cập nhật avatar, tên, HP, điểm.
+/// Một slot board — theo dõi riêng PlayerBoardState được chỉ định.
 /// </summary>
 public class PlayerBoardSlotUI : MonoBehaviour
 {
@@ -34,9 +29,8 @@ public class PlayerBoardSlotUI : MonoBehaviour
     [Header("HP Icon Colors")]
     [SerializeField] private Color activeHpColor = Color.white;
     [SerializeField] private Color inactiveHpColor = new Color(1f, 1f, 1f, 0.25f);
-
-    private PlayerBoardState trackedState;
-    private CharacterDatabase characterDatabase;
+    PlayerBoardState trackedState;
+    CharacterDatabase characterDatabase;
 
     public int SlotIndex => slotIndex;
 
@@ -44,6 +38,7 @@ public class PlayerBoardSlotUI : MonoBehaviour
         PlayerBoardState state,
         CharacterDatabase database,
         bool isLocal = false
+
     )
     {
         Unsubscribe();
@@ -95,7 +90,7 @@ public class PlayerBoardSlotUI : MonoBehaviour
         SetHpIcons(0, hpIcons != null ? hpIcons.Length : 0);
     }
 
-    private void RefreshFromState()
+    void RefreshFromState()
     {
         if (trackedState == null)
         {
@@ -106,7 +101,13 @@ public class PlayerBoardSlotUI : MonoBehaviour
         if (emptyState != null)
             emptyState.SetActive(false);
 
-        CharacterDefinition definition = ResolveDefinition();
+        CharacterDefinition definition = characterDatabase != null
+            ? characterDatabase.GetById(trackedState.CharacterId)
+            : MatchSessionBroker.ResolveDefinition(new PlayerMatchProfile
+            {
+                characterId = trackedState.CharacterId,
+                catalogIndex = trackedState.CatalogIndex
+            });
 
         if (avatar != null)
         {
@@ -129,7 +130,6 @@ public class PlayerBoardSlotUI : MonoBehaviour
         SetHpIcons(trackedState.CurrentHp, trackedState.MaxHp);
 
         // Hiện tại PlayerBoardState chưa có Bomb/Gold sync riêng.
-        // Để trống để tránh đọc property chưa tồn tại.
         if (bomblbl != null)
             bomblbl.text = string.Empty;
 
@@ -140,25 +140,10 @@ public class PlayerBoardSlotUI : MonoBehaviour
             scorelbl.text = trackedState.Score.ToString();
     }
 
-    private CharacterDefinition ResolveDefinition()
-    {
-        if (trackedState == null)
-            return null;
-
-        if (characterDatabase != null)
-            return characterDatabase.GetById(trackedState.CharacterId);
-
-        return MatchSessionBroker.ResolveDefinition(new PlayerMatchProfile
-        {
-            characterId = trackedState.CharacterId,
-            catalogIndex = trackedState.CatalogIndex
-        });
-    }
-
     /// <summary>
     /// Cập nhật icon trái tim theo HP hiện tại.
     /// </summary>
-    private void SetHpIcons(int currentHp, int maxHp)
+    void SetHpIcons(int currentHp, int maxHp)
     {
         if (hpGroup != null)
             hpGroup.SetActive(hpIcons != null && hpIcons.Length > 0);
@@ -181,179 +166,142 @@ public class PlayerBoardSlotUI : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+
+    void OnDisable()
     {
         Unsubscribe();
     }
 
-    private void Unsubscribe()
+    void Unsubscribe()
     {
         if (trackedState != null)
             trackedState.Changed -= RefreshFromState;
     }
 
+
     [ContextMenu("Auto Bind UI From Children")]
-    private void AutoBindUIFromChildren()
+    void AutoBindUIFromChildren()
     {
-#if UNITY_EDITOR
-        Undo.RecordObject(this, "Auto Bind PlayerBoardSlotUI");
-#endif
+        UIAutoBindUtility.RecordUndo(this, "Auto Bind PlayerBoardSlotUI");
 
-        avatar = FindChildComponent<Image>("Avatar");
+        avatar = UIAutoBindUtility.FindChildComponent<Image>(
+            this,
+            "Avatar",
+            "Icon",
+            "CharacterIcon"
+        );
 
-        playerNamelbl = FindChildComponent<TMP_Text>(
+        playerNamelbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
             "PlayerNamelbl",
             "PlayerNameLbl",
             "Namelbl",
-            "NameLbl"
+            "NameLbl",
+            "Name"
         );
 
-        hplbl = FindChildComponent<TMP_Text>(
+        hplbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
             "Hplbl",
             "HpLbl",
             "HPLbl",
             "HpText"
         );
 
-        bomblbl = FindChildComponent<TMP_Text>(
+        bomblbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
             "Bomblbl",
             "BombLbl",
             "BombText"
         );
 
-        goldlbl = FindChildComponent<TMP_Text>(
+        goldlbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
             "Goldlbl",
             "GoldLbl",
             "GoldText"
         );
 
-        scorelbl = FindChildComponent<TMP_Text>(
+        scorelbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
             "Scorelbl",
             "ScoreLbl",
             "ScoreText"
         );
 
-        Transform hpGroupTransform = FindChildTransform(
+        hpGroup = UIAutoBindUtility.FindChildGameObject(
+            this,
             "HpGroup",
             "HPGroup",
             "HeartGroup"
         );
 
-        hpGroup = hpGroupTransform != null ? hpGroupTransform.gameObject : null;
-
         hpIcons = new Image[3];
-        hpIcons[0] = FindChildComponent<Image>("HpIcon_0", "HPIcon_0", "Heart_0");
-        hpIcons[1] = FindChildComponent<Image>("HpIcon_1", "HPIcon_1", "Heart_1");
-        hpIcons[2] = FindChildComponent<Image>("HpIcon_2", "HPIcon_2", "Heart_2");
 
-        LogBindResult();
-
-#if UNITY_EDITOR
-        EditorUtility.SetDirty(this);
-        PrefabUtility.RecordPrefabInstancePropertyModifications(this);
-#endif
-    }
-
-    private T FindChildComponent<T>(params string[] names) where T : Component
-    {
-        Transform child = FindChildTransform(names);
-
-        if (child == null)
-            return null;
-
-        T component = child.GetComponent<T>();
-
-        if (component == null)
-        {
-            Debug.LogWarning(
-                "[FLOW:HUD] Found child '" + child.name + "' but missing component " + typeof(T).Name,
-                child
-            );
-        }
-
-        return component;
-    }
-
-    private Transform FindChildTransform(params string[] names)
-    {
-        for (int i = 0; i < names.Length; i++)
-        {
-            Transform result = FindDeepChildByName(transform, names[i]);
-
-            if (result != null)
-                return result;
-        }
-
-        return null;
-    }
-
-    private Transform FindDeepChildByName(Transform root, string targetName)
-    {
-        if (root == null)
-            return null;
-
-        if (IsSameName(root.name, targetName))
-            return root;
-
-        for (int i = 0; i < root.childCount; i++)
-        {
-            Transform result = FindDeepChildByName(root.GetChild(i), targetName);
-
-            if (result != null)
-                return result;
-        }
-
-        return null;
-    }
-
-    private bool IsSameName(string a, string b)
-    {
-        return NormalizeName(a) == NormalizeName(b);
-    }
-
-    private string NormalizeName(string value)
-    {
-        if (string.IsNullOrEmpty(value))
-            return string.Empty;
-
-        return value
-            .Replace(" ", "")
-            .Replace("_", "")
-            .Replace("-", "")
-            .ToLowerInvariant();
-    }
-
-    private void LogBindResult()
-    {
-        Debug.Log(
-            "[FLOW:HUD] Auto Bind result for " + gameObject.name + "\n" +
-            "Avatar: " + Bound(avatar) + "\n" +
-            "PlayerNamelbl: " + Bound(playerNamelbl) + "\n" +
-            "Hplbl: " + Bound(hplbl) + "\n" +
-            "Bomblbl: " + Bound(bomblbl) + "\n" +
-            "Goldlbl: " + Bound(goldlbl) + "\n" +
-            "Scorelbl: " + Bound(scorelbl) + "\n" +
-            "HpGroup: " + Bound(hpGroup) + "\n" +
-            "HpIcon_0: " + Bound(GetHpIcon(0)) + "\n" +
-            "HpIcon_1: " + Bound(GetHpIcon(1)) + "\n" +
-            "HpIcon_2: " + Bound(GetHpIcon(2)),
-            this
+        hpIcons[0] = UIAutoBindUtility.FindChildComponent<Image>(
+            this,
+            "HpIcon_0",
+            "HPIcon_0",
+            "Heart_0"
         );
+
+        hpIcons[1] = UIAutoBindUtility.FindChildComponent<Image>(
+            this,
+            "HpIcon_1",
+            "HPIcon_1",
+            "Heart_1"
+        );
+
+        hpIcons[2] = UIAutoBindUtility.FindChildComponent<Image>(
+            this,
+            "HpIcon_2",
+            "HPIcon_2",
+            "Heart_2"
+        );
+
+        emptyState = UIAutoBindUtility.FindChildGameObject(
+            this,
+            "EmptyState",
+            "Empty",
+            "WaitingState"
+        );
+
+        localHighlight = UIAutoBindUtility.FindChildGameObject(
+            this,
+            "LocalHighlight",
+            "Highlight",
+            "SelectedHighlight"
+        );
+
+        UIAutoBindUtility.LogBindResult(
+            this,
+            "Auto Bind PlayerBoardSlotUI result for " + gameObject.name,
+            new BindLogItem("Avatar", avatar),
+            new BindLogItem("PlayerNamelbl", playerNamelbl),
+            new BindLogItem("Hplbl", hplbl),
+            new BindLogItem("Bomblbl", bomblbl),
+            new BindLogItem("Goldlbl", goldlbl),
+            new BindLogItem("Scorelbl", scorelbl),
+            new BindLogItem("HpGroup", hpGroup),
+            new BindLogItem("HpIcon_0", GetHpIconForLog(0)),
+            new BindLogItem("HpIcon_1", GetHpIconForLog(1)),
+            new BindLogItem("HpIcon_2", GetHpIconForLog(2)),
+            new BindLogItem("EmptyState", emptyState),
+            new BindLogItem("LocalHighlight", localHighlight)
+        );
+
+        UIAutoBindUtility.SetDirty(this);
     }
 
-    private Image GetHpIcon(int index)
+    Image GetHpIconForLog(int iconIndex)
     {
         if (hpIcons == null)
             return null;
 
-        if (index < 0 || index >= hpIcons.Length)
+        if (iconIndex < 0 || iconIndex >= hpIcons.Length)
             return null;
 
-        return hpIcons[index];
+        return hpIcons[iconIndex];
     }
 
-    private string Bound(Object obj)
-    {
-        return obj != null ? "OK" : "MISSING";
-    }
 }

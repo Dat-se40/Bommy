@@ -44,7 +44,6 @@ public class CharacterDefinition : ScriptableObject
     public Sprite Icon => icon;
     public Sprite Preview => preview != null ? preview : icon;
     public SpriteLibraryAsset SpriteLibrary => spriteLibrary;
-
     public GameObject PlayerPrefab => playerPrefab;
 
     public int Hp => hp;

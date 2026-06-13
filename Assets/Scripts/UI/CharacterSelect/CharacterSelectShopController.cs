@@ -207,6 +207,9 @@ public class CharacterSelectShopController : MonoBehaviour
 
     void UpdateReadyButtonState()
     {
+        if (characterDatabase == null)
+            return;
+
         CharacterDefinition data = characterDatabase.GetByIndex(selectedIndex);
 
         if (data == null)
@@ -252,6 +255,7 @@ public class CharacterSelectShopController : MonoBehaviour
             requirelbl.text = "Available to buy";
     }
 
+
     void SetReadyButton(string text, bool interactable)
     {
         if (readybtnlbl != null)
@@ -263,6 +267,8 @@ public class CharacterSelectShopController : MonoBehaviour
 
     void OnReadyButtonClicked()
     {
+        if (characterDatabase == null)
+            return;
         CharacterDefinition data = characterDatabase.GetByIndex(selectedIndex);
 
         if (data == null)
@@ -315,10 +321,11 @@ public class CharacterSelectShopController : MonoBehaviour
 
         MatchSessionBroker.CommitLocalSelection(profile);
 
-        // Bridge cho code cũ và fallback khi vào GameScene trực tiếp.
+        // Bridge cho code cũ và fallback khi scene sau chưa lấy được profile từ broker.
         PlayerPrefs.SetInt("SelectedCharacterIndex", selectedIndex);
         PlayerPrefs.SetInt("SelectedCharacterId", data.CharacterId);
         PlayerPrefs.SetString("SelectedCharacterName", data.CharacterName);
+        PlayerPrefs.SetString("SelectedPlayerDisplayName", displayName);
         PlayerPrefs.SetInt("SelectedCharacterHp", data.Hp);
         PlayerPrefs.SetInt("SelectedCharacterBomb", data.Bomb);
         PlayerPrefs.SetInt("SelectedCharacterSpeed", data.Speed);
