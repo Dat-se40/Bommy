@@ -378,7 +378,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 472167447, guid: 4bcf9749096756a49a5bc7d708d58349, type: 3}
+  m_Sprite: {fileID: -1024042915, guid: 5f48444059cab034fa7d77c5943822ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -439,7 +439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrary
   m_Library: []
-  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 511732e69796bb540a69e44344e604a7, type: 3}
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: c26e4e28f76b70b459425ec740c419c6, type: 3}
 --- !u!1 &7372041011084794701
 GameObject:
   m_ObjectHideFlags: 0
