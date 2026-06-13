@@ -96,6 +96,22 @@ public class NetworkPlayerSpawner : NetworkBehaviour
 
     PlayerMatchProfile ResolveSpawnProfile(PlayerID player)
     {
+        if (RuntimeMode.IsDedicatedServer)
+        {
+            if (MatchSessionBroker.TryGetNetworkPlayerProfile(player.id.value, out PlayerMatchProfile mapped))
+            {
+                mapped.isLocal = false;
+                return mapped;
+            }
+
+            FlowGuard.Error(
+                FlowGuard.TagNetwork,
+                $"No backend-approved profile mapped for playerId={player.id}.",
+                this
+            );
+            return default;
+        }
+
         // TODO[NETWORK] Map PlayerID → profile đã gửi lúc join lobby.
         MatchSessionBroker.LoadLocalFromPlayerPrefs(characterDatabase);
 

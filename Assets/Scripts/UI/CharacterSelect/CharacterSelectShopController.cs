@@ -17,6 +17,9 @@ public class CharacterSelectShopController : MonoBehaviour
     [Header("Character Database")]
     [SerializeField] private CharacterDatabase characterDatabase;
 
+    [Header("Backend")]
+    [SerializeField] private PlayerProfileApiClient apiClient;
+
     [Header("Character Cards")]
     [SerializeField] private CharacterCardUI[] characterCards;
 
@@ -50,6 +53,9 @@ public class CharacterSelectShopController : MonoBehaviour
 
     void Start()
     {
+        if (apiClient == null)
+            apiClient = FindFirstObjectByType<PlayerProfileApiClient>();
+
         if (characterDatabase != null)
             MatchSessionBroker.SetCharacterCatalog(characterDatabase);
 
@@ -285,13 +291,40 @@ public class CharacterSelectShopController : MonoBehaviour
         if (playerGold < data.Price)
             return;
 
+        if (apiClient != null)
+        {
+            SetReadyButton("BUYING", false);
+            apiClient.PurchaseCharacter(data.CharacterId, OnPurchaseCompleted);
+            return;
+        }
+
+        BuyCharacterOffline(data);
+    }
+
+    void BuyCharacterOffline(CharacterDefinition data)
+    {
         playerGold -= data.Price;
 
         PlayerPrefs.SetInt(GoldKey, playerGold);
         PlayerPrefs.SetInt(MatchSessionBroker.GetOwnedKey(data.CharacterId), 1);
         PlayerPrefs.Save();
 
-        // TODO[REST_API] POST /v1/shop/purchase { characterId }
+        RefreshProgressUI();
+        UpdateReadyButtonState();
+        RefreshAllCards();
+    }
+
+    void OnPurchaseCompleted(bool success, PlayerAccountSnapshot account)
+    {
+        if (account != null)
+        {
+            MatchSessionBroker.ApplyAccountSnapshot(account);
+            playerGold = PlayerPrefs.GetInt(GoldKey, account.gold);
+            playerLevel = PlayerPrefs.GetInt(LevelKey, account.level);
+        }
+
+        if (!success)
+            FlowGuard.Error(FlowGuard.TagRestApi, "Character purchase was rejected.", this);
 
         RefreshProgressUI();
         UpdateReadyButtonState();
