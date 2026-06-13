@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 [CreateAssetMenu(
     fileName = "CharacterDefinition",
@@ -16,6 +17,7 @@ public class CharacterDefinition : ScriptableObject
     [Header("Visual")]
     [SerializeField] private Sprite icon;
     [SerializeField] private Sprite preview;
+    [SerializeField] private SpriteLibraryAsset spriteLibrary;
 
     [Header("Gameplay Prefab")]
     [SerializeField] private GameObject playerPrefab;
@@ -41,6 +43,7 @@ public class CharacterDefinition : ScriptableObject
 
     public Sprite Icon => icon;
     public Sprite Preview => preview != null ? preview : icon;
+    public SpriteLibraryAsset SpriteLibrary => spriteLibrary;
 
     public GameObject PlayerPrefab => playerPrefab;
 

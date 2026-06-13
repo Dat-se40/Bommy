@@ -315,8 +315,16 @@ public class CharacterSelectShopController : MonoBehaviour
 
         MatchSessionBroker.CommitLocalSelection(profile);
 
-        // TODO[NETWORK] Gửi chỉ characterId + displayName lên lobby server.
+        // Bridge cho code cũ và fallback khi vào GameScene trực tiếp.
+        PlayerPrefs.SetInt("SelectedCharacterIndex", selectedIndex);
+        PlayerPrefs.SetInt("SelectedCharacterId", data.CharacterId);
+        PlayerPrefs.SetString("SelectedCharacterName", data.CharacterName);
+        PlayerPrefs.SetInt("SelectedCharacterHp", data.Hp);
+        PlayerPrefs.SetInt("SelectedCharacterBomb", data.Bomb);
+        PlayerPrefs.SetInt("SelectedCharacterSpeed", data.Speed);
+        PlayerPrefs.Save();
 
+        // TODO[NETWORK] Sau này gửi characterId + displayName lên lobby/server.
         string mode = PlayerPrefs.GetString(ModeKey, "Play");
 
         if (mode == "Lobby")
@@ -324,6 +332,7 @@ public class CharacterSelectShopController : MonoBehaviour
         else
             SceneManager.LoadScene(randomMatchSceneName);
     }
+
 
     void Back()
     {

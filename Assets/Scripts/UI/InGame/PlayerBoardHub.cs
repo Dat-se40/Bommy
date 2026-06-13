@@ -8,6 +8,14 @@ public class PlayerBoardHub : MonoBehaviour
     [SerializeField] private CharacterDatabase characterDatabase;
     [SerializeField] private PlayerBoardSlotUI[] slots;
 
+    [SerializeField] private bool autoFindSlotsIfEmpty = true;
+
+    void Awake()
+    {
+        if (autoFindSlotsIfEmpty && IsSlotsEmpty())
+            AutoFillSlotsFromChildren();
+    }
+
     void OnEnable()
     {
         MatchSessionBroker.RosterChanged += RefreshStaticRoster;
@@ -57,6 +65,39 @@ public class PlayerBoardHub : MonoBehaviour
             slots[index].SetEmpty();
         }
     }
+
+    bool IsSlotsEmpty()
+    {
+        if (slots == null || slots.Length == 0)
+            return true;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i] != null)
+                return false;
+        }
+
+        return true;
+    }
+
+    [ContextMenu("Auto Fill Slots From Children")]
+    void AutoFillSlotsFromChildren()
+    {
+        PlayerBoardSlotUI[] foundSlots = GetComponentsInChildren<PlayerBoardSlotUI>(true);
+
+        System.Array.Sort(
+            foundSlots,
+            (a, b) => a.SlotIndex.CompareTo(b.SlotIndex)
+        );
+
+        slots = foundSlots;
+
+        Debug.Log(
+            "[FLOW:HUD] Auto filled PlayerBoardSlotUI count=" + slots.Length,
+            this
+        );
+    }
+
 
     void RebindAllFromScene()
     {
