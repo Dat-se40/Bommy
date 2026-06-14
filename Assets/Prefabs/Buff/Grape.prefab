@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2157340961471449528}
   - component: {fileID: 8004118972044734335}
   m_Layer: 0
-  m_Name: Orange
+  m_Name: Grape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 1598213522, guid: f542979c0765e2a4b8d284c5599737ff, type: 3}
+  m_Sprite: {fileID: 2050799488, guid: f542979c0765e2a4b8d284c5599737ff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -132,7 +132,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.875, y: 0.9375}
+    oldSize: {x: 0.9375, y: 1}
     newSize: {x: 0.875, y: 0.9375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  effectTemplate: {fileID: 11400000, guid: a2bde4cc656847f42a26f92a991e4a69, type: 2}
+  effectTemplate: {fileID: 11400000, guid: be14013a2caccd44f89763785167e99e, type: 2}
   visualRoot: {fileID: 8013522885725600179}
   floatHeight: 0.15
   floatDuration: 0.5

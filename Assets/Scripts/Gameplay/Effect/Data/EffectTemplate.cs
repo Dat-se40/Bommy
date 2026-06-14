@@ -13,6 +13,8 @@ public class EffectTemplate : ScriptableObject
 
     public float specialValue;
 
+    public string description; 
+
     [Range(0f, 1f)]
     public float rating;
 

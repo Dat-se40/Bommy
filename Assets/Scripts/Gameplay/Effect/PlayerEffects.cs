@@ -1,13 +1,9 @@
-﻿using System;
-using PurrNet;
-using Unity.VisualScripting;
+﻿using PurrNet;
 using UnityEngine;
 
 public class PlayerEffects : NetworkBehaviour
 {
     public SyncList<ActiveEffect> effects = new();
-
-
     void Update()
     {
         if (!isServer)
@@ -35,41 +31,35 @@ public class PlayerEffects : NetworkBehaviour
     void RemoveEffect(ActiveEffect effect)
     {
         var template = EffectDatabase.Instance.Get(effect.effectId);
-
-        //switch (template.effectType)
-        //{
-        //    case EffectType.Speed:
-
-        //        player.moveSpeed.value -=
-        //            effect.specialValue;
-
-        //        break;
-
-        //    case EffectType.Shield:
-
-        //        player.shield.value -=
-        //            (int)effect.specialValue;
-
-        //        break;
-        //}
+        var player = GetComponent<PlayerInfor>();
+        switch (template.effectType)
+        {
+            case EffectType.Speed:
+                player.AddSpeed(-effect.specialValue);
+                break;
+            case EffectType.Shield:
+                player.AddShield(-(int)effect.specialValue);
+                break;
+        }
     }
 
     protected override void OnSpawned()
     {
-     
         base.OnSpawned();
-        effects.onChanged += RefreshUI;
+        // TODO[ANNOUNCE] effects.onChanged += RefreshUI khi bật lại announcement.
     }
 
-    private void RefreshUI(SyncListChange<ActiveEffect> change)
+    // TODO[ANNOUNCE] Gọi PlayerBoardHub.LocalAnnounce khi effect mới được sync.
+    void RefreshUI(SyncListChange<ActiveEffect> change)
     {
-        // wwtffff
     }
+
     protected override void OnDespawned()
     {
         base.OnDespawned();
-        effects.onChanged -= RefreshUI;
+        // TODO[ANNOUNCE] effects.onChanged -= RefreshUI
     }
+
     public void AddEffect(EffectTemplate template)
     {
         if (!isServer)
@@ -90,22 +80,15 @@ public class PlayerEffects : NetworkBehaviour
     void ApplyEffect(ActiveEffect effect)
     {
         var template = EffectDatabase.Instance.Get(effect.effectId);
-        // Đây là cái lí do tạo sao dùng type nè :V
-        //switch (template.effectType)
-        //{
-        //    case EffectType.Speed:
-
-        //        player.moveSpeed.value +=
-        //            effect.specialValue;
-
-        //        break;
-
-        //    case EffectType.Shield:
-
-        //        player.shield.value +=
-        //            (int)effect.specialValue;
-
-        //        break;
-        //}
+        var player = GetComponent<PlayerInfor>();
+        switch (template.effectType)
+        {
+            case EffectType.Speed:
+                player.AddSpeed(effect.specialValue);
+                break;
+            case EffectType.Shield:
+                player.AddShield((int)effect.specialValue);
+                break;
+        }
     }
 }

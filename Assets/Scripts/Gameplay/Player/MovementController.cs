@@ -17,6 +17,10 @@ public class MovementController : NetworkBehaviour
 
     [Header("Obstacle")]
     [SerializeField] private LayerMask bombLayer;
+    [SerializeField] private LayerMask playerLayer;
+
+    const float CellOverlapSize = 0.75f;
+    static readonly Vector2 CellOverlapExtents = new Vector2(CellOverlapSize, CellOverlapSize);
 
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
@@ -28,7 +32,7 @@ public class MovementController : NetworkBehaviour
     private bool isMoving;
     private int direction;
 
-
+    PlayerBoardState boardState;
 
     public Vector3Int CurrentCell => currentCell;
     public bool IsMoving => isMoving;
@@ -37,11 +41,14 @@ public class MovementController : NetworkBehaviour
     {
         if (rb == null)
             rb = GetComponent<Rigidbody2D>();
+
+        boardState = GetComponent<PlayerBoardState>();
     }
 
     private void Update()
     {
         if (!isOwner) return;
+        if (IsPlayerDead()) return; 
         if (grid == null) return;
         if (!isMoving)
             ReadInput();
@@ -198,12 +205,42 @@ public class MovementController : NetworkBehaviour
         return origin;
     }
 
+    /// <summary>
+    /// Di chuyển: tile hợp lệ, không có bomb, không có player khác (bỏ qua chính mình).
+    /// </summary>
     public bool CanStandAtCell(Vector3Int cell)
+    {
+        if (!IsWalkableTile(cell))
+            return false;
+
+        if (HasBombAtCell(cell))
+            return false;
+
+        if (HasOtherPlayerAtCell(cell))
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Đặt bomb: tile hợp lệ và chưa có bomb. Player đang đứng trên ô vẫn được phép.
+    /// </summary>
+    public bool CanPlaceBombAtCell(Vector3Int cell)
+    {
+        if (!IsWalkableTile(cell))
+            return false;
+
+        if (HasBombAtCell(cell))
+            return false;
+
+        return true;
+    }
+
+    bool IsWalkableTile(Vector3Int cell)
     {
         if (grid == null)
             return false;
 
-        // Nếu có Playground thì chỉ được đi trên tile Playground.
         if (playgroundTilemap != null && !playgroundTilemap.HasTile(cell))
             return false;
 
@@ -213,19 +250,42 @@ public class MovementController : NetworkBehaviour
         if (destructibleTilemap != null && destructibleTilemap.HasTile(cell))
             return false;
 
-        Vector3 cellCenter = grid.GetCellCenterWorld(cell);
+        return true;
+    }
 
-        Collider2D bombCollider = Physics2D.OverlapBox(
-            cellCenter,
-            new Vector2(0.75f, 0.75f),
-            0f,
-            bombLayer
-        );
-
-        if (bombCollider != null)
+    bool HasBombAtCell(Vector3Int cell)
+    {
+        if (grid == null)
             return false;
 
-        return true;
+        Vector3 cellCenter = grid.GetCellCenterWorld(cell);
+        return Physics2D.OverlapBox(cellCenter, CellOverlapExtents, 0f, bombLayer) != null;
+    }
+
+    bool HasOtherPlayerAtCell(Vector3Int cell)
+    {
+        if (grid == null)
+            return false;
+
+        Vector3 cellCenter = grid.GetCellCenterWorld(cell);
+        Collider2D[] hits = Physics2D.OverlapBoxAll(cellCenter, CellOverlapExtents, 0f, playerLayer);
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            Collider2D hit = hits[i];
+
+            if (hit == null || IsOwnCollider(hit))
+                continue;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    bool IsOwnCollider(Collider2D collider)
+    {
+        return collider.transform.root == transform.root;
     }
 
     private void UpdateAnimator()
@@ -268,6 +328,17 @@ public class MovementController : NetworkBehaviour
 
     public void SetSpeed(float value)
     {
-        this.moveSpeed = value; 
+        this.moveSpeed = value;
+    }
+
+    bool IsPlayerDead()
+    {
+        if (boardState != null)
+            return boardState.CurrentHp <= 0 || boardState.IsEliminated;
+
+        if (TryGetComponent(out PlayerInfor playerInfor))
+            return playerInfor.IsDead;
+
+        return false;
     }
 }

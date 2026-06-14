@@ -9,7 +9,6 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private BombController bombPrefab;
     [SerializeField] private ExplosionCreator explosionCreator;
     [SerializeField] private Transform bombParent;
-    [SerializeField] private LayerMask bombLayer;
 
     [Header("References")]
     [SerializeField] private MovementController movementController;
@@ -31,7 +30,7 @@ public class PlayerController : NetworkBehaviour
     {
         if (!isOwner) return;
         if (!IsReady) return;
-
+        if (playerInfor.IsDead) return;
         Keyboard keyboard = Keyboard.current;
 
         if (keyboard == null)
@@ -43,7 +42,7 @@ public class PlayerController : NetworkBehaviour
                 return;
 
             RequestPlaceBomb(movementController.CurrentCell);
-    }
+        }
     }
 
     bool IsReady =>
@@ -87,23 +86,13 @@ public class PlayerController : NetworkBehaviour
         if (activeBombs >= maxBombs)
             return;
 
-        if (!movementController.CanStandAtCell(bombCell))
-            return;
-
         if (bombCell != movementController.CurrentCell)
             return;
 
-        Vector3 bombPosition = grid.GetCellCenterWorld(bombCell);
-
-        bool alreadyHasBomb = Physics2D.OverlapBox(
-            bombPosition,
-            new Vector2(0.75f, 0.75f),
-            0f,
-            bombLayer
-        );
-
-        if (alreadyHasBomb)
+        if (!movementController.CanPlaceBombAtCell(bombCell))
             return;
+
+        Vector3 bombPosition = grid.GetCellCenterWorld(bombCell);
 
         BombController bomb = Instantiate(
             bombPrefab,

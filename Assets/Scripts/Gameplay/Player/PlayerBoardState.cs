@@ -3,8 +3,8 @@ using PurrNet;
 using UnityEngine;
 
 /// <summary>
-/// State sync cho board HUD — server authority.
-/// Mỗi player prefab có một instance; slot UI subscribe riêng.
+/// State sync cho board HUD + visual feedback trên mọi client.
+/// PlayerInfor (server) ghi stats → SyncVar replicate → PlayerBoardSlotUI / PlayerVisualFeedback subscribe.
 /// </summary>
 public class PlayerBoardState : NetworkBehaviour
 {
@@ -18,8 +18,8 @@ public class PlayerBoardState : NetworkBehaviour
     readonly SyncVar<int> maxLives = new();
     readonly SyncVar<int> score = new();
     readonly SyncVar<int> kills = new();
+    readonly SyncVar<int> shield = new();
     readonly SyncVar<bool> isEliminated = new();
-
     public event Action Changed;
 
     public int SlotIndex => slotIndex.value;
@@ -32,6 +32,7 @@ public class PlayerBoardState : NetworkBehaviour
     public int MaxLives => maxLives.value;
     public int Score => score.value;
     public int Kills => kills.value;
+    public int Shield => shield.value;
     public bool IsEliminated => isEliminated.value;
 
     protected override void OnSpawned()
@@ -51,6 +52,7 @@ public class PlayerBoardState : NetworkBehaviour
         maxLives.onChanged += OnAnyChanged;
         score.onChanged += OnAnyChanged;
         kills.onChanged += OnAnyChanged;
+        shield.onChanged += OnAnyChanged;
         isEliminated.onChanged += OnAnyChanged;
 
         TryRegisterWithHub();
@@ -72,6 +74,7 @@ public class PlayerBoardState : NetworkBehaviour
         maxLives.onChanged -= OnAnyChanged;
         score.onChanged -= OnAnyChanged;
         kills.onChanged -= OnAnyChanged;
+        shield.onChanged -= OnAnyChanged;
         isEliminated.onChanged -= OnAnyChanged;
 
         if (PlayerBoardHub.Instance != null)
@@ -135,6 +138,7 @@ public class PlayerBoardState : NetworkBehaviour
         currentLives.value = 3;
         score.value = 0;
         kills.value = 0;
+        shield.value = 0;
         isEliminated.value = false;
     }
 
@@ -149,6 +153,7 @@ public class PlayerBoardState : NetworkBehaviour
         maxLives.value = infor.MaxLives;
         score.value = infor.Score;
         kills.value = infor.Kills;
+        shield.value = infor.Shield;
         isEliminated.value = infor.IsEliminated;
     }
 

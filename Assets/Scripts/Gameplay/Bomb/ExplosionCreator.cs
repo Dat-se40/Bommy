@@ -106,6 +106,7 @@ public class ExplosionCreator : NetworkBehaviour
     {
         Vector3 center = grid.GetCellCenterWorld(cell);
 
+        // 14/06 ko check được collider
         Collider2D[] hits = Physics2D.OverlapBoxAll(
             center,
             new Vector2(0.85f, 0.85f),
@@ -123,6 +124,7 @@ public class ExplosionCreator : NetworkBehaviour
     /// <summary>Server: ghi state + tilemap authority (server tilemap cho physics).</summary>
     void DestroyDestructible(Vector3Int cell)
     {
+        // Destroy thì cộng điểm
         if (!isServer)
             return;
 
@@ -134,7 +136,10 @@ public class ExplosionCreator : NetworkBehaviour
 
         destructibleTilemap.SetTile(cell, null);
         destroyedCells.Add(cell);
-
+        if(TryGetComponent(out PlayerInfor playerInfor)) 
+        {
+            playerInfor.AddScore(General.SCORE_DESTROY_OBSTACLE);
+        }
         if (itemDropper != null)
             itemDropper.TryDropAt(grid.GetCellCenterWorld(cell));
     }

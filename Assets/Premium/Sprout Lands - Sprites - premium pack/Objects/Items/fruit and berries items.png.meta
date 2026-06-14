@@ -112,7 +112,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6bfbc36b366583f468e3bb44e9efaed5
+      spriteID: 77426845a4fea214eaecb383cdfade2c
       internalID: -156484691
       vertices: []
       indices: 
@@ -134,7 +134,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5872e18aa18b1ff49aa2b617ca736c83
+      spriteID: cb0be1c0d504b2841b610172a9b8253f
       internalID: 1598213522
       vertices: []
       indices: 
@@ -145,18 +145,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 33
-        y: 0
-        width: 15
-        height: 32
+        y: 1
+        width: 16
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 17}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 72080549b154fe342b2cafb5cf06af95
+      spriteID: d43c94111237b034c94f1cfe3e18382b
       internalID: 1430413014
       vertices: []
       indices: 
@@ -178,7 +178,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0f5f8c16042af204b9937771cfca40bd
+      spriteID: 903e2440687674e489c3f64ac51f139c
       internalID: 1961612115
       vertices: []
       indices: 
@@ -188,19 +188,19 @@ TextureImporter:
       name: fruit and berries items_4
       rect:
         serializedVersion: 2
-        x: 0
+        x: 16
         y: 0
-        width: 31
+        width: 15
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 15, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c01aa76919c473a4e89e8ecdb7bac9ac
+      spriteID: d824679b5570e964da583fccf75aa690
       internalID: 2050799488
       vertices: []
       indices: 

@@ -17,6 +17,7 @@ MonoBehaviour:
   effectType: 5
   duration: 6000
   specialValue: 1
+  description: You gain 1 boom stack permentaly
   rating: 1
   pickupPrefab: {fileID: 3140720615861595630, guid: 99789600b39ad0044973858712e505ae, type: 3}
   vfxPrefab: {fileID: 0}

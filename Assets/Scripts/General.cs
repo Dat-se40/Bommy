@@ -2,11 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class General : MonoBehaviour
+public class General 
 {
-    // Start is called before the first frame update
-    void Start() { }
-
-    // Update is called once per frame
-    void Update() { }
+    public static int SCORE_DESTROY_OBSTACLE = 2;
+    public static int SCORE_ATTACK_PLAYER = 20; 
 }

@@ -1,5 +1,6 @@
 using PurrNet;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BombController : NetworkBehaviour
@@ -8,7 +9,7 @@ public class BombController : NetworkBehaviour
     [SerializeField] private float fuseTime = 2f;
 
     [Header("References")]
-    [SerializeField] private BoxCollider2D boxCollider;
+    [SerializeField] private CircleCollider2D collider2D;
 
     private PlayerController owner;
     private ExplosionCreator explosionCreator;
@@ -17,13 +18,13 @@ public class BombController : NetworkBehaviour
 
     private void Awake()
     {
-        if (boxCollider == null)
-            boxCollider = GetComponent<BoxCollider2D>();
+        if (collider2D == null)
+            collider2D = GetComponent<CircleCollider2D>();
 
-        if (boxCollider != null)
-            boxCollider.isTrigger = true;
+        if (collider2D != null)
+            collider2D.isTrigger = true;
     }
-
+    
     public void Init(PlayerController owner, ExplosionCreator explosionCreator, Vector3Int bombCell)
     {
         this.owner = owner;
@@ -63,7 +64,12 @@ public class BombController : NetworkBehaviour
         if (!other.CompareTag("Player"))
             return;
 
-        if (boxCollider != null)
-            boxCollider.isTrigger = false;
+        if (collider2D != null) 
+        {
+            Debug.Log("[BOMB] Player goes out bomb range");
+            collider2D.isTrigger = false;
+        }
+            
+
     }
 }

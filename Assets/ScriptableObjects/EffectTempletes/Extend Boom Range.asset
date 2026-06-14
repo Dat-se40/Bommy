@@ -17,6 +17,7 @@ MonoBehaviour:
   effectType: 0
   duration: 6000
   specialValue: 1
+  description: Explosion extend 1 range
   rating: 1
   pickupPrefab: {fileID: 32877488675269953, guid: 785de34bb152a1a40aee15d88055dc4f, type: 3}
   vfxPrefab: {fileID: 0}

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -8,6 +9,10 @@ public class PlayerBoardHub : MonoBehaviour
     [SerializeField] private CharacterDatabase characterDatabase;
     [SerializeField] private PlayerBoardSlotUI[] slots;
     [SerializeField] private bool autoFindSlotsIfEmpty = true;
+
+    [Header("Announcement")]
+    [SerializeField] private BoardAnnouncementUI announcementUI;
+    [SerializeField] private TMP_Text announcement;
 
     public static PlayerBoardHub Instance { get; private set; }
 
@@ -23,6 +28,10 @@ public class PlayerBoardHub : MonoBehaviour
 
         if (autoFindSlotsIfEmpty && IsSlotsEmpty())
             AutoFillSlotsFromChildren();
+
+        // TODO[ANNOUNCE] Bật lại khi hoàn thiện BoardAnnouncementUI + UITopLayerSupport.
+        // if (announcementUI == null)
+        //     announcementUI = GetComponentInChildren<BoardAnnouncementUI>(true);
     }
 
     void OnDestroy()
@@ -168,7 +177,10 @@ public class PlayerBoardHub : MonoBehaviour
 
         slots[slotIndex].SetEmpty();
     }
-
+    // TODO[ANNOUNCE] Hiện announcement slide + top canvas khi nhặt buff / sự kiện in-game.
+    public void LocalAnnounce(string message)
+    {
+    }
     static PlayerBoardState FindBoardState(int slotIndex)
     {
         PlayerBoardState[] states = FindObjectsByType<PlayerBoardState>(FindObjectsSortMode.None);
@@ -214,4 +226,6 @@ public class PlayerBoardHub : MonoBehaviour
 
         UIAutoBindUtility.SetDirty(this);
     }
+
+
 }

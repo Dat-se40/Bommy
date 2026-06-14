@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,8 +31,23 @@ public class PlayerBoardSlotUI : MonoBehaviour
     [SerializeField] private Color activeHpColor = Color.white;
     [SerializeField] private Color inactiveHpColor = new Color(1f, 1f, 1f, 0.25f);
 
+    [Header("Damage Feedback")]
+    [SerializeField] private RectTransform shakeTarget;
+    [SerializeField] private float heartPunchScale = 0.35f;
+    [SerializeField] private float heartPunchDuration = 0.35f;
+    [SerializeField] private float slotShakeStrength = 12f;
+    [SerializeField] private float slotShakeDuration = 0.4f;
+    [SerializeField] private int slotShakeVibrato = 8;
+
     PlayerBoardState trackedState;
     CharacterDatabase characterDatabase;
+    int lastDisplayedHp = -1;
+
+    void Awake()
+    {
+        if (shakeTarget == null)
+            shakeTarget = transform as RectTransform;
+    }
 
     public int SlotIndex => slotIndex;
 
@@ -52,11 +68,13 @@ public class PlayerBoardSlotUI : MonoBehaviour
         if (localHighlight != null)
             localHighlight.SetActive(isLocal);
 
+        lastDisplayedHp = -1;
         RefreshFromState();
     }
 
     public void SetEmpty()
     {
+        StopDamageFeedback();
         Unsubscribe();
         trackedState = null;
 
@@ -88,6 +106,7 @@ public class PlayerBoardSlotUI : MonoBehaviour
             scorelbl.text = string.Empty;
 
         SetHpIcons(0, hpIcons != null ? hpIcons.Length : 0);
+        lastDisplayedHp = -1;
         gameObject.SetActive(false);
     }
 
@@ -103,6 +122,11 @@ public class PlayerBoardSlotUI : MonoBehaviour
 
         if (emptyState != null)
             emptyState.SetActive(false);
+
+        int newHp = trackedState.CurrentHp;
+        int newMaxHp = trackedState.MaxHp;
+        bool tookDamage = lastDisplayedHp >= 0 && newHp < lastDisplayedHp;
+        int previousHp = lastDisplayedHp;
 
         CharacterDefinition definition = characterDatabase != null
             ? characterDatabase.GetById(trackedState.CharacterId)
@@ -128,9 +152,14 @@ public class PlayerBoardSlotUI : MonoBehaviour
         }
 
         if (hplbl != null)
-            hplbl.text = "HP " + trackedState.CurrentHp + "/" + trackedState.MaxHp;
+            hplbl.text = "HP " + newHp + "/" + newMaxHp;
 
-        SetHpIcons(trackedState.CurrentHp, trackedState.MaxHp);
+        SetHpIcons(newHp, newMaxHp);
+
+        if (tookDamage)
+            PlayDamageFeedback(previousHp, newHp);
+
+        lastDisplayedHp = newHp;
 
         // Hiện tại PlayerBoardState chưa có Bomb/Gold sync riêng.
         if (bomblbl != null)
@@ -169,8 +198,58 @@ public class PlayerBoardSlotUI : MonoBehaviour
         }
     }
 
+    void PlayDamageFeedback(int previousHp, int currentHp)
+    {
+        int lostHeartIndex = previousHp - 1;
+
+        if (hpIcons != null
+            && lostHeartIndex >= 0
+            && lostHeartIndex < hpIcons.Length
+            && hpIcons[lostHeartIndex] != null)
+        {
+            Transform heart = hpIcons[lostHeartIndex].transform;
+            heart.DOKill();
+            heart.localScale = Vector3.one;
+            heart.DOPunchScale(Vector3.one * heartPunchScale, heartPunchDuration, 1, 0.5f);
+        }
+
+        if (shakeTarget != null)
+        {
+            shakeTarget.DOKill();
+            shakeTarget.localRotation = Quaternion.identity;
+            shakeTarget.DOPunchRotation(
+                new Vector3(0f, 0f, slotShakeStrength),
+                slotShakeDuration,
+                slotShakeVibrato,
+                0.5f
+            );
+        }
+    }
+
+    void StopDamageFeedback()
+    {
+        if (hpIcons != null)
+        {
+            for (int i = 0; i < hpIcons.Length; i++)
+            {
+                if (hpIcons[i] == null)
+                    continue;
+
+                hpIcons[i].transform.DOKill();
+                hpIcons[i].transform.localScale = Vector3.one;
+            }
+        }
+
+        if (shakeTarget != null)
+        {
+            shakeTarget.DOKill();
+            shakeTarget.localRotation = Quaternion.identity;
+        }
+    }
+
     void OnDisable()
     {
+        StopDamageFeedback();
         Unsubscribe();
     }
 
