@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
+/// <summary>
+/// Đổi màu/skin bằng cách gán SpriteLibraryAsset tương ứng từ CharacterDatabase.
+/// Phải được gọi trên mọi client khi characterId đã replicate — không chỉ lúc server spawn.
+/// </summary>
 public class PlayerSkinApplier : MonoBehaviour
 {
     [Header("Database")]
@@ -15,13 +19,7 @@ public class PlayerSkinApplier : MonoBehaviour
     /// </summary>
     public void ApplyCharacterVisual(int characterId)
     {
-        if (characterDatabase == null)
-        {
-            Debug.LogWarning("[FLOW:SETUP] Cannot apply character visual: CharacterDatabase is null.");
-            return;
-        }
-
-        CharacterDefinition character = characterDatabase.GetById(characterId);
+        CharacterDefinition character = ResolveDefinition(characterId);
 
         if (character == null)
         {
@@ -36,7 +34,7 @@ public class PlayerSkinApplier : MonoBehaviour
         }
 
         if (spriteLibrary == null)
-            spriteLibrary = GetComponentInChildren<SpriteLibrary>();
+            spriteLibrary = GetComponentInChildren<SpriteLibrary>(true);
 
         if (spriteLibrary == null)
         {
@@ -45,5 +43,29 @@ public class PlayerSkinApplier : MonoBehaviour
         }
 
         spriteLibrary.spriteLibraryAsset = character.SpriteLibrary;
+        RefreshSpriteResolvers();
+    }
+
+    CharacterDefinition ResolveDefinition(int characterId)
+    {
+        CharacterDatabase database = characterDatabase != null
+            ? characterDatabase
+            : MatchSessionBroker.CharacterCatalog;
+
+        if (database == null)
+        {
+            Debug.LogWarning("[FLOW:SETUP] Cannot apply character visual: CharacterDatabase is null.");
+            return null;
+        }
+
+        return database.GetById(characterId);
+    }
+
+    void RefreshSpriteResolvers()
+    {
+        SpriteResolver[] resolvers = GetComponentsInChildren<SpriteResolver>(true);
+
+        for (int i = 0; i < resolvers.Length; i++)
+            resolvers[i].ResolveSpriteToSpriteRenderer();
     }
 }

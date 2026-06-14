@@ -54,6 +54,7 @@ public class PlayerBoardState : NetworkBehaviour
         isEliminated.onChanged += OnAnyChanged;
 
         TryRegisterWithHub();
+        TryApplyCharacterVisual();
     }
 
     protected override void OnDespawned()
@@ -80,8 +81,14 @@ public class PlayerBoardState : NetworkBehaviour
     }
 
     void OnSlotIndexChanged(int _) => TryRegisterWithHub();
-    void OnIdentityChanged(int _) => TryRegisterWithHub();
-    void OnIdentityChanged(string _) => TryRegisterWithHub();
+    void OnIdentityChanged(int _) => OnIdentityReplicated();
+    void OnIdentityChanged(string _) => OnIdentityReplicated();
+
+    void OnIdentityReplicated()
+    {
+        TryRegisterWithHub();
+        TryApplyCharacterVisual();
+    }
 
     void TryRegisterWithHub()
     {
@@ -93,6 +100,23 @@ public class PlayerBoardState : NetworkBehaviour
 
         PlayerBoardHub.Instance.RegisterBoardState(this);
     }
+
+    void TryApplyCharacterVisual()
+    {
+        if (characterId.value <= 0)
+            return;
+
+        PlayerSkinApplier skinApplier = GetComponent<PlayerSkinApplier>();
+
+        if (skinApplier == null)
+            skinApplier = GetComponentInChildren<PlayerSkinApplier>(true);
+
+        if (skinApplier == null)
+            return;
+
+        skinApplier.ApplyCharacterVisual(characterId.value);
+    }
+
     /// <summary>
     /// Server gọi trực tiếp sau networkManager.Spawn — không dùng ServerRpc ở đây.
     /// </summary>

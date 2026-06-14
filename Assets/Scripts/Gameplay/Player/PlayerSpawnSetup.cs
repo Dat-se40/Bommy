@@ -7,15 +7,10 @@ public class PlayerSpawnSetup : MonoBehaviour
 {
     public void Apply(PlayerMatchProfile profile)
     {
-        // Áp visual trước để player vừa spawn đã đúng màu/skin.
-        PlayerSkinApplier skinApplier = GetComponentInChildren<PlayerSkinApplier>();
-
-        if (skinApplier != null)
-            skinApplier.ApplyCharacterVisual(profile.characterId);
-
         if (TryGetComponent(out PlayerInfor playerInfor))
             playerInfor.ApplyMatchProfile(profile);
 
+        // characterId replicate → PlayerBoardState.TryApplyCharacterVisual trên mọi client.
         if (TryGetComponent(out PlayerBoardState boardState))
             boardState.InitializeFromProfile(profile);
     }

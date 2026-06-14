@@ -39,7 +39,9 @@
 
 # Visual Studio cache directory
 .vs/
-
+.vscode/
+.cursorignore
+.cursorrules
 # Gradle cache directory
 .gradle/
 
