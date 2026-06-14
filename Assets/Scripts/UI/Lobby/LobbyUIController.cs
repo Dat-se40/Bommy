@@ -27,8 +27,21 @@ public class LobbyUIController : MonoBehaviour
         if (createRoomDialog != null)
             createRoomDialog.SetActive(false);
 
-        SetCurrentRoomEmpty();
+        DisplayCurrentRoom();
     }
+
+    private void DisplayCurrentRoom()
+    {
+        if (currentRoomNamelbl != null)
+            currentRoomNamelbl.text = "ROOM: " + GameSession.RoomName;
+
+        if (currentRoomPlayerslbl != null)
+            currentRoomPlayerslbl.text = "Players: 1/" + GameSession.MaxPlayers;
+
+        if (currentRoomMaplbl != null)
+            currentRoomMaplbl.text = "Map: " + GameSession.MapName;
+    }
+
 
     public void OpenCreateRoomDialog()
     {

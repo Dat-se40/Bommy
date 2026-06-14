@@ -5,7 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     [Header("Scenes")]
     [SerializeField] private string characterSelectSceneName = "CharacterSelect";
-    [SerializeField] private string lobbySceneName = "Lobby";
+    [SerializeField] private string lobbySceneName = "LobbyBrowser";
 
     [Header("Settings")]
     [SerializeField] private GameObject settingsPanel;
