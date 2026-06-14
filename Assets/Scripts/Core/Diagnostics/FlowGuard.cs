@@ -12,7 +12,6 @@ public static class FlowGuard
     public const string TagNetwork = "FLOW:NETWORK";
     public const string TagHud = "FLOW:HUD";
     public const string TagGameplay = "FLOW:GAMEPLAY";
-    public const string TagRestApi = "FLOW:REST_API";
 
     public static bool Require(bool condition, string tag, string message, UnityEngine.Object context = null)
     {

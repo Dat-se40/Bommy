@@ -17,9 +17,7 @@ public static class MatchSessionBroker
 
     static CharacterDatabase characterCatalog;
     static PlayerMatchProfile localPlayer;
-    static MatchServerAllocation matchAllocation;
     static readonly List<PlayerMatchProfile> roster = new();
-    static readonly Dictionary<ulong, PlayerMatchProfile> networkProfiles = new();
 
     public static event Action RosterChanged;
 
@@ -88,39 +86,6 @@ public static class MatchSessionBroker
         }
 
         PlayerPrefs.Save();
-    }
-
-    public static void CommitRoom(string roomName, string mapName, int maxPlayers)
-    {
-        GameSession.SetRoom(roomName, mapName, maxPlayers);
-        FlowGuard.Info(
-            FlowGuard.TagSetup,
-            $"Committed room: {roomName} map={mapName} maxPlayers={maxPlayers}"
-        );
-    }
-
-    public static void SetMatchAllocation(MatchServerAllocation allocation)
-    {
-        matchAllocation = allocation;
-
-        if (allocation == null)
-            return;
-
-        if (!string.IsNullOrWhiteSpace(allocation.matchId))
-            GameSession.RoomName = allocation.matchId;
-
-        FlowGuard.Info(
-            FlowGuard.TagNetwork,
-            $"Stored match allocation: {allocation.host}:{allocation.port} matchId={allocation.matchId}"
-        );
-    }
-
-    public static bool TryGetMatchAllocation(out MatchServerAllocation allocation)
-    {
-        allocation = matchAllocation;
-        return allocation != null &&
-            !string.IsNullOrWhiteSpace(allocation.host) &&
-            allocation.port > 0;
     }
 
     public static void LoadLocalFromPlayerPrefs(CharacterDatabase database)
@@ -200,21 +165,9 @@ public static class MatchSessionBroker
         // TODO[NETWORK] Nhận từ ServerRpc / SyncList trên server.
     }
 
-    public static void RegisterNetworkPlayerProfile(ulong playerId, PlayerMatchProfile profile)
-    {
-        networkProfiles[playerId] = profile;
-        UpsertRosterSlot(profile);
-    }
-
-    public static bool TryGetNetworkPlayerProfile(ulong playerId, out PlayerMatchProfile profile)
-    {
-        return networkProfiles.TryGetValue(playerId, out profile);
-    }
-
     public static void ClearRoster()
     {
         roster.Clear();
-        networkProfiles.Clear();
         RosterChanged?.Invoke();
     }
 

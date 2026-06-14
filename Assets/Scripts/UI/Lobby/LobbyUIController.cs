@@ -8,9 +8,6 @@ public class LobbyUIController : MonoBehaviour
     [SerializeField] private string characterSelectSceneName = "CharacterSelect";
     [SerializeField] private string gameSceneName = "GameScene";
 
-    [Header("Backend")]
-    [SerializeField] private PlayerProfileApiClient apiClient;
-
     [Header("Create Room Dialog")]
     [SerializeField] private GameObject createRoomDialog;
 
@@ -27,14 +24,24 @@ public class LobbyUIController : MonoBehaviour
 
     private void Start()
     {
-        if (apiClient == null)
-            apiClient = FindFirstObjectByType<PlayerProfileApiClient>();
-
         if (createRoomDialog != null)
             createRoomDialog.SetActive(false);
 
-        SetCurrentRoomEmpty();
+        DisplayCurrentRoom();
     }
+
+    private void DisplayCurrentRoom()
+    {
+        if (currentRoomNamelbl != null)
+            currentRoomNamelbl.text = "ROOM: " + GameSession.RoomName;
+
+        if (currentRoomPlayerslbl != null)
+            currentRoomPlayerslbl.text = "Players: 1/" + GameSession.MaxPlayers;
+
+        if (currentRoomMaplbl != null)
+            currentRoomMaplbl.text = "Map: " + GameSession.MapName;
+    }
+
 
     public void OpenCreateRoomDialog()
     {
@@ -73,7 +80,6 @@ public class LobbyUIController : MonoBehaviour
 
         string mapName = mapDropdown.options[mapDropdown.value].text;
         int maxPlayers = GetMaxPlayers();
-        MatchSessionBroker.CommitRoom(roomName, mapName, maxPlayers);
 
         if (currentRoomNamelbl != null)
             currentRoomNamelbl.text = "ROOM: " + roomName;
@@ -97,30 +103,6 @@ public class LobbyUIController : MonoBehaviour
 
     public void StartGame()
     {
-        if (apiClient == null || !apiClient.HasAccessToken)
-        {
-            SceneManager.LoadScene(gameSceneName);
-            return;
-        }
-
-        apiClient.CreateMatch(
-            GameSession.RoomName,
-            GameSession.MapName,
-            GameSession.MaxPlayers,
-            MatchSessionBroker.GetLocalPlayer(),
-            OnMatchCreated
-        );
-    }
-
-    void OnMatchCreated(bool success, MatchServerAllocation allocation)
-    {
-        if (!success || allocation == null)
-        {
-            FlowGuard.Error(FlowGuard.TagNetwork, "Match allocation failed; staying in Lobby.", this);
-            return;
-        }
-
-        MatchSessionBroker.SetMatchAllocation(allocation);
         SceneManager.LoadScene(gameSceneName);
     }
 

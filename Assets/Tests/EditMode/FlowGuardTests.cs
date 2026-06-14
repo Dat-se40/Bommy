@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using NUnit.Framework;
 
 public class FlowGuardTests
@@ -44,3 +45,4 @@ public class FlowGuardTests
         Assert.IsNull(reason);
     }
 }
+#endif
