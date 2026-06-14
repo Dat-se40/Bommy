@@ -32,7 +32,7 @@ public struct PlayerMatchProfile
             slotIndex = slotIndex,
             characterId = definition.CharacterId,
             catalogIndex = catalogIndex,
-            displayName = string.IsNullOrEmpty(displayNameOverride)
+            displayName = string.IsNullOrWhiteSpace(displayNameOverride)
                 ? definition.CharacterName
                 : displayNameOverride,
             hp = definition.Hp,

@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af9ad96c9f138d7458e8ab4921ab9d84, type: 3}
-  m_Name: Default Fall Back
+  m_Name: Mimi Green
   m_EditorClassIdentifier: Assembly-CSharp::CharacterDefinition
-  characterId: 10
-  characterName: DatDat
-  description: I can destroy you
-  icon: {fileID: 1422249534, guid: 8f8b1e3b8d8a9ec49aac1bd7bd425198, type: 3}
-  preview: {fileID: 6625992648519983936, guid: 50aea94bb4ecbf5419c3b100de0607d6, type: 3}
-  playerPrefab: {fileID: 24528305369907493, guid: ec9d821a5ae442745a4a7c248f637d4d, type: 3}
+  characterId: 3
+  characterName: Poko
+  description: Fast runner.
+  icon: {fileID: -1875616277, guid: 3662d6b211977b74f9c2416c932cf619, type: 3}
+  preview: {fileID: 1497621365, guid: 4bcf9749096756a49a5bc7d708d58349, type: 3}
+  spriteLibrary: {fileID: 7108339969198208228, guid: 511732e69796bb540a69e44344e604a7, type: 3}
+  playerPrefab: {fileID: 24528305369907493, guid: 0b2ef07dd0781f44c94c28e578b48a03, type: 3}
   hp: 3
   bomb: 1
-  speed: 5
+  speed: 60
   defaultOwned: 0
   requiredLevel: 1
   price: 0

@@ -7,14 +7,28 @@ using UnityEngine.UI;
 /// </summary>
 public class PlayerBoardSlotUI : MonoBehaviour
 {
+    [Header("Slot")]
     [SerializeField] private int slotIndex;
+
+    [Header("Main UI")]
     [SerializeField] private Image avatar;
-    [SerializeField] private TMP_Text nameLabel;
-    [SerializeField] private TMP_Text hpLabel;
-    [SerializeField] private TMP_Text livesLabel;
-    [SerializeField] private TMP_Text scoreLabel;
+    [SerializeField] private TMP_Text playerNamelbl;
+    [SerializeField] private TMP_Text hplbl;
+    [SerializeField] private TMP_Text bomblbl;
+    [SerializeField] private TMP_Text goldlbl;
+    [SerializeField] private TMP_Text scorelbl;
+
+    [Header("HP Icons")]
+    [SerializeField] private GameObject hpGroup;
+    [SerializeField] private Image[] hpIcons = new Image[3];
+
+    [Header("States")]
     [SerializeField] private GameObject emptyState;
     [SerializeField] private GameObject localHighlight;
+
+    [Header("HP Icon Colors")]
+    [SerializeField] private Color activeHpColor = Color.white;
+    [SerializeField] private Color inactiveHpColor = new Color(1f, 1f, 1f, 0.25f);
 
     PlayerBoardState trackedState;
     CharacterDatabase characterDatabase;
@@ -25,7 +39,6 @@ public class PlayerBoardSlotUI : MonoBehaviour
         PlayerBoardState state,
         CharacterDatabase database,
         bool isLocal = false
-
     )
     {
         Unsubscribe();
@@ -47,27 +60,35 @@ public class PlayerBoardSlotUI : MonoBehaviour
         Unsubscribe();
         trackedState = null;
 
-        if (localHighlight != null)
-            localHighlight.SetActive(false);
-
         if (emptyState != null)
             emptyState.SetActive(true);
 
-        if (nameLabel != null)
-            nameLabel.text = "—";
-
-        if (hpLabel != null)
-            hpLabel.text = string.Empty;
-
-        if (livesLabel != null)
-            livesLabel.text = string.Empty;
-
-        if (scoreLabel != null)
-            scoreLabel.text = string.Empty;
+        if (localHighlight != null)
+            localHighlight.SetActive(false);
 
         if (avatar != null)
+        {
+            avatar.sprite = null;
             avatar.enabled = false;
-        this.gameObject.SetActive(false);
+        }
+
+        if (playerNamelbl != null)
+            playerNamelbl.text = "—";
+
+        if (hplbl != null)
+            hplbl.text = string.Empty;
+
+        if (bomblbl != null)
+            bomblbl.text = string.Empty;
+
+        if (goldlbl != null)
+            goldlbl.text = string.Empty;
+
+        if (scorelbl != null)
+            scorelbl.text = string.Empty;
+
+        SetHpIcons(0, hpIcons != null ? hpIcons.Length : 0);
+        gameObject.SetActive(false);
     }
 
     void RefreshFromState()
@@ -77,7 +98,9 @@ public class PlayerBoardSlotUI : MonoBehaviour
             SetEmpty();
             return;
         }
-        this.gameObject.SetActive(true);   
+
+        gameObject.SetActive(true);
+
         if (emptyState != null)
             emptyState.SetActive(false);
 
@@ -89,18 +112,6 @@ public class PlayerBoardSlotUI : MonoBehaviour
                 catalogIndex = trackedState.CatalogIndex
             });
 
-        if (nameLabel != null)
-            nameLabel.text = trackedState.DisplayName;
-
-        if (hpLabel != null)
-            hpLabel.text = $"HP {trackedState.CurrentHp}/{trackedState.MaxHp}";
-
-        if (livesLabel != null)
-            livesLabel.text = $"♥ {trackedState.CurrentLives}";
-
-        if (scoreLabel != null)
-            scoreLabel.text = trackedState.Score.ToString();
-
         if (avatar != null)
         {
             Sprite sprite = definition != null ? definition.Icon : null;
@@ -108,9 +119,54 @@ public class PlayerBoardSlotUI : MonoBehaviour
             avatar.enabled = sprite != null;
         }
 
-        if (trackedState.IsEliminated && nameLabel != null)
-            nameLabel.text += " (OUT)";
+        if (playerNamelbl != null)
+        {
+            playerNamelbl.text = trackedState.DisplayName;
 
+            if (trackedState.IsEliminated)
+                playerNamelbl.text += " (OUT)";
+        }
+
+        if (hplbl != null)
+            hplbl.text = "HP " + trackedState.CurrentHp + "/" + trackedState.MaxHp;
+
+        SetHpIcons(trackedState.CurrentHp, trackedState.MaxHp);
+
+        // Hiện tại PlayerBoardState chưa có Bomb/Gold sync riêng.
+        if (bomblbl != null)
+            bomblbl.text = string.Empty;
+
+        if (goldlbl != null)
+            goldlbl.text = string.Empty;
+
+        if (scorelbl != null)
+            scorelbl.text = trackedState.Score.ToString();
+    }
+
+    /// <summary>
+    /// Cập nhật icon trái tim theo HP hiện tại.
+    /// </summary>
+    void SetHpIcons(int currentHp, int maxHp)
+    {
+        if (hpGroup != null)
+            hpGroup.SetActive(hpIcons != null && hpIcons.Length > 0);
+
+        if (hpIcons == null)
+            return;
+
+        int visibleCount = Mathf.Min(maxHp, hpIcons.Length);
+
+        for (int i = 0; i < hpIcons.Length; i++)
+        {
+            if (hpIcons[i] == null)
+                continue;
+
+            bool shouldShow = i < visibleCount;
+            bool isActive = i < currentHp;
+
+            hpIcons[i].gameObject.SetActive(shouldShow);
+            hpIcons[i].color = isActive ? activeHpColor : inactiveHpColor;
+        }
     }
 
     void OnDisable()
@@ -122,5 +178,130 @@ public class PlayerBoardSlotUI : MonoBehaviour
     {
         if (trackedState != null)
             trackedState.Changed -= RefreshFromState;
+    }
+
+    [ContextMenu("Auto Bind UI From Children")]
+    void AutoBindUIFromChildren()
+    {
+        UIAutoBindUtility.RecordUndo(this, "Auto Bind PlayerBoardSlotUI");
+
+        avatar = UIAutoBindUtility.FindChildComponent<Image>(
+            this,
+            "Avatar",
+            "Icon",
+            "CharacterIcon"
+        );
+
+        playerNamelbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
+            "PlayerNamelbl",
+            "PlayerNameLbl",
+            "Namelbl",
+            "NameLbl",
+            "Name"
+        );
+
+        hplbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
+            "Hplbl",
+            "HpLbl",
+            "HPLbl",
+            "HpText"
+        );
+
+        bomblbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
+            "Bomblbl",
+            "BombLbl",
+            "BombText"
+        );
+
+        goldlbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
+            "Goldlbl",
+            "GoldLbl",
+            "GoldText"
+        );
+
+        scorelbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
+            "Scorelbl",
+            "ScoreLbl",
+            "ScoreText"
+        );
+
+        hpGroup = UIAutoBindUtility.FindChildGameObject(
+            this,
+            "HpGroup",
+            "HPGroup",
+            "HeartGroup"
+        );
+
+        hpIcons = new Image[3];
+
+        hpIcons[0] = UIAutoBindUtility.FindChildComponent<Image>(
+            this,
+            "HpIcon_0",
+            "HPIcon_0",
+            "Heart_0"
+        );
+
+        hpIcons[1] = UIAutoBindUtility.FindChildComponent<Image>(
+            this,
+            "HpIcon_1",
+            "HPIcon_1",
+            "Heart_1"
+        );
+
+        hpIcons[2] = UIAutoBindUtility.FindChildComponent<Image>(
+            this,
+            "HpIcon_2",
+            "HPIcon_2",
+            "Heart_2"
+        );
+
+        emptyState = UIAutoBindUtility.FindChildGameObject(
+            this,
+            "EmptyState",
+            "Empty",
+            "WaitingState"
+        );
+
+        localHighlight = UIAutoBindUtility.FindChildGameObject(
+            this,
+            "LocalHighlight",
+            "Highlight",
+            "SelectedHighlight"
+        );
+
+        UIAutoBindUtility.LogBindResult(
+            this,
+            "Auto Bind PlayerBoardSlotUI result for " + gameObject.name,
+            new BindLogItem("Avatar", avatar),
+            new BindLogItem("PlayerNamelbl", playerNamelbl),
+            new BindLogItem("Hplbl", hplbl),
+            new BindLogItem("Bomblbl", bomblbl),
+            new BindLogItem("Goldlbl", goldlbl),
+            new BindLogItem("Scorelbl", scorelbl),
+            new BindLogItem("HpGroup", hpGroup),
+            new BindLogItem("HpIcon_0", GetHpIconForLog(0)),
+            new BindLogItem("HpIcon_1", GetHpIconForLog(1)),
+            new BindLogItem("HpIcon_2", GetHpIconForLog(2)),
+            new BindLogItem("EmptyState", emptyState),
+            new BindLogItem("LocalHighlight", localHighlight)
+        );
+
+        UIAutoBindUtility.SetDirty(this);
+    }
+
+    Image GetHpIconForLog(int iconIndex)
+    {
+        if (hpIcons == null)
+            return null;
+
+        if (iconIndex < 0 || iconIndex >= hpIcons.Length)
+            return null;
+
+        return hpIcons[iconIndex];
     }
 }

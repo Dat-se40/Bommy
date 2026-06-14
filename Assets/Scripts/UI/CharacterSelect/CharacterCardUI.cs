@@ -119,4 +119,103 @@ public class CharacterCardUI : MonoBehaviour
     {
         owner?.SelectCharacter(index);
     }
+
+    [ContextMenu("Auto Bind UI From Children")]
+    private void AutoBindUIFromChildren()
+    {
+        UIAutoBindUtility.RecordUndo(this, "Auto Bind CharacterCardUI");
+
+        button = GetComponent<Button>();
+
+        if (cardImage == null)
+            cardImage = GetComponent<Image>();
+
+        icon = UIAutoBindUtility.FindChildComponent<Image>(
+            this,
+            "Icon",
+            "Avatar",
+            "CharacterIcon"
+        );
+
+        characterNamelbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
+            "CharacterNamelbl",
+            "CharacterNameLbl",
+            "Namelbl",
+            "NameLbl",
+            "Name"
+        );
+
+        pricelbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
+            "Pricelbl",
+            "PriceLbl",
+            "Price"
+        );
+
+        requiredLevellbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
+            "RequiredLevellbl",
+            "RequiredLevelLbl",
+            "RequireLevellbl",
+            "RequireLevelLbl",
+            "Levellbl",
+            "LevelLbl"
+        );
+
+        statuslbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
+            "Statuslbl",
+            "StatusLbl",
+            "Status"
+        );
+
+        lockOverlay = UIAutoBindUtility.FindChildGameObject(
+            this,
+            "LockOverlay",
+            "LockedOverlay",
+            "Lock",
+            "Locked"
+        );
+
+        if (normalSprite == null && cardImage != null)
+            normalSprite = cardImage.sprite;
+
+        TryBindSelectedSpriteFromButton();
+
+        UIAutoBindUtility.LogBindResult(
+            this,
+            "Auto Bind CharacterCardUI result for " + gameObject.name,
+            new BindLogItem("Card Image", cardImage),
+            new BindLogItem("Button", button),
+            new BindLogItem("Icon", icon),
+            new BindLogItem("CharacterNamelbl", characterNamelbl),
+            new BindLogItem("Pricelbl", pricelbl),
+            new BindLogItem("RequiredLevellbl", requiredLevellbl),
+            new BindLogItem("Statuslbl", statuslbl),
+            new BindLogItem("LockOverlay", lockOverlay),
+            new BindLogItem("Normal Sprite", normalSprite),
+            new BindLogItem("Selected Sprite", selectedSprite)
+        );
+
+        UIAutoBindUtility.SetDirty(this);
+    }
+
+    /// <summary>
+    /// Nếu Button đang dùng Sprite Swap thì lấy Selected Sprite làm selectedSprite.
+    /// </summary>
+    private void TryBindSelectedSpriteFromButton()
+    {
+        if (button == null)
+            return;
+
+        if (selectedSprite != null)
+            return;
+
+        Sprite selected = button.spriteState.selectedSprite;
+
+        if (selected != null)
+            selectedSprite = selected;
+    }
+
 }

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d6da22262b8ce42b1b1ea29978265d, type: 3}
+  m_Name: SampleLocalPlayer
+  m_EditorClassIdentifier: Assembly-CSharp::SamplePlayerDataSheet
+  account:
+    userId: local_guest
+    steamId: 
+    displayName: MIMI
+    gold: 850
+    level: 1
+    ownedCharacterIds: 0100000002000000
+  defaultLocalProfile:
+    slotIndex: 0
+    characterId: 1
+    catalogIndex: 0
+    displayName: NANA
+    hp: 3
+    bomb: 1
+    speed: 600
+    isLocal: 1
