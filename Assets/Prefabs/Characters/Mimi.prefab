@@ -199,8 +199,8 @@ MonoBehaviour:
   moveSpeed: 5
   maxHp: 3
   currentHp: 3
-  maxLives: 3
-  currentLives: 3
+  maxLives: 1
+  currentLives: 1
   maxBombs: 1
   bombRange: 2
   gold: 0

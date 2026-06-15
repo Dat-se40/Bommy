@@ -46,7 +46,6 @@ public class PlayerEffects : NetworkBehaviour
     protected override void OnSpawned()
     {
         base.OnSpawned();
-        // TODO[ANNOUNCE] effects.onChanged += RefreshUI khi bật lại announcement.
     }
 
     // TODO[ANNOUNCE] Gọi PlayerBoardHub.LocalAnnounce khi effect mới được sync.
@@ -81,6 +80,8 @@ public class PlayerEffects : NetworkBehaviour
     {
         var template = EffectDatabase.Instance.Get(effect.effectId);
         var player = GetComponent<PlayerInfor>();
+        if (PlayerBoardHub.Instance != null)
+            PlayerBoardHub.Instance.LocalAnnounce(template.description);
         switch (template.effectType)
         {
             case EffectType.Speed:

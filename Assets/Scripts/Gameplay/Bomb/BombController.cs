@@ -51,7 +51,7 @@ public class BombController : NetworkBehaviour
             return;
 
         if (explosionCreator != null)
-            explosionCreator.CreateExplosionAtCell(bombCell);
+            explosionCreator.CreateExplosionAtCell(bombCell,this.owner.owner);
 
         if (owner != null)
             owner.OnBombExploded();

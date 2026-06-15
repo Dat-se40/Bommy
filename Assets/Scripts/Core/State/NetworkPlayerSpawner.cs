@@ -100,6 +100,7 @@ public class NetworkPlayerSpawner : NetworkBehaviour
         MatchSessionBroker.LoadLocalFromPlayerPrefs(characterDatabase);
 
         PlayerMatchProfile profile = MatchSessionBroker.GetLocalPlayer();
+        profile.owner = player;
         profile.isLocal = false;
 
         return profile;

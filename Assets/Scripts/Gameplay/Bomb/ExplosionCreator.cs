@@ -3,8 +3,8 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 /// <summary>
-/// Server authority phá gạch. State ô đã phá nằm trong SyncList — client/late join replay từ list.
-/// Tilemap chỉ là view local (MapRefs / destructibleTilemap).
+/// Sensor bomb/explosion — phá gạch, detect hit, Submit vào MatchGameplayAuthority.
+/// Không giữ match events / game-over state (thuộc MatchGameplayAuthority).
 /// </summary>
 public class ExplosionCreator : NetworkBehaviour
 {
@@ -25,10 +25,6 @@ public class ExplosionCreator : NetworkBehaviour
     [SerializeField] private int damage = 1;
     [SerializeField] private LayerMask playerLayer;
 
-    /// <summary>
-    /// Danh sách ô đã phá (server append-only). Late joiner nhận full list khi spawn.
-    /// Dùng SyncList thay SyncQueue vì không dequeue — chỉ cần "tập ô đã hủy".
-    /// </summary>
     readonly SyncList<Vector3Int> destroyedCells = new();
 
     public static ExplosionCreator Instance { get; private set; }
@@ -36,6 +32,12 @@ public class ExplosionCreator : NetworkBehaviour
     void Awake()
     {
         Instance = this;
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
     }
 
     protected override void OnSpawned()
@@ -52,7 +54,7 @@ public class ExplosionCreator : NetworkBehaviour
         base.OnDespawned();
     }
 
-    public void CreateExplosionAtCell(Vector3Int originCell)
+    public void CreateExplosionAtCell(Vector3Int originCell, PlayerID? creator)
     {
         if (!isServer)
             return;
@@ -63,12 +65,14 @@ public class ExplosionCreator : NetworkBehaviour
             return;
         }
 
+        PlayerID attacker = creator ?? PlayerID.Server;
+
         SpawnExplosionVisual(originCell);
-        AffectCell(originCell);
-        Spread(Vector3Int.up, originCell);
-        Spread(Vector3Int.down, originCell);
-        Spread(Vector3Int.left, originCell);
-        Spread(Vector3Int.right, originCell);
+        AffectCell(originCell, attacker);
+        Spread(Vector3Int.up, originCell, attacker);
+        Spread(Vector3Int.down, originCell, attacker);
+        Spread(Vector3Int.left, originCell, attacker);
+        Spread(Vector3Int.right, originCell, attacker);
     }
 
     void SpawnExplosionVisual(Vector3Int cell)
@@ -81,7 +85,7 @@ public class ExplosionCreator : NetworkBehaviour
         networkManager.Spawn(explo.gameObject);
     }
 
-    void Spread(Vector3Int direction, Vector3Int originCell)
+    void Spread(Vector3Int direction, Vector3Int originCell, PlayerID attacker)
     {
         for (int i = 1; i <= explosionRange; i++)
         {
@@ -90,23 +94,36 @@ public class ExplosionCreator : NetworkBehaviour
             if (HasTile(indestructibleTilemap, targetCell))
                 break;
 
-            AffectCell(targetCell);
+            AffectCell(targetCell, attacker);
 
             if (HasTile(destructibleTilemap, targetCell))
             {
-                DestroyDestructible(targetCell);
+                DestroyDestructible(targetCell, attacker);
                 break;
             }
         }
     }
 
-    void AffectCell(Vector3Int cell) => DamagePlayersAtCell(cell);
+    void AffectCell(Vector3Int cell, PlayerID attacker) => DamagePlayersAtCell(cell, attacker);
 
-    void DamagePlayersAtCell(Vector3Int cell)
+    void DamagePlayersAtCell(Vector3Int cell, PlayerID attacker)
     {
+        if (!isServer)
+            return;
+
+        MatchGameplayAuthority authority = MatchGameplayAuthority.Instance;
+        if (authority == null)
+        {
+            FlowGuard.Error(
+                FlowGuard.TagNetwork,
+                "MatchGameplayAuthority missing — thêm GameObject MatchSystems vào GameScene.",
+                this
+            );
+            return;
+        }
+
         Vector3 center = grid.GetCellCenterWorld(cell);
 
-        // 14/06 ko check được collider
         Collider2D[] hits = Physics2D.OverlapBoxAll(
             center,
             new Vector2(0.85f, 0.85f),
@@ -116,15 +133,26 @@ public class ExplosionCreator : NetworkBehaviour
 
         for (int i = 0; i < hits.Length; i++)
         {
-            if (hits[i].TryGetComponent(out PlayerInfor playerInfor))
-                playerInfor.TakeDamage(damage);
+            if (!hits[i].TryGetComponent(out PlayerInfor playerInfor))
+                continue;
+
+            PlayerID? injured = playerInfor.GetPlayerID();
+            if (!injured.HasValue)
+                continue;
+
+            authority.SubmitAttack(
+                new AttackDTO
+                {
+                    attacker = attacker,
+                    injured = injured.Value,
+                    damage = this.damage,
+                }
+            );
         }
     }
 
-    /// <summary>Server: ghi state + tilemap authority (server tilemap cho physics).</summary>
-    void DestroyDestructible(Vector3Int cell)
+    void DestroyDestructible(Vector3Int cell, PlayerID scorer)
     {
-        // Destroy thì cộng điểm
         if (!isServer)
             return;
 
@@ -136,10 +164,11 @@ public class ExplosionCreator : NetworkBehaviour
 
         destructibleTilemap.SetTile(cell, null);
         destroyedCells.Add(cell);
-        if(TryGetComponent(out PlayerInfor playerInfor)) 
-        {
-            playerInfor.AddScore(General.SCORE_DESTROY_OBSTACLE);
-        }
+
+        MatchGameplayAuthority authority = MatchGameplayAuthority.Instance;
+        if (authority != null && scorer != PlayerID.Server)
+            authority.GrantScore(scorer, General.SCORE_DESTROY_OBSTACLE);
+
         if (itemDropper != null)
             itemDropper.TryDropAt(grid.GetCellCenterWorld(cell));
     }
@@ -163,7 +192,6 @@ public class ExplosionCreator : NetworkBehaviour
         ApplyDestroyCellLocal(change.value);
     }
 
-    /// <summary>Late join / OnSpawned: áp toàn bộ ô đã phá lên tilemap local.</summary>
     void ReplayAllDestroyedCells()
     {
         for (int i = 0; i < destroyedCells.Count; i++)

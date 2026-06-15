@@ -100,6 +100,7 @@ public class PlayerController : NetworkBehaviour
             Quaternion.identity,
             bombParent
         );
+
         networkManager.Spawn(bomb.gameObject);
         bomb.Init(this, explosionCreator, bombCell);
 
@@ -117,8 +118,27 @@ public class PlayerController : NetworkBehaviour
     protected override void OnSpawned()
     {
         base.OnSpawned();
-        // Cách để đợi các DI đã xong
+
+        if (isServer && owner.HasValue && playerInfor != null)
+        {
+            MatchGameplayAuthority authority = MatchGameplayAuthority.Instance;
+            if (authority != null)
+                authority.RegisterPlayer(owner.Value, this, playerInfor);
+        }
+
         StartCoroutine(SetUpDI());
+    }
+
+    protected override void OnDespawned()
+    {
+        if (isServer && owner.HasValue)
+        {
+            MatchGameplayAuthority authority = MatchGameplayAuthority.Instance;
+            if (authority != null)
+                authority.UnregisterPlayer(owner.Value);
+        }
+
+        base.OnDespawned();
     }
 
     private IEnumerator SetUpDI()

@@ -3,8 +3,8 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Gameplay authority trên server — HP, lives, bomb stats.
-/// Visual/HUD sync qua PlayerBoardState SyncVar; hiệu ứng xem PlayerVisualFeedback.
+/// Server runtime state bag — HP, lives, bomb stats.
+/// Chỉ MatchGameplayAuthority gọi combat/score cross-player; client đọc qua PlayerBoardState.
 /// </summary>
 public class PlayerInfor : MonoBehaviour
 {
@@ -27,7 +27,8 @@ public class PlayerInfor : MonoBehaviour
     [Header("Movement")]
     [SerializeField]
     private float moveSpeed = 4f;
-    private float maxMoveSpeed = 7f; 
+    private float baseMoveSpeed = 4f;
+    private float maxMoveSpeed = 7f;
     [Header("HP")]
     [SerializeField]
     private int maxHp = 3;
@@ -37,10 +38,10 @@ public class PlayerInfor : MonoBehaviour
 
     [Header("Lives")]
     [SerializeField]
-    private int maxLives = 3;
+    private int maxLives = 1;
 
     [SerializeField]
-    private int currentLives = 3;
+    private int currentLives = 1;
 
     [Header("Bomb")]
     [SerializeField]
@@ -72,6 +73,8 @@ public class PlayerInfor : MonoBehaviour
     [SerializeField]
     private int shield;
 
+    PlayerID? pendingKillAttacker;
+
     public int Shield => shield;
     public int PlayerIndex => playerIndex;
     public int CharacterId => characterId;
@@ -102,7 +105,6 @@ public class PlayerInfor : MonoBehaviour
     Coroutine invincibilityRoutine;
     Coroutine deathResolveRoutine;
 
-    private PurrNet.PlayerID attackedBy; 
     void OnDisable()
     {
         StopAllCombatRoutines();
@@ -124,6 +126,7 @@ public class PlayerInfor : MonoBehaviour
         playerName = profile.displayName;
         maxHp = profile.hp;
         maxBombs = profile.bomb;
+        baseMoveSpeed = profile.speed;
         moveSpeed = profile.speed;
 
         if (TryGetComponent(out MovementController move))
@@ -161,6 +164,7 @@ public class PlayerInfor : MonoBehaviour
         StopAllCombatRoutines();
         isInvincible = false;
         isDeathPending = false;
+        pendingKillAttacker = null;
 
         currentHp = maxHp;
         currentLives = maxLives;
@@ -174,20 +178,23 @@ public class PlayerInfor : MonoBehaviour
         PublishBoardState();
     }
 
-    void PublishBoardState()
+    public void PublishBoardState()
     {
         if (TryGetComponent(out PlayerBoardState boardState))
             boardState.PublishFromInfor(this);
     }
 
-    public void TakeDamage(int damage)
+    /// <summary>Chỉ MatchGameplayAuthority gọi. Trả về true nếu HP giảm (để ghi MatchEvent).</summary>
+    public bool ApplyDamageFromAuthority(int damage, PlayerID attacker)
     {
         if (IsEliminated || isInvincible || isDeathPending)
-            return;
+            return false;
 
         if (damage <= 0)
-            return;
-      //  attackedBy = attacker.Value; 
+            return false;
+
+        int hpBefore = currentHp;
+
         if (shield <= 0)
         {
             currentHp -= damage;
@@ -205,14 +212,16 @@ public class PlayerInfor : MonoBehaviour
             shield -= damage;
         }
 
+        bool hpLoss = currentHp < hpBefore;
+
         if (currentHp <= 0)
         {
             currentHp = 0;
-            PublishBoardState();
+            pendingKillAttacker = attacker;
             BeginDeathResolve();
-            return;
         }
-        PublishBoardState();
+
+        return hpLoss;
     }
 
     void BeginHitInvincibility()
@@ -255,6 +264,8 @@ public class PlayerInfor : MonoBehaviour
         deaths++;
         currentLives--;
 
+        TryAwardKillToAttacker();
+
         if (currentLives <= 0)
         {
             currentLives = 0;
@@ -263,6 +274,29 @@ public class PlayerInfor : MonoBehaviour
         }
 
         Respawn();
+    }
+
+    void TryAwardKillToAttacker()
+    {
+        if (!pendingKillAttacker.HasValue)
+            return;
+
+        PlayerID? selfId = GetPlayerID();
+        if (!selfId.HasValue)
+        {
+            pendingKillAttacker = null;
+            return;
+        }
+
+        PlayerID killer = pendingKillAttacker.Value;
+        pendingKillAttacker = null;
+
+        if (killer == selfId.Value)
+            return;
+
+        MatchGameplayAuthority authority = MatchGameplayAuthority.Instance;
+        if (authority != null)
+            authority.AwardKill(killer, selfId.Value);
     }
 
     void Respawn()
@@ -280,6 +314,15 @@ public class PlayerInfor : MonoBehaviour
     {
         Debug.Log(playerName + " eliminated.");
         PublishBoardState();
+
+        PlayerID? selfId = GetPlayerID();
+        if (selfId.HasValue)
+        {
+            MatchGameplayAuthority authority = MatchGameplayAuthority.Instance;
+            if (authority != null)
+                authority.NotifyPlayerEliminated(selfId.Value);
+        }
+
         gameObject.SetActive(false);
     }
 
@@ -328,11 +371,11 @@ public class PlayerInfor : MonoBehaviour
         PublishBoardState();
     }
 
-    public void AddKill()
+    /// <summary>Chỉ MatchGameplayAuthority gọi khi AwardKill.</summary>
+    public void RecordKill()
     {
         kills++;
-        AddScore(300);
-        PublishBoardState();
+        AddScore(General.SCORE_KILL_BONUS);
     }
 
     public void AddBombCapacity(int amount)
@@ -363,11 +406,11 @@ public class PlayerInfor : MonoBehaviour
 
     public void AddSpeed(float amount)
     {
-        if (amount <= 0)
+        if (amount == 0)
             return;
 
-        // Giới hạn tốc độ lại
-        moveSpeed = Mathf.Clamp(moveSpeed + amount, moveSpeed, maxMoveSpeed);
+        moveSpeed = Mathf.Clamp(moveSpeed + amount, baseMoveSpeed, maxMoveSpeed);
+
         if (TryGetComponent(out MovementController move))
             move.SetSpeed(moveSpeed);
     }
@@ -385,5 +428,13 @@ public class PlayerInfor : MonoBehaviour
             StopCoroutine(deathResolveRoutine);
             deathResolveRoutine = null;
         }
+    }
+
+    public PlayerID? GetPlayerID()
+    {
+        if (TryGetComponent(out PlayerController playerController) && playerController.owner.HasValue)
+            return playerController.owner.Value;
+
+        return null;
     }
 }

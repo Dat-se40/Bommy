@@ -34,6 +34,8 @@ public class MovementController : NetworkBehaviour
 
     PlayerBoardState boardState;
 
+    readonly SyncVar<float> networkMoveSpeed = new();
+
     public Vector3Int CurrentCell => currentCell;
     public bool IsMoving => isMoving;
 
@@ -43,6 +45,28 @@ public class MovementController : NetworkBehaviour
             rb = GetComponent<Rigidbody2D>();
 
         boardState = GetComponent<PlayerBoardState>();
+    }
+
+    protected override void OnSpawned()
+    {
+        base.OnSpawned();
+
+        networkMoveSpeed.onChanged += OnNetworkMoveSpeedChanged;
+
+        if (networkMoveSpeed.value > 0f)
+            moveSpeed = networkMoveSpeed.value;
+    }
+
+    protected override void OnDespawned()
+    {
+        networkMoveSpeed.onChanged -= OnNetworkMoveSpeedChanged;
+        base.OnDespawned();
+    }
+
+    void OnNetworkMoveSpeedChanged(float value)
+    {
+        if (value > 0f)
+            moveSpeed = value;
     }
 
     private void Update()
@@ -328,7 +352,13 @@ public class MovementController : NetworkBehaviour
 
     public void SetSpeed(float value)
     {
-        this.moveSpeed = value;
+        if (value <= 0f)
+            return;
+
+        moveSpeed = value;
+
+        if (isServer)
+            networkMoveSpeed.value = value;
     }
 
     bool IsPlayerDead()

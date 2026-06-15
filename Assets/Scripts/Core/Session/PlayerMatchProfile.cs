@@ -1,3 +1,4 @@
+using PurrNet;
 using System;
 
 /// <summary>
@@ -15,7 +16,7 @@ public struct PlayerMatchProfile
     public int bomb;
     public int speed;
     public bool isLocal;
-
+    public PlayerID owner; 
     public static PlayerMatchProfile FromDefinition(
         CharacterDefinition definition,
         int catalogIndex,

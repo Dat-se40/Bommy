@@ -1,8 +1,14 @@
+using PurrNet;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Game over UI — subscribe MatchGameplayAuthority.MatchFinishedChanged (replicate mọi client).
+/// Script phải nằm trên object cha; gameOverOverlay là child bị ẩn lúc Start.
+/// </summary>
 public class GameOverUIController : MonoBehaviour
 {
     [System.Serializable]
@@ -48,13 +54,158 @@ public class GameOverUIController : MonoBehaviour
     [Header("Leaderboard Rows")]
     [SerializeField] private LeaderboardRowUI[] leaderboardRows;
 
-    private void Start()
+    [Header("Match End")]
+    [SerializeField] private float matchStartTime;
+
+    int matchPlayerCount;
+    bool matchEnded;
+
+    void Awake()
+    {
+        matchStartTime = Time.time;
+    }
+
+    void Start()
     {
         SetupButtons();
         HideGameOver();
+        StartCoroutine(BindMatchEndWhenReady());
     }
 
-    private void SetupButtons()
+    IEnumerator BindMatchEndWhenReady()
+    {
+        while (MatchGameplayAuthority.Instance == null)
+            yield return null;
+
+        MatchGameplayAuthority authority = MatchGameplayAuthority.Instance;
+        authority.MatchFinishedChanged += OnMatchFinishedChanged;
+
+        if (authority.IsMatchFinished)
+            OnMatchFinishedChanged(true);
+    }
+
+    void OnDestroy()
+    {
+        if (MatchGameplayAuthority.Instance != null)
+            MatchGameplayAuthority.Instance.MatchFinishedChanged -= OnMatchFinishedChanged;
+    }
+
+    void OnMatchFinishedChanged(bool finished)
+    {
+        if (!finished || matchEnded)
+            return;
+
+        matchEnded = true;
+        StartCoroutine(PresentMatchEndWhenReady());
+    }
+
+    IEnumerator PresentMatchEndWhenReady()
+    {
+        // Đợi 1–2 frame để SyncVar eliminated / score kịp replicate trên client.
+        yield return null;
+        yield return null;
+
+        matchPlayerCount = MatchGameplayAuthority.Instance != null
+            ? MatchGameplayAuthority.Instance.MatchPlayerCount
+            : CountMatchPlayers();
+
+        PresentMatchEnd();
+    }
+
+    static int CountMatchPlayers()
+    {
+        PlayerBoardState[] states = FindObjectsByType<PlayerBoardState>(FindObjectsSortMode.None);
+        int count = 0;
+
+        for (int i = 0; i < states.Length; i++)
+        {
+            if (states[i].CharacterId > 0)
+                count++;
+        }
+
+        return count;
+    }
+
+    static PlayerBoardState FindLocalBoardState()
+    {
+        PlayerBoardState[] states = FindObjectsByType<PlayerBoardState>(FindObjectsSortMode.None);
+
+        for (int i = 0; i < states.Length; i++)
+        {
+            if (states[i].isOwner)
+                return states[i];
+        }
+
+        return states.Length > 0 ? states[0] : null;
+    }
+
+    void PresentMatchEnd()
+    {
+        PlayerBoardState local = FindLocalBoardState();
+        bool isWin = local != null && !local.IsEliminated;
+        int kills = local != null ? local.Kills : 0;
+        int score = local != null ? local.Score : 0;
+        string timeText = FormatElapsedTime(Time.time - matchStartTime);
+
+        int goldReward = Mathf.Max(10, score / 20);
+        int expReward = Mathf.Max(20, score / 10);
+        int level = PlayerPrefs.GetInt("PlayerLevel", 1);
+        int currentExp = PlayerPrefs.GetInt("PlayerExp", 0);
+        int needExp = 100 + level * 50;
+
+        ShowGameOver(
+            isWin,
+            kills,
+            score,
+            timeText,
+            goldReward,
+            expReward,
+            level,
+            currentExp,
+            needExp
+        );
+
+        PopulateLeaderboardFromBoardStates();
+    }
+
+    static string FormatElapsedTime(float seconds)
+    {
+        int total = Mathf.Max(0, Mathf.FloorToInt(seconds));
+        int minutes = total / 60;
+        int secs = total % 60;
+        return minutes.ToString("00") + ":" + secs.ToString("00");
+    }
+
+    void PopulateLeaderboardFromBoardStates()
+    {
+        PlayerBoardState[] states = FindObjectsByType<PlayerBoardState>(FindObjectsSortMode.None);
+        System.Array.Sort(states, (a, b) => b.Score.CompareTo(a.Score));
+
+        for (int i = 0; i < leaderboardRows.Length; i++)
+        {
+            if (i >= states.Length || states[i].CharacterId <= 0)
+            {
+                SetLeaderboardRow(i, "#" + (i + 1), "—", 0, 0);
+                continue;
+            }
+
+            string rank = i switch
+            {
+                0 => "🥇",
+                1 => "🥈",
+                2 => "🥉",
+                _ => "#" + (i + 1),
+            };
+
+            string name = states[i].DisplayName;
+            if (states[i].isOwner)
+                name += " (YOU)";
+
+            SetLeaderboardRow(i, rank, name, states[i].Kills, states[i].Score);
+        }
+    }
+
+    void SetupButtons()
     {
         if (playbtn != null)
         {
@@ -157,7 +308,7 @@ public class GameOverUIController : MonoBehaviour
         ApplyExp(currentLevel, currentExp, needExp, expReward);
     }
 
-    private void ApplyExp(int currentLevel, int currentExp, int needExp, int expReward)
+    void ApplyExp(int currentLevel, int currentExp, int needExp, int expReward)
     {
         int newExp = currentExp + expReward;
         int newLevel = currentLevel;
@@ -183,7 +334,7 @@ public class GameOverUIController : MonoBehaviour
             expFill.fillAmount = (float)newExp / newNeedExp;
     }
 
-    private void SetDemoLeaderboard()
+    void SetDemoLeaderboard()
     {
         SetLeaderboardRow(0, "🥇", "BLASTER (YOU)", 4, 2500);
         SetLeaderboardRow(1, "🥈", "MIMI", 2, 1200);
@@ -191,9 +342,9 @@ public class GameOverUIController : MonoBehaviour
         SetLeaderboardRow(3, "#4", "POKO", 0, 300);
     }
 
-    private void SetLeaderboardRow(int index, string rank, string playerName, int kills, int score)
+    void SetLeaderboardRow(int index, string rank, string playerName, int kills, int score)
     {
-        if (index < 0 || index >= leaderboardRows.Length)
+        if (leaderboardRows == null || index < 0 || index >= leaderboardRows.Length)
             return;
 
         LeaderboardRowUI row = leaderboardRows[index];
