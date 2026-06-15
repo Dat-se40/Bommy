@@ -38,6 +38,9 @@ public class PlayerController : NetworkBehaviour
 
         if (keyboard.spaceKey.wasPressedThisFrame || keyboard.enterKey.wasPressedThisFrame)
         {
+            if (!MatchPhaseRules.CanPlaceBomb)
+                return;
+
             if (movementController.IsMoving)
                 return;
 
@@ -55,6 +58,9 @@ public class PlayerController : NetworkBehaviour
     void RequestPlaceBomb(Vector3Int bombCell, RPCInfo rpcInfo = default)
     {
         if (!isServer) return;
+
+        if (!MatchPhaseRules.CanPlaceBomb)
+            return;
 
         Debug.Log($"PlaceBomb called by {rpcInfo.sender.id} at cell {bombCell}");
         if (bombPrefab == null)

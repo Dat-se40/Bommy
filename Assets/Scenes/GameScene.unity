@@ -1980,6 +1980,7 @@ GameObject:
   - component: {fileID: 194919921}
   - component: {fileID: 194919923}
   - component: {fileID: 194919922}
+  - component: {fileID: 194919924}
   m_Layer: 5
   m_Name: 'TimerChip '
   m_TagString: Untagged
@@ -2045,6 +2046,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 194919920}
   m_CullTransparentMesh: 1
+--- !u!114 &194919924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194919920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3937ed61d1b671a40b3ff8f77de50e91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MatchTimerChipUI
+  timerLabel: {fileID: 1214113783}
+  shakeTarget: {fileID: 194919921}
+  normalColor: {r: 0.97, g: 0.89, b: 0.71, a: 1}
+  urgentColor: {r: 0.95, g: 0.2, b: 0.15, a: 1}
+  shakeStartRemainingSeconds: 10
+  shakeStrength: 6
+  shakeDuration: 0.35
+  shakeVibrato: 8
 --- !u!1 &212347875
 GameObject:
   m_ObjectHideFlags: 0
@@ -13683,6 +13704,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1835806104}
   - component: {fileID: 1835806105}
+  - component: {fileID: 1835806110}
+  - component: {fileID: 1835806109}
+  - component: {fileID: 1835806108}
+  - component: {fileID: 1835806107}
+  - component: {fileID: 1835806106}
+  - component: {fileID: 1835806111}
   m_Layer: 0
   m_Name: GameAuth
   m_TagString: Untagged
@@ -13726,6 +13753,144 @@ MonoBehaviour:
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
+--- !u!114 &1835806106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835806103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b881e48ffb7a59a4a81f5c9a7ce62ddf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MatchPhaseBroadcast
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
+--- !u!114 &1835806107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835806103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6bad3261b7aeea44ac4d158d00167ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MatchZoneShrinkState
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
+  phaseBroadcast: {fileID: 1835806106}
+  zoneShrinkDurationSeconds: 30
+--- !u!114 &1835806108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835806103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c15a8551b9edcba4e8b13aa91fbf7f86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MatchGameplayState
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
+  phaseBroadcast: {fileID: 1835806106}
+  gameplayDurationSeconds: 150
+--- !u!114 &1835806109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835806103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3790ee429d483984cb01cf54f85a7f10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MatchPrepState
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
+  phaseBroadcast: {fileID: 1835806106}
+  prepDurationSeconds: 30
+--- !u!114 &1835806110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835806103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b75530599bfcfa49ae4ecfe6ed3d21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PurrNet.Runtime::PurrNet.StateMachine.StateMachine
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
+  _ownerAuth: 0
+  _states:
+  - {fileID: 1835806109}
+  - {fileID: 1835806108}
+  - {fileID: 1835806107}
+--- !u!114 &1835806111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835806103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c89c089bc02c8284c8b7a68b0ff7d12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MatchStateMachineBootstrap
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
+  stateMachine: {fileID: 0}
 --- !u!1 &1885123858
 GameObject:
   m_ObjectHideFlags: 0
