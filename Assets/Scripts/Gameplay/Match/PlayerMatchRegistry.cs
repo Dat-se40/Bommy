@@ -40,6 +40,44 @@ public sealed class PlayerMatchRegistry
 
         return count;
     }
+    /// <summary>Server: chốt điểm survive + snapshot leaderboard.</summary>
+    public List<LeaderBoardData> BuildLeaderBoardEntries(System.Action<PlayerRuntimeEntry> onSurvivorScored)
+    {
+        List<LeaderBoardData> result = new List<LeaderBoardData>();
+
+        foreach (KeyValuePair<PlayerID, PlayerRuntimeEntry> item in byPlayerId)
+        {
+            PlayerRuntimeEntry entry = item.Value;
+
+            if (entry?.Infor == null || entry.BoardState == null)
+                continue;
+
+            if (!entry.Infor.IsEliminated)
+                onSurvivorScored?.Invoke(entry);
+
+            result.Add(
+                new LeaderBoardData
+                {
+                    slotIndex = entry.BoardState.SlotIndex,
+                    name = entry.Infor.PlayerName,
+                    kills = entry.Infor.Kills,
+                    score = entry.Infor.Score,
+                }
+            );
+        }
+
+        result.Sort(
+            (p1, p2) =>
+            {
+                if (p1.score == p2.score)
+                    return p2.kills.CompareTo(p1.kills);
+
+                return p2.score.CompareTo(p1.score);
+            }
+        );
+
+        return result;
+    }
 }
 
 public sealed class PlayerRuntimeEntry
@@ -47,4 +85,12 @@ public sealed class PlayerRuntimeEntry
     public PlayerController Controller;
     public PlayerInfor Infor;
     public PlayerBoardState BoardState;
+    
+}
+public struct LeaderBoardData
+{
+    public int slotIndex;
+    public string name;
+    public int kills;
+    public int score;
 }

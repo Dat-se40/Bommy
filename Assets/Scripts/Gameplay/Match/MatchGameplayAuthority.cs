@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using PurrNet;
 using UnityEngine;
 
@@ -31,11 +32,11 @@ public class MatchGameplayAuthority : NetworkBehaviour
     readonly SyncList<MatchEvent> matchEvents = new();
     readonly SyncVar<int> matchPlayerCount = new();
     readonly SyncVar<bool> matchFinished = new();
-
+    readonly SyncList<LeaderBoardData> leaderBoardData = new();
     public SyncList<MatchEvent> MatchEvents => matchEvents;
     public int MatchPlayerCount => matchPlayerCount.value;
     public bool IsMatchFinished => matchFinished.value;
-
+    public SyncList<LeaderBoardData> LeaderBoardData => leaderBoardData;
     public event Action<bool> MatchFinishedChanged;
 
     void Awake()
@@ -170,6 +171,9 @@ public class MatchGameplayAuthority : NetworkBehaviour
         if (registry.CountNotEliminated() > 1)
             return;
 
+        BuildLeaderBoard();
+        PublishLeaderBoard();
+
         if (!matchFinished.value)
             matchFinished.value = true;
     }
@@ -207,5 +211,33 @@ public class MatchGameplayAuthority : NetworkBehaviour
                 value = value,
             }
         );
+    }
+    void BuildLeaderBoard()
+    {
+        if (!isServer)
+            return;
+
+        pendingLeaderBoard = registry.BuildLeaderBoardEntries(
+            survivor =>
+            {
+                survivor.Infor.AddScore(General.SCORE_SURVIVE_BONUS);
+                PublishPlayer(survivor);
+            }
+        );
+    }
+
+    List<LeaderBoardData> pendingLeaderBoard;
+
+    void PublishLeaderBoard()
+    {
+        if (!isServer || pendingLeaderBoard == null)
+            return;
+
+        leaderBoardData.Clear();
+
+        for (int i = 0; i < pendingLeaderBoard.Count; i++)
+            leaderBoardData.Add(pendingLeaderBoard[i]);
+
+        pendingLeaderBoard = null;
     }
 }

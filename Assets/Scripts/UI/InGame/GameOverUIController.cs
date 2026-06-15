@@ -1,4 +1,3 @@
-using PurrNet;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -18,6 +17,7 @@ public class GameOverUIController : MonoBehaviour
         public TMP_Text playerNamelbl;
         public TMP_Text killslbl;
         public TMP_Text scorelbl;
+        public GameObject gameObject;
     }
 
     [Header("Scenes")]
@@ -57,7 +57,6 @@ public class GameOverUIController : MonoBehaviour
     [Header("Match End")]
     [SerializeField] private float matchStartTime;
 
-    int matchPlayerCount;
     bool matchEnded;
 
     void Awake()
@@ -101,50 +100,92 @@ public class GameOverUIController : MonoBehaviour
 
     IEnumerator PresentMatchEndWhenReady()
     {
-        // Đợi 1–2 frame để SyncVar eliminated / score kịp replicate trên client.
-        yield return null;
-        yield return null;
+        MatchGameplayAuthority authority = MatchGameplayAuthority.Instance;
 
-        matchPlayerCount = MatchGameplayAuthority.Instance != null
-            ? MatchGameplayAuthority.Instance.MatchPlayerCount
-            : CountMatchPlayers();
+        float timeout = 3f;
+        while (authority != null && authority.LeaderBoardData.Count == 0 && timeout > 0f)
+        {
+            timeout -= Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        yield return null;
 
         PresentMatchEnd();
     }
 
-    static int CountMatchPlayers()
-    {
-        PlayerBoardState[] states = FindObjectsByType<PlayerBoardState>(FindObjectsSortMode.None);
-        int count = 0;
-
-        for (int i = 0; i < states.Length; i++)
-        {
-            if (states[i].CharacterId > 0)
-                count++;
-        }
-
-        return count;
-    }
-
     static PlayerBoardState FindLocalBoardState()
     {
-        PlayerBoardState[] states = FindObjectsByType<PlayerBoardState>(FindObjectsSortMode.None);
+        PlayerController[] controllers = FindObjectsByType<PlayerController>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None
+        );
 
-        for (int i = 0; i < states.Length; i++)
+        for (int i = 0; i < controllers.Length; i++)
         {
-            if (states[i].isOwner)
-                return states[i];
+            if (!controllers[i].isOwner)
+                continue;
+
+            if (controllers[i].TryGetComponent(out PlayerBoardState board))
+                return board;
         }
 
-        return states.Length > 0 ? states[0] : null;
+        return null;
+    }
+
+    static bool TryGetLocalLeaderBoardData(
+        PlayerBoardState localBoard,
+        MatchGameplayAuthority authority,
+        out LeaderBoardData data
+    )
+    {
+        data = default;
+
+        if (authority == null || authority.LeaderBoardData.Count == 0)
+            return false;
+
+        int localSlot = localBoard != null ? localBoard.SlotIndex : -1;
+
+        for (int i = 0; i < authority.LeaderBoardData.Count; i++)
+        {
+            LeaderBoardData entry = authority.LeaderBoardData[i];
+
+            if (localSlot >= 0 && entry.slotIndex == localSlot)
+            {
+                data = entry;
+                return true;
+            }
+        }
+
+        if (localBoard == null)
+            return false;
+
+        string localName = localBoard.DisplayName;
+
+        for (int i = 0; i < authority.LeaderBoardData.Count; i++)
+        {
+            LeaderBoardData entry = authority.LeaderBoardData[i];
+
+            if (entry.name == localName)
+            {
+                data = entry;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     void PresentMatchEnd()
     {
-        PlayerBoardState local = FindLocalBoardState();
-        bool isWin = local != null && !local.IsEliminated;
-        int kills = local != null ? local.Kills : 0;
-        int score = local != null ? local.Score : 0;
+        MatchGameplayAuthority authority = MatchGameplayAuthority.Instance;
+        PlayerBoardState localBoard = FindLocalBoardState();
+
+        bool hasLeaderData = TryGetLocalLeaderBoardData(localBoard, authority, out LeaderBoardData localData);
+
+        bool isWin = localBoard != null && !localBoard.IsEliminated;
+        int kills = hasLeaderData ? localData.kills : (localBoard != null ? localBoard.Kills : 0);
+        int score = hasLeaderData ? localData.score : (localBoard != null ? localBoard.Score : 0);
         string timeText = FormatElapsedTime(Time.time - matchStartTime);
 
         int goldReward = Mathf.Max(10, score / 20);
@@ -178,30 +219,39 @@ public class GameOverUIController : MonoBehaviour
 
     void PopulateLeaderboardFromBoardStates()
     {
-        PlayerBoardState[] states = FindObjectsByType<PlayerBoardState>(FindObjectsSortMode.None);
-        System.Array.Sort(states, (a, b) => b.Score.CompareTo(a.Score));
+        MatchGameplayAuthority authority = MatchGameplayAuthority.Instance;
+        if (authority == null)
+            return;
+
+        int lbSize = authority.LeaderBoardData.Count;
 
         for (int i = 0; i < leaderboardRows.Length; i++)
         {
-            if (i >= states.Length || states[i].CharacterId <= 0)
+            LeaderboardRowUI row = leaderboardRows[i];
+
+            if (row.gameObject == null)
+                continue;
+
+            if (i >= lbSize)
             {
-                SetLeaderboardRow(i, "#" + (i + 1), "—", 0, 0);
+                row.gameObject.SetActive(false);
                 continue;
             }
 
-            string rank = i switch
-            {
-                0 => "🥇",
-                1 => "🥈",
-                2 => "🥉",
-                _ => "#" + (i + 1),
-            };
+            row.gameObject.SetActive(true);
+            LeaderBoardData data = authority.LeaderBoardData[i];
 
-            string name = states[i].DisplayName;
-            if (states[i].isOwner)
-                name += " (YOU)";
+            if (row.ranklbl != null)
+                row.ranklbl.text = (i + 1).ToString();
 
-            SetLeaderboardRow(i, rank, name, states[i].Kills, states[i].Score);
+            if (row.playerNamelbl != null)
+                row.playerNamelbl.text = string.IsNullOrEmpty(data.name) ? "UNKNOWN" : data.name;
+
+            if (row.killslbl != null)
+                row.killslbl.text = data.kills.ToString();
+
+            if (row.scorelbl != null)
+                row.scorelbl.text = data.score.ToString();
         }
     }
 
