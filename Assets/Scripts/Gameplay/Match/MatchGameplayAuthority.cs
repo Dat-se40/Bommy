@@ -171,11 +171,7 @@ public class MatchGameplayAuthority : NetworkBehaviour
         if (registry.CountNotEliminated() > 1)
             return;
 
-        BuildLeaderBoard();
-        PublishLeaderBoard();
-
-        if (!matchFinished.value)
-            matchFinished.value = true;
+        EndMatch();
     }
 
     public void GrantScore(PlayerID playerId, int amount)
@@ -212,6 +208,29 @@ public class MatchGameplayAuthority : NetworkBehaviour
             }
         );
     }
+    /// <summary>
+    /// Kết thúc match theo timer (zone shrink) hoặc gọi trực tiếp từ gameplay.
+    /// Build leaderboard trước khi set matchFinished để UI nhận đủ dữ liệu.
+    /// </summary>
+    public void GameOver()
+    {
+        if (!isServer)
+            return;
+
+        EndMatch();
+    }
+
+    void EndMatch()
+    {
+        if (!isServer || matchFinished.value)
+            return;
+
+        BuildLeaderBoard();
+        PublishLeaderBoard();
+        matchFinished.value = true;
+
+        AppendEvent(MatchEventType.GameOver, new PlayerID(0, true), new PlayerID(0, true), 0);
+    }
     void BuildLeaderBoard()
     {
         if (!isServer)
@@ -234,7 +253,7 @@ public class MatchGameplayAuthority : NetworkBehaviour
             return;
 
         leaderBoardData.Clear();
-
+        
         for (int i = 0; i < pendingLeaderBoard.Count; i++)
             leaderBoardData.Add(pendingLeaderBoard[i]);
 

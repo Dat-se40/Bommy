@@ -171,6 +171,7 @@ public class MovementController : NetworkBehaviour
         currentCell = cell;
         targetCell = cell;
 
+        // Client gửi lên server; host đã là server nên cập nhật local là đủ.
         if (isOwner && !isServer)
             ReportCurrentCellRpc(cell);
     }
@@ -309,7 +310,13 @@ public class MovementController : NetworkBehaviour
 
     bool IsOwnCollider(Collider2D collider)
     {
-        return collider.transform.root == transform.root;
+        if (collider == null)
+            return false;
+
+        if (collider.attachedRigidbody != null && rb != null && collider.attachedRigidbody == rb)
+            return true;
+
+        return collider.transform == transform || collider.transform.IsChildOf(transform);
     }
 
     private void UpdateAnimator()

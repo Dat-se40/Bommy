@@ -26,6 +26,7 @@ public class ExplosionCreator : NetworkBehaviour
     [SerializeField] private LayerMask playerLayer;
 
     readonly SyncList<Vector3Int> destroyedCells = new();
+    readonly SyncList<Vector3Int> shrinkCells = new();
 
     public static ExplosionCreator Instance { get; private set; }
 
@@ -45,13 +46,67 @@ public class ExplosionCreator : NetworkBehaviour
         base.OnSpawned();
 
         destroyedCells.onChanged += OnDestroyedCellsChanged;
+        shrinkCells.onChanged += OnShrinkCellsChanged;
         ReplayAllDestroyedCells();
+        ReplayAllShrinkCells();
     }
 
     protected override void OnDespawned()
     {
         destroyedCells.onChanged -= OnDestroyedCellsChanged;
+        shrinkCells.onChanged -= OnShrinkCellsChanged;
         base.OnDespawned();
+    }
+
+    /// <summary>Server — thêm ô bo vào SyncList (client + join muộn replay giống destroyedCells).</summary>
+    public void ServerAddShrinkCell(Vector3Int cell)
+    {
+        if (!isServer)
+            return;
+
+        if (ContainsShrinkCell(cell))
+            return;
+
+        shrinkCells.Add(cell);
+    }
+
+    /// <summary>Gọi khi MapRefs spawn sau network spawn.</summary>
+    public void ReplayShrinkCellsOnMapReady()
+    {
+        ReplayAllShrinkCells();
+    }
+
+    bool ContainsShrinkCell(Vector3Int cell)
+    {
+        for (int i = 0; i < shrinkCells.Count; i++)
+        {
+            if (shrinkCells[i] == cell)
+                return true;
+        }
+
+        return false;
+    }
+
+    void OnShrinkCellsChanged(SyncListChange<Vector3Int> change)
+    {
+        if (change.operation != SyncListOperation.Added)
+            return;
+
+        ApplyShrinkCellLocal(change.value);
+    }
+
+    void ReplayAllShrinkCells()
+    {
+        for (int i = 0; i < shrinkCells.Count; i++)
+            ApplyShrinkCellLocal(shrinkCells[i]);
+    }
+
+    static void ApplyShrinkCellLocal(Vector3Int cell)
+    {
+        if (MapRefs.Instance == null)
+            return;
+
+        MapRefs.Instance.ApplyShrinkCell(cell);
     }
 
     public void CreateExplosionAtCell(Vector3Int originCell, PlayerID? creator)
