@@ -166,8 +166,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -592,8 +592,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -731,8 +731,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name: ""
+  m_EditorClassIdentifier: ""
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -5019,6 +5019,7 @@ RectTransform:
   - {fileID: 1842941694}
   - {fileID: 638206401}
   - {fileID: 542145231}
+  - {fileID: 1451965624}
   m_Father: {fileID: 550370428}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5026,6 +5027,75 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1451965623
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1451965624}
+  - component: {fileID: 1451965625}
+  m_Layer: 5
+  m_Name: BackendConnectionStatusChip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1451965624
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451965623}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1369335425}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 859, y: 445}
+  m_SizeDelta: {x: 190, y: 34}
+  m_Pivot: {x: 1, y: 1}
+--- !u!114 &1451965625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451965623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c4c06f29ec482d86fa4d06013fc2c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNameLabel: {fileID: 0}
+  statusDot: {fileID: 0}
+  background: {fileID: 0}
+  disconnectedColor: {r: 0.48, g: 0.5, b: 0.52, a: 1}
+  connectedColor: {r: 0.28, g: 0.86, b: 0.42, a: 1}
+  failedColor: {r: 0.9, g: 0.16, b: 0.12, a: 1}
+  backgroundColor: {r: 0.08, g: 0.09, b: 0.1, a: 0.72}
+  labelColor: {r: 0.96, g: 0.93, b: 0.84, a: 1}
+  childAlignment: 5
+  paddingLeft: 12
+  paddingRight: 12
+  paddingTop: 6
+  paddingBottom: 6
+  spacing: 8
+  dotSize: 12
+  labelWidth: 138
+  labelHeight: 22
+  labelFontSize: 16
+  editorPreviewName: Player
+  ensureManagerOnEnable: 1
+  autoBuildChildren: 1
 --- !u!1 &1508518562
 GameObject:
   m_ObjectHideFlags: 0
