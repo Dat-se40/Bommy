@@ -297,8 +297,6 @@ public class CharacterSelectShopController : MonoBehaviour
         PlayerPrefs.SetInt(MatchSessionBroker.GetOwnedKey(data.CharacterId), 1);
         PlayerPrefs.Save();
 
-        // TODO[REST_API] POST /v1/shop/purchase { characterId }
-
         RefreshProgressUI();
         UpdateReadyButtonState();
         RefreshAllCards();
