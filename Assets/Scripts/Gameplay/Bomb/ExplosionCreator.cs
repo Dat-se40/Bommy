@@ -245,6 +245,7 @@ public class ExplosionCreator : NetworkBehaviour
             return;
 
         ApplyDestroyCellLocal(change.value);
+        SoundPlayback.PlaySynced(SoundKey.SfxExplosion);
     }
 
     void ReplayAllDestroyedCells()
