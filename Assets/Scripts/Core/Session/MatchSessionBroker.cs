@@ -8,13 +8,6 @@ using UnityEngine;
 /// </summary>
 public static class MatchSessionBroker
 {
-    const string CharacterIdKey = "SelectedCharacterId";
-    const string CharacterIndexKey = "SelectedCharacterIndex";
-    const string CharacterNameKey = "SelectedCharacterName";
-    const string CharacterHpKey = "SelectedCharacterHp";
-    const string CharacterBombKey = "SelectedCharacterBomb";
-    const string CharacterSpeedKey = "SelectedCharacterSpeed";
-
     static CharacterDatabase characterCatalog;
     static PlayerMatchProfile localPlayer;
     static readonly List<PlayerMatchProfile> roster = new();
@@ -38,7 +31,6 @@ public static class MatchSessionBroker
         }
 
         localPlayer = profile;
-        PersistLocalToPlayerPrefs(profile);
         SyncLegacyGameSession(profile);
 
         UpsertRosterSlot(profile);
@@ -52,7 +44,12 @@ public static class MatchSessionBroker
 
     public static PlayerMatchProfile GetLocalPlayer()
     {
-        return localPlayer;
+        PlayerMatchProfile profile = localPlayer;
+
+        if (profile.characterId > 0)
+            profile.displayName = NakamaConnectionManager.EnsureExists().DisplayName;
+
+        return profile;
     }
 
     public static bool TryGetRosterSlot(int slotIndex, out PlayerMatchProfile profile)
@@ -70,30 +67,12 @@ public static class MatchSessionBroker
         return false;
     }
 
-    public static void ApplyAccountSnapshot(PlayerAccountSnapshot account)
-    {
-        if (account == null)
-            return;
-
-        PlayerPrefs.SetInt("PlayerGold", account.gold);
-        PlayerPrefs.SetInt("PlayerLevel", account.level);
-        PlayerPrefs.SetString("PlayerDisplayName", account.displayName);
-
-        if (account.ownedCharacterIds != null)
-        {
-            for (int i = 0; i < account.ownedCharacterIds.Length; i++)
-                PlayerPrefs.SetInt(GetOwnedKey(account.ownedCharacterIds[i]), 1);
-        }
-
-        PlayerPrefs.Save();
-    }
-
-    public static void LoadLocalFromPlayerPrefs(CharacterDatabase database)
+    public static void LoadLocalFromProgression(CharacterDatabase database)
     {
         if (database == null)
             return;
 
-        int characterId = PlayerPrefs.GetInt(CharacterIdKey, 0);
+        int characterId = PlayerProgressionService.Instance?.Current?.selectedCharacterId ?? 1;
         int catalogIndex = database.GetIndexById(characterId);
 
         if (catalogIndex < 0 && database.Count > 0)
@@ -107,10 +86,7 @@ public static class MatchSessionBroker
         if (definition == null)
             return;
 
-        string displayName = PlayerPrefs.GetString(
-            CharacterNameKey,
-            PlayerPrefs.GetString("PlayerDisplayName", definition.CharacterName)
-        );
+        string displayName = NakamaConnectionManager.EnsureExists().DisplayName;
 
         localPlayer = PlayerMatchProfile.FromDefinition(
             definition,
@@ -119,18 +95,6 @@ public static class MatchSessionBroker
             isLocal: true,
             displayNameOverride: displayName
         );
-    }
-
-    public static void SeedSampleLocalPlayer(SamplePlayerDataSheet sheet)
-    {
-        if (sheet == null)
-            return;
-
-        if (sheet.account != null)
-            ApplyAccountSnapshot(sheet.account);
-
-        if (sheet.defaultLocalProfile.characterId > 0)
-            CommitLocalSelection(sheet.defaultLocalProfile);
     }
 
     public static CharacterDefinition ResolveDefinition(PlayerMatchProfile profile)
@@ -171,6 +135,14 @@ public static class MatchSessionBroker
         RosterChanged?.Invoke();
     }
 
+    public static void Reset()
+    {
+        characterCatalog = null;
+        localPlayer = default;
+        roster.Clear();
+        RosterChanged?.Invoke();
+    }
+
     static void UpsertRosterSlot(PlayerMatchProfile profile)
     {
         for (int i = 0; i < roster.Count; i++)
@@ -187,30 +159,18 @@ public static class MatchSessionBroker
         RosterChanged?.Invoke();
     }
 
-    static void PersistLocalToPlayerPrefs(PlayerMatchProfile profile)
-    {
-        PlayerPrefs.SetInt(CharacterIdKey, profile.characterId);
-        PlayerPrefs.SetInt(CharacterIndexKey, profile.catalogIndex);
-        PlayerPrefs.SetString(CharacterNameKey, profile.displayName);
-        PlayerPrefs.SetInt(CharacterHpKey, profile.hp);
-        PlayerPrefs.SetInt(CharacterBombKey, profile.bomb);
-        PlayerPrefs.SetInt(CharacterSpeedKey, profile.speed);
-        PlayerPrefs.Save();
-    }
-
     static void SyncLegacyGameSession(PlayerMatchProfile profile)
     {
+        CharacterDefinition definition = ResolveDefinition(profile);
+        string characterName = definition != null ? definition.CharacterName : "Player";
+
         GameSession.SetSelectedCharacter(
             profile.catalogIndex,
-            profile.displayName,
+            characterName,
             profile.hp,
             profile.bomb,
             profile.speed
         );
     }
 
-    public static string GetOwnedKey(int characterId)
-    {
-        return "CharacterOwned_" + characterId;
-    }
 }

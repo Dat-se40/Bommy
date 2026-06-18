@@ -190,8 +190,9 @@ public class GameOverUIController : MonoBehaviour
 
         int goldReward = Mathf.Max(10, score / 20);
         int expReward = Mathf.Max(20, score / 10);
-        int level = PlayerPrefs.GetInt("PlayerLevel", 1);
-        int currentExp = PlayerPrefs.GetInt("PlayerExp", 0);
+        PlayerAccountSnapshot progression = PlayerProgressionService.Instance?.Current;
+        int level = progression?.level ?? 1;
+        int currentExp = progression?.experience ?? 0;
         int needExp = 100 + level * 50;
 
         ShowGameOver(

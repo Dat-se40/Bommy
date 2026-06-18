@@ -31,13 +31,6 @@ public static class GameSession
         SelectedCharacterHp = hp;
         SelectedCharacterBomb = bomb;
         SelectedCharacterSpeed = speed;
-
-        UnityEngine.PlayerPrefs.SetInt("SelectedCharacterIndex", index);
-        UnityEngine.PlayerPrefs.SetString("SelectedCharacterName", characterName);
-        UnityEngine.PlayerPrefs.SetInt("SelectedCharacterHp", hp);
-        UnityEngine.PlayerPrefs.SetInt("SelectedCharacterBomb", bomb);
-        UnityEngine.PlayerPrefs.SetInt("SelectedCharacterSpeed", speed);
-        UnityEngine.PlayerPrefs.Save();
     }
 
     public static void SetRoom(string roomName, string mapName, int maxPlayers)
@@ -45,5 +38,18 @@ public static class GameSession
         RoomName = roomName;
         MapName = mapName;
         MaxPlayers = maxPlayers;
+    }
+
+    public static void Reset()
+    {
+        CharacterSelectMode = CharacterSelectMode.Play;
+        RoomName = "BM-0000";
+        MapName = "Classic Garden";
+        MaxPlayers = 4;
+        SelectedCharacterIndex = 0;
+        SelectedCharacterName = "Player";
+        SelectedCharacterHp = 3;
+        SelectedCharacterBomb = 1;
+        SelectedCharacterSpeed = 60;
     }
 }

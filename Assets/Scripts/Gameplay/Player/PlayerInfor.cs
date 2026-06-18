@@ -140,23 +140,12 @@ public class PlayerInfor : MonoBehaviour
         PlayerMatchProfile profile = MatchSessionBroker.GetLocalPlayer();
 
         if (profile.characterId <= 0)
-            MatchSessionBroker.LoadLocalFromPlayerPrefs(MatchSessionBroker.CharacterCatalog);
+            MatchSessionBroker.LoadLocalFromProgression(MatchSessionBroker.CharacterCatalog);
 
         profile = MatchSessionBroker.GetLocalPlayer();
 
         if (profile.characterId > 0)
             ApplyMatchProfile(profile);
-        else
-            LoadSelectedCharacterStatsLegacy();
-    }
-
-    void LoadSelectedCharacterStatsLegacy()
-    {
-        playerName = PlayerPrefs.GetString("SelectedCharacterName", playerName);
-        characterId = PlayerPrefs.GetInt("SelectedCharacterId", characterId);
-        catalogIndex = PlayerPrefs.GetInt("SelectedCharacterIndex", catalogIndex);
-        maxHp = PlayerPrefs.GetInt("SelectedCharacterHp", maxHp);
-        maxBombs = PlayerPrefs.GetInt("SelectedCharacterBomb", maxBombs);
     }
 
     public void ResetForMatch()

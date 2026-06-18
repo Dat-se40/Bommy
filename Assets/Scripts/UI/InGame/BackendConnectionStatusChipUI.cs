@@ -7,7 +7,6 @@ using UnityEngine.UI;
 /// </summary>
 public class BackendConnectionStatusChipUI : MonoBehaviour
 {
-    const string PlayerDisplayNamePrefName = "PlayerDisplayName";
     const float DefaultDotSize = 12f;
     const float DefaultLabelWidth = 138f;
     const float DefaultLabelHeight = 22f;
@@ -65,14 +64,9 @@ public class BackendConnectionStatusChipUI : MonoBehaviour
         EnsureVisuals();
 
         if (ensureManagerOnEnable)
-        {
             manager = NakamaConnectionManager.EnsureExists();
-            _ = manager.InitializeAsync();
-        }
         else
-        {
             manager = NakamaConnectionManager.Instance;
-        }
 
         NakamaConnectionManager.StatusChanged += RequestRefresh;
         Refresh();
@@ -132,11 +126,6 @@ public class BackendConnectionStatusChipUI : MonoBehaviour
     {
         if (manager != null && !string.IsNullOrWhiteSpace(manager.DisplayName))
             return manager.DisplayName;
-
-        string playerPrefsName = PlayerPrefs.GetString(PlayerDisplayNamePrefName, string.Empty);
-
-        if (!string.IsNullOrWhiteSpace(playerPrefsName))
-            return playerPrefsName;
 
         return "Player";
     }

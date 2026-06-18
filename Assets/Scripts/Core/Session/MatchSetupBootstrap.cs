@@ -8,9 +8,6 @@ public class MatchSetupBootstrap : MonoBehaviour
 {
     [SerializeField] private CharacterDatabase characterDatabase;
     [SerializeField] private PlayerProfileApiClient apiClient;
-    [SerializeField] private SamplePlayerDataSheet offlineSample;
-    [SerializeField] private bool seedSampleOnStart = true;
-
     void Awake()
     {
         if (characterDatabase != null)
@@ -19,24 +16,13 @@ public class MatchSetupBootstrap : MonoBehaviour
         if (apiClient != null)
         {
             apiClient.FetchLocalAccount(OnAccountLoaded);
-            return;
         }
-
-        BootstrapFromOffline();
+        else
+            MatchSessionBroker.LoadLocalFromProgression(characterDatabase);
     }
 
     void OnAccountLoaded(PlayerAccountSnapshot account)
     {
-        MatchSessionBroker.ApplyAccountSnapshot(account);
-        MatchSessionBroker.LoadLocalFromPlayerPrefs(characterDatabase);
-        BootstrapFromOffline();
-    }
-
-    void BootstrapFromOffline()
-    {
-        if (seedSampleOnStart && offlineSample != null)
-            MatchSessionBroker.SeedSampleLocalPlayer(offlineSample);
-        else
-            MatchSessionBroker.LoadLocalFromPlayerPrefs(characterDatabase);
+        MatchSessionBroker.LoadLocalFromProgression(characterDatabase);
     }
 }

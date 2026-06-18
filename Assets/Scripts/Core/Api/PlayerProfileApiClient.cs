@@ -6,16 +6,9 @@ using UnityEngine;
 /// </summary>
 public class PlayerProfileApiClient : MonoBehaviour
 {
-    [Header("Offline Fallback")]
-    [SerializeField] private SamplePlayerDataSheet offlineSample;
-
     public void FetchLocalAccount(Action<PlayerAccountSnapshot> onCompleted)
     {
-        PlayerAccountSnapshot snapshot = offlineSample != null
-            ? offlineSample.account
-            : new PlayerAccountSnapshot();
-
-        onCompleted?.Invoke(snapshot);
+        onCompleted?.Invoke(PlayerProgressionService.Instance?.Current);
     }
 
     public bool ValidateCharacterOwnership(
@@ -24,9 +17,6 @@ public class PlayerProfileApiClient : MonoBehaviour
         CharacterDefinition definition
     )
     {
-        if (definition != null && definition.DefaultOwned)
-            return true;
-
         if (account?.ownedCharacterIds == null)
             return false;
 
@@ -36,6 +26,6 @@ public class PlayerProfileApiClient : MonoBehaviour
                 return true;
         }
 
-        return PlayerPrefs.GetInt(MatchSessionBroker.GetOwnedKey(characterId), 0) == 1;
+        return false;
     }
 }

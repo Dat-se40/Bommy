@@ -177,11 +177,12 @@ public class CharacterSelectController : MonoBehaviour
 
     private void SaveSelectedCharacter(CharacterInfo data)
     {
-        PlayerPrefs.SetInt("SelectedCharacterIndex", selectedIndex);
-        PlayerPrefs.SetString("SelectedCharacterName", data.characterName);
-        PlayerPrefs.SetInt("SelectedCharacterHp", data.hp);
-        PlayerPrefs.SetInt("SelectedCharacterBomb", data.bomb);
-        PlayerPrefs.SetInt("SelectedCharacterSpeed", data.speed);
-        PlayerPrefs.Save();
+        GameSession.SetSelectedCharacter(
+            selectedIndex,
+            data.characterName,
+            data.hp,
+            data.bomb,
+            data.speed
+        );
     }
 }

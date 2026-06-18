@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Nakama;
 using UnityEngine;
@@ -13,18 +14,26 @@ public enum NakamaConnectionStatus
 }
 
 /// <summary>
-/// Global Unity-side Nakama client/session/socket owner.
+/// Persistent owner of Nakama client, email session, account, and socket state.
+/// Authentication flow and scene entry are coordinated by AccountSessionCoordinator.
 /// </summary>
 public sealed class NakamaConnectionManager : MonoBehaviour
 {
     const string SingletonName = "[NakamaConnectionManager]";
-    const string SessionPrefName = "Bommy.Nakama.Session";
-    const string DeviceIdPrefName = "Bommy.Nakama.DeviceId";
-    const string PlayerDisplayNamePrefName = "PlayerDisplayName";
-    const float DefaultRetryInitialDelaySeconds = 1f;
-    const float DefaultRetryMaxDelaySeconds = 5f;
+    const string AuthTokenPrefName = "Bommy.Nakama.AuthToken";
+    const string RefreshTokenPrefName = "Bommy.Nakama.RefreshToken";
+    const string LegacySessionPrefName = "Bommy.Nakama.Session";
+    const string LegacyDeviceIdPrefName = "Bommy.Nakama.DeviceId";
+    const string LegacyDisplayNameCachePrefName = "Bommy.Nakama.DisplayNameCache";
+    const string DisplayNameCachePrefix = "Bommy.Nakama.DisplayNameCache.";
+    const float RetryInitialDelaySeconds = 1f;
+    const float RetryMaxDelaySeconds = 5f;
 
     static NakamaConnectionManager instance;
+    bool socketConnected;
+    bool applicationQuitting;
+    bool manualDisconnectRequested;
+    CancellationTokenSource reconnectCancellation;
 
     [Header("Server")]
     [SerializeField] private string scheme = "http";
@@ -32,38 +41,28 @@ public sealed class NakamaConnectionManager : MonoBehaviour
     [SerializeField] private int port = 7350;
     [SerializeField] private string serverKey = "defaultkey";
 
-    [Header("Startup")]
-    [SerializeField] private bool initializeOnAwake = true;
-    [SerializeField] private bool connectSocketAfterAuth = true;
-
-    [Header("Retry")]
-    [SerializeField] private bool retryOnFailure = true;
-    [SerializeField] private float retryInitialDelaySeconds = DefaultRetryInitialDelaySeconds;
-    [SerializeField] private float retryMaxDelaySeconds = DefaultRetryMaxDelaySeconds;
-
-    Task initializeTask;
-    Task retryTask;
-    float nextRetryDelaySeconds = DefaultRetryInitialDelaySeconds;
-    int retryVersion;
-    bool manualDisconnectRequested;
-    bool applicationQuitting;
-    bool socketConnected;
-
     public static event Action StatusChanged;
+    public static event Action AccountChanged;
 
     public static NakamaConnectionManager Instance => instance;
-
     public IClient Client { get; private set; }
     public ISession Session { get; private set; }
     public ISocket Socket { get; private set; }
+    public IApiAccount Account { get; private set; }
     public NakamaConnectionStatus Status { get; private set; } = NakamaConnectionStatus.Uninitialized;
     public string DisplayName { get; private set; } = "Player";
+    public string Username => Account?.User?.Username ?? Session?.Username ?? string.Empty;
+
+    public bool IsAuthenticated =>
+        Session != null &&
+        !Session.HasExpired(DateTime.UtcNow) &&
+        Account != null &&
+        !string.IsNullOrWhiteSpace(Account.Email);
 
     public bool IsServerReady =>
         Status == NakamaConnectionStatus.SocketConnected &&
         socketConnected &&
-        Session != null &&
-        !Session.HasExpired(DateTime.UtcNow.AddMinutes(1));
+        IsAuthenticated;
 
     public static NakamaConnectionManager EnsureExists()
     {
@@ -80,52 +79,184 @@ public sealed class NakamaConnectionManager : MonoBehaviour
         return instance;
     }
 
-    public Task InitializeAsync()
-    {
-        manualDisconnectRequested = false;
-
-        if (IsServerReady)
-            return Task.CompletedTask;
-
-        if (initializeTask != null && !initializeTask.IsCompleted)
-            return initializeTask;
-
-        initializeTask = InitializeInternalAsync(scheduleRetryOnFailure: true);
-        return initializeTask;
-    }
-
-    public async Task<ISession> AuthenticateDeviceAsync()
+    public async Task<ISession> SignInAsync(string email, string password)
     {
         EnsureClient();
         SetStatus(NakamaConnectionStatus.Initializing);
 
-        ISession restoredSession = TryRestoreSession();
-
-        if (restoredSession != null)
+        try
         {
-            Session = restoredSession;
-            RefreshDisplayName();
+            ISession session = await Client.AuthenticateEmailAsync(
+                email.Trim().ToLowerInvariant(),
+                password,
+                username: null,
+                create: false
+            );
+            await AcceptEmailSessionAsync(session);
+            return Session;
+        }
+        catch
+        {
+            SetStatus(NakamaConnectionStatus.Failed);
+            throw;
+        }
+    }
+
+    public async Task<ISession> RegisterAsync(string email, string username, string password)
+    {
+        EnsureClient();
+        SetStatus(NakamaConnectionStatus.Initializing);
+
+        try
+        {
+            string handle = username.Trim().ToLowerInvariant();
+            ISession session = await Client.AuthenticateEmailAsync(
+                email.Trim().ToLowerInvariant(),
+                password,
+                handle,
+                create: true
+            );
+
+            if (!session.Created)
+            {
+                await Client.SessionLogoutAsync(session);
+                throw new InvalidOperationException("An account already exists for that email.");
+            }
+
+            SetSession(session);
+            await Client.UpdateAccountAsync(Session, handle, handle);
+            await RefreshAccountAsync();
+            ValidateEmailAccount();
             SetStatus(NakamaConnectionStatus.Authenticated);
             return Session;
         }
+        catch
+        {
+            ClearAccountState(clearTokens: true);
+            SetStatus(NakamaConnectionStatus.Failed);
+            throw;
+        }
+    }
 
-        string deviceId = GetOrCreateDeviceId();
-        Session = await Client.AuthenticateDeviceAsync(deviceId);
+    public async Task<bool> TryRestoreSessionAsync()
+    {
+        EnsureClient();
+        SetStatus(NakamaConnectionStatus.Initializing);
 
-        PlayerPrefs.SetString(SessionPrefName, Session.AuthToken);
-        PlayerPrefs.Save();
+        string authToken = PlayerPrefs.GetString(AuthTokenPrefName, string.Empty);
+        string refreshToken = PlayerPrefs.GetString(RefreshTokenPrefName, string.Empty);
 
+        if (string.IsNullOrWhiteSpace(authToken))
+        {
+            ClearLegacyDeviceSession();
+            SetStatus(NakamaConnectionStatus.Uninitialized);
+            return false;
+        }
+
+        ISession restored = Nakama.Session.Restore(authToken, refreshToken);
+
+        if (restored == null ||
+            (restored.HasExpired(DateTime.UtcNow.AddMinutes(1)) &&
+             (string.IsNullOrWhiteSpace(restored.RefreshToken) ||
+              restored.HasRefreshExpired(DateTime.UtcNow.AddMinutes(1)))))
+        {
+            ClearAccountState(clearTokens: true);
+            SetStatus(NakamaConnectionStatus.Uninitialized);
+            return false;
+        }
+
+        try
+        {
+            if (restored.HasExpired(DateTime.UtcNow.AddMinutes(1)))
+                restored = await Client.SessionRefreshAsync(restored);
+
+            await AcceptEmailSessionAsync(restored);
+            return true;
+        }
+        catch (ApiResponseException exception) when (exception.StatusCode == 401 || exception.StatusCode == 403)
+        {
+            Debug.LogWarning($"[NakamaConnectionManager] Saved session was rejected: {exception.Message}", this);
+            ClearAccountState(clearTokens: true);
+            SetStatus(NakamaConnectionStatus.Uninitialized);
+            return false;
+        }
+        catch (InvalidOperationException exception)
+        {
+            Debug.LogWarning($"[NakamaConnectionManager] Saved account was rejected: {exception.Message}", this);
+            ClearAccountState(clearTokens: true);
+            SetStatus(NakamaConnectionStatus.Uninitialized);
+            return false;
+        }
+        catch (Exception exception)
+        {
+            Debug.LogWarning($"[NakamaConnectionManager] Session restore failed: {exception.Message}", this);
+            ClearAccountState(clearTokens: false);
+            SetStatus(NakamaConnectionStatus.Failed);
+            throw;
+        }
+    }
+
+    public async Task<IApiAccount> RefreshAccountAsync()
+    {
+        ISession session = Account == null
+            ? RequireSession(allowAccountPending: true)
+            : await RequireFreshSessionAsync();
+        Account = await Client.GetAccountAsync(session);
         RefreshDisplayName();
-        SetStatus(NakamaConnectionStatus.Authenticated);
+        CacheServerDisplayName();
+        AccountChanged?.Invoke();
+        StatusChanged?.Invoke();
+        return Account;
+    }
 
-        return Session;
+    public async Task<IApiAccount> UpdateDisplayNameAsync(string displayName)
+    {
+        ISession session = await RequireFreshSessionAsync();
+        await Client.UpdateAccountAsync(session, Username, displayName.Trim());
+        return await RefreshAccountAsync();
+    }
+
+    public async Task<IApiFriendList> ListFriendsAsync()
+    {
+        return await Client.ListFriendsAsync(await RequireFreshSessionAsync(), state: null, limit: 100);
+    }
+
+    public async Task AddFriendAsync(string identifier)
+    {
+        ISession session = await RequireFreshSessionAsync();
+        string value = identifier.Trim();
+
+        if (Guid.TryParse(value, out _))
+            await Client.AddFriendsAsync(session, new[] { value });
+        else
+            await Client.AddFriendsAsync(session, Array.Empty<string>(), new[] { value });
+    }
+
+    public async Task AcceptFriendAsync(string userId)
+    {
+        await Client.AddFriendsAsync(await RequireFreshSessionAsync(), new[] { userId });
+    }
+
+    public async Task DeleteFriendAsync(string userId)
+    {
+        await Client.DeleteFriendsAsync(await RequireFreshSessionAsync(), new[] { userId });
+    }
+
+    public async Task<IApiRpc> RpcAsync(string id, string payload = "{}")
+    {
+        return await Client.RpcAsync(await RequireFreshSessionAsync(), id, payload);
     }
 
     public async Task ConnectSocketAsync()
     {
-        if (Session == null || Session.HasExpired(DateTime.UtcNow.AddMinutes(1)))
-            await AuthenticateDeviceAsync();
+        manualDisconnectRequested = false;
+        CancelReconnect();
+        await ConnectSocketInternalAsync();
+    }
 
+    async Task ConnectSocketInternalAsync()
+    {
+        await RequireFreshSessionAsync();
         EnsureSocket();
 
         if (socketConnected)
@@ -135,27 +266,51 @@ public sealed class NakamaConnectionManager : MonoBehaviour
         }
 
         await Socket.ConnectAsync(Session);
-
         socketConnected = true;
         SetStatus(NakamaConnectionStatus.SocketConnected);
     }
 
-    public async Task DisconnectAsync()
+    public async Task DisconnectSocketAsync()
     {
         manualDisconnectRequested = true;
-        CancelRetryLoop();
+        CancelReconnect();
         socketConnected = false;
 
         if (Socket != null)
             await Socket.CloseAsync();
 
-        if (Session != null && !Session.HasExpired(DateTime.UtcNow.AddMinutes(1)))
-            SetStatus(NakamaConnectionStatus.Authenticated);
-        else
-            SetStatus(NakamaConnectionStatus.Uninitialized);
+        SetStatus(IsAuthenticated
+            ? NakamaConnectionStatus.Authenticated
+            : NakamaConnectionStatus.Uninitialized);
     }
 
-    async void Awake()
+    public async Task LogoutAsync()
+    {
+        ISession session = Session;
+
+        try
+        {
+            await DisconnectSocketAsync();
+
+            if (session != null)
+                await Client.SessionLogoutAsync(session);
+        }
+        finally
+        {
+            ClearAccountState(clearTokens: true);
+            SetStatus(NakamaConnectionStatus.Uninitialized);
+        }
+    }
+
+    public void ClearLocalSession()
+    {
+        manualDisconnectRequested = true;
+        CancelReconnect();
+        ClearAccountState(clearTokens: true);
+        SetStatus(NakamaConnectionStatus.Uninitialized);
+    }
+
+    void Awake()
     {
         if (instance != null && instance != this)
         {
@@ -165,125 +320,54 @@ public sealed class NakamaConnectionManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
-
         EnsureClient();
+        ClearLegacyDeviceSession();
         RefreshDisplayName();
-
-        if (initializeOnAwake)
-            await InitializeAsync();
     }
 
     async void OnApplicationQuit()
     {
         applicationQuitting = true;
         manualDisconnectRequested = true;
-        CancelRetryLoop();
+        CancelReconnect();
 
         try
         {
-            await DisconnectAsync();
+            if (Socket != null && socketConnected)
+                await Socket.CloseAsync();
         }
         catch (Exception exception)
         {
-            Debug.LogWarning($"[NakamaConnectionManager] Disconnect failed: {exception.Message}", this);
+            Debug.LogWarning($"[NakamaConnectionManager] Socket close failed: {exception.Message}", this);
         }
     }
 
-    async Task InitializeInternalAsync(bool scheduleRetryOnFailure)
+    async Task AcceptEmailSessionAsync(ISession session)
     {
-        try
-        {
-            await AuthenticateDeviceAsync();
-
-            if (connectSocketAfterAuth)
-                await ConnectSocketAsync();
-
-            ResetRetryDelay();
-
-            if (scheduleRetryOnFailure)
-                CancelRetryLoop();
-        }
-        catch (Exception exception)
-        {
-            socketConnected = false;
-            SetStatus(NakamaConnectionStatus.Failed);
-            Debug.LogWarning($"[NakamaConnectionManager] Nakama startup failed: {exception.Message}", this);
-
-            if (scheduleRetryOnFailure)
-                StartRetryLoop();
-        }
+        SetSession(session);
+        await RefreshAccountAsync();
+        ValidateEmailAccount();
+        SetStatus(NakamaConnectionStatus.Authenticated);
     }
 
-    void StartRetryLoop()
+    void SetSession(ISession session)
     {
-        if (!retryOnFailure || applicationQuitting || manualDisconnectRequested || IsServerReady)
-            return;
-
-        if (retryTask != null && !retryTask.IsCompleted)
-            return;
-
-        int version = ++retryVersion;
-        retryTask = RetryLoopAsync(version);
+        Session = session ?? throw new ArgumentNullException(nameof(session));
+        PlayerPrefs.SetString(AuthTokenPrefName, session.AuthToken ?? string.Empty);
+        PlayerPrefs.SetString(RefreshTokenPrefName, session.RefreshToken ?? string.Empty);
+        PlayerPrefs.Save();
     }
 
-    async Task RetryLoopAsync(int version)
+    void ValidateEmailAccount()
     {
-        try
-        {
-            while (version == retryVersion && retryOnFailure && !applicationQuitting && !manualDisconnectRequested && !IsServerReady)
-            {
-                float retryDelaySeconds = ConsumeRetryDelay();
-                Debug.LogWarning($"[NakamaConnectionManager] Retrying Nakama connection in {retryDelaySeconds:0.#}s.", this);
-
-                await Task.Delay(TimeSpan.FromSeconds(retryDelaySeconds));
-
-                if (version != retryVersion || applicationQuitting || manualDisconnectRequested || IsServerReady)
-                    break;
-
-                if (initializeTask != null && !initializeTask.IsCompleted)
-                    await initializeTask;
-                else
-                {
-                    initializeTask = InitializeInternalAsync(scheduleRetryOnFailure: false);
-                    await initializeTask;
-                }
-            }
-        }
-        catch (Exception exception)
-        {
-            Debug.LogWarning($"[NakamaConnectionManager] Retry loop failed: {exception.Message}", this);
-        }
-        finally
-        {
-            if (version == retryVersion)
-                retryTask = null;
-        }
-    }
-
-    float ConsumeRetryDelay()
-    {
-        float retryDelaySeconds = Mathf.Clamp(nextRetryDelaySeconds, retryInitialDelaySeconds, retryMaxDelaySeconds);
-        nextRetryDelaySeconds = Mathf.Min(retryDelaySeconds * 2f, retryMaxDelaySeconds);
-        return retryDelaySeconds;
-    }
-
-    void ResetRetryDelay()
-    {
-        nextRetryDelaySeconds = retryInitialDelaySeconds;
-    }
-
-    void CancelRetryLoop()
-    {
-        retryVersion++;
-        retryTask = null;
+        if (Account == null || string.IsNullOrWhiteSpace(Account.Email))
+            throw new InvalidOperationException("This account is not linked to an email address.");
     }
 
     void EnsureClient()
     {
-        if (Client != null)
-            return;
-
-        Client = new Client(scheme, host, port, serverKey);
+        if (Client == null)
+            Client = new Client(scheme, host, port, serverKey);
     }
 
     void EnsureSocket()
@@ -297,63 +381,125 @@ public sealed class NakamaConnectionManager : MonoBehaviour
         Socket.ReceivedError += OnSocketError;
     }
 
-    ISession TryRestoreSession()
+    ISession RequireSession(bool allowAccountPending = false)
     {
-        string authToken = PlayerPrefs.GetString(SessionPrefName, string.Empty);
+        EnsureClient();
 
-        if (string.IsNullOrWhiteSpace(authToken))
-            return null;
+        if (Session == null || Session.HasExpired(DateTime.UtcNow.AddMinutes(1)))
+            throw new InvalidOperationException("Nakama authentication is not available.");
 
-        ISession restoredSession = Nakama.Session.Restore(authToken);
+        if (!allowAccountPending && (Account == null || string.IsNullOrWhiteSpace(Account.Email)))
+            throw new InvalidOperationException("An email account is required.");
 
-        if (restoredSession == null || restoredSession.HasExpired(DateTime.UtcNow.AddMinutes(1)))
-            return null;
-
-        return restoredSession;
+        return Session;
     }
 
-    string GetOrCreateDeviceId()
+    async Task<ISession> RequireFreshSessionAsync()
     {
-        string deviceId = PlayerPrefs.GetString(DeviceIdPrefName, string.Empty);
+        EnsureClient();
+        ISession session = Session;
 
-        if (!string.IsNullOrWhiteSpace(deviceId))
-            return deviceId;
+        if (session == null || Account == null || string.IsNullOrWhiteSpace(Account.Email))
+            throw new InvalidOperationException("Nakama authentication is not available.");
 
-        deviceId = SystemInfo.deviceUniqueIdentifier;
+        if (!session.HasExpired(DateTime.UtcNow.AddMinutes(1)))
+            return session;
 
-        if (string.IsNullOrWhiteSpace(deviceId) || deviceId == SystemInfo.unsupportedIdentifier)
-            deviceId = Guid.NewGuid().ToString("N");
+        if (string.IsNullOrWhiteSpace(session.RefreshToken) ||
+            session.HasRefreshExpired(DateTime.UtcNow.AddMinutes(1)))
+            throw new InvalidOperationException("Your session has expired. Log in again.");
 
-        PlayerPrefs.SetString(DeviceIdPrefName, deviceId);
+        Session = await Client.SessionRefreshAsync(session);
+        SetSession(Session);
+        return Session;
+    }
+
+    void ClearAccountState(bool clearTokens)
+    {
+        string previousUserId = Account?.User?.Id ?? Session?.UserId;
+        ReleaseSocket();
+        Session = null;
+        Account = null;
+        socketConnected = false;
+
+        if (clearTokens)
+        {
+            PlayerPrefs.DeleteKey(AuthTokenPrefName);
+            PlayerPrefs.DeleteKey(RefreshTokenPrefName);
+
+            if (!string.IsNullOrWhiteSpace(previousUserId))
+                PlayerPrefs.DeleteKey(DisplayNameCachePrefix + previousUserId);
+
+            PlayerPrefs.Save();
+        }
+
+        RefreshDisplayName();
+        AccountChanged?.Invoke();
+    }
+
+    void ReleaseSocket()
+    {
+        if (Socket == null)
+            return;
+
+        Socket.Connected -= OnSocketConnected;
+        Socket.Closed -= OnSocketClosed;
+        Socket.ReceivedError -= OnSocketError;
+        Socket = null;
+    }
+
+    void ClearLegacyDeviceSession()
+    {
+        PlayerPrefs.DeleteKey(LegacySessionPrefName);
+        PlayerPrefs.DeleteKey(LegacyDeviceIdPrefName);
+        PlayerPrefs.DeleteKey(LegacyDisplayNameCachePrefName);
+        PlayerPrefs.DeleteKey("PlayerDisplayName");
+        PlayerPrefs.DeleteKey("SelectedPlayerDisplayName");
         PlayerPrefs.Save();
+    }
 
-        return deviceId;
+    void CacheServerDisplayName()
+    {
+        string userId = Account?.User?.Id;
+        string serverDisplayName = Account?.User?.DisplayName;
+
+        if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(serverDisplayName))
+            return;
+
+        PlayerPrefs.SetString(DisplayNameCachePrefix + userId, serverDisplayName.Trim());
+        PlayerPrefs.Save();
     }
 
     void RefreshDisplayName()
     {
-        string playerPrefsName = PlayerPrefs.GetString(PlayerDisplayNamePrefName, string.Empty);
+        string serverDisplayName = Account?.User?.DisplayName;
 
-        if (!string.IsNullOrWhiteSpace(playerPrefsName))
+        if (!string.IsNullOrWhiteSpace(serverDisplayName))
         {
-            DisplayName = playerPrefsName;
+            DisplayName = serverDisplayName.Trim();
             return;
         }
 
-        if (Session != null && !string.IsNullOrWhiteSpace(Session.Username))
+        string userId = Account?.User?.Id ?? Session?.UserId;
+
+        if (!string.IsNullOrWhiteSpace(userId))
         {
-            DisplayName = Session.Username;
-            return;
+            string cached = PlayerPrefs.GetString(DisplayNameCachePrefix + userId, string.Empty);
+
+            if (!string.IsNullOrWhiteSpace(cached))
+            {
+                DisplayName = cached;
+                return;
+            }
         }
 
-        DisplayName = "Player";
+        DisplayName = string.IsNullOrWhiteSpace(Username) ? "Player" : Username;
     }
 
     void OnSocketConnected()
     {
         socketConnected = true;
-        ResetRetryDelay();
-        CancelRetryLoop();
+        CancelReconnect();
         SetStatus(NakamaConnectionStatus.SocketConnected);
     }
 
@@ -361,44 +507,67 @@ public sealed class NakamaConnectionManager : MonoBehaviour
     {
         socketConnected = false;
 
-        if (Session != null && !Session.HasExpired(DateTime.UtcNow.AddMinutes(1)))
-            SetStatus(NakamaConnectionStatus.Authenticated);
-        else
-            SetStatus(NakamaConnectionStatus.Uninitialized);
-
-        StartRetryLoop();
+        if (!applicationQuitting)
+        {
+            SetStatus(IsAuthenticated ? NakamaConnectionStatus.Authenticated : NakamaConnectionStatus.Uninitialized);
+            StartReconnect();
+        }
     }
 
     void OnSocketError(Exception exception)
     {
         socketConnected = false;
         Debug.LogWarning($"[NakamaConnectionManager] Socket error: {exception.Message}", this);
-
-        if (Session != null && !Session.HasExpired(DateTime.UtcNow.AddMinutes(1)))
-            SetStatus(NakamaConnectionStatus.Authenticated);
-        else
-            SetStatus(NakamaConnectionStatus.Failed);
-
-        StartRetryLoop();
+        SetStatus(IsAuthenticated ? NakamaConnectionStatus.Authenticated : NakamaConnectionStatus.Failed);
+        StartReconnect();
     }
 
-    void OnValidate()
+    void StartReconnect()
     {
-        retryInitialDelaySeconds = Mathf.Max(0.1f, retryInitialDelaySeconds);
-        retryMaxDelaySeconds = Mathf.Max(retryInitialDelaySeconds, retryMaxDelaySeconds);
-        nextRetryDelaySeconds = Mathf.Clamp(nextRetryDelaySeconds, retryInitialDelaySeconds, retryMaxDelaySeconds);
+        if (applicationQuitting || manualDisconnectRequested || !IsAuthenticated)
+            return;
+
+        CancelReconnect();
+        reconnectCancellation = new CancellationTokenSource();
+        _ = ReconnectLoopAsync(reconnectCancellation.Token);
+    }
+
+    async Task ReconnectLoopAsync(CancellationToken cancellationToken)
+    {
+        float delaySeconds = RetryInitialDelaySeconds;
+
+        while (!cancellationToken.IsCancellationRequested && !applicationQuitting && !manualDisconnectRequested && !socketConnected)
+        {
+            try
+            {
+                await Task.Delay(TimeSpan.FromSeconds(delaySeconds), cancellationToken);
+                await ConnectSocketInternalAsync();
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning($"[NakamaConnectionManager] Socket reconnect failed: {exception.Message}", this);
+                delaySeconds = Mathf.Min(delaySeconds * 2f, RetryMaxDelaySeconds);
+            }
+        }
+    }
+
+    void CancelReconnect()
+    {
+        if (reconnectCancellation == null)
+            return;
+
+        reconnectCancellation.Cancel();
+        reconnectCancellation.Dispose();
+        reconnectCancellation = null;
     }
 
     void SetStatus(NakamaConnectionStatus nextStatus)
     {
         RefreshDisplayName();
-
-        if (Status == nextStatus)
-        {
-            StatusChanged?.Invoke();
-            return;
-        }
-
         Status = nextStatus;
         StatusChanged?.Invoke();
     }
