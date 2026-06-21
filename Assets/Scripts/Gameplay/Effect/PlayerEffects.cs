@@ -92,4 +92,39 @@ public class PlayerEffects : NetworkBehaviour
                 break;
         }
     }
+
+    /// <summary>
+    /// Kiểm tra player có đang active effect theo loại không.
+    /// Dùng cho server quyết định đặt bomb thường hay đặt bẫy đặc biệt.
+    /// </summary>
+    public bool TryGetActiveEffectTemplate(EffectType effectType, out EffectTemplate template)
+    {
+        template = null;
+
+        if (EffectDatabase.Instance == null)
+            return false;
+
+        for (int i = 0; i < effects.Count; i++)
+        {
+            ActiveEffect activeEffect = effects[i];
+
+            if (activeEffect.remainingTime <= 0f)
+                continue;
+
+            if (!EffectDatabase.Instance.TryGet(activeEffect.effectId, out EffectTemplate effectTemplate))
+                continue;
+
+            if (effectTemplate == null)
+                continue;
+
+            if (effectTemplate.effectType != effectType)
+                continue;
+
+            template = effectTemplate;
+            return true;
+        }
+
+        return false;
+    }
+
 }

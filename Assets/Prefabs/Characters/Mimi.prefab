@@ -179,6 +179,7 @@ MonoBehaviour:
   movementController: {fileID: 1157754897553907773}
   playerInfor: {fileID: 4878169392023504884}
   grid: {fileID: 0}
+  effectController: {fileID: 0}
 --- !u!114 &4878169392023504884
 MonoBehaviour:
   m_ObjectHideFlags: 0

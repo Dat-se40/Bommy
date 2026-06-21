@@ -15,6 +15,10 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private PlayerInfor playerInfor;
     [SerializeField] private Grid grid;
 
+    [Header("Effects")]
+    [SerializeField] private PlayerEffects playerEffects;
+
+
     private int activeBombs;
 
     private void Awake()
@@ -24,6 +28,10 @@ public class PlayerController : NetworkBehaviour
 
         if (playerInfor == null)
             playerInfor = GetComponent<PlayerInfor>();
+
+        if (playerEffects == null)
+            playerEffects = GetComponent<PlayerEffects>();
+
     }
 
     private void Update()
@@ -100,6 +108,12 @@ public class PlayerController : NetworkBehaviour
 
         Vector3 bombPosition = grid.GetCellCenterWorld(bombCell);
 
+        if (TryPlaceMossTrap(bombPosition))
+        {
+            activeBombs++;
+            return;
+        }
+
         BombController bomb = Instantiate(
             bombPrefab,
             bombPosition,
@@ -169,4 +183,50 @@ public class PlayerController : NetworkBehaviour
         explosionCreator = ExplosionCreator.Instance;
         bombParent = explosionCreator.transform;
     }
+
+    /// <summary>
+    /// Nếu player đang có buff MossTrap thì đặt bẫy rêu thay vì bomb thường.
+    /// </summary>
+    private bool TryPlaceMossTrap(Vector3 bombPosition)
+    {
+        if (!TryGetActiveEffectTemplate(EffectType.MossTrap, out EffectTemplate effect))
+            return false;
+
+        if (effect.placedBombPrefab == null)
+        {
+            Debug.LogWarning("MossTrap effect does not have placedBombPrefab.");
+            return false;
+        }
+
+        GameObject trapObject = Instantiate(
+            effect.placedBombPrefab,
+            bombPosition,
+            Quaternion.identity,
+            bombParent
+        );
+
+        networkManager.Spawn(trapObject);
+
+        MossTrapController trap = trapObject.GetComponent<MossTrapController>();
+
+        if (trap != null)
+            trap.Init(this, effect);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Lấy EffectTemplate đang active theo EffectType.
+    /// Server dùng hàm này để quyết định đặt bomb thường hay đặt trap.
+    /// </summary>
+    private bool TryGetActiveEffectTemplate(EffectType effectType, out EffectTemplate template)
+    {
+        template = null;
+
+        if (playerEffects == null)
+            return false;
+
+        return playerEffects.TryGetActiveEffectTemplate(effectType, out template);
+    }
+
 }

@@ -24,4 +24,18 @@ public class EffectDatabase : MonoBehaviour
     {
         return lookup[id];
     }
+
+    /// <summary>
+    /// Lấy EffectTemplate an toàn theo id, không ném lỗi nếu id không tồn tại.
+    /// </summary>
+    public bool TryGet(int id, out EffectTemplate template)
+    {
+        template = null;
+
+        if (lookup == null)
+            return false;
+
+        return lookup.TryGetValue(id, out template);
+    }
+
 }
