@@ -1,7 +1,46 @@
 fileFormatVersion: 2
-guid: 42a9e818b3af59c428fafdcffe82612c
+guid: dcc500564d94b654999eca7ff47f0245
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -7898050059186924841
+    second: MiniIcon_0
+  - first:
+      213: 63458302808345106
+    second: MiniIcon_1
+  - first:
+      213: 9087672622409794292
+    second: MiniIcon_2
+  - first:
+      213: 7480658345435112471
+    second: MiniIcon_3
+  - first:
+      213: 7121791059886833940
+    second: MiniIcon_4
+  - first:
+      213: -8793747692277984247
+    second: MiniIcon_5
+  - first:
+      213: 3678212411487774515
+    second: MiniIcon_6
+  - first:
+      213: 4437635450341787714
+    second: MiniIcon_7
+  - first:
+      213: 1212358409207005979
+    second: MiniIcon_8
+  - first:
+      213: -8910701426150577955
+    second: MiniIcon_9
+  - first:
+      213: 3736292855085887209
+    second: MiniIcon_10
+  - first:
+      213: 696580621896103410
+    second: MiniIcon_11
+  - first:
+      213: 7074137284206834762
+    second: MiniIcon_12
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,89 +136,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UI Big Play Button_0
+      name: MiniIcon_0
       rect:
         serializedVersion: 2
         x: 3
-        y: 35
-        width: 90
-        height: 27
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 4, y: 6, z: 4, w: 4}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3088ff6caff37ae4fbe720a6cf9add1b
-      internalID: -715449038
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI Big Play Button_1
-      rect:
-        serializedVersion: 2
-        x: 99
-        y: 35
-        width: 90
-        height: 25
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 4, y: 4, z: 4, w: 4}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b35e7b34aa65dfd478fe31b127705b64
-      internalID: 647722412
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI Big Play Button_2
-      rect:
-        serializedVersion: 2
-        x: 3
-        y: 3
-        width: 90
-        height: 27
+        y: 82
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 2ede44e82b74ba4459fdb8a70e7e3672
-      internalID: -679248391
+      spriteID: 7d219eb115d746290800000000000000
+      internalID: -7898050059186924841
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI Big Play Button_3
+      name: MiniIcon_6
       rect:
         serializedVersion: 2
-        x: 99
-        y: 3
-        width: 90
-        height: 25
+        x: 19
+        y: 50
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 3e2fb0a249e412849954a80822b5ff08
-      internalID: -2128646220
+      spriteID: 337692343b2ab0330800000000000000
+      internalID: 3678212411487774515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniIcon_8
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 33
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b13cd31cc8923d010800000000000000
+      internalID: 1212358409207005979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniIcon_12
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 2
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a44be7d21626c2260800000000000000
+      internalID: 7074137284206834762
       vertices: []
       indices: 
       edges: []
@@ -188,7 +227,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 6908613155e3a22459b1af6e60a685ed
     internalID: 0
     vertices: []
     indices: 
@@ -198,10 +237,19 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      UI Big Play Button_0: -715449038
-      UI Big Play Button_1: 647722412
-      UI Big Play Button_2: -679248391
-      UI Big Play Button_3: -2128646220
+      MiniIcon_0: -7898050059186924841
+      MiniIcon_1: 63458302808345106
+      MiniIcon_10: 3736292855085887209
+      MiniIcon_11: 696580621896103410
+      MiniIcon_12: 7074137284206834762
+      MiniIcon_2: 9087672622409794292
+      MiniIcon_3: 7480658345435112471
+      MiniIcon_4: 7121791059886833940
+      MiniIcon_5: -8793747692277984247
+      MiniIcon_6: 3678212411487774515
+      MiniIcon_7: 4437635450341787714
+      MiniIcon_8: 1212358409207005979
+      MiniIcon_9: -8910701426150577955
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

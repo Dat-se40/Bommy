@@ -5,10 +5,25 @@ public class MainMenu : MonoBehaviour
 {
     [Header("Scenes")]
     [SerializeField] private string characterSelectSceneName = "CharacterSelect";
-    [SerializeField] private string lobbySceneName = "LobbyBrowser";
+    [SerializeField] private string lobbySceneName = "Lobby";
+    [SerializeField] private string authGateSceneName = "AuthGate_demo";
 
     [Header("Settings")]
-    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private GameObject guideOverlay;
+
+    private const string SessionKey = "AUTH_SESSION_ACTIVE";
+
+    private void Start()
+    {
+        if (PlayerPrefs.GetInt(SessionKey, 0) != 1)
+        {
+            SceneManager.LoadScene(authGateSceneName);
+            return;
+        }
+
+        if (guideOverlay != null)
+            guideOverlay.SetActive(false);
+    }
 
     public void Play()
     {
@@ -23,17 +38,21 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(lobbySceneName);
     }
 
-    public void OpenSettings()
+    public void OpenGuide()
     {
-        if (settingsPanel != null)
-            settingsPanel.SetActive(true);
+        if (guideOverlay != null)
+        {
+            guideOverlay.SetActive(true);
+            guideOverlay.transform.SetAsLastSibling();
+        }
     }
 
-    public void CloseSettings()
+    public void CloseGuide()
     {
-        if (settingsPanel != null)
-            settingsPanel.SetActive(false);
+        if (guideOverlay != null)
+            guideOverlay.SetActive(false);
     }
+
 
     public void Quit()
     {
