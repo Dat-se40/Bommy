@@ -19,7 +19,10 @@ MonoBehaviour:
     entries:
     - effect: {fileID: 11400000, guid: 9ca9e98e68e11f54ba241f9a218dad7d, type: 2}
       weight: 0.55
+      maxSpawnCount: 8
     - effect: {fileID: 11400000, guid: be14013a2caccd44f89763785167e99e, type: 2}
       weight: 0.45
+      maxSpawnCount: 12
     - effect: {fileID: 11400000, guid: 46a8cea16360b17468b4cd4cf799fc8c, type: 2}
       weight: 0.45
+      maxSpawnCount: 7

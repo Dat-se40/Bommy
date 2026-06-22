@@ -29,6 +29,8 @@ public class PlayerController : NetworkBehaviour
     readonly SyncVar<int> activeBombs = new();
     readonly SyncVar<int> activeTraps = new();
 
+    PlayerBoardState boardState;
+
     #endregion
 
     #region Unity Methods
@@ -43,6 +45,8 @@ public class PlayerController : NetworkBehaviour
 
         if (playerEffects == null)
             playerEffects = GetComponent<PlayerEffects>();
+
+        TryGetComponent(out boardState);
     }
 
     void Update()
@@ -89,6 +93,7 @@ public class PlayerController : NetworkBehaviour
         }
 
         StartCoroutine(SetUpDI());
+        RefreshBoardPlaceables();
     }
 
     protected override void OnDespawned()
@@ -117,6 +122,8 @@ public class PlayerController : NetworkBehaviour
 
         if (activeBombs.value < 0)
             activeBombs.value = 0;
+
+        RefreshBoardPlaceables();
     }
 
     public void OnTrapRemoved()
@@ -128,6 +135,23 @@ public class PlayerController : NetworkBehaviour
 
         if (activeTraps.value < 0)
             activeTraps.value = 0;
+
+        RefreshBoardPlaceables();
+    }
+
+    public void RefreshBoardPlaceables()
+    {
+        if (!isServer)
+            return;
+
+        if (boardState == null)
+            TryGetComponent(out boardState);
+
+        if (boardState == null)
+            return;
+
+        int trapCharges = playerEffects != null ? playerEffects.MossTrapSkillCount : 0;
+        boardState.PublishPlaceables(activeBombs.value, activeTraps.value, trapCharges);
     }
 
     #endregion
@@ -247,6 +271,7 @@ public class PlayerController : NetworkBehaviour
         networkManager.Spawn(bomb.gameObject);
         bomb.Init(this, explosionCreator, cell);
         activeBombs.value++;
+        RefreshBoardPlaceables();
     }
 
     void PlaceTrapServer(Vector3 worldPosition, Vector3Int cell, RPCInfo rpcInfo)
@@ -274,6 +299,7 @@ public class PlayerController : NetworkBehaviour
         trap.Init(this, effect, cell);
         playerEffects.RemoveEarliestMossTrapSkill();
         activeTraps.value++;
+        RefreshBoardPlaceables();
     }
 
     bool TryGetActiveEffectTemplate(EffectType effectType, out EffectTemplate template)

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using PurrNet;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ public class ItemDropper : MonoBehaviour
 
     [SerializeField]
     LevelConfig defaultLevelConfig;
+
+    readonly Dictionary<int, int> spawnedCounts = new();
 
     public void TryDropAt(Vector3 worldPosition)
     {
@@ -21,10 +24,20 @@ public class ItemDropper : MonoBehaviour
             return;
         }
 
-        if (!config.destructibleDrops.TryRoll(out EffectTemplate template))
+        if (!config.destructibleDrops.TryRoll(spawnedCounts, out EffectTemplate template))
             return;
 
+        RegisterSpawn(template);
         SpawnPickup(template, worldPosition);
+    }
+
+    void RegisterSpawn(EffectTemplate template)
+    {
+        if (template == null)
+            return;
+
+        spawnedCounts.TryGetValue(template.effectId, out int count);
+        spawnedCounts[template.effectId] = count + 1;
     }
 
     void SpawnPickup(EffectTemplate template, Vector3 worldPosition)
@@ -50,5 +63,7 @@ public class ItemDropper : MonoBehaviour
 
         if (LevelRuntime.Current == null && defaultLevelConfig != null)
             LevelRuntime.SetLevel(defaultLevelConfig);
+
+        spawnedCounts.Clear();
     }
 }

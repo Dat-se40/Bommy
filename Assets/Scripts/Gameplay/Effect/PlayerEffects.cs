@@ -79,6 +79,7 @@ public class PlayerEffects : NetworkBehaviour
         effects.Add(effect);
 
         ApplyEffect(effect);
+        NotifyPlaceableBoardChanged();
     }
 
     void ApplyEffect(ActiveEffect effect)
@@ -148,6 +149,17 @@ public class PlayerEffects : NetworkBehaviour
         {
             Debug.Log("Số lượng moss trap còn lại: " + MossTrapSkillCount);
         }
+
+        NotifyPlaceableBoardChanged();
     }
-    public int MossTrapSkillCount => mosEfffectsId.Count; 
+    public int MossTrapSkillCount => mosEfffectsId.Count;
+
+    void NotifyPlaceableBoardChanged()
+    {
+        if (!isServer)
+            return;
+
+        if (TryGetComponent(out PlayerController controller))
+            controller.RefreshBoardPlaceables();
+    }
 }

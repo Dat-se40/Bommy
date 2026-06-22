@@ -96,7 +96,8 @@ public class MapInfoDialogController : MonoBehaviour
 
         for (int i = 0; i < entries.Length; i++)
         {
-            EffectTemplate effect = entries[i].effect;
+            DropEntry entry = entries[i];
+            EffectTemplate effect = entry.effect;
 
             if (effect == null)
                 continue;
@@ -105,7 +106,7 @@ public class MapInfoDialogController : MonoBehaviour
             if (!usedEffectIds.Add(effect.effectId))
                 continue;
 
-            SpawnEffectCard(effect);
+            SpawnEffectCard(effect, entry.maxSpawnCount);
             count++;
 
             if (count >= maxCards)
@@ -116,7 +117,7 @@ public class MapInfoDialogController : MonoBehaviour
             SpawnEmptyCard();
     }
 
-    private void SpawnEffectCard(EffectTemplate effect)
+    private void SpawnEffectCard(EffectTemplate effect, int maxSpawnCount)
     {
         MapInfoItemCardUI card = Instantiate(itemCardTemplate, itemList);
         card.gameObject.SetActive(true);
@@ -124,6 +125,14 @@ public class MapInfoDialogController : MonoBehaviour
         string description = !string.IsNullOrWhiteSpace(effect.mapInfoDescription)
             ? effect.mapInfoDescription
             : effect.description;
+
+        if (maxSpawnCount > 0)
+        {
+            if (string.IsNullOrWhiteSpace(description))
+                description = $"Max spawn on map: {maxSpawnCount}";
+            else
+                description += $"\nMax spawn on map: {maxSpawnCount}";
+        }
 
         card.Setup(
             effect.uiIcon != null ? effect.uiIcon : ResolveFallbackIcon(effect),
