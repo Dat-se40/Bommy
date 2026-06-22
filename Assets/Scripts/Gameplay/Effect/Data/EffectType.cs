@@ -8,4 +8,5 @@ public enum EffectType
     Poison,
     Strength,
     BoomStack,
+    MossTrap,
 }

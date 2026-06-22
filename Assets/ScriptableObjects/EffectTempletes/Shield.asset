@@ -17,6 +17,13 @@ MonoBehaviour:
   effectType: 2
   duration: 30
   specialValue: 1
-  rating: 1
+  description: 
+  rating: 0
   pickupPrefab: {fileID: 3140720615861595630, guid: 5c89bb4b36dcf4e44b9acb527cab0a6c, type: 3}
   vfxPrefab: {fileID: 0}
+  uiIcon: {fileID: 1430413014, guid: f542979c0765e2a4b8d284c5599737ff, type: 3}
+  mapInfoDescription: 
+  placedBombPrefab: {fileID: 0}
+  fuseSeconds: 2
+  damage: 1
+  ignoreOwner: 1

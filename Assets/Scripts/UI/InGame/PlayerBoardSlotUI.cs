@@ -16,8 +16,14 @@ public class PlayerBoardSlotUI : MonoBehaviour
     [SerializeField] private TMP_Text playerNamelbl;
     [SerializeField] private TMP_Text hplbl;
     [SerializeField] private TMP_Text bomblbl;
+    [SerializeField] private TMP_Text trapSkilllbl;
     [SerializeField] private TMP_Text goldlbl;
     [SerializeField] private TMP_Text scorelbl;
+
+    [Header("Placeable Display")]
+    [SerializeField] private string bombCountFormat = "{0}/{1}";
+    [SerializeField] private string trapSkillFormat = "T:{0}";
+    [SerializeField] private bool hideTrapSkillWhenZero = true;
 
     [Header("HP Icons")]
     [SerializeField] private GameObject hpGroup;
@@ -99,6 +105,9 @@ public class PlayerBoardSlotUI : MonoBehaviour
         if (bomblbl != null)
             bomblbl.text = string.Empty;
 
+        if (trapSkilllbl != null)
+            trapSkilllbl.text = string.Empty;
+
         if (goldlbl != null)
             goldlbl.text = string.Empty;
 
@@ -161,15 +170,41 @@ public class PlayerBoardSlotUI : MonoBehaviour
 
         lastDisplayedHp = newHp;
 
-        // Hiện tại PlayerBoardState chưa có Bomb/Gold sync riêng.
-        if (bomblbl != null)
-            bomblbl.text = string.Empty;
+        RefreshPlaceableLabels();
 
         if (goldlbl != null)
             goldlbl.text = string.Empty;
 
         if (scorelbl != null)
             scorelbl.text = trackedState.Score.ToString();
+    }
+
+    void RefreshPlaceableLabels()
+    {
+        if (trackedState == null)
+            return;
+
+        if (bomblbl != null)
+        {
+            bomblbl.text = string.Format(
+                bombCountFormat,
+                trackedState.AvailableBombs,
+                trackedState.MaxBombs
+            );
+        }
+
+        if (trapSkilllbl == null)
+            return;
+
+        int trapCharges = trackedState.TrapSkillCharges;
+
+        if (hideTrapSkillWhenZero && trapCharges <= 0)
+        {
+            trapSkilllbl.text = string.Empty;
+            return;
+        }
+
+        trapSkilllbl.text = string.Format(trapSkillFormat, trapCharges);
     }
 
     /// <summary>
@@ -295,6 +330,14 @@ public class PlayerBoardSlotUI : MonoBehaviour
             "BombText"
         );
 
+        trapSkilllbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
+            "TrapSkilllbl",
+            "TrapLbl",
+            "TrapSkillLbl",
+            "TrapText"
+        );
+
         goldlbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
             this,
             "Goldlbl",
@@ -360,6 +403,7 @@ public class PlayerBoardSlotUI : MonoBehaviour
             new BindLogItem("PlayerNamelbl", playerNamelbl),
             new BindLogItem("Hplbl", hplbl),
             new BindLogItem("Bomblbl", bomblbl),
+            new BindLogItem("TrapSkilllbl", trapSkilllbl),
             new BindLogItem("Goldlbl", goldlbl),
             new BindLogItem("Scorelbl", scorelbl),
             new BindLogItem("HpGroup", hpGroup),

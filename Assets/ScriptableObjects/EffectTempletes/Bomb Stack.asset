@@ -21,3 +21,5 @@ MonoBehaviour:
   rating: 1
   pickupPrefab: {fileID: 3140720615861595630, guid: 99789600b39ad0044973858712e505ae, type: 3}
   vfxPrefab: {fileID: 0}
+  uiIcon: {fileID: 1598213522, guid: f542979c0765e2a4b8d284c5599737ff, type: 3}
+  mapInfoDescription: 

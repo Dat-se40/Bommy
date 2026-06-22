@@ -20,6 +20,11 @@ public class PlayerBoardState : NetworkBehaviour
     readonly SyncVar<int> kills = new();
     readonly SyncVar<int> shield = new();
     readonly SyncVar<bool> isEliminated = new();
+    readonly SyncVar<int> maxBombs = new(1);
+    readonly SyncVar<int> activeBombs = new();
+    readonly SyncVar<int> maxTrapSlots = new(1);
+    readonly SyncVar<int> activeTraps = new();
+    readonly SyncVar<int> trapSkillCharges = new();
     public event Action Changed;
 
     public int SlotIndex => slotIndex.value;
@@ -34,6 +39,12 @@ public class PlayerBoardState : NetworkBehaviour
     public int Kills => kills.value;
     public int Shield => shield.value;
     public bool IsEliminated => isEliminated.value;
+    public int MaxBombs => maxBombs.value;
+    public int ActiveBombs => activeBombs.value;
+    public int AvailableBombs => Mathf.Max(0, maxBombs.value - activeBombs.value);
+    public int MaxTrapSlots => maxTrapSlots.value;
+    public int ActiveTraps => activeTraps.value;
+    public int TrapSkillCharges => trapSkillCharges.value;
 
     protected override void OnSpawned()
     {
@@ -54,6 +65,11 @@ public class PlayerBoardState : NetworkBehaviour
         kills.onChanged += OnAnyChanged;
         shield.onChanged += OnAnyChanged;
         isEliminated.onChanged += OnAnyChanged;
+        maxBombs.onChanged += OnAnyChanged;
+        activeBombs.onChanged += OnAnyChanged;
+        maxTrapSlots.onChanged += OnAnyChanged;
+        activeTraps.onChanged += OnAnyChanged;
+        trapSkillCharges.onChanged += OnAnyChanged;
 
         TryRegisterWithHub();
         TryApplyCharacterVisual();
@@ -76,6 +92,11 @@ public class PlayerBoardState : NetworkBehaviour
         kills.onChanged -= OnAnyChanged;
         shield.onChanged -= OnAnyChanged;
         isEliminated.onChanged -= OnAnyChanged;
+        maxBombs.onChanged -= OnAnyChanged;
+        activeBombs.onChanged -= OnAnyChanged;
+        maxTrapSlots.onChanged -= OnAnyChanged;
+        activeTraps.onChanged -= OnAnyChanged;
+        trapSkillCharges.onChanged -= OnAnyChanged;
 
         if (PlayerBoardHub.Instance != null)
             PlayerBoardHub.Instance.OnBoardStateDespawned(SlotIndex);
@@ -140,6 +161,11 @@ public class PlayerBoardState : NetworkBehaviour
         kills.value = 0;
         shield.value = 0;
         isEliminated.value = false;
+        maxBombs.value = Mathf.Max(1, profile.bomb);
+        activeBombs.value = 0;
+        maxTrapSlots.value = Mathf.Max(1, profile.bomb);
+        activeTraps.value = 0;
+        trapSkillCharges.value = 0;
     }
 
     public void PublishFromInfor(PlayerInfor infor)
@@ -155,6 +181,19 @@ public class PlayerBoardState : NetworkBehaviour
         kills.value = infor.Kills;
         shield.value = infor.Shield;
         isEliminated.value = infor.IsEliminated;
+        maxBombs.value = Mathf.Max(1, infor.MaxBombs);
+        maxTrapSlots.value = Mathf.Max(1, infor.MaxBombs);
+    }
+
+    /// <summary>Server — đồng bộ bomb/trap đang dùng + charge skill lên HUD.</summary>
+    public void PublishPlaceables(int activeBombCount, int activeTrapCount, int mossTrapCharges)
+    {
+        if (!isServer)
+            return;
+
+        activeBombs.value = Mathf.Max(0, activeBombCount);
+        activeTraps.value = Mathf.Max(0, activeTrapCount);
+        trapSkillCharges.value = Mathf.Max(0, mossTrapCharges);
     }
 
     void OnAnyChanged(int _) => Changed?.Invoke();

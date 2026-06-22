@@ -373,6 +373,7 @@ public class PlayerInfor : MonoBehaviour
             return;
 
         maxBombs += amount;
+        PublishBoardState();
     }
 
     public void AddBombRange(int amount)

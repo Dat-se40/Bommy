@@ -80,7 +80,7 @@ public class PickableBuff : NetworkBehaviour
 
         // Đánh dấu là đã nhặt để không bị dính trigger lần nữa trong lúc chờ animation
         _isPickedUp = true;
-
+        Debug.Log("Đã nhặt: " + effectTemplate.name); 
         playerEffects.AddEffect(effectTemplate);
 
         PickupFxRpc();
@@ -92,7 +92,14 @@ public class PickableBuff : NetworkBehaviour
         // Sinh ra Particle/VFX rời (nếu có)
         if (effectTemplate != null && effectTemplate.vfxPrefab != null)
             Instantiate(effectTemplate.vfxPrefab, transform.position, Quaternion.identity);
-
+        if (effectTemplate.effectType == EffectType.MossTrap) 
+        {
+            if (isServer)
+            {
+                Destroy(gameObject);
+            }
+            return; 
+        }
         Transform target = visualRoot != null ? visualRoot : transform;
 
         // Cần dừng animation lơ lửng/pulse hiện tại để không bị đụng độ với animation nhặt

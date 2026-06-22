@@ -18,6 +18,12 @@ MonoBehaviour:
   duration: 6000
   specialValue: 1
   description: Explosion extend 1 range
-  rating: 1
+  rating: 0
   pickupPrefab: {fileID: 32877488675269953, guid: 785de34bb152a1a40aee15d88055dc4f, type: 3}
   vfxPrefab: {fileID: 0}
+  uiIcon: {fileID: -156484691, guid: f542979c0765e2a4b8d284c5599737ff, type: 3}
+  mapInfoDescription: 
+  placedBombPrefab: {fileID: 0}
+  fuseSeconds: 2
+  damage: 1
+  ignoreOwner: 1
