@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class CharacterSelectShopController : MonoBehaviour
 {
@@ -12,13 +13,15 @@ public class CharacterSelectShopController : MonoBehaviour
 
     [Header("Player Progress UI")]
     [SerializeField] private TMP_Text goldlbl;
-    [SerializeField] private TMP_Text levellbl;
 
     [Header("Character Database")]
     [SerializeField] private CharacterDatabase characterDatabase;
 
     [Header("Character Cards")]
-    [SerializeField] private CharacterCardUI[] characterCards;
+    [SerializeField] private Transform cardContent;
+    [SerializeField] private CharacterCardUI characterCardTemplate;
+
+    readonly List<CharacterCardUI> characterCards = new();
 
     [Header("Preview UI")]
     [SerializeField] private Image characterPreview;
@@ -38,7 +41,6 @@ public class CharacterSelectShopController : MonoBehaviour
 
     int selectedIndex;
     int playerGold;
-    int playerLevel;
     bool requestInProgress;
 
     const string ModeKey = "CharacterSelectMode";
@@ -60,6 +62,7 @@ public class CharacterSelectShopController : MonoBehaviour
 
         LoadProgress();
         SetupButtons();
+        BuildCharacterCards();
         SelectInitialCharacter();
     }
 
@@ -67,7 +70,6 @@ public class CharacterSelectShopController : MonoBehaviour
     {
         PlayerAccountSnapshot progression = PlayerProgressionService.Instance?.Current;
         playerGold = progression?.gold ?? 0;
-        playerLevel = progression?.level ?? 1;
         RefreshProgressUI();
     }
 
@@ -76,8 +78,6 @@ public class CharacterSelectShopController : MonoBehaviour
         if (goldlbl != null)
             goldlbl.text = "Gold: " + playerGold;
 
-        if (levellbl != null)
-            levellbl.text = "Level: " + playerLevel;
     }
 
     void SetupButtons()
@@ -126,7 +126,7 @@ public class CharacterSelectShopController : MonoBehaviour
         if (characterCards == null)
             return;
 
-        for (int i = 0; i < characterCards.Length; i++)
+        for (int i = 0; i < characterCards.Count; i++)
         {
             if (characterCards[i] == null)
                 continue;
@@ -144,12 +144,12 @@ public class CharacterSelectShopController : MonoBehaviour
             characterCards[i].gameObject.SetActive(true);
 
             bool owned = IsOwned(data);
-            bool levelUnlocked = IsLevelUnlocked(data);
             bool selected = i == selectedIndex;
 
-            characterCards[i].Setup(this, i, data, owned, levelUnlocked, selected);
+            characterCards[i].Setup(this, i, data, owned, selected);
         }
     }
+
 
     public void SelectCharacter(int index)
     {
@@ -222,7 +222,6 @@ public class CharacterSelectShopController : MonoBehaviour
             return;
 
         bool owned = IsOwned(data);
-        bool levelUnlocked = IsLevelUnlocked(data);
         bool enoughGold = playerGold >= data.Price;
 
         if (owned)
@@ -231,16 +230,6 @@ public class CharacterSelectShopController : MonoBehaviour
 
             if (requirelbl != null)
                 requirelbl.text = "OWNED";
-
-            return;
-        }
-
-        if (!levelUnlocked)
-        {
-            SetReadyButton("LOCKED", false);
-
-            if (requirelbl != null)
-                requirelbl.text = "Requires LV " + data.RequiredLevel;
 
             return;
         }
@@ -291,7 +280,7 @@ public class CharacterSelectShopController : MonoBehaviour
 
     async System.Threading.Tasks.Task TryBuyCharacterAsync(CharacterDefinition data)
     {
-        if (requestInProgress || !IsLevelUnlocked(data) || playerGold < data.Price)
+        if (requestInProgress || playerGold < data.Price)
             return;
 
         requestInProgress = true;
@@ -369,14 +358,17 @@ public class CharacterSelectShopController : MonoBehaviour
 
     bool IsOwned(CharacterDefinition data)
     {
+        if (data == null)
+            return false;
+
+        if (data.DefaultOwned)
+            return true;
+
         return PlayerProgressionService.Instance != null &&
             PlayerProgressionService.Instance.OwnsCharacter(data.CharacterId);
     }
 
-    bool IsLevelUnlocked(CharacterDefinition data)
-    {
-        return playerLevel >= data.RequiredLevel;
-    }
+
 
     void OnProgressionChanged()
     {
@@ -384,4 +376,33 @@ public class CharacterSelectShopController : MonoBehaviour
         UpdateReadyButtonState();
         RefreshAllCards();
     }
+
+    /// <summary>
+    /// Tạo card nhân vật từ CharacterDatabase bằng một template duy nhất.
+    /// </summary>
+    void BuildCharacterCards()
+    {
+        characterCards.Clear();
+
+        if (cardContent == null || characterCardTemplate == null)
+        {
+            Debug.LogWarning("[FLOW:SETUP] Character card template/content is missing.", this);
+            return;
+        }
+
+        if (characterDatabase == null)
+            return;
+
+        characterCardTemplate.gameObject.SetActive(false);
+
+        for (int i = 0; i < characterDatabase.Count; i++)
+        {
+            CharacterCardUI card = Instantiate(characterCardTemplate, cardContent);
+            card.name = "CharacterCard_" + i;
+            card.gameObject.SetActive(true);
+
+            characterCards.Add(card);
+        }
+    }
+
 }

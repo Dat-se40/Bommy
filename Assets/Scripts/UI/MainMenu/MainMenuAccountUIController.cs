@@ -24,6 +24,10 @@ public class MainMenuAccountUIController : MonoBehaviour
     [SerializeField] private TMP_Text accountIdlbl;
     [SerializeField] private Button copyIdbtn;
 
+    [Header("Edit Name")]
+    [SerializeField] private Button editNamebtn;
+    [SerializeField] private NameEditDialogController nameEditDialog;
+
     [Header("Setting Entries")]
     [SerializeField] private Button soundSettingsEntrybtn;
     [SerializeField] private Button bindAccountEntrybtn;
@@ -56,6 +60,9 @@ public class MainMenuAccountUIController : MonoBehaviour
         if (settingsOverlay != null)
             settingsOverlay.SetActive(false);
 
+        if (nameEditDialog != null)
+            nameEditDialog.CloseDialog();
+
         RefreshAccountInfo();
     }
 
@@ -83,6 +90,12 @@ public class MainMenuAccountUIController : MonoBehaviour
         {
             copyIdbtn.onClick.RemoveAllListeners();
             copyIdbtn.onClick.AddListener(CopyAccountId);
+        }
+
+        if (editNamebtn != null)
+        {
+            editNamebtn.onClick.RemoveAllListeners();
+            editNamebtn.onClick.AddListener(OpenEditNameDialog);
         }
 
         if (soundSettingsEntrybtn != null)
@@ -145,6 +158,29 @@ public class MainMenuAccountUIController : MonoBehaviour
             mailboxDialog.OpenDialog();
     }
 
+    private void OpenEditNameDialog()
+    {
+        if (nameEditDialog == null)
+            return;
+
+        string currentName = PlayerPrefs.GetString(AccountNameKey, "Player");
+
+        nameEditDialog.OpenDialog(currentName, SaveAccountName);
+    }
+
+    private void SaveAccountName(string newName)
+    {
+        if (string.IsNullOrWhiteSpace(newName))
+            return;
+
+        newName = newName.Trim();
+
+        PlayerPrefs.SetString(AccountNameKey, newName);
+        PlayerPrefs.Save();
+
+        RefreshAccountInfo();
+    }
+
     private void OpenSoundSettings()
     {
         if (soundSettingsDialog != null)
@@ -173,7 +209,6 @@ public class MainMenuAccountUIController : MonoBehaviour
     {
         string name = PlayerPrefs.GetString(AccountNameKey, "Player");
         string id = PlayerPrefs.GetString(AccountIdKey, "BOOM-0000");
-        string email = PlayerPrefs.GetString(AccountEmailKey, "guest@local");
 
         if (accountNamelbl != null)
             accountNamelbl.text = name;
