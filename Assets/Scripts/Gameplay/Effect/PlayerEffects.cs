@@ -1,14 +1,16 @@
 ﻿using PurrNet;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerEffects : NetworkBehaviour
 {
     public SyncList<ActiveEffect> effects = new();
+    public SyncQueue<int> mosEfffectsId = new();
     void Update()
     {
         if (!isServer)
             return;
-
+        if (effects.Count <= 0) return;
         for (int i = effects.Count - 1; i >= 0; i--)
         {
             var effect = effects[i];
@@ -28,7 +30,7 @@ public class PlayerEffects : NetworkBehaviour
         }
     }
 
-    void RemoveEffect(ActiveEffect effect)
+    public void RemoveEffect(ActiveEffect effect)
     {
         var template = EffectDatabase.Instance.Get(effect.effectId);
         var player = GetComponent<PlayerInfor>();
@@ -40,6 +42,9 @@ public class PlayerEffects : NetworkBehaviour
             case EffectType.Shield:
                 player.AddShield(-(int)effect.specialValue);
                 break;
+            //case EffectType.MossTrap:
+            //    RemoveEarliestMossTrapSkill(); 
+            //    break;
         }
     }
 
@@ -90,6 +95,9 @@ public class PlayerEffects : NetworkBehaviour
             case EffectType.Shield:
                 player.AddShield((int)effect.specialValue);
                 break;
+            case EffectType.MossTrap:
+                mosEfffectsId.Enqueue(effect.effectId); 
+                break;
         }
     }
 
@@ -126,5 +134,20 @@ public class PlayerEffects : NetworkBehaviour
 
         return false;
     }
-
+    public void RemoveEarliestMossTrapSkill() 
+    {
+        if (mosEfffectsId.Count < 1 || effects.Count <= 0 ) 
+        {
+            Debug.Log("Không có moss trap skill để xóa");
+            return; 
+        }
+        ActiveEffect target = effects.list.First(effect => effect.effectId == mosEfffectsId.Peek());
+        Debug.Log($"target.id = {target.effectId}"); 
+        mosEfffectsId.Dequeue();
+        if (effects.Remove(target)) 
+        {
+            Debug.Log("Số lượng moss trap còn lại: " + MossTrapSkillCount);
+        }
+    }
+    public int MossTrapSkillCount => mosEfffectsId.Count; 
 }

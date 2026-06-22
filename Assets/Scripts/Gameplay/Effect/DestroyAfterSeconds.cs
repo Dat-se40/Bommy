@@ -1,6 +1,7 @@
+using PurrNet;
 using UnityEngine;
 
-public class DestroyAfterSeconds : MonoBehaviour
+public class DestroyAfterSeconds : NetworkBehaviour
 {
     [SerializeField] private float seconds = 0.5f;
 
