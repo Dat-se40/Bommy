@@ -5,14 +5,6 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Popup nhỏ để sửa tên account.
-/// UI dự kiến:
-/// NameEditDialog
-/// ├── AccountBottomButtons
-/// │   ├── SaveButton
-/// │   └── CancelButton
-/// ├── CloseSettingsbtn
-/// ├── NameInput
-/// └── NameEditTitlelbl
 /// </summary>
 public class NameEditDialogController : MonoBehaviour
 {

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class MainMenuAccountUIController : MonoBehaviour
 {
     [Header("Scenes")]
-    [SerializeField] private string authGateSceneName = "AuthGate";
+    [SerializeField] private string authGateSceneName = "AuthGate_demo";
 
     [Header("Top Bar")]
     [SerializeField] private Button settingbtn;

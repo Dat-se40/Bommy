@@ -35,6 +35,7 @@ public sealed class AuthGateUIController : MonoBehaviour
     [SerializeField] private Button forgotbtn;
 
     [Header("Register")]
+    [SerializeField] private TMP_InputField registerNameInput;
     [SerializeField] private TMP_InputField registerEmailInput;
     [SerializeField] private TMP_InputField registerPasswordInput;
     [SerializeField] private TMP_InputField confirmPasswordInput;
@@ -69,6 +70,11 @@ public sealed class AuthGateUIController : MonoBehaviour
     private const string AccountNameKey = "AUTH_ACCOUNT_NAME";
     private const string AccountProviderKey = "AUTH_ACCOUNT_PROVIDER";
 
+
+    private const int MinNameLength = 1;
+    private const int MaxNameLength = 12;
+
+
     private async void Start()
     {
         CollectControls();
@@ -97,6 +103,7 @@ public sealed class AuthGateUIController : MonoBehaviour
         AddControl(loginbtn);
         AddControl(forgotbtn);
 
+        AddControl(registerNameInput);
         AddControl(registerEmailInput);
         AddControl(registerPasswordInput);
         AddControl(confirmPasswordInput);
@@ -182,6 +189,20 @@ public sealed class AuthGateUIController : MonoBehaviour
             confirmPasswordInput.onSubmit.RemoveAllListeners();
             confirmPasswordInput.onSubmit.AddListener(_ => Register());
         }
+
+        if (registerNameInput != null)
+        {
+            registerNameInput.onSubmit.RemoveAllListeners();
+            registerNameInput.onSubmit.AddListener(_ =>
+            {
+                if (registerEmailInput != null)
+                {
+                    registerEmailInput.Select();
+                    registerEmailInput.ActivateInputField();
+                }
+            });
+        }
+
     }
 
     /// <summary>
@@ -320,6 +341,10 @@ public sealed class AuthGateUIController : MonoBehaviour
         if (busy)
             return;
 
+        string userName = registerNameInput != null
+            ? CleanName(registerNameInput.text)
+            : "";
+
         string email = registerEmailInput != null
             ? registerEmailInput.text.Trim().ToLowerInvariant()
             : "";
@@ -331,6 +356,12 @@ public sealed class AuthGateUIController : MonoBehaviour
         string confirmPassword = confirmPasswordInput != null
             ? confirmPasswordInput.text
             : "";
+
+        if (!IsValidName(userName))
+        {
+            SetFeedback("Name must be " + MinNameLength + "-" + MaxNameLength + " characters.", true);
+            return;
+        }
 
         if (!IsValidEmail(email))
         {
@@ -354,7 +385,7 @@ public sealed class AuthGateUIController : MonoBehaviour
 
         try
         {
-            await RegisterDemoAsync(email, password);
+            await RegisterDemoAsync(email, password, userName);
             LoadMainMenu();
         }
         catch (Exception exception)
@@ -403,22 +434,28 @@ public sealed class AuthGateUIController : MonoBehaviour
         if (string.IsNullOrEmpty(id))
             id = GenerateAccountId("BOOM");
 
+        string savedName = PlayerPrefs.GetString(AccountNameKey, string.Empty);
+
+        if (string.IsNullOrWhiteSpace(savedName))
+            savedName = GetNameFromEmail(email);
+
         SaveSession(
             email,
             id,
-            GetNameFromEmail(email),
+            savedName,
             "Email"
         );
+
     }
 
-    private async Task RegisterDemoAsync(string email, string password)
+    private async Task RegisterDemoAsync(string email, string password, string userName)
     {
         await Task.Delay(700);
 
         SaveSession(
             email,
             GenerateAccountId("BOOM"),
-            GetNameFromEmail(email),
+            userName,
             "Email"
         );
     }
@@ -536,6 +573,26 @@ public sealed class AuthGateUIController : MonoBehaviour
             return "Player";
 
         return name;
+    }
+
+    private static string CleanName(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return string.Empty;
+
+        value = value.Replace("\n", string.Empty);
+        value = value.Replace("\r", string.Empty);
+        value = value.Trim();
+
+        return value;
+    }
+
+    private static bool IsValidName(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return false;
+
+        return value.Length >= MinNameLength && value.Length <= MaxNameLength;
     }
 
     private static string GenerateAccountId(string prefix)
