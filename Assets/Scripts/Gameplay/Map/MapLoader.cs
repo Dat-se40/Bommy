@@ -1,11 +1,19 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Load map prefab local trên mọi peer khi MatchPhaseBroadcast replicate activeMapId.
+/// StateNode chỉ chạy server — không gọi LoadSelectedMap trực tiếp từ Prep state.
+/// </summary>
 public class MapLoader : MonoBehaviour
 {
-    [System.Serializable]
+    public static event Action<MapRefs> MapReady;
+
+    [Serializable]
     public class MapEntry
     {
-        public string mapName;
+        public int mapId;
         public MapRefs mapPrefab;
         public LevelConfig levelConfig;
     }
@@ -18,53 +26,159 @@ public class MapLoader : MonoBehaviour
     [Header("Systems")]
     [SerializeField] private ExplosionCreator explosionCreator;
     [SerializeField] private MovementController localPlayerMovement;
-    [SerializeField] private Transform localPlayer;
 
-    private MapRefs currentMap;
+    MapRefs currentMap;
+    int loadedMapId = MatchPhaseBroadcast.NoMapId;
+    Coroutine bindBroadcastRoutine;
 
     public MapRefs CurrentMap => currentMap;
+    public int LoadedMapId => loadedMapId;
 
-    private void Start()
+    void OnEnable()
     {
-        LoadSelectedMap();
+        bindBroadcastRoutine = StartCoroutine(BindBroadcastWhenReady());
     }
 
-    private void LoadSelectedMap()
+    void OnDisable()
     {
-        string selectedMapName = GameSession.MapName;
+        if (bindBroadcastRoutine != null)
+        {
+            StopCoroutine(bindBroadcastRoutine);
+            bindBroadcastRoutine = null;
+        }
 
-        MapEntry entry = FindMapEntry(selectedMapName);
+        UnsubscribeBroadcast();
+    }
 
-        MapRefs prefab = entry?.mapPrefab;
+    IEnumerator BindBroadcastWhenReady()
+    {
+        while (MatchPhaseBroadcast.Instance == null)
+            yield return null;
 
-        if (prefab == null && maps.Length > 0)
+        SubscribeBroadcast(MatchPhaseBroadcast.Instance);
+    }
+
+    void SubscribeBroadcast(MatchPhaseBroadcast broadcast)
+    {
+        if (broadcast == null)
+            return;
+
+        broadcast.MapIdChanged -= OnActiveMapIdChanged;
+        broadcast.MapIdChanged += OnActiveMapIdChanged;
+
+        if (broadcast.ActiveMapId >= 0)
+            OnActiveMapIdChanged(broadcast.ActiveMapId);
+    }
+
+    void UnsubscribeBroadcast()
+    {
+        MatchPhaseBroadcast broadcast = MatchPhaseBroadcast.Instance;
+
+        if (broadcast == null)
+            return;
+
+        broadcast.MapIdChanged -= OnActiveMapIdChanged;
+    }
+
+    void OnActiveMapIdChanged(int mapId)
+    {
+        LoadSelectedMap(mapId, forceReload: false);
+    }
+
+    /// <summary>
+    /// Load hoặc giữ map đang có. forceReload dùng khi reconnect cần refresh MapReady.
+    /// </summary>
+    public void LoadSelectedMap(int selectedMapId, bool forceReload = false)
+    {
+        if (selectedMapId < 0)
+            return;
+
+        if (!forceReload
+            && currentMap != null
+            && loadedMapId == selectedMapId)
+        {
+            MapReady?.Invoke(currentMap);
+            return;
+        }
+
+        MapEntry entry = FindMapEntry(selectedMapId);
+
+        if (entry?.mapPrefab == null && maps.Length > 0)
             entry = maps[0];
 
         if (entry == null || entry.mapPrefab == null)
         {
-            Debug.LogWarning("Không có map prefab.");
+            FlowGuard.Error(
+                FlowGuard.TagGameplay,
+                $"MapLoader: không tìm thấy map prefab cho id={selectedMapId}.",
+                this
+            );
             return;
         }
 
+        UnloadCurrentMap();
+
         LevelRuntime.SetLevel(entry.levelConfig);
         currentMap = Instantiate(entry.mapPrefab, mapParent);
+        currentMap.transform.SetParent(mapParent, false);
+        currentMap.transform.localPosition = Vector3.zero;
+        currentMap.currentMapId = selectedMapId;
+        loadedMapId = selectedMapId;
 
         SetupSystems(currentMap);
-        SpawnLocalPlayer(currentMap);
+        MapReady?.Invoke(currentMap);
+
+        FlowGuard.Info(
+            FlowGuard.TagGameplay,
+            $"Map loaded id={selectedMapId} prefab={entry.mapPrefab.name}",
+            this
+        );
     }
 
-    private MapEntry FindMapEntry(string mapName)
+    /// <summary>Reconnect — map id đã biết nhưng cần re-bind spawn / tilemaps.</summary>
+    public void ReloadForReconnect()
     {
+        int mapId = loadedMapId;
+
+        if (mapId < 0)
+        {
+            MatchPhaseBroadcast broadcast = MatchPhaseBroadcast.Instance;
+
+            if (broadcast != null && broadcast.ActiveMapId >= 0)
+                mapId = broadcast.ActiveMapId;
+        }
+
+        if (mapId < 0)
+            return;
+
+        LoadSelectedMap(mapId, forceReload: true);
+    }
+
+    void UnloadCurrentMap()
+    {
+        if (currentMap == null)
+            return;
+
+        Destroy(currentMap.gameObject);
+        currentMap = null;
+        loadedMapId = MatchPhaseBroadcast.NoMapId;
+    }
+
+    MapEntry FindMapEntry(int id)
+    {
+        if (maps == null)
+            return null;
+
         for (int i = 0; i < maps.Length; i++)
         {
-            if (maps[i].mapName == mapName)
+            if (maps[i].mapId == id)
                 return maps[i];
         }
 
         return null;
     }
 
-    private void SetupSystems(MapRefs map)
+    void SetupSystems(MapRefs map)
     {
         if (explosionCreator != null)
         {
@@ -84,19 +198,5 @@ public class MapLoader : MonoBehaviour
                 map.Destructibles
             );
         }
-    }
-
-    private void SpawnLocalPlayer(MapRefs map)
-    {
-        if (localPlayer == null)
-            return;
-
-        if (map.SpawnPoints == null || map.SpawnPoints.Length == 0)
-            return;
-
-        localPlayer.position = map.SpawnPoints[0].position;
-
-        if (localPlayerMovement != null)
-            localPlayerMovement.SnapToNearestValidCell();
     }
 }

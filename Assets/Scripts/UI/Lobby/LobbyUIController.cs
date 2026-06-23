@@ -25,6 +25,7 @@ public partial class LobbyUIController : MonoBehaviour
 
     [Header("Inputs")]
     [SerializeField] private TMP_InputField roomNameInput;
+    // TODO: Làm on value changed cho cái này
     [SerializeField] private TMP_Dropdown mapDropdown;
     [SerializeField] private TMP_Dropdown maxPlayersDropdown;
     [SerializeField] private TMP_InputField passwordInput;
@@ -299,6 +300,7 @@ public partial class LobbyUIController : MonoBehaviour
 
         return new string(id);
     }
+    // TODO: đi submit cái mấy cái input
 
 
 }

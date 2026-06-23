@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -31,7 +31,7 @@ public class LobbyBrowserUIController : MonoBehaviour
             this.mapName = mapName;
         }
     }
-
+    public static readonly int DEFAULT_MAP_ID = 1; 
     [Header("Scenes")]
     [SerializeField] private string mainMenuSceneName = "MainMenu";
     [SerializeField] private string lobbySceneName = "Lobby";
@@ -82,7 +82,20 @@ public class LobbyBrowserUIController : MonoBehaviour
     private int selectedLobbyIndex = -1;
     private int currentPage = 0;
     private const int ItemsPerPage = 5;
-
+    // Serializable API response rồi tương tác qua đây
+    public List<LobbyEntry> AllLobbies 
+    {
+        get
+        {
+            return allLobbies;
+        }   
+        set 
+        {
+            allLobbies = value;
+            // thay đổi render lại
+            RenderLobbies();
+        }
+    }
     private void Start()
     {
         InitializeMockLobbies();
@@ -126,7 +139,6 @@ public class LobbyBrowserUIController : MonoBehaviour
         if (prevPageBtn != null) prevPageBtn.onClick.AddListener(OnPrevPageClicked);
         if (nextPageBtn != null) nextPageBtn.onClick.AddListener(OnNextPageClicked);
     }
-
     private void RenderLobbies()
     {
         // Clear previous items
@@ -250,16 +262,19 @@ public class LobbyBrowserUIController : MonoBehaviour
             if (createPasswordInput != null) createPasswordInput.text = "";
         }
     }
-
+    // Submit form tạo phòng
     private void OnConfirmCreateClicked()
     {
         string roomName = createRoomNameInput != null ? createRoomNameInput.text.Trim() : "";
         if (string.IsNullOrEmpty(roomName)) roomName = "Casual Room";
 
         string mapName = "Classic Garden";
+        int mapId = DEFAULT_MAP_ID; 
         if (createMapDropdown != null && createMapDropdown.options.Count > 0)
         {
             mapName = createMapDropdown.options[createMapDropdown.value].text;
+            // 0 là random , các id hợp lệ [1,4]
+            mapId = createMapDropdown.value;
         }
 
         int maxPlayers = 4;
@@ -274,8 +289,11 @@ public class LobbyBrowserUIController : MonoBehaviour
         bool isPrivate = !string.IsNullOrEmpty(password);
 
         // Update GameSession settings
-        GameSession.SetRoom(roomName, mapName, maxPlayers);
-        
+        // Chỗ này cần gửi request -> có response xác nhận -> GameSession của host lưu về
+        GameSession.GetShareDataFromServer(roomName, mapId, maxPlayers, mapName);
+        // Ở chỗ Join vào của những người chơi thì sẽ lấy GameSession của host là data chính
+
+
         // Also save isPrivate / password to PlayerPrefs for verification later if needed
         PlayerPrefs.SetString("CurrentRoomPassword", password);
         PlayerPrefs.SetInt("CurrentRoomIsPrivate", isPrivate ? 1 : 0);
@@ -331,7 +349,8 @@ public class LobbyBrowserUIController : MonoBehaviour
     private void JoinLobbyDirectly(LobbyEntry lobby)
     {
         // Update GameSession settings
-        GameSession.SetRoom(lobby.roomName, lobby.mapName, lobby.maxPlayers);
+        
+        GameSession.SetRoom(lobby.roomName,DEFAULT_MAP_ID, lobby.maxPlayers, lobby.mapName);
 
         Debug.Log($"[FLOW:SETUP] LobbyBrowser joined room {lobby.roomName}. Transitioning to Lobby scene.");
         SceneManager.LoadScene(lobbySceneName);

@@ -1,12 +1,14 @@
 using UnityEngine;
 
 /// <summary>
-/// Phase chuẩn bị — tự mở bảng map info, player có thể E / đóng trong lúc Prep.
+/// Phase chuẩn bị — server replicate map id + timer; client load map / UI qua SyncVar listeners.
 /// </summary>
 public class MatchPrepState : MatchTimedStateNode
 {
     [SerializeField] private float prepDurationSeconds = MatchTiming.PrepSeconds;
-
+    [SerializeField] private int fallbackMapId = 2;
+    // Ignore data from server
+    [SerializeField] private bool inTestingMode; 
     protected override MatchPhaseKind PhaseKind => MatchPhaseKind.Prep;
     protected override float DurationSeconds => prepDurationSeconds;
 
@@ -15,14 +17,25 @@ public class MatchPrepState : MatchTimedStateNode
         base.Enter(asServer);
 
         if (!asServer)
-            MapInfoDialogController.Instance?.BeginPrepPhase();
-    }
+            return;
 
-    public override void Exit(bool asServer)
-    {
-        if (!asServer)
-            MapInfoDialogController.Instance?.EndPrepPhase();
+        int resolvedMapId = (GameSession.MapId >= 0 ) && !inTestingMode ? GameSession.MapId : fallbackMapId;
+        MatchPhaseBroadcast broadcast = PhaseBroadcast;
 
-        base.Exit(asServer);
+        if (broadcast == null)
+        {
+            FlowGuard.Error(
+                FlowGuard.TagGameplay,
+                "MatchPrepState: thiếu MatchPhaseBroadcast — không replicate map id.",
+                machine
+            );
+            return;
+        }
+
+        broadcast.ServerSetActiveMap(resolvedMapId);
+        FlowGuard.Info(
+            FlowGuard.TagGameplay,
+            $"Prep started — activeMapId={resolvedMapId} (GameSession.MapId={GameSession.MapId})"
+        );
     }
 }
