@@ -11,7 +11,7 @@ public static class GameSession
     #region Share data  from Host
     public static string RoomName = "BM-0000";
     public static string MapName = "Classic Garden";
-    public static int MapId = LobbyBrowserUIController.DEFAULT_MAP_ID; 
+    public static int MapId = LobbyApiContracts.DefaultMapId; 
     public static int MaxPlayers = 4;
     #endregion
     #region Private data

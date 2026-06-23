@@ -10997,7 +10997,7 @@ MonoBehaviour:
   phaseBroadcast: {fileID: 1835806106}
   prepDurationSeconds: 30
   fallbackMapId: 4
-  inTestingMode: 1
+  inTestingMode: 0
 --- !u!114 &1835806110
 MonoBehaviour:
   m_ObjectHideFlags: 0

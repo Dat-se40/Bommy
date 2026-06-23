@@ -1,3 +1,5 @@
+﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,6 +11,9 @@ public partial class LobbyUIController : MonoBehaviour
     [SerializeField] private string mainMenuSceneName = "MainMenu";
     [SerializeField] private string characterSelectSceneName = "CharacterSelect";
     [SerializeField] private string gameSceneName = "GameScene";
+
+    [Header("Status")]
+    [SerializeField] private TMP_Text lobbyStatuslbl;
 
     [Header("Create Room Dialog")]
     [SerializeField] private GameObject createRoomDialog;
@@ -23,10 +28,10 @@ public partial class LobbyUIController : MonoBehaviour
     [SerializeField] private Button friendsbtn;
     [SerializeField] private Button backbtn;
 
-    [Header("Inputs")]
+    [Header("Create Room Inputs")]
     [SerializeField] private TMP_InputField roomNameInput;
-    // TODO: Làm on value changed cho cái này
     [SerializeField] private TMP_Dropdown mapDropdown;
+    [SerializeField] private LobbyMapOption[] mapOptions;
     [SerializeField] private TMP_Dropdown maxPlayersDropdown;
     [SerializeField] private TMP_InputField passwordInput;
 
@@ -41,23 +46,48 @@ public partial class LobbyUIController : MonoBehaviour
     [SerializeField] private Button chooseCharbtn;
     [SerializeField] private Button startbtn;
 
-    private string pendingRoomId;
-    private string currentRoomId;
+    string pendingRoomId;
+    string currentRoomId;
 
-    private void Start()
+    void Start()
     {
+        LobbyManager.EnsureExists();
+        BindLobbyManagerEvents();
+
         if (createRoomDialogOverlay != null)
             createRoomDialogOverlay.SetActive(false);
         else if (createRoomDialog != null)
             createRoomDialog.SetActive(false);
 
         SetupLobbyButtons();
+        InitializeMapDropdown();
+        InitializeRoomListFeature();
         InitializeFriendsFeature();
 
         SetCurrentRoomEmpty();
     }
 
-    private void SetupLobbyButtons()
+    private void BindLobbyManagerEvents()
+    {
+        LobbyManager manager = LobbyManager.EnsureExists();
+
+        manager.CurrentRoomChanged -= OnCurrentRoomChanged;
+        manager.CurrentRoomChanged += OnCurrentRoomChanged;
+
+        manager.RoomsListed -= OnRoomsListed;
+        manager.RoomsListed += OnRoomsListed;
+
+        manager.FriendsListed -= OnFriendsListed;
+        manager.FriendsListed += OnFriendsListed;
+
+        manager.FriendRequestsListed -= OnFriendRequestsListed;
+        manager.FriendRequestsListed += OnFriendRequestsListed;
+
+        manager.OperationFailed -= OnLobbyOperationFailed;
+        manager.OperationFailed += OnLobbyOperationFailed;
+    }
+
+    void SetupLobbyButtons()
     {
         if (joinByRoomIdbtn != null)
         {
@@ -123,45 +153,22 @@ public partial class LobbyUIController : MonoBehaviour
 
         if (string.IsNullOrEmpty(roomId))
         {
-            SetFriendsStatus("Room ID is empty.");
+            SetLobbyStatus("Room ID is empty.");
             return;
         }
 
-        JoinRoomById(roomId);
-    }
-
-    /// <summary>
-    /// Join phòng bằng Room ID.
-    /// Hiện tại là flow UI demo, sau này thay bằng request lên lobby server/backend.
-    /// </summary>
-    private void JoinRoomById(string roomId)
-    {
-        currentRoomId = roomId;
-
-        if (currentRoomNamelbl != null)
-            currentRoomNamelbl.text = "ROOM: " + roomId;
-
-        if (currentRoomIdlbl != null)
-            currentRoomIdlbl.text = "ID: " + currentRoomId;
-
-        if (currentRoomPlayerslbl != null)
-            currentRoomPlayerslbl.text = "Players: ?";
-
-        if (currentRoomMaplbl != null)
-            currentRoomMaplbl.text = "Map: -";
-
-        SetFriendsStatus("Joined room " + currentRoomId + ".");
+        LobbyManager.EnsureExists().RequestJoinRoomByCode(new JoinRoomByCodeRequest { roomCode = roomId });
     }
 
     public void BackToMainMenu()
     {
+        LobbyManager.Instance?.ClearCurrentRoom();
         SceneManager.LoadScene(mainMenuSceneName);
     }
 
-
     public void OpenCreateRoomDialog()
     {
-        pendingRoomId = GenerateRoomId();
+        pendingRoomId = LobbyManager.GenerateRoomCodePreview();
 
         if (generatedRoomIdlbl != null)
             generatedRoomIdlbl.text = "ROOM ID: " + pendingRoomId;
@@ -183,7 +190,7 @@ public partial class LobbyUIController : MonoBehaviour
             mapDropdown.value = 0;
 
         if (maxPlayersDropdown != null && maxPlayersDropdown.options.Count > 0)
-            maxPlayersDropdown.value = Mathf.Clamp(2, 0, maxPlayersDropdown.options.Count - 1);
+            maxPlayersDropdown.value = Mathf.Clamp(1, 0, maxPlayersDropdown.options.Count - 1);
 
         if (passwordInput != null)
             passwordInput.text = "";
@@ -201,56 +208,92 @@ public partial class LobbyUIController : MonoBehaviour
             createRoomDialog.SetActive(false);
     }
 
-
     public void CreateRoom()
     {
         if (string.IsNullOrEmpty(pendingRoomId))
-            pendingRoomId = GenerateRoomId();
+            pendingRoomId = LobbyManager.GenerateRoomCodePreview();
 
-        string roomName = roomNameInput != null
-            ? roomNameInput.text.Trim()
-            : "";
-
+        string roomName = roomNameInput != null ? roomNameInput.text.Trim() : "";
 
         if (string.IsNullOrEmpty(roomName))
             roomName = "My Awesome Room";
 
-        string mapName = mapDropdown.options[mapDropdown.value].text;
-        int maxPlayers = GetMaxPlayers();
+        ResolveMapSelection(out int mapId, out string mapName);
 
-        currentRoomId = pendingRoomId;
+        var request = new CreateRoomRequest
+        {
+            roomName = roomName,
+            mapId = mapId,
+            mapName = mapName,
+            maxPlayers = GetMaxPlayers(),
+            password = passwordInput != null ? passwordInput.text : "",
+            preferredRoomId = pendingRoomId
+        };
 
-
-        if (currentRoomNamelbl != null)
-            currentRoomNamelbl.text = "ROOM: " + roomName;
-
-        if (currentRoomIdlbl != null)
-            currentRoomIdlbl.text = "ID: " + currentRoomId;
-
-        if (currentRoomPlayerslbl != null)
-            currentRoomPlayerslbl.text = "Players: 1/" + maxPlayers;
-
-        if (currentRoomMaplbl != null)
-            currentRoomMaplbl.text = "Map: " + mapName;
-        SetFriendsStatus("Created room " + currentRoomId + ".");
-
-        CloseCreateRoomDialog();
+        LobbyManager.EnsureExists().RequestCreateRoom(request);
     }
 
     public void ChooseCharacter()
     {
         PlayerPrefs.SetString("CharacterSelectMode", "Lobby");
         PlayerPrefs.Save();
-
         SceneManager.LoadScene(characterSelectSceneName);
     }
 
     public void StartGame()
     {
+        LobbyManager manager = LobbyManager.EnsureExists();
+
+        if (!manager.TryStartMatch(out string error))
+        {
+            SetLobbyStatus(error);
+            return;
+        }
+
         SceneManager.LoadScene(gameSceneName);
     }
 
-    private int GetMaxPlayers()
+    void InitializeMapDropdown()
+    {
+        if (mapDropdown == null || mapOptions == null || mapOptions.Length == 0)
+            return;
+
+        var options = new List<TMP_Dropdown.OptionData>(mapOptions.Length);
+
+        for (int i = 0; i < mapOptions.Length; i++)
+            options.Add(new TMP_Dropdown.OptionData(GetMapDisplayName(i)));
+
+        mapDropdown.ClearOptions();
+        mapDropdown.AddOptions(options);
+        mapDropdown.value = 0;
+        mapDropdown.RefreshShownValue();
+    }
+
+    string GetMapDisplayName(int index)
+    {
+        if (mapOptions == null || index < 0 || index >= mapOptions.Length)
+            return "Map " + (index + 1);
+
+        string name = mapOptions[index].displayName;
+        return string.IsNullOrWhiteSpace(name) ? "Map " + (index + 1) : name.Trim();
+    }
+
+    void ResolveMapSelection(out int mapId, out string mapName)
+    {
+        mapId = LobbyApiContracts.DefaultMapId;
+        mapName = "Classic Garden";
+
+        if (mapOptions == null || mapOptions.Length == 0)
+            return;
+
+        int index = mapDropdown != null ? mapDropdown.value : 0;
+        index = Mathf.Clamp(index, 0, mapOptions.Length - 1);
+
+        mapId = index + 1;
+        mapName = GetMapDisplayName(index);
+    }
+
+    int GetMaxPlayers()
     {
         if (maxPlayersDropdown == null || maxPlayersDropdown.options.Count == 0)
             return 4;
@@ -266,7 +309,7 @@ public partial class LobbyUIController : MonoBehaviour
         return 4;
     }
 
-    private void SetCurrentRoomEmpty()
+    void SetCurrentRoomEmpty()
     {
         currentRoomId = "";
 
@@ -283,24 +326,24 @@ public partial class LobbyUIController : MonoBehaviour
             currentRoomMaplbl.text = "Map: -";
     }
 
-    /// <summary>
-    /// Tạo mã phòng ngắn để người chơi có thể mời hoặc join bằng ID.
-    /// </summary>
-    private string GenerateRoomId()
+    void OnDestroy()
     {
-        const string chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+        if (LobbyManager.Instance == null)
+            return;
 
-        char[] id = new char[4];
-
-        for (int i = 0; i < id.Length; i++)
-        {
-            int randomIndex = Random.Range(0, chars.Length);
-            id[i] = chars[randomIndex];
-        }
-
-        return new string(id);
+        LobbyManager.Instance.CurrentRoomChanged -= OnCurrentRoomChanged;
+        LobbyManager.Instance.RoomsListed -= OnRoomsListed;
+        LobbyManager.Instance.OperationFailed -= OnLobbyOperationFailed;
+        LobbyManager.Instance.FriendsListed -= OnFriendsListed;
+        LobbyManager.Instance.FriendRequestsListed -= OnFriendRequestsListed;
+        LobbyManager.Instance.OperationFailed -= OnLobbyOperationFailed;
     }
-    // TODO: đi submit cái mấy cái input
 
+    void SetLobbyStatus(string message)
+    {
+        if (lobbyStatuslbl != null)
+            lobbyStatuslbl.text = message;
 
+        SetFriendsStatus(message);
+    }
 }

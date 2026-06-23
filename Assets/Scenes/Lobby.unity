@@ -681,6 +681,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90761719}
   m_CullTransparentMesh: 1
+--- !u!114 &121096650 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5910205027621242686, guid: 5d21fb5e939cd0640b260928074d63a0, type: 3}
+  m_PrefabInstance: {fileID: 2375833598042630496}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdc42d0d517314a44a4317f3c8876a13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FriendRowUI
 --- !u!1 &134420922
 GameObject:
   m_ObjectHideFlags: 0
@@ -1877,6 +1888,7 @@ GameObject:
   - component: {fileID: 479164658}
   - component: {fileID: 479164660}
   - component: {fileID: 479164659}
+  - component: {fileID: 479164661}
   m_Layer: 5
   m_Name: RoomRowTemplate
   m_TagString: Untagged
@@ -1946,6 +1958,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 479164657}
   m_CullTransparentMesh: 1
+--- !u!114 &479164661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479164657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6a0b3c45d7f8096c3e4f5a6b7c8d9e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LobbyRoomRowUI
+  roomNamelbl: {fileID: 1098570994}
+  roomIdlbl: {fileID: 154723033}
+  playerCountlbl: {fileID: 482310365}
+  maplbl: {fileID: 1437046727}
+  joinbtn: {fileID: 824196808}
 --- !u!1 &482310363
 GameObject:
   m_ObjectHideFlags: 0
@@ -10849,7 +10878,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1551508454
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10983,92 +11012,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1560589643}
   m_CullTransparentMesh: 1
---- !u!1 &1564842773
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1564842775}
-  - component: {fileID: 1564842774}
-  m_Layer: 0
-  m_Name: LobbyBrowserUIController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1564842774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564842773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 148883c0c55e56948be87f0b7df18857, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LobbyUIController
-  friendsDialogOverlay: {fileID: 0}
-  friendsPage: {fileID: 0}
-  requestsPage: {fileID: 0}
-  friendsStatuslbl: {fileID: 0}
-  closeFriendsbtn: {fileID: 0}
-  friendsTabbtn: {fileID: 0}
-  requestsTabbtn: {fileID: 0}
-  searchbtn: {fileID: 0}
-  addFriendbtn: {fileID: 0}
-  steamIcon: {fileID: 0}
-  steamStatuslbl: {fileID: 0}
-  friendSearchInput: {fileID: 0}
-  friendListContent: {fileID: 0}
-  friendRowTemplate: {fileID: 0}
-  friendsCountlbl: {fileID: 0}
-  friendIdInput: {fileID: 0}
-  requestsCountlbl: {fileID: 0}
-  requestListContent: {fileID: 0}
-  requestRowTemplate: {fileID: 0}
-  mainMenuSceneName: MainMenu
-  characterSelectSceneName: CharacterSelect
-  gameSceneName: GameScene
-  createRoomDialog: {fileID: 0}
-  generatedRoomIdlbl: {fileID: 0}
-  createRoomDialogOverlay: {fileID: 0}
-  confirmCreateRoombtn: {fileID: 0}
-  cancelCreateRoombtn: {fileID: 0}
-  roomIdInput: {fileID: 0}
-  joinByRoomIdbtn: {fileID: 0}
-  friendsbtn: {fileID: 0}
-  backbtn: {fileID: 0}
-  roomNameInput: {fileID: 0}
-  mapDropdown: {fileID: 0}
-  maxPlayersDropdown: {fileID: 0}
-  passwordInput: {fileID: 0}
-  currentRoomNamelbl: {fileID: 0}
-  currentRoomIdlbl: {fileID: 0}
-  currentRoomPlayerslbl: {fileID: 0}
-  currentRoomMaplbl: {fileID: 0}
-  createRoombtn: {fileID: 0}
-  chooseCharbtn: {fileID: 0}
-  startbtn: {fileID: 0}
---- !u!4 &1564842775
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564842773}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1573701098 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5201233454410151448, guid: 5d21fb5e939cd0640b260928074d63a0, type: 3}
@@ -12263,6 +12206,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1737411478}
   - component: {fileID: 1737411477}
+  - component: {fileID: 1737411479}
   m_Layer: 0
   m_Name: 'LobbyUIController '
   m_TagString: Untagged
@@ -12277,7 +12221,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1737411476}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 148883c0c55e56948be87f0b7df18857, type: 3}
   m_Name: 
@@ -12295,15 +12239,25 @@ MonoBehaviour:
   steamStatuslbl: {fileID: 2112112816}
   friendSearchInput: {fileID: 1506646410}
   friendListContent: {fileID: 1573701098}
-  friendRowTemplate: {fileID: 0}
+  friendRowTemplate: {fileID: 121096650}
   friendsCountlbl: {fileID: 2009440670}
   friendIdInput: {fileID: 708251119}
   requestsCountlbl: {fileID: 508709669}
   requestListContent: {fileID: 1597935539}
   requestRowTemplate: {fileID: 1790829517}
+  roomListContent: {fileID: 1016188996}
+  roomRowTemplate: {fileID: 479164661}
+  roomCountlbl: {fileID: 1267393196}
+  refreshRoomListbtn: {fileID: 0}
+  passwordDialog: {fileID: 0}
+  joinPasswordInput: {fileID: 1655471953}
+  passwordErrorText: {fileID: 0}
+  passwordConfirmbtn: {fileID: 0}
+  passwordCancelbtn: {fileID: 0}
   mainMenuSceneName: MainMenu
   characterSelectSceneName: CharacterSelect
   gameSceneName: GameScene
+  lobbyStatuslbl: {fileID: 0}
   createRoomDialog: {fileID: 280072769}
   generatedRoomIdlbl: {fileID: 1742320953}
   createRoomDialogOverlay: {fileID: 1551508453}
@@ -12315,6 +12269,11 @@ MonoBehaviour:
   backbtn: {fileID: 1327478316}
   roomNameInput: {fileID: 1208892073}
   mapDropdown: {fileID: 645026348}
+  mapOptions:
+  - displayName: Class Garden
+  - displayName: Summer
+  - displayName: Dungeon
+  - displayName: Winner
   maxPlayersDropdown: {fileID: 1971440981}
   passwordInput: {fileID: 1655471953}
   currentRoomNamelbl: {fileID: 1624755185}
@@ -12339,6 +12298,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1737411479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737411476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5f9a2b34c6e7f8095b2d3e4f6a7b8c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LobbyManager
 --- !u!1 &1742320951
 GameObject:
   m_ObjectHideFlags: 0
@@ -14001,27 +13972,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 110182094980224536, guid: 5d21fb5e939cd0640b260928074d63a0, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 154.97
       objectReference: {fileID: 0}
     - target: {fileID: 2295518061633787931, guid: 5d21fb5e939cd0640b260928074d63a0, type: 3}
       propertyPath: m_Name
       value: FriendsDialogOverplay
       objectReference: {fileID: 0}
+    - target: {fileID: 2295518061633787931, guid: 5d21fb5e939cd0640b260928074d63a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2403222226575829514, guid: 5d21fb5e939cd0640b260928074d63a0, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2403222226575829514, guid: 5d21fb5e939cd0640b260928074d63a0, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2403222226575829514, guid: 5d21fb5e939cd0640b260928074d63a0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 456.245
       objectReference: {fileID: 0}
     - target: {fileID: 2403222226575829514, guid: 5d21fb5e939cd0640b260928074d63a0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -77.485
       objectReference: {fileID: 0}
     - target: {fileID: 3058324371128007176, guid: 5d21fb5e939cd0640b260928074d63a0, type: 3}
       propertyPath: m_Pivot.x
@@ -14105,23 +14080,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3417578912148350985, guid: 5d21fb5e939cd0640b260928074d63a0, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3417578912148350985, guid: 5d21fb5e939cd0640b260928074d63a0, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3417578912148350985, guid: 5d21fb5e939cd0640b260928074d63a0, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 8965810153477845071, guid: 5d21fb5e939cd0640b260928074d63a0, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8965810153477845071, guid: 5d21fb5e939cd0640b260928074d63a0, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14135,6 +14110,5 @@ SceneRoots:
   - {fileID: 2011540976}
   - {fileID: 1810138934}
   - {fileID: 1737411478}
-  - {fileID: 1564842775}
   - {fileID: 1133678362}
   - {fileID: 413761022}
