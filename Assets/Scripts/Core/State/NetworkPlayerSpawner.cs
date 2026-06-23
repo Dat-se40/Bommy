@@ -89,7 +89,16 @@ public class NetworkPlayerSpawner : NetworkBehaviour
         if (newPlayer.TryGetComponent(out PlayerSpawnSetup spawnSetup))
             spawnSetup.Apply(profile);
 
-        // Host: refresh ngay. Client: PlayerBoardState SyncVar → RegisterBoardState.
+        // Host: refresh ngay. Client: ObserversRpc + PlayerBoardState SyncVar → RegisterBoardState.
+        if (PlayerBoardHub.Instance != null)
+            PlayerBoardHub.Instance.OnNetworkPlayerRegistered(profile);
+
+        BroadcastPlayerBoardRegistration(profile);
+    }
+
+    [ObserversRpc(runLocally: false)]
+    void BroadcastPlayerBoardRegistration(PlayerMatchProfile profile)
+    {
         if (PlayerBoardHub.Instance != null)
             PlayerBoardHub.Instance.OnNetworkPlayerRegistered(profile);
     }

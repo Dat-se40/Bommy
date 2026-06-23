@@ -10,21 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5c18516c2baed94bb1f1093cdbfefc9, type: 3}
-  m_Name: Shield
+  m_Name: Gold
   m_EditorClassIdentifier: Assembly-CSharp::EffectTemplate
-  effectId: 2
-  displayName: Shield
-  effectType: 2
-  duration: 30
-  specialValue: 1
-  description: 
-  rating: 0
-  pickupPrefab: {fileID: 3140720615861595630, guid: 5c89bb4b36dcf4e44b9acb527cab0a6c, type: 3}
+  effectId: 6
+  displayName: Gold
+  effectType: 8
+  duration: 6000
+  specialValue: 20
+  description: 5
+  rating: 1
+  pickupPrefab: {fileID: 3140720615861595630, guid: d72e559c3ef2cdc4d9483add248ff7a0, type: 3}
   vfxPrefab: {fileID: 0}
-  uiIcon: {fileID: 1430413014, guid: f542979c0765e2a4b8d284c5599737ff, type: 3}
-  mapInfoDescription: 'Immune damage, this effect cannot stack
-
-'
+  uiIcon: {fileID: -3126738845940356929, guid: 5b1c1560612680a40b191ce136e47f30, type: 3}
+  mapInfoDescription: " 5 gold \n"
   placedBombPrefab: {fileID: 0}
   fuseSeconds: 2
   damage: 1

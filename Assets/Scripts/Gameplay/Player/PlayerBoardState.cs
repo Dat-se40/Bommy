@@ -25,6 +25,7 @@ public class PlayerBoardState : NetworkBehaviour
     readonly SyncVar<int> maxTrapSlots = new(1);
     readonly SyncVar<int> activeTraps = new();
     readonly SyncVar<int> trapSkillCharges = new();
+    readonly SyncVar<int> gold= new(); 
     public event Action Changed;
 
     public int SlotIndex => slotIndex.value;
@@ -45,7 +46,7 @@ public class PlayerBoardState : NetworkBehaviour
     public int MaxTrapSlots => maxTrapSlots.value;
     public int ActiveTraps => activeTraps.value;
     public int TrapSkillCharges => trapSkillCharges.value;
-
+    public int Gold => gold.value; 
     protected override void OnSpawned()
     {
         base.OnSpawned();
@@ -62,6 +63,7 @@ public class PlayerBoardState : NetworkBehaviour
         currentLives.onChanged += OnAnyChanged;
         maxLives.onChanged += OnAnyChanged;
         score.onChanged += OnAnyChanged;
+        gold.onChanged += OnAnyChanged;
         kills.onChanged += OnAnyChanged;
         shield.onChanged += OnAnyChanged;
         isEliminated.onChanged += OnAnyChanged;
@@ -89,6 +91,7 @@ public class PlayerBoardState : NetworkBehaviour
         currentLives.onChanged -= OnAnyChanged;
         maxLives.onChanged -= OnAnyChanged;
         score.onChanged -= OnAnyChanged;
+        gold.onChanged -= OnAnyChanged;
         kills.onChanged -= OnAnyChanged;
         shield.onChanged -= OnAnyChanged;
         isEliminated.onChanged -= OnAnyChanged;
@@ -158,6 +161,7 @@ public class PlayerBoardState : NetworkBehaviour
         maxLives.value = 3;
         currentLives.value = 3;
         score.value = 0;
+        gold.value = 0; 
         kills.value = 0;
         shield.value = 0;
         isEliminated.value = false;
@@ -178,6 +182,7 @@ public class PlayerBoardState : NetworkBehaviour
         currentLives.value = infor.CurrentLives;
         maxLives.value = infor.MaxLives;
         score.value = infor.Score;
+        gold.value = infor.Gold; 
         kills.value = infor.Kills;
         shield.value = infor.Shield;
         isEliminated.value = infor.IsEliminated;

@@ -166,7 +166,15 @@ public class PlayerInfor : MonoBehaviour
 
         PublishBoardState();
     }
+    public void BeginPowerUp() 
+    {
+    
 
+    }
+    public void EngPowerUp() 
+    {
+    
+    }
     public void PublishBoardState()
     {
         if (TryGetComponent(out PlayerBoardState boardState))
@@ -228,7 +236,7 @@ public class PlayerInfor : MonoBehaviour
         isInvincible = false;
         invincibilityRoutine = null;
     }
-
+    
     void BeginDeathResolve()
     {
         if (deathResolveRoutine != null)
@@ -348,7 +356,8 @@ public class PlayerInfor : MonoBehaviour
             return;
 
         gold += amount;
-        AddScore(amount * 2);
+        AddScore(amount * 5);
+        PublishBoardState();
     }
 
     public void AddScore(int amount)
@@ -404,7 +413,7 @@ public class PlayerInfor : MonoBehaviour
         if (TryGetComponent(out MovementController move))
             move.SetSpeed(moveSpeed);
     }
-
+   
     void StopAllCombatRoutines()
     {
         if (invincibilityRoutine != null)

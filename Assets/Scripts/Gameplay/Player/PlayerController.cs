@@ -28,7 +28,7 @@ public class PlayerController : NetworkBehaviour
 
     readonly SyncVar<int> activeBombs = new();
     readonly SyncVar<int> activeTraps = new();
-
+    readonly SyncVar<bool> superPowerState = new(); 
     PlayerBoardState boardState;
 
     #endregion
@@ -334,6 +334,9 @@ public class PlayerController : NetworkBehaviour
         explosionCreator = ExplosionCreator.Instance;
         bombParent = explosionCreator.transform;
     }
-
+    public void TakeSuperpower() 
+    {
+        superPowerState.value = true; 
+    }
     #endregion
 }

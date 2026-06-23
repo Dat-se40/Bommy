@@ -1,6 +1,7 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 /// <summary>
@@ -13,16 +14,19 @@ public class PlayerBoardSlotUI : MonoBehaviour
 
     [Header("Main UI")]
     [SerializeField] private Image avatar;
+    [FormerlySerializedAs("nameLabel")]
     [SerializeField] private TMP_Text playerNamelbl;
+    [FormerlySerializedAs("hpLabel")]
     [SerializeField] private TMP_Text hplbl;
     [SerializeField] private TMP_Text bomblbl;
     [SerializeField] private TMP_Text trapSkilllbl;
     [SerializeField] private TMP_Text goldlbl;
+    [FormerlySerializedAs("scoreLabel")]
     [SerializeField] private TMP_Text scorelbl;
 
     [Header("Placeable Display")]
     [SerializeField] private string bombCountFormat = "{0}/{1}";
-    [SerializeField] private string trapSkillFormat = "T:{0}";
+    [SerializeField] private string trapSkillFormat = "Trap:{0}";
     [SerializeField] private bool hideTrapSkillWhenZero = true;
 
     [Header("HP Icons")]
@@ -53,9 +57,13 @@ public class PlayerBoardSlotUI : MonoBehaviour
     {
         if (shakeTarget == null)
             shakeTarget = transform as RectTransform;
+
+        EnsureUiReferences();
     }
 
     public int SlotIndex => slotIndex;
+
+    public void SetSlotIndex(int index) => slotIndex = index;
 
     public void AssignPlayer(
         PlayerBoardState state,
@@ -136,7 +144,7 @@ public class PlayerBoardSlotUI : MonoBehaviour
         int newMaxHp = trackedState.MaxHp;
         bool tookDamage = lastDisplayedHp >= 0 && newHp < lastDisplayedHp;
         int previousHp = lastDisplayedHp;
-
+        int newGold = trackedState.Gold;
         CharacterDefinition definition = characterDatabase != null
             ? characterDatabase.GetById(trackedState.CharacterId)
             : MatchSessionBroker.ResolveDefinition(new PlayerMatchProfile
@@ -173,7 +181,7 @@ public class PlayerBoardSlotUI : MonoBehaviour
         RefreshPlaceableLabels();
 
         if (goldlbl != null)
-            goldlbl.text = string.Empty;
+            goldlbl.text = "GOLD: " + newGold;
 
         if (scorelbl != null)
             scorelbl.text = trackedState.Score.ToString();
@@ -292,6 +300,20 @@ public class PlayerBoardSlotUI : MonoBehaviour
     {
         if (trackedState != null)
             trackedState.Changed -= RefreshFromState;
+    }
+
+    void EnsureUiReferences()
+    {
+        if (avatar != null
+            && playerNamelbl != null
+            && hplbl != null
+            && bomblbl != null
+            && goldlbl != null)
+        {
+            return;
+        }
+
+        AutoBindUIFromChildren();
     }
 
     [ContextMenu("Auto Bind UI From Children")]

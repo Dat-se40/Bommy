@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5c18516c2baed94bb1f1093cdbfefc9, type: 3}
-  m_Name: Shield
+  m_Name: Strength
   m_EditorClassIdentifier: Assembly-CSharp::EffectTemplate
-  effectId: 2
-  displayName: Shield
-  effectType: 2
-  duration: 30
+  effectId: 0
+  displayName: Extend Bomb Range
+  effectType: 0
+  duration: 40
   specialValue: 1
-  description: 
+  description: Explosion extend 1 range
   rating: 0
-  pickupPrefab: {fileID: 3140720615861595630, guid: 5c89bb4b36dcf4e44b9acb527cab0a6c, type: 3}
+  pickupPrefab: {fileID: 32877488675269953, guid: 785de34bb152a1a40aee15d88055dc4f, type: 3}
   vfxPrefab: {fileID: 0}
-  uiIcon: {fileID: 1430413014, guid: f542979c0765e2a4b8d284c5599737ff, type: 3}
-  mapInfoDescription: 'Immune damage, this effect cannot stack
+  uiIcon: {fileID: -156484691, guid: f542979c0765e2a4b8d284c5599737ff, type: 3}
+  mapInfoDescription: 'Can kick bomb for 40s
 
 '
   placedBombPrefab: {fileID: 0}

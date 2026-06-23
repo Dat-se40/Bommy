@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2157340961471449528}
   - component: {fileID: 8004118972044734335}
   m_Layer: 0
-  m_Name: Orange
+  m_Name: Gold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,12 +84,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 1598213522, guid: f542979c0765e2a4b8d284c5599737ff, type: 3}
+  m_Sprite: {fileID: -3126738845940356929, guid: 5b1c1560612680a40b191ce136e47f30, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.875, y: 0.9375}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -132,8 +132,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.875, y: 0.9375}
-    newSize: {x: 0.875, y: 0.9375}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  effectTemplate: {fileID: 11400000, guid: 875493fde7ef7f8458512de922a61a03, type: 2}
+  effectTemplate: {fileID: 11400000, guid: deb44d1e3e67147408c8697f6efe5c12, type: 2}
   visualRoot: {fileID: 8013522885725600179}
   floatHeight: 0.15
   floatDuration: 0.5

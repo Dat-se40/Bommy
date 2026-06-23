@@ -51,6 +51,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MapInfoToggle",
+                    "type": "Button",
+                    "id": "e7b3c4d5-8a9f-4012-b567-89abcdef0123",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -73,6 +82,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "DefultCursor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a4c8e1f2-3b5d-4e6a-9c0d-1e2f3a4b5c6d",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MapInfoToggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

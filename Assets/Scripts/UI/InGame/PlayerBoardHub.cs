@@ -8,6 +8,7 @@ public class PlayerBoardHub : MonoBehaviour
 {
     [SerializeField] private CharacterDatabase characterDatabase;
     [SerializeField] private PlayerBoardSlotUI[] slots;
+    [SerializeField] private GameObject prefapPlayerSlotUI; 
     [SerializeField] private bool autoFindSlotsIfEmpty = true;
 
     [Header("Announcement")]
@@ -26,8 +27,7 @@ public class PlayerBoardHub : MonoBehaviour
 
         Instance = this;
 
-        if (autoFindSlotsIfEmpty && IsSlotsEmpty())
-            AutoFillSlotsFromChildren();
+        EnsureSlotsResolved();
 
         // TODO[ANNOUNCE] Bật lại khi hoàn thiện BoardAnnouncementUI + UITopLayerSupport.
         // if (announcementUI == null)
@@ -71,7 +71,12 @@ public class PlayerBoardHub : MonoBehaviour
     /// </summary>
     public void RegisterBoardState(PlayerBoardState state)
     {
-        if (state == null || slots == null)
+        if (state == null)
+            return;
+
+        EnsureSlotsResolved();
+
+        if (slots == null)
             return;
 
         int index = state.SlotIndex;
@@ -126,6 +131,8 @@ public class PlayerBoardHub : MonoBehaviour
 
     public void RebindAllFromScene()
     {
+        EnsureSlotsResolved();
+
         if (slots == null)
             return;
 
@@ -192,6 +199,38 @@ public class PlayerBoardHub : MonoBehaviour
         }
 
         return null;
+    }
+
+    void EnsureSlotsResolved()
+    {
+        if (!autoFindSlotsIfEmpty && !IsSlotsEmpty() && !HasNullSlot())
+            return;
+
+        if (IsSlotsEmpty() || HasNullSlot())
+            AutoFillSlotsFromChildren();
+
+        if (slots == null)
+            return;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i] != null)
+                slots[i].SetSlotIndex(i);
+        }
+    }
+
+    bool HasNullSlot()
+    {
+        if (slots == null)
+            return true;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i] == null)
+                return true;
+        }
+
+        return false;
     }
 
     bool IsSlotsEmpty()
