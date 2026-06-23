@@ -22,7 +22,9 @@ MonoBehaviour:
   pickupPrefab: {fileID: 3140720615861595630, guid: 5c89bb4b36dcf4e44b9acb527cab0a6c, type: 3}
   vfxPrefab: {fileID: 0}
   uiIcon: {fileID: 1430413014, guid: f542979c0765e2a4b8d284c5599737ff, type: 3}
-  mapInfoDescription: 
+  mapInfoDescription: 'Immune damage, this effect cannot stack
+
+'
   placedBombPrefab: {fileID: 0}
   fuseSeconds: 2
   damage: 1

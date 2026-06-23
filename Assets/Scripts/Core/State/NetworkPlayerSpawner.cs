@@ -8,7 +8,7 @@ public class NetworkPlayerSpawner : NetworkBehaviour
     [SerializeField] private Grid grid;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private GameObject players;
-
+    [SerializeField] private MapRefs mapRefs;
     readonly SyncList<PlayerController> playerControllers = new();
 
     protected override void OnSpawned()
@@ -19,20 +19,45 @@ public class NetworkPlayerSpawner : NetworkBehaviour
             MatchSessionBroker.SetCharacterCatalog(characterDatabase);
 
         networkManager.onPlayerJoined += SpawnPlayer;
-
-        if (grid != null)
-        {
-            MapRefs map = grid.transform.Find("Map")?.GetComponent<MapRefs>();
-
-            if (map != null)
-                spawnPoints = map.SpawnPoints;
-        }
+        MapLoader.MapReady += OnMapReady;
+        TryResolveSpawnPoints();
     }
 
     protected override void OnDespawned()
     {
         networkManager.onPlayerJoined -= SpawnPlayer;
+        MapLoader.MapReady -= OnMapReady;
         base.OnDespawned();
+    }
+
+    void OnMapReady(MapRefs map)
+    {
+        mapRefs = map;
+        TryResolveSpawnPoints();
+    }
+
+    /// <summary>
+    /// SpawnPoints nằm trong map prefab — MapLoader instantiate sau scene load.
+    /// Gọi lại mỗi lần spawn vì onPlayerJoined có thể tới trước MapLoader.Start.
+    /// </summary>
+    bool TryResolveSpawnPoints()
+    {
+        if (spawnPoints != null && spawnPoints.Length > 0)
+            return true;
+
+        if (mapRefs == null)
+            mapRefs = MapRefs.Instance;
+
+        if (mapRefs == null || mapRefs.SpawnPoints == null || mapRefs.SpawnPoints.Length == 0)
+            return false;
+
+        spawnPoints = mapRefs.SpawnPoints;
+        FlowGuard.Info(
+            FlowGuard.TagNetwork,
+            $"Resolved {spawnPoints.Length} spawn point(s) from {mapRefs.name}",
+            this
+        );
+        return true;
     }
 
     /// <summary>
@@ -61,9 +86,13 @@ public class NetworkPlayerSpawner : NetworkBehaviour
 
         int playerCount = playerControllers.Count;
 
-        if (spawnPoints == null || spawnPoints.Length == 0)
+        if (!TryResolveSpawnPoints())
         {
-            Debug.LogWarning($"{nameof(NetworkPlayerSpawner)}: spawnPoints trống.");
+            FlowGuard.Error(
+                FlowGuard.TagNetwork,
+                "spawnPoints trống — MapLoader chưa load map hoặc map prefab thiếu SpawnPoints.",
+                this
+            );
             return;
         }
 
@@ -89,7 +118,16 @@ public class NetworkPlayerSpawner : NetworkBehaviour
         if (newPlayer.TryGetComponent(out PlayerSpawnSetup spawnSetup))
             spawnSetup.Apply(profile);
 
-        // Host: refresh ngay. Client: PlayerBoardState SyncVar → RegisterBoardState.
+        // Host: refresh ngay. Client: ObserversRpc + PlayerBoardState SyncVar → RegisterBoardState.
+        if (PlayerBoardHub.Instance != null)
+            PlayerBoardHub.Instance.OnNetworkPlayerRegistered(profile);
+
+        BroadcastPlayerBoardRegistration(profile);
+    }
+
+    [ObserversRpc(runLocally: false)]
+    void BroadcastPlayerBoardRegistration(PlayerMatchProfile profile)
+    {
         if (PlayerBoardHub.Instance != null)
             PlayerBoardHub.Instance.OnNetworkPlayerRegistered(profile);
     }

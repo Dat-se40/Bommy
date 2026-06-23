@@ -1,14 +1,36 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 /// <summary>
-/// Hiển thị thông tin item/buff của map hiện tại trước khi trận bắt đầu.
-/// Dữ liệu được lấy từ LevelRuntime.Current.destructibleDrops.
+/// Hiển thị thông tin item/buff của map — singleton, toggle bằng InputActionReference (phím E).
+/// Host GameObject phải luôn active; ẩn/hiện bằng CanvasGroup.
+/// Prep: tự mở bảng khi vào phase, E / Closebtn bật tắt trong lúc Prep.
 /// </summary>
 public class MapInfoDialogController : MonoBehaviour
 {
+    #region Singleton
+
+    static MapInfoDialogController instance;
+
+    public static MapInfoDialogController Instance
+    {
+        get
+        {
+            if (instance != null)
+                return instance;
+
+            instance = FindAnyObjectByType<MapInfoDialogController>(FindObjectsInactive.Include);
+            return instance;
+        }
+    }
+
+    #endregion
+
+    #region Variables
+
     [Header("Root")]
     [SerializeField] private GameObject overlayRoot;
 
@@ -22,28 +44,74 @@ public class MapInfoDialogController : MonoBehaviour
     [Header("Items")]
     [SerializeField] private Transform itemList;
     [SerializeField] private MapInfoItemCardUI itemCardTemplate;
+    [SerializeField] private GameObject prefabItemCard;
     [SerializeField] private int maxCards = 8;
 
     [Header("Fallback")]
     [SerializeField] private Sprite fallbackIcon;
     [SerializeField] private string emptyText = "No item data";
 
-    private readonly List<MapInfoItemCardUI> spawnedCards = new();
+    [Header("Keyboard Actions")]
+    [SerializeField] private InputActionReference toggleMapInfoAction;
+    [SerializeField] private InputActionAsset gameInputActions;
 
-    private void Awake()
+    readonly List<MapInfoItemCardUI> spawnedCards = new();
+    InputAction resolvedToggleAction;
+    MatchPhaseKind lastAutoOverlayPhase = MatchPhaseKind.None;
+    CanvasGroup overlayCanvasGroup;
+    bool overlayVisible;
+    bool allowToggleInPrep;
+
+    #endregion
+
+    #region Properties
+
+    public bool IsOpen => overlayVisible;
+    public bool CanToggle => allowToggleInPrep;
+
+    #endregion
+
+    #region Unity Methods
+
+    void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Debug.LogWarning($"{nameof(MapInfoDialogController)}: duplicate on '{name}'.", this);
+            return;
+        }
+
+        instance = this;
+        ResolveOverlayReferences();
+
         if (closebtn != null)
         {
             closebtn.onClick.RemoveAllListeners();
             closebtn.onClick.AddListener(Close);
         }
 
-        if (itemCardTemplate != null)
-            itemCardTemplate.gameObject.SetActive(false);
-
-        if (overlayRoot != null)
-            overlayRoot.SetActive(false);
+        SetOverlayVisible(false);
+        allowToggleInPrep = false;
     }
+
+    void Start()
+    {
+        BindToggleInput();
+        SubscribeMatchPhase();
+    }
+
+    void OnDestroy()
+    {
+        UnbindToggleInput();
+        UnsubscribeMatchPhase();
+
+        if (instance == this)
+            instance = null;
+    }
+
+    #endregion
+
+    #region Public Methods
 
     public void OpenFromCurrentLevel()
     {
@@ -55,11 +123,7 @@ public class MapInfoDialogController : MonoBehaviour
             return;
         }
 
-        if (overlayRoot != null)
-        {
-            overlayRoot.SetActive(true);
-            overlayRoot.transform.SetAsLastSibling();
-        }
+        SetOverlayVisible(true);
 
         if (mapInfoTitlelbl != null)
             mapInfoTitlelbl.text = "MAP INFO";
@@ -72,16 +136,167 @@ public class MapInfoDialogController : MonoBehaviour
 
     public void Close()
     {
-        if (overlayRoot != null)
-            overlayRoot.SetActive(false);
+        SetOverlayVisible(false);
     }
 
-    private void RenderItems(LevelConfig level)
+    public void Toggle()
+    {
+        if (!allowToggleInPrep)
+            return;
+
+        if (IsOpen)
+            Close();
+        else
+            OpenFromCurrentLevel();
+    }
+
+    /// <summary>Prep bắt đầu — mở bảng + cho phép E / Closebtn toggle.</summary>
+    public void BeginPrepPhase()
+    {
+        allowToggleInPrep = true;
+        OpenFromCurrentLevel();
+    }
+
+    /// <summary>Hết Prep — đóng overlay, khóa E toggle.</summary>
+    public void EndPrepPhase()
+    {
+        allowToggleInPrep = true;
+        Close();
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    void ResolveOverlayReferences()
+    {
+        if (overlayRoot == null)
+            overlayRoot = gameObject;
+
+        overlayCanvasGroup = GetComponent<CanvasGroup>();
+
+        if (overlayCanvasGroup == null)
+            overlayCanvasGroup = gameObject.AddComponent<CanvasGroup>();
+
+        Transform dialog = transform.Find("MapInfoDialog");
+
+        if (dialog != null)
+            dialog.gameObject.SetActive(true);
+    }
+
+    void SetOverlayVisible(bool visible)
+    {
+        overlayVisible = visible;
+
+        if (overlayCanvasGroup != null)
+        {
+            overlayCanvasGroup.alpha = visible ? 1f : 0f;
+            overlayCanvasGroup.interactable = visible;
+            overlayCanvasGroup.blocksRaycasts = visible;
+        }
+
+        if (visible)
+            transform.SetAsLastSibling();
+    }
+
+    void BindToggleInput()
+    {
+        resolvedToggleAction = ResolveToggleAction();
+
+        if (resolvedToggleAction == null)
+        {
+            Debug.LogWarning(
+                $"{nameof(MapInfoDialogController)}: chưa gán MapInfoToggle (InputActionReference hoặc Game Input asset).",
+                this
+            );
+            return;
+        }
+
+        resolvedToggleAction.Enable();
+        resolvedToggleAction.performed += OnToggleMapInfoPerformed;
+    }
+
+    void UnbindToggleInput()
+    {
+        if (resolvedToggleAction == null)
+            return;
+
+        resolvedToggleAction.performed -= OnToggleMapInfoPerformed;
+        resolvedToggleAction.Disable();
+        resolvedToggleAction = null;
+    }
+
+    void SubscribeMatchPhase()
+    {
+        MatchPhaseBroadcast broadcast = MatchPhaseBroadcast.Instance;
+
+        if (broadcast == null)
+            return;
+
+        broadcast.PhaseChanged += HandleMatchPhaseForOverlay;
+        HandleMatchPhaseForOverlay();
+    }
+
+    void UnsubscribeMatchPhase()
+    {
+        MatchPhaseBroadcast broadcast = MatchPhaseBroadcast.Instance;
+
+        if (broadcast == null)
+            return;
+
+        broadcast.PhaseChanged -= HandleMatchPhaseForOverlay;
+    }
+
+    void OnToggleMapInfoPerformed(InputAction.CallbackContext context)
+    {
+        if (!allowToggleInPrep)
+            return;
+
+        Toggle();
+    }
+
+    InputAction ResolveToggleAction()
+    {
+        if (toggleMapInfoAction != null && toggleMapInfoAction.action != null)
+            return toggleMapInfoAction.action;
+
+        if (gameInputActions != null)
+            return gameInputActions.FindAction("MapInfoToggle", false);
+
+        return null;
+    }
+
+    void HandleMatchPhaseForOverlay()
+    {
+        MatchPhaseBroadcast broadcast = MatchPhaseBroadcast.Instance;
+
+        if (broadcast == null)
+            return;
+
+        MatchPhaseKind phase = broadcast.CurrentPhase;
+
+        if (phase == MatchPhaseKind.Prep)
+        {
+            if (lastAutoOverlayPhase != MatchPhaseKind.Prep)
+                BeginPrepPhase();
+        }
+        else if (lastAutoOverlayPhase == MatchPhaseKind.Prep)
+        {
+            EndPrepPhase();
+        }
+
+        lastAutoOverlayPhase = phase;
+    }
+
+    void RenderItems(LevelConfig level)
     {
         ClearCards();
 
-        if (itemList == null || itemCardTemplate == null)
+        if (itemList == null || !HasItemCardSource())
+        {
+            Debug.LogWarning($"{nameof(MapInfoDialogController)}: thiếu Item List hoặc Item Card Template.", this);
             return;
+        }
 
         DropEntry[] entries = level.destructibleDrops.entries;
 
@@ -102,7 +317,6 @@ public class MapInfoDialogController : MonoBehaviour
             if (effect == null)
                 continue;
 
-            // Tránh hiện trùng cùng một effect nếu config có duplicate.
             if (!usedEffectIds.Add(effect.effectId))
                 continue;
 
@@ -117,9 +331,38 @@ public class MapInfoDialogController : MonoBehaviour
             SpawnEmptyCard();
     }
 
-    private void SpawnEffectCard(EffectTemplate effect, int maxSpawnCount)
+    MapInfoItemCardUI SpawnItemCard()
     {
-        MapInfoItemCardUI card = Instantiate(itemCardTemplate, itemList);
+        if (itemCardTemplate != null)
+            return Instantiate(itemCardTemplate, itemList);
+
+        if (prefabItemCard == null)
+            return null;
+
+        GameObject instance = Instantiate(prefabItemCard, itemList);
+
+        if (!instance.TryGetComponent(out MapInfoItemCardUI card))
+        {
+            Debug.LogWarning(
+                $"{nameof(MapInfoDialogController)}: prefabItemCard thiếu {nameof(MapInfoItemCardUI)}.",
+                this
+            );
+            Destroy(instance);
+            return null;
+        }
+
+        return card;
+    }
+
+    bool HasItemCardSource() => itemCardTemplate != null || prefabItemCard != null;
+
+    void SpawnEffectCard(EffectTemplate effect, int maxSpawnCount)
+    {
+        MapInfoItemCardUI card = SpawnItemCard();
+
+        if (card == null)
+            return;
+
         card.gameObject.SetActive(true);
 
         string description = !string.IsNullOrWhiteSpace(effect.mapInfoDescription)
@@ -143,7 +386,7 @@ public class MapInfoDialogController : MonoBehaviour
         spawnedCards.Add(card);
     }
 
-    private Sprite ResolveFallbackIcon(EffectTemplate effect)
+    Sprite ResolveFallbackIcon(EffectTemplate effect)
     {
         if (effect == null || effect.pickupPrefab == null)
             return fallbackIcon;
@@ -156,21 +399,21 @@ public class MapInfoDialogController : MonoBehaviour
         return fallbackIcon;
     }
 
-    private void SpawnEmptyCard()
+    void SpawnEmptyCard()
     {
-        MapInfoItemCardUI card = Instantiate(itemCardTemplate, itemList);
+        MapInfoItemCardUI card = SpawnItemCard();
+
+        if (card == null)
+            return;
+
         card.gameObject.SetActive(true);
         card.Setup(fallbackIcon, "ITEMS", emptyText);
         spawnedCards.Add(card);
     }
 
-    private void OpenEmpty()
+    void OpenEmpty()
     {
-        if (overlayRoot != null)
-        {
-            overlayRoot.SetActive(true);
-            overlayRoot.transform.SetAsLastSibling();
-        }
+        SetOverlayVisible(true);
 
         if (mapInfoTitlelbl != null)
             mapInfoTitlelbl.text = "MAP INFO";
@@ -182,7 +425,7 @@ public class MapInfoDialogController : MonoBehaviour
         SpawnEmptyCard();
     }
 
-    private void ClearCards()
+    void ClearCards()
     {
         for (int i = 0; i < spawnedCards.Count; i++)
         {
@@ -192,4 +435,6 @@ public class MapInfoDialogController : MonoBehaviour
 
         spawnedCards.Clear();
     }
+
+    #endregion
 }

@@ -22,4 +22,8 @@ MonoBehaviour:
   pickupPrefab: {fileID: 3140720615861595630, guid: 53236164c8cdc81499bbcde622a6afc6, type: 3}
   vfxPrefab: {fileID: 0}
   uiIcon: {fileID: 2050799488, guid: f542979c0765e2a4b8d284c5599737ff, type: 3}
-  mapInfoDescription: 
+  mapInfoDescription: Increase speed for 60s, this effect can stack
+  placedBombPrefab: {fileID: 0}
+  fuseSeconds: 2
+  damage: 1
+  ignoreOwner: 1

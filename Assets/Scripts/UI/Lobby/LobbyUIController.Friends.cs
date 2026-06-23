@@ -5,24 +5,6 @@ using UnityEngine.UI;
 
 public partial class LobbyUIController
 {
-    [System.Serializable]
-    private class FriendData
-    {
-        public string friendId;
-        public string displayName;
-        public bool online;
-        public bool isSteamFriend;
-        public string currentRoomId;
-    }
-
-    [System.Serializable]
-    private class FriendRequestData
-    {
-        public string friendId;
-        public string displayName;
-        public bool isSteamFriend;
-    }
-
     [Header("Friends Dialog")]
     [SerializeField] private GameObject friendsDialogOverlay;
     [SerializeField] private GameObject friendsPage;
@@ -35,7 +17,6 @@ public partial class LobbyUIController
     [SerializeField] private Button requestsTabbtn;
     [SerializeField] private Button searchbtn;
     [SerializeField] private Button addFriendbtn;
-
 
     [Header("Steam Status")]
     [SerializeField] private Image steamIcon;
@@ -53,18 +34,13 @@ public partial class LobbyUIController
     [SerializeField] private Transform requestListContent;
     [SerializeField] private FriendRequestRowUI requestRowTemplate;
 
-    private readonly List<FriendData> friends = new();
-    private readonly List<FriendRequestData> friendRequests = new();
+    readonly List<FriendRowUI> spawnedFriendRows = new();
+    readonly List<FriendRequestRowUI> spawnedRequestRows = new();
+    FriendDto[] cachedFriends = System.Array.Empty<FriendDto>();
 
-    private readonly List<FriendRowUI> spawnedFriendRows = new();
-    private readonly List<FriendRequestRowUI> spawnedRequestRows = new();
+    bool steamConnected = true;
 
-    private bool steamConnected = true;
-
-    /// <summary>
-    /// Khởi tạo UI Friends dialog khi vào Lobby.
-    /// </summary>
-    private void InitializeFriendsFeature()
+    void InitializeFriendsFeature()
     {
         if (friendsDialogOverlay != null)
             friendsDialogOverlay.SetActive(false);
@@ -77,11 +53,10 @@ public partial class LobbyUIController
 
         SetupFriendsButtons();
         SetupFriendSearch();
-        SeedFriendDemoData();
         RefreshSteamStatus();
     }
 
-    private void SetupFriendSearch()
+    void SetupFriendSearch()
     {
         if (friendSearchInput != null)
         {
@@ -90,15 +65,13 @@ public partial class LobbyUIController
         }
     }
 
-
-    private void SetupFriendsButtons()
+    void SetupFriendsButtons()
     {
         if (closeFriendsbtn != null)
         {
             closeFriendsbtn.onClick.RemoveAllListeners();
             closeFriendsbtn.onClick.AddListener(CloseFriendsDialog);
         }
-
 
         if (friendsTabbtn != null)
         {
@@ -118,7 +91,6 @@ public partial class LobbyUIController
             searchbtn.onClick.AddListener(SearchFriends);
         }
 
-
         if (addFriendbtn != null)
         {
             addFriendbtn.onClick.RemoveAllListeners();
@@ -133,8 +105,10 @@ public partial class LobbyUIController
 
         ShowFriendsTab();
         RefreshSteamStatus();
-        RefreshFriendList();
-        RefreshRequestList();
+
+        LobbyManager manager = LobbyManager.EnsureExists();
+        manager.RequestFriendsList();
+        manager.RequestFriendRequests();
 
         SetFriendsStatus("Invite friends or join their room.");
     }
@@ -167,74 +141,25 @@ public partial class LobbyUIController
         SetFriendsStatus("Add friends by ID or handle requests.");
     }
 
-    // DEMO, sau này thay bằng backend/Steam data.
-    private void SeedFriendDemoData()
+    void OnFriendsListed(FriendDto[] friends)
     {
-        if (friends.Count == 0)
-        {
-            friends.Add(new FriendData
-            {
-                friendId = "1001",
-                displayName = "MimiFan",
-                online = true,
-                isSteamFriend = true,
-                currentRoomId = "RX45"
-            });
-
-            friends.Add(new FriendData
-            {
-                friendId = "1002",
-                displayName = "BomberCat",
-                online = true,
-                isSteamFriend = true,
-                currentRoomId = ""
-            });
-
-            friends.Add(new FriendData
-            {
-                friendId = "2001",
-                displayName = "LocalBuddy",
-                online = true,
-                isSteamFriend = false,
-                currentRoomId = "MM88"
-            });
-
-            friends.Add(new FriendData
-            {
-                friendId = "3001",
-                displayName = "OfflineDog",
-                online = false,
-                isSteamFriend = false,
-                currentRoomId = ""
-            });
-        }
-
-        if (friendRequests.Count == 0)
-        {
-            friendRequests.Add(new FriendRequestData
-            {
-                friendId = "9001",
-                displayName = "NewBomber",
-                isSteamFriend = false
-            });
-
-            friendRequests.Add(new FriendRequestData
-            {
-                friendId = "STEAM42",
-                displayName = "SteamGuest",
-                isSteamFriend = true
-            });
-        }
+        cachedFriends = friends ?? System.Array.Empty<FriendDto>();
+        RefreshFriendList();
     }
 
-    private void RefreshFriendList()
+    void OnFriendRequestsListed(FriendRequestDto[] requests)
+    {
+        RefreshRequestList(requests);
+    }
+
+    void RefreshFriendList()
     {
         ClearFriendRows();
 
         if (friendListContent == null || friendRowTemplate == null)
         {
             if (friendsCountlbl != null)
-                friendsCountlbl.text = "0/" + friends.Count + " FRIENDS";
+                friendsCountlbl.text = "0/" + cachedFriends.Length + " FRIENDS";
 
             return;
         }
@@ -245,9 +170,9 @@ public partial class LobbyUIController
 
         int shownCount = 0;
 
-        for (int i = 0; i < friends.Count; i++)
+        for (int i = 0; i < cachedFriends.Length; i++)
         {
-            FriendData friend = friends[i];
+            FriendDto friend = cachedFriends[i];
 
             bool match =
                 string.IsNullOrEmpty(keyword) ||
@@ -272,23 +197,18 @@ public partial class LobbyUIController
 
             spawnedFriendRows.Add(row);
             shownCount++;
-
         }
-        if (friendsCountlbl != null)
-            friendsCountlbl.text = shownCount + "/" + friends.Count + " FRIENDS";
 
+        if (friendsCountlbl != null)
+            friendsCountlbl.text = shownCount + "/" + cachedFriends.Length + " FRIENDS";
     }
 
-    /// <summary>
-    /// Tìm friend theo tên hoặc ID trong danh sách bạn bè.
-    /// </summary>
     public void SearchFriends()
     {
         RefreshFriendList();
     }
 
-
-    private void ClearFriendRows()
+    void ClearFriendRows()
     {
         for (int i = 0; i < spawnedFriendRows.Count; i++)
         {
@@ -299,25 +219,27 @@ public partial class LobbyUIController
         spawnedFriendRows.Clear();
     }
 
-
-    private void RefreshRequestList()
+    void RefreshRequestList(FriendRequestDto[] requests)
     {
         ClearRequestRows();
+
+        if (requests == null)
+            requests = System.Array.Empty<FriendRequestDto>();
 
         if (requestListContent == null || requestRowTemplate == null)
         {
             if (requestsCountlbl != null)
-                requestsCountlbl.text = friendRequests.Count + " REQUESTS";
+                requestsCountlbl.text = requests.Length + " REQUESTS";
 
             return;
         }
 
         if (requestsCountlbl != null)
-            requestsCountlbl.text = friendRequests.Count + " REQUESTS";
+            requestsCountlbl.text = requests.Length + " REQUESTS";
 
-        for (int i = 0; i < friendRequests.Count; i++)
+        for (int i = 0; i < requests.Length; i++)
         {
-            FriendRequestData request = friendRequests[i];
+            FriendRequestDto request = requests[i];
 
             FriendRequestRowUI row = Instantiate(requestRowTemplate, requestListContent);
             row.gameObject.SetActive(true);
@@ -334,7 +256,7 @@ public partial class LobbyUIController
         }
     }
 
-    private void ClearRequestRows()
+    void ClearRequestRows()
     {
         for (int i = 0; i < spawnedRequestRows.Count; i++)
         {
@@ -358,187 +280,48 @@ public partial class LobbyUIController
             return;
         }
 
-        if (FindFriend(id) != null)
-        {
-            SetFriendsStatus("Friend already exists.");
-            return;
-        }
-
-        if (FindRequest(id) != null)
-        {
-            SetFriendsStatus("This player already sent a request.");
-            return;
-        }
-
-        friendRequests.Insert(0, new FriendRequestData
-        {
-            friendId = id,
-            displayName = "Friend " + id,
-            isSteamFriend = false
-        });
-
+        LobbyManager.EnsureExists().RequestAddFriend(new AddFriendRequest { friendId = id });
         friendIdInput.text = "";
-
-        SetFriendsStatus("Friend request created for ID: " + id);
-        RefreshRequestList();
+        SetFriendsStatus("Friend request sent for ID: " + id);
     }
 
-    private FriendData FindFriend(string friendId)
+    void AcceptFriendRequest(string friendId)
     {
-        for (int i = 0; i < friends.Count; i++)
-        {
-            if (friends[i].friendId == friendId)
-                return friends[i];
-        }
-
-        return null;
+        LobbyManager.EnsureExists().RequestAcceptFriend(friendId);
+        SetFriendsStatus("Accepted friend request.");
     }
 
-    private FriendRequestData FindRequest(string friendId)
+    void DeclineFriendRequest(string friendId)
     {
-        for (int i = 0; i < friendRequests.Count; i++)
-        {
-            if (friendRequests[i].friendId == friendId)
-                return friendRequests[i];
-        }
-
-        return null;
+        LobbyManager.EnsureExists().RequestDeclineFriend(friendId);
+        SetFriendsStatus("Declined friend request.");
     }
 
-    private void AcceptFriendRequest(string friendId)
+    void InviteFriend(string friendId)
     {
-        for (int i = 0; i < friendRequests.Count; i++)
-        {
-            if (friendRequests[i].friendId != friendId)
-                continue;
+        LobbyManager manager = LobbyManager.EnsureExists();
 
-            FriendRequestData request = friendRequests[i];
-
-            friends.Insert(0, new FriendData
-            {
-                friendId = request.friendId,
-                displayName = request.displayName,
-                online = true,
-                isSteamFriend = request.isSteamFriend,
-                currentRoomId = ""
-            });
-
-            friendRequests.RemoveAt(i);
-
-            SetFriendsStatus("Accepted " + request.displayName + ".");
-            RefreshRequestList();
-            RefreshFriendList();
-            return;
-        }
-
-        SetFriendsStatus("Request not found.");
-    }
-
-    private void DeclineFriendRequest(string friendId)
-    {
-        for (int i = 0; i < friendRequests.Count; i++)
-        {
-            if (friendRequests[i].friendId != friendId)
-                continue;
-
-            string displayName = friendRequests[i].displayName;
-            friendRequests.RemoveAt(i);
-
-            SetFriendsStatus("Declined " + displayName + ".");
-            RefreshRequestList();
-            return;
-        }
-
-        SetFriendsStatus("Request not found.");
-    }
-
-    /// <summary>
-    /// Mời friend vào phòng hiện tại.
-    /// Steam sẽ nối sau, hiện tại chỉ hiển thị status.
-    /// </summary>
-    private void InviteFriend(string friendId)
-    {
-        FriendData friend = FindFriend(friendId);
-
-        if (friend == null)
-        {
-            SetFriendsStatus("Friend not found.");
-            return;
-        }
-
-        if (!friend.online)
-        {
-            SetFriendsStatus(friend.displayName + " is offline.");
-            return;
-        }
-
-        if (string.IsNullOrEmpty(currentRoomId))
+        if (!manager.HasCurrentRoom)
         {
             SetFriendsStatus("Create or join a room first.");
             return;
         }
 
-        if (friend.isSteamFriend)
+        manager.RequestInviteFriend(new InviteFriendRequest
         {
-            if (!IsSteamConnected())
-            {
-                SetFriendsStatus("Steam is not connected.");
-                return;
-            }
+            friendId = friendId,
+            roomId = manager.CurrentRoom.roomId
+        });
 
-            // TODO[STEAM]: Gửi lời mời qua Steam overlay/app.
-            SetFriendsStatus("Steam invite sent to " + friend.displayName + " for room " + currentRoomId + ".");
-            return;
-        }
-
-        // TODO[NETWORK]: Gửi invite qua backend/lobby server.
-        SetFriendsStatus("Invite sent to " + friend.displayName + " for room " + currentRoomId + ".");
+        SetFriendsStatus("Invite sent.");
     }
 
-    private void JoinFriendRoom(string friendId)
+    void JoinFriendRoom(string friendId)
     {
-        FriendData friend = FindFriend(friendId);
-
-        if (friend == null)
-        {
-            SetFriendsStatus("Friend not found.");
-            return;
-        }
-
-        if (!friend.online)
-        {
-            SetFriendsStatus(friend.displayName + " is offline.");
-            return;
-        }
-
-        if (string.IsNullOrEmpty(friend.currentRoomId))
-        {
-            SetFriendsStatus(friend.displayName + " is not in a room.");
-            return;
-        }
-
-        currentRoomId = friend.currentRoomId;
-
-        if (currentRoomNamelbl != null)
-            currentRoomNamelbl.text = "ROOM: " + friend.displayName + "'s Room";
-
-        if (currentRoomIdlbl != null)
-            currentRoomIdlbl.text = "ID: " + currentRoomId;
-
-        if (currentRoomPlayerslbl != null)
-            currentRoomPlayerslbl.text = "Players: ?";
-
-        if (currentRoomMaplbl != null)
-            currentRoomMaplbl.text = "Map: -";
-
-        SetFriendsStatus("Joined room " + currentRoomId + " from " + friend.displayName + ".");
+        LobbyManager.EnsureExists().RequestJoinFriendRoom(friendId);
     }
 
-    /// <summary>
-    /// Cập nhật trạng thái kết nối Steam trên UI.
-    /// Steam thật sẽ nối sau.
-    /// </summary>
-    private void RefreshSteamStatus()
+    void RefreshSteamStatus()
     {
         bool connected = IsSteamConnected();
 
@@ -553,17 +336,14 @@ public partial class LobbyUIController
             steamStatuslbl.text = connected ? "STEAM ON" : "STEAM OFF";
     }
 
-    private bool IsSteamConnected()
+    bool IsSteamConnected()
     {
-        // TODO[STEAM]: Thay bằng SteamManager.Initialized hoặc trạng thái Steamworks.
         return steamConnected;
     }
 
-    private void SetFriendsStatus(string message)
+    void SetFriendsStatus(string message)
     {
         if (friendsStatuslbl != null)
             friendsStatuslbl.text = message;
     }
-
-
 }

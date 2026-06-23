@@ -9,4 +9,7 @@ public enum EffectType
     Strength,
     BoomStack,
     MossTrap,
+    Crytal,
+    Gold
+    
 }

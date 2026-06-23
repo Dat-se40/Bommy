@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5c18516c2baed94bb1f1093cdbfefc9, type: 3}
-  m_Name: Extend Boom Range
+  m_Name: Crytal
   m_EditorClassIdentifier: Assembly-CSharp::EffectTemplate
-  effectId: 0
-  displayName: Extend Bomb Range
-  effectType: 0
+  effectId: 5
+  displayName: Crytal
+  effectType: 7
   duration: 6000
-  specialValue: 1
-  description: Explosion extend 1 range
-  rating: 0
-  pickupPrefab: {fileID: 32877488675269953, guid: 785de34bb152a1a40aee15d88055dc4f, type: 3}
+  specialValue: 20
+  description: Gold
+  rating: 1
+  pickupPrefab: {fileID: 3140720615861595630, guid: 4093f432da02849448372d9bf71e157a, type: 3}
   vfxPrefab: {fileID: 0}
-  uiIcon: {fileID: -156484691, guid: f542979c0765e2a4b8d284c5599737ff, type: 3}
-  mapInfoDescription: 
+  uiIcon: {fileID: -7742226383432107638, guid: 5b1c1560612680a40b191ce136e47f30, type: 3}
+  mapInfoDescription: "20  gold \n"
   placedBombPrefab: {fileID: 0}
   fuseSeconds: 2
   damage: 1

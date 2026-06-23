@@ -29,7 +29,7 @@ public class PlayerEffects : NetworkBehaviour
             }
         }
     }
-
+    // Nhưng món ko nằm trong đây được coi là hiệu ứng vĩnh viễn
     public void RemoveEffect(ActiveEffect effect)
     {
         var template = EffectDatabase.Instance.Get(effect.effectId);
@@ -42,9 +42,12 @@ public class PlayerEffects : NetworkBehaviour
             case EffectType.Shield:
                 player.AddShield(-(int)effect.specialValue);
                 break;
-            //case EffectType.MossTrap:
-            //    RemoveEarliestMossTrapSkill(); 
-            //    break;
+            case EffectType.MossTrap:
+                RemoveEarliestMossTrapSkill();
+                break;
+            case EffectType.Strength: 
+                break;
+
         }
     }
 
@@ -99,6 +102,15 @@ public class PlayerEffects : NetworkBehaviour
             case EffectType.MossTrap:
                 mosEfffectsId.Enqueue(effect.effectId); 
                 break;
+            case EffectType.Crytal:
+                player.AddGold((int)effect.specialValue); 
+                break;
+            case EffectType.Gold:
+                player.AddGold((int)effect.specialValue); 
+                break;
+            case EffectType.BoomStack:
+                player.AddBombCapacity((int)effect.specialValue);   
+                break; 
         }
     }
 
