@@ -6,7 +6,7 @@ public class MainMenu : MonoBehaviour
     [Header("Scenes")]
     [SerializeField] private string characterSelectSceneName = "CharacterSelect";
     [SerializeField] private string lobbySceneName = "Lobby";
-    [SerializeField] private string authGateSceneName = "AuthGate_demo";
+    [SerializeField] private string authGateSceneName = "AuthGate";
 
     [Header("Settings")]
     [SerializeField] private GameObject guideOverlay;

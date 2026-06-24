@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/AuthGate.unity
     guid: 928c5a0c53ba466781dd7afd385d0a71
   - enabled: 1
-    path: Assets/Scenes/AuthGate_demo.unity
+    path: Assets/Scenes/AuthGate.unity
     guid: 9c2f6c8cc05aae74d8601a44b97607fd
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
