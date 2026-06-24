@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 public class MainMenuAccountUIController : MonoBehaviour
 {
     [Header("Scenes")]
-    [SerializeField] private string authGateSceneName = "AuthGate_demo";
+    [SerializeField] private string authGateSceneName = "AuthGate";
 
     [Header("Top Bar")]
     [SerializeField] private Button settingbtn;
@@ -47,14 +48,11 @@ public class MainMenuAccountUIController : MonoBehaviour
     [Header("Mailbox")]
     [SerializeField] private MailboxDialogController mailboxDialog;
 
-    private const string SessionKey = "AUTH_SESSION_ACTIVE";
-    private const string AccountEmailKey = "AUTH_ACCOUNT_EMAIL";
-    private const string AccountIdKey = "AUTH_ACCOUNT_ID";
-    private const string AccountNameKey = "AUTH_ACCOUNT_NAME";
-    private const string AccountProviderKey = "AUTH_ACCOUNT_PROVIDER";
+    private AuthService authService;
 
     private void Awake()
     {
+        // Just bind buttons here — no AuthService needed yet
         BindButtons();
 
         if (settingsOverlay != null)
@@ -62,6 +60,18 @@ public class MainMenuAccountUIController : MonoBehaviour
 
         if (nameEditDialog != null)
             nameEditDialog.CloseDialog();
+    }
+
+    private void Start()
+    {
+        // Bootstrapper.Awake() has already run by now, AuthService exists
+        authService = FindAnyObjectByType<AuthService>();
+
+        if (authService == null)
+        {
+            Debug.LogError("[MainMenuAccountUIController] AuthService not found.");
+            return;
+        }
 
         RefreshAccountInfo();
     }
@@ -163,22 +173,23 @@ public class MainMenuAccountUIController : MonoBehaviour
         if (nameEditDialog == null)
             return;
 
-        string currentName = PlayerPrefs.GetString(AccountNameKey, "Player");
-
+        string currentName = authService?.Session?.Username ?? "Player";
         nameEditDialog.OpenDialog(currentName, SaveAccountName);
     }
 
-    private void SaveAccountName(string newName)
+    private async void SaveAccountName(string newName)
     {
-        if (string.IsNullOrWhiteSpace(newName))
+        if (string.IsNullOrWhiteSpace(newName) || authService == null)
             return;
 
         newName = newName.Trim();
 
-        PlayerPrefs.SetString(AccountNameKey, newName);
-        PlayerPrefs.Save();
+        AuthResult result = await authService.UpdateDisplayNameAsync(newName);
 
-        RefreshAccountInfo();
+        if (result.Success)
+            RefreshAccountInfo();
+        else
+            Debug.LogWarning("[MainMenuAccountUIController] Failed to update name: " + result.Error);
     }
 
     private void OpenSoundSettings()
@@ -207,46 +218,38 @@ public class MainMenuAccountUIController : MonoBehaviour
 
     private void RefreshAccountInfo()
     {
-        string name = PlayerPrefs.GetString(AccountNameKey, "Player");
-        string id = PlayerPrefs.GetString(AccountIdKey, "BOOM-0000");
+        // Pull directly from the live session — no PlayerPrefs needed
+        string name = authService.DisplayName;
+        string id = authService.Session?.UserId ?? "—";
 
         if (accountNamelbl != null)
             accountNamelbl.text = name;
 
         if (accountIdlbl != null)
             accountIdlbl.text = "ID: " + id;
-
     }
 
     private void CopyAccountId()
     {
-        string id = PlayerPrefs.GetString(AccountIdKey, "BOOM-0000");
+        string id = authService.Session?.UserId ?? string.Empty;
         GUIUtility.systemCopyBuffer = id;
     }
 
-    private void SwitchAccount()
+    private async void SwitchAccount()
     {
-        ClearSession();
+        await SignOutAndReturn();
+    }
+
+    private async void Logout()
+    {
+        await SignOutAndReturn();
+    }
+
+    private async Task SignOutAndReturn()
+    {
+        if (authService != null)
+            await authService.LogoutAsync();
+
         SceneManager.LoadScene(authGateSceneName);
     }
-
-    private void Logout()
-    {
-        ClearSession();
-        SceneManager.LoadScene(authGateSceneName);
-    }
-
-    /// <summary>
-    /// Xóa session local demo. Sau này thay bằng logout backend thật.
-    /// </summary>
-    private void ClearSession()
-    {
-        PlayerPrefs.DeleteKey(SessionKey);
-        PlayerPrefs.DeleteKey(AccountEmailKey);
-        PlayerPrefs.DeleteKey(AccountIdKey);
-        PlayerPrefs.DeleteKey(AccountNameKey);
-        PlayerPrefs.DeleteKey(AccountProviderKey);
-        PlayerPrefs.Save();
-    }
-
 }

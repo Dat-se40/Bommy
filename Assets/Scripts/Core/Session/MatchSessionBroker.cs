@@ -47,7 +47,7 @@ public static class MatchSessionBroker
         PlayerMatchProfile profile = localPlayer;
 
         if (profile.characterId > 0)
-            profile.displayName = NakamaConnectionManager.EnsureExists().DisplayName;
+            profile.displayName = AuthService.GetOrCreate().DisplayName;
 
         return profile;
     }
@@ -86,7 +86,7 @@ public static class MatchSessionBroker
         if (definition == null)
             return;
 
-        string displayName = NakamaConnectionManager.EnsureExists().DisplayName;
+        string displayName = AuthService.GetOrCreate().DisplayName;
 
         localPlayer = PlayerMatchProfile.FromDefinition(
             definition,

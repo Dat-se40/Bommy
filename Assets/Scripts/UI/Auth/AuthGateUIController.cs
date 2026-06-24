@@ -35,7 +35,7 @@ public sealed class AuthGateUIController : MonoBehaviour
     [SerializeField] private Button forgotbtn;
 
     [Header("Register")]
-    [SerializeField] private TMP_InputField registerNameInput;
+    [SerializeField] private TMP_InputField registerUsernameInput;
     [SerializeField] private TMP_InputField registerEmailInput;
     [SerializeField] private TMP_InputField registerPasswordInput;
     [SerializeField] private TMP_InputField confirmPasswordInput;
@@ -59,36 +59,42 @@ public sealed class AuthGateUIController : MonoBehaviour
     [SerializeField] private Color normalFeedbackColor = new(0.66f, 0.7f, 0.68f, 1f);
     [SerializeField] private Color errorFeedbackColor = new(0.9f, 0.3f, 0.26f, 1f);
 
+    [Header("Services")]
+    [SerializeField] private AuthService authService;
+
     private readonly List<Selectable> controls = new();
 
     private bool registerMode;
     private bool busy;
 
-    private const string SessionKey = "AUTH_SESSION_ACTIVE";
-    private const string AccountEmailKey = "AUTH_ACCOUNT_EMAIL";
-    private const string AccountIdKey = "AUTH_ACCOUNT_ID";
-    private const string AccountNameKey = "AUTH_ACCOUNT_NAME";
-    private const string AccountProviderKey = "AUTH_ACCOUNT_PROVIDER";
+    //private const string SessionKey = "AUTH_SESSION_ACTIVE";
+    //private const string AccountEmailKey = "AUTH_ACCOUNT_EMAIL";
+    //private const string AccountIdKey = "AUTH_ACCOUNT_ID";
+    //private const string AccountNameKey = "AUTH_ACCOUNT_NAME";
+    //private const string AccountProviderKey = "AUTH_ACCOUNT_PROVIDER";
 
 
     private const int MinNameLength = 1;
     private const int MaxNameLength = 12;
 
-
-    private async void Start()
+    private void Awake()
     {
         CollectControls();
         SetupButtons();
+    }
+
+    private void Start()
+    {
+        authService = FindAnyObjectByType<AuthService>();
+
+        if (authService == null)
+        {
+            Debug.LogError("[AuthGateUIController] AuthService not found.");
+            return;
+        }
 
         ShowMode(false);
-
-        if (retryConnectionbtn != null)
-            retryConnectionbtn.gameObject.SetActive(false);
-
-        if (loadingPanel != null)
-            loadingPanel.SetActive(false);
-
-        await AttemptRestoreAsync();
+        SetFeedback("Sign in to continue.");
     }
 
     private void CollectControls()
@@ -103,7 +109,7 @@ public sealed class AuthGateUIController : MonoBehaviour
         AddControl(loginbtn);
         AddControl(forgotbtn);
 
-        AddControl(registerNameInput);
+        AddControl(registerUsernameInput);
         AddControl(registerEmailInput);
         AddControl(registerPasswordInput);
         AddControl(confirmPasswordInput);
@@ -190,10 +196,10 @@ public sealed class AuthGateUIController : MonoBehaviour
             confirmPasswordInput.onSubmit.AddListener(_ => Register());
         }
 
-        if (registerNameInput != null)
+        if (registerUsernameInput != null)
         {
-            registerNameInput.onSubmit.RemoveAllListeners();
-            registerNameInput.onSubmit.AddListener(_ =>
+            registerUsernameInput.onSubmit.RemoveAllListeners();
+            registerUsernameInput.onSubmit.AddListener(_ =>
             {
                 if (registerEmailInput != null)
                 {
@@ -217,9 +223,9 @@ public sealed class AuthGateUIController : MonoBehaviour
 
         try
         {
-            bool restored = await TryRestoreSessionAsync();
+            AuthResult result = await authService.TryRestoreSessionAsync();
 
-            if (restored)
+            if (result.Success)
             {
                 LoadMainMenu();
                 return;
@@ -240,23 +246,6 @@ public sealed class AuthGateUIController : MonoBehaviour
         }
     }
 
-    private async Task<bool> TryRestoreSessionAsync()
-    {
-        await Task.Delay(450);
-
-        bool hasSession = PlayerPrefs.GetInt(SessionKey, 0) == 1;
-
-        if (!hasSession)
-            return false;
-
-        string accountId = PlayerPrefs.GetString(AccountIdKey, string.Empty);
-
-        if (string.IsNullOrEmpty(accountId))
-            return false;
-
-        return true;
-    }
-
     private async void RetryConnection()
     {
         if (busy)
@@ -264,7 +253,6 @@ public sealed class AuthGateUIController : MonoBehaviour
 
         await AttemptRestoreAsync();
     }
-
     private void ShowMode(bool createAccount)
     {
         if (busy)
@@ -296,128 +284,62 @@ public sealed class AuthGateUIController : MonoBehaviour
 
     private async void Login()
     {
-        if (busy)
-            return;
+        if (busy) return;
 
-        string email = loginEmailInput != null
-            ? loginEmailInput.text.Trim().ToLowerInvariant()
-            : "";
+        string email = loginEmailInput.text.Trim().ToLowerInvariant() ?? "";
+        string password = loginPasswordInput.text ?? "";
 
-        string password = loginPasswordInput != null
-            ? loginPasswordInput.text
-            : "";
+        if (!IsValidEmail(email)) { SetFeedback("Enter a valid email address.", true); return; }
+        if (password.Length < 8) { SetFeedback("Password must be at least 8 characters.", true); return; }
 
-        if (!IsValidEmail(email))
-        {
-            SetFeedback("Enter a valid email address.", true);
-            return;
-        }
+        SetBusy(true, "Signing in…");
+        AuthResult result = await authService.LoginAsync(email, password);
+        SetBusy(false);
 
-        if (password.Length < 8)
-        {
-            SetFeedback("Password must contain at least 8 characters.", true);
-            return;
-        }
-
-        SetBusy(true, "Signing in...");
-
-        try
-        {
-            await SignInDemoAsync(email, password);
-            LoadMainMenu();
-        }
-        catch (Exception exception)
-        {
-            SetFeedback(ToActionableError(exception), true);
-        }
-        finally
-        {
-            SetBusy(false);
-        }
+        if (result.Success) LoadMainMenu();
+        else SetFeedback(result.Error, true);
     }
 
     private async void Register()
     {
-        if (busy)
-            return;
+        if (busy) return;
 
-        string userName = registerNameInput != null
-            ? CleanName(registerNameInput.text)
-            : "";
+        string name = CleanName(registerUsernameInput.text ?? "");
+        string email = registerEmailInput.text.Trim().ToLowerInvariant() ?? "";
+        string password = registerPasswordInput.text ?? "";
+        string confirm = confirmPasswordInput.text ?? "";
 
-        string email = registerEmailInput != null
-            ? registerEmailInput.text.Trim().ToLowerInvariant()
-            : "";
+        if (!IsValidName(name)) { SetFeedback($"Name must be {MinNameLength}–{MaxNameLength} characters.", true); return; }
+        if (!IsValidEmail(email)) { SetFeedback("Enter a valid email address.", true); return; }
+        if (password.Length < 8) { SetFeedback("Password must be at least 8 characters.", true); return; }
+        if (password != confirm) { SetFeedback("Passwords do not match.", true); return; }
 
-        string password = registerPasswordInput != null
-            ? registerPasswordInput.text
-            : "";
+        SetBusy(true, "Creating account…");
+        AuthResult result = await authService.RegisterAsync(email, password, name);
+        SetBusy(false);
 
-        string confirmPassword = confirmPasswordInput != null
-            ? confirmPasswordInput.text
-            : "";
-
-        if (!IsValidName(userName))
-        {
-            SetFeedback("Name must be " + MinNameLength + "-" + MaxNameLength + " characters.", true);
-            return;
-        }
-
-        if (!IsValidEmail(email))
-        {
-            SetFeedback("Enter a valid email address.", true);
-            return;
-        }
-
-        if (password.Length < 8)
-        {
-            SetFeedback("Password must contain at least 8 characters.", true);
-            return;
-        }
-
-        if (password != confirmPassword)
-        {
-            SetFeedback("Passwords do not match.", true);
-            return;
-        }
-
-        SetBusy(true, "Creating account...");
-
-        try
-        {
-            await RegisterDemoAsync(email, password, userName);
-            LoadMainMenu();
-        }
-        catch (Exception exception)
-        {
-            SetFeedback(ToActionableError(exception), true);
-        }
-        finally
-        {
-            SetBusy(false);
-        }
+        if (result.Success) LoadMainMenu();
+        else SetFeedback(result.Error, true);
     }
 
     private async void QuickLogin(string provider)
     {
-        if (busy)
-            return;
+        if (busy) return;
 
-        SetBusy(true, "Signing in with " + provider + "...");
+        SetBusy(true, $"Signing in with {provider}…");
 
-        try
+        AuthResult result = provider switch
         {
-            await QuickLoginDemoAsync(provider);
-            LoadMainMenu();
-        }
-        catch (Exception exception)
-        {
-            SetFeedback(ToActionableError(exception), true);
-        }
-        finally
-        {
-            SetBusy(false);
-        }
+            "Guest" => await authService.LoginGuestAsync(),
+            // "Steam" => await authService.LoginSteamAsync(SteamManager.GetAuthToken()),
+            // "Discord" => await authService.LoginDiscordAsync(DiscordManager.GetAuthToken()),
+            _ => AuthResult.Fail($"{provider} login not implemented yet.")
+        };
+
+        SetBusy(false);
+
+        if (result.Success) LoadMainMenu();
+        else SetFeedback(result.Error, true);
     }
 
     private void ForgotPassword()
@@ -425,67 +347,67 @@ public sealed class AuthGateUIController : MonoBehaviour
         SetFeedback("Password recovery will be added later.");
     }
 
-    private async Task SignInDemoAsync(string email, string password)
-    {
-        await Task.Delay(600);
+    //private async Task SignInDemoAsync(string email, string password)
+    //{
+    //    await Task.Delay(600);
 
-        string id = PlayerPrefs.GetString(AccountIdKey, string.Empty);
+    //    string id = PlayerPrefs.GetString(AccountIdKey, string.Empty);
 
-        if (string.IsNullOrEmpty(id))
-            id = GenerateAccountId("BOOM");
+    //    if (string.IsNullOrEmpty(id))
+    //        id = GenerateAccountId("BOOM");
 
-        string savedName = PlayerPrefs.GetString(AccountNameKey, string.Empty);
+    //    string savedName = PlayerPrefs.GetString(AccountNameKey, string.Empty);
 
-        if (string.IsNullOrWhiteSpace(savedName))
-            savedName = GetNameFromEmail(email);
+    //    if (string.IsNullOrWhiteSpace(savedName))
+    //        savedName = GetNameFromEmail(email);
 
-        SaveSession(
-            email,
-            id,
-            savedName,
-            "Email"
-        );
+    //    SaveSession(
+    //        email,
+    //        id,
+    //        savedName,
+    //        "Email"
+    //    );
 
-    }
+    //}
 
-    private async Task RegisterDemoAsync(string email, string password, string userName)
-    {
-        await Task.Delay(700);
+    //private async Task RegisterDemoAsync(string email, string password, string userName)
+    //{
+    //    await Task.Delay(700);
 
-        SaveSession(
-            email,
-            GenerateAccountId("BOOM"),
-            userName,
-            "Email"
-        );
-    }
+    //    SaveSession(
+    //        email,
+    //        GenerateAccountId("BOOM"),
+    //        userName,
+    //        "Email"
+    //    );
+    //}
 
-    private async Task QuickLoginDemoAsync(string provider)
-    {
-        await Task.Delay(500);
+    //private async Task QuickLoginDemoAsync(string provider)
+    //{
+    //    await Task.Delay(500);
 
-        string prefix = provider.ToUpperInvariant();
+    //    string prefix = provider.ToUpperInvariant();
 
-        SaveSession(
-            provider.ToLowerInvariant() + "@quick.login",
-            GenerateAccountId(prefix),
-            provider + "User",
-            provider
-        );
-    }
+    //    SaveSession(
+    //        provider.ToLowerInvariant() + "@quick.login",
+    //        GenerateAccountId(prefix),
+    //        provider + "User",
+    //        provider
+    //    );
+    //}
 
     /// <summary>
     /// Lưu phiên demo. Sau này thay bằng token/session từ backend.
     /// </summary>
-    private void SaveSession(string email, string accountId, string accountName, string provider)
-    {
-        PlayerPrefs.SetInt(SessionKey, 1);
-        PlayerPrefs.SetString(AccountEmailKey, email);
-        PlayerPrefs.SetString(AccountIdKey, accountId);
-        PlayerPrefs.SetString(AccountNameKey, accountName);
-        PlayerPrefs.SetString(AccountProviderKey, provider);
-        PlayerPrefs.Save();
-    }
+    //private void SaveSession(string email, string accountId, string accountName, string provider)
+    //{
+    //    PlayerPrefs.SetInt(SessionKey, 1);
+    //    PlayerPrefs.SetString(AccountEmailKey, email);
+    //    PlayerPrefs.SetString(AccountIdKey, accountId);
+    //    PlayerPrefs.SetString(AccountNameKey, accountName);
+    //    PlayerPrefs.SetString(AccountProviderKey, provider);
+    //    PlayerPrefs.Save();
+    //}
 
     private void LoadMainMenu()
     {

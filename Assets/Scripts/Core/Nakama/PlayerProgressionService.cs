@@ -96,7 +96,7 @@ public sealed class PlayerProgressionService : MonoBehaviour
 
     async Task<PlayerAccountSnapshot> CallProgressionRpcAsync(string rpcId, string payload)
     {
-        IApiRpc response = await NakamaConnectionManager.EnsureExists().RpcAsync(rpcId, payload);
+        IApiRpc response = await AuthService.GetOrCreate().RpcAsync(rpcId, payload);
         PlayerAccountSnapshot snapshot = JsonUtility.FromJson<PlayerAccountSnapshot>(response.Payload);
 
         if (snapshot == null || snapshot.schemaVersion <= 0)

@@ -94,7 +94,7 @@ public class RandomMatchController : MonoBehaviour
 
     private void SetupLocalPlayerSlot(PlayerSlotUI slot)
     {
-        string characterName = NakamaConnectionManager.EnsureExists().DisplayName;
+        string characterName = AuthService.GetOrCreate().DisplayName;
 
         if (slot.avatar != null)
         {

@@ -326,7 +326,7 @@ public class CharacterSelectShopController : MonoBehaviour
             return;
         }
 
-        string displayName = NakamaConnectionManager.EnsureExists().DisplayName;
+        string displayName = AuthService.GetOrCreate().DisplayName;
 
         PlayerMatchProfile profile = PlayerMatchProfile.FromDefinition(
             data,
