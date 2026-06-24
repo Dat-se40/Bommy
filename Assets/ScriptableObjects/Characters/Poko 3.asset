@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af9ad96c9f138d7458e8ab4921ab9d84, type: 3}
-  m_Name: Mimi Green
+  m_Name: Poko 3
   m_EditorClassIdentifier: Assembly-CSharp::CharacterDefinition
   characterId: 3
   characterName: Poko

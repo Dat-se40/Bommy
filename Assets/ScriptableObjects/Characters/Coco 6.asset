@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af9ad96c9f138d7458e8ab4921ab9d84, type: 3}
-  m_Name: Mimi Blue
+  m_Name: Coco 6
   m_EditorClassIdentifier: Assembly-CSharp::CharacterDefinition
-  characterId: 2
-  characterName: Luna
-  description: Lucky bomber.
-  icon: {fileID: -889619879, guid: 3662d6b211977b74f9c2416c932cf619, type: 3}
-  preview: {fileID: -1074142214, guid: 9a16e9cff30bf084e985a525797c857f, type: 3}
-  spriteLibrary: {fileID: 7108339969198208228, guid: b816c74d71b69a94cbd4683b6dfbbca3, type: 3}
+  characterId: 6
+  characterName: Coco
+  description: Moca
+  icon: {fileID: 198743297064816441, guid: 3c99856db67185e4abe7bed80b820cbf, type: 3}
+  preview: {fileID: 701458238248811156, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+  spriteLibrary: {fileID: 11400000, guid: f6cf24da51f5d42448df58627aca8261, type: 2}
   playerPrefab: {fileID: 24528305369907493, guid: 0b2ef07dd0781f44c94c28e578b48a03, type: 3}
-  hp: 3
+  hp: 1
   bomb: 1
-  speed: 5
-  defaultOwned: 0
-  requiredLevel: 2
-  price: 50
+  speed: 1
+  defaultOwned: 1
+  requiredLevel: 0
+  price: 0

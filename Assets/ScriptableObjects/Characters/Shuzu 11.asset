@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af9ad96c9f138d7458e8ab4921ab9d84, type: 3}
-  m_Name: Mimi Orange
+  m_Name: Shuzu 11
   m_EditorClassIdentifier: Assembly-CSharp::CharacterDefinition
-  characterId: 4
-  characterName: Bobo
-  description: Tank bomber.
-  icon: {fileID: -199718241, guid: 3662d6b211977b74f9c2416c932cf619, type: 3}
-  preview: {fileID: 184286363, guid: 7bc83c692a9f3374789a660fb96bb6f3, type: 3}
-  spriteLibrary: {fileID: 7108339969198208228, guid: 1b5d251916225a64399c25e3c0504518, type: 3}
+  characterId: 11
+  characterName: Shuzu
+  description: Moca
+  icon: {fileID: 3699454328553463107, guid: ed36919064fa2494bb867b6844a03b77, type: 3}
+  preview: {fileID: 2760331331077528538, guid: 03ee8518cc1840b4b885a349795c6c32, type: 3}
+  spriteLibrary: {fileID: 11400000, guid: ded34b4334a76254e9b5b3be15812dad, type: 2}
   playerPrefab: {fileID: 24528305369907493, guid: 0b2ef07dd0781f44c94c28e578b48a03, type: 3}
-  hp: 3
+  hp: 1
   bomb: 1
-  speed: 5
-  defaultOwned: 0
-  requiredLevel: 1
+  speed: 1
+  defaultOwned: 1
+  requiredLevel: 0
   price: 0

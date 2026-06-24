@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af9ad96c9f138d7458e8ab4921ab9d84, type: 3}
-  m_Name: Mimi Pink
+  m_Name: Dono 7
   m_EditorClassIdentifier: Assembly-CSharp::CharacterDefinition
-  characterId: 5
-  characterName: Moca
+  characterId: 7
+  characterName: Dono
   description: Moca
-  icon: {fileID: 526181530, guid: 3662d6b211977b74f9c2416c932cf619, type: 3}
-  preview: {fileID: 1687356694, guid: d0cbed405ad81af47825078b1e86e7b0, type: 3}
-  spriteLibrary: {fileID: 7108339969198208228, guid: 8d088d8f861ab904eb8156f1ee188b61, type: 3}
+  icon: {fileID: 4864798051981548806, guid: abfea2d6eb9541d4d97b0532f56b0c22, type: 3}
+  preview: {fileID: 5114226631507303043, guid: 3fdcee7e030721f4fa790b7d7c99d18d, type: 3}
+  spriteLibrary: {fileID: 11400000, guid: 4bbefa8996872e342b75b6cb5f438fdd, type: 2}
   playerPrefab: {fileID: 24528305369907493, guid: 0b2ef07dd0781f44c94c28e578b48a03, type: 3}
-  hp: 3
+  hp: 1
   bomb: 1
-  speed: 5
-  defaultOwned: 0
-  requiredLevel: 1
+  speed: 1
+  defaultOwned: 1
+  requiredLevel: 0
   price: 0

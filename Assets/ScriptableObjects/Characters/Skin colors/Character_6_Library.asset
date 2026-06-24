@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf7c34a0dc4e6348bea04faa70406ee, type: 3}
+  m_Name: Character_6_Library
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibraryAsset
+  m_Labels:
+  - m_Name: Body
+    m_Hash: 999990412
+    m_CategoryList:
+    - m_Name: IdleDown_0
+      m_Hash: 1049683420
+      m_Sprite: {fileID: 1464148438414482275, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: IdleDown_1
+      m_Hash: 160945482
+      m_Sprite: {fileID: 5827397263151229452, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: IdleDown_2
+      m_Hash: 278824176
+      m_Sprite: {fileID: -1463958182621589290, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: IdleDown_3
+      m_Hash: 664384614
+      m_Sprite: {fileID: 6285162157681231727, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: IdleDown_4
+      m_Hash: 972890565
+      m_Sprite: {fileID: -1274057469085477848, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: IdleDown_5
+      m_Hash: 251269459
+      m_Sprite: {fileID: 701458238248811156, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: IdleDown_6
+      m_Hash: 401817833
+      m_Sprite: {fileID: 5673953233035232465, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: IdleDown_7
+      m_Hash: 552890495
+      m_Sprite: {fileID: 2324697074655458612, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkDown_0
+      m_Hash: 492792469
+      m_Sprite: {fileID: 635695684566365164, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkDown_1
+      m_Hash: 710433283
+      m_Sprite: {fileID: 5943895898506601221, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkDown_2
+      m_Hash: 860949433
+      m_Sprite: {fileID: -4768734858870269193, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkDown_3
+      m_Hash: 72760111
+      m_Sprite: {fileID: -3771975791858072515, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkDown_4
+      m_Hash: 439529100
+      m_Sprite: {fileID: 341863953556359928, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkDown_5
+      m_Hash: 758488602
+      m_Sprite: {fileID: -8436762175585609196, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkDown_6
+      m_Hash: 876400544
+      m_Sprite: {fileID: 1751229779670315929, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkDown_7
+      m_Hash: 54263606
+      m_Sprite: {fileID: 3298814187608406096, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkUp_0
+      m_Hash: 889982317
+      m_Sprite: {fileID: -5343893247059654077, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkUp_1
+      m_Hash: 34291195
+      m_Sprite: {fileID: 1426683740840721774, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkUp_2
+      m_Hash: 453143617
+      m_Sprite: {fileID: 411173151818505830, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkUp_3
+      m_Hash: 738548951
+      m_Sprite: {fileID: -7207189982998979102, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkUp_4
+      m_Hash: 845269364
+      m_Sprite: {fileID: -8216609544527208529, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkUp_5
+      m_Hash: 90634722
+      m_Sprite: {fileID: 1149613845233110861, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkUp_6
+      m_Hash: 477079640
+      m_Sprite: {fileID: -5247466414218436063, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkUp_7
+      m_Hash: 728275150
+      m_Sprite: {fileID: 6795666232199950396, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkRight_0
+      m_Hash: 901954398
+      m_Sprite: {fileID: -2813896495543151040, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkRight_1
+      m_Hash: 46500808
+      m_Sprite: {fileID: 1756122603102623216, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkRight_2
+      m_Hash: 466410098
+      m_Sprite: {fileID: 5005544467056901466, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkRight_3
+      m_Hash: 751561444
+      m_Sprite: {fileID: -7698095464880566708, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkRight_4
+      m_Hash: 850362183
+      m_Sprite: {fileID: 8169020509340646548, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkRight_5
+      m_Hash: 94916561
+      m_Sprite: {fileID: 7911598057702365800, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkRight_6
+      m_Hash: 480321131
+      m_Sprite: {fileID: 5944140817789096760, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkRight_7
+      m_Hash: 732311293
+      m_Sprite: {fileID: 4426027793865710111, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkLeft_0
+      m_Hash: 44623365
+      m_Sprite: {fileID: -7462993779946481847, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkLeft_1
+      m_Hash: 900716179
+      m_Sprite: {fileID: -2662356681217811660, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkLeft_2
+      m_Hash: 749111081
+      m_Sprite: {fileID: 5629591232412031973, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkLeft_3
+      m_Hash: 463583167
+      m_Sprite: {fileID: -8456884515456577423, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkLeft_4
+      m_Hash: 96805404
+      m_Sprite: {fileID: -8868211591998250753, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkLeft_5
+      m_Hash: 851579530
+      m_Sprite: {fileID: 4225058116310601381, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkLeft_6
+      m_Hash: 734741296
+      m_Sprite: {fileID: -2626429911052500164, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+    - m_Name: WalkLeft_7
+      m_Hash: 483160998
+      m_Sprite: {fileID: -4879200461008665168, guid: 65a2b4814d0228f4eb015846ed7864e2, type: 3}
+  m_ModificationHash: 0
+  m_Version: 1

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af9ad96c9f138d7458e8ab4921ab9d84, type: 3}
-  m_Name: Mimi
+  m_Name: Runi 9
   m_EditorClassIdentifier: Assembly-CSharp::CharacterDefinition
-  characterId: 1
-  characterName: 'Mimi '
-  description: Balanced bomber.
-  icon: {fileID: -1875616277, guid: 3662d6b211977b74f9c2416c932cf619, type: 3}
-  preview: {fileID: -182758820, guid: 5f48444059cab034fa7d77c5943822ed, type: 3}
-  spriteLibrary: {fileID: 7108339969198208228, guid: c26e4e28f76b70b459425ec740c419c6, type: 3}
+  characterId: 9
+  characterName: Runi
+  description: Moca
+  icon: {fileID: 198743297064816441, guid: 3c99856db67185e4abe7bed80b820cbf, type: 3}
+  preview: {fileID: -4246943709325784, guid: 7c615902e571263418040db1d1782966, type: 3}
+  spriteLibrary: {fileID: 11400000, guid: acfbcf52f7a66344c997d5b0ecde7ba0, type: 2}
   playerPrefab: {fileID: 24528305369907493, guid: 0b2ef07dd0781f44c94c28e578b48a03, type: 3}
-  hp: 3
+  hp: 1
   bomb: 1
-  speed: 5
+  speed: 1
   defaultOwned: 1
-  requiredLevel: 1
+  requiredLevel: 0
   price: 0
