@@ -23,6 +23,14 @@ public static class SoundKey
 
     public const string BgmMenu = "bgm.menu";
     public const string BgmInGame = "bgm.ingame";
+    
+    // Local
+    public const string SfxClick       = "sfx.click";
+    public const string SfxMove        = "sfx.move";
+    public const string SfxCountdown   = "sfx.countdown";
+
+    // Synced
+    public const string SfxVictory     = "sfx.victory";
 
     #endregion
 }

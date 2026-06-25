@@ -325,6 +325,11 @@ public class GameOverUIController : MonoBehaviour
     {
         if (gameOverOverlay != null)
             gameOverOverlay.SetActive(true);
+        
+        if (isWin)
+            SoundPlayback.PlayLocal(SoundKey.SfxVictory);
+        else
+            SoundPlayback.PlayLocal(SoundKey.SfxMatchEnd);
 
         if (gameOverPanel != null)
             gameOverPanel.SetActive(true);

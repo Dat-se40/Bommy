@@ -23,7 +23,6 @@ public class MatchEndSoundListener : MonoBehaviour
     {
         if (!finished) return;
 
-        SoundPlayback.PlaySynced(SoundKey.SfxMatchEnd);
         SoundPlayback.StopBgm();
     }
 }
