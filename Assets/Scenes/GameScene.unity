@@ -4356,7 +4356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &521837582
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13585,8 +13585,8 @@ MonoBehaviour:
   _directChildren: []
   phaseBroadcast: {fileID: 1835806106}
   prepDurationSeconds: 30
-  fallbackMapId: 4
-  inTestingMode: 0
+  fallbackMapId: 3
+  inTestingMode: 1
 --- !u!114 &1835806110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14999,11 +14999,11 @@ MonoBehaviour:
     mapPrefab: {fileID: 8497494586292562342, guid: 61f99735d768fb842b98c5edfa314002, type: 3}
     levelConfig: {fileID: 11400000, guid: 4e8b1d6f3a2c5e709182736455463748, type: 2}
   - mapId: 2
-    mapPrefab: {fileID: 8497494586292562342, guid: 2e87cb4571832b44da94e8bfa9d56a63, type: 3}
-    levelConfig: {fileID: 11400000, guid: ccbd186be4f5663449feb62559b8a264, type: 2}
-  - mapId: 3
     mapPrefab: {fileID: 8497494586292562342, guid: 57b7ba14336a69645958ca7ecabf266b, type: 3}
     levelConfig: {fileID: 11400000, guid: 25178201996daa6439355e2259e67ca8, type: 2}
+  - mapId: 3
+    mapPrefab: {fileID: 8497494586292562342, guid: 2e87cb4571832b44da94e8bfa9d56a63, type: 3}
+    levelConfig: {fileID: 11400000, guid: ccbd186be4f5663449feb62559b8a264, type: 2}
   - mapId: 4
     mapPrefab: {fileID: 8497494586292562342, guid: acaa8f799bad944409f4d627f0bcc692, type: 3}
     levelConfig: {fileID: 11400000, guid: edfe3ae670f6b2e479a7ca92f33d26f7, type: 2}

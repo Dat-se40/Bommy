@@ -3,9 +3,9 @@ using UnityEngine;
 
 public static class SessionStore
 {
-    private const string KeyAuthToken = "NK_AUTH_TOKEN";
-    private const string KeyRefreshToken = "NK_REFRESH_TOKEN";
-    private const string KeyUserId = "NK_USER_ID";
+    private const string KeyAuthToken = General.AUTH_SESSION_KEY_AUTH_TOKEN;
+    private const string KeyRefreshToken = General.AUTH_SESSION_KEY_REFRESH_TOKEN;
+    private const string KeyUserId = General.AUTH_SESSION_KEY_USER_ID;
 
     public static void Save(string authToken, string refreshToken, string userId)
     {

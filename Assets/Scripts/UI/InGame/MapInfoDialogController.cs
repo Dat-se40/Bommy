@@ -372,9 +372,9 @@ public class MapInfoDialogController : MonoBehaviour
         if (maxSpawnCount > 0)
         {
             if (string.IsNullOrWhiteSpace(description))
-                description = $"Max spawn on map: {maxSpawnCount}";
+                description = $"Quantity: {maxSpawnCount}";
             else
-                description += $"\nMax spawn on map: {maxSpawnCount}";
+                description += $"\nQuantity: {maxSpawnCount}";
         }
 
         card.Setup(

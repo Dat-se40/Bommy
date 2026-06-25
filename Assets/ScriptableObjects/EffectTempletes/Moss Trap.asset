@@ -17,14 +17,12 @@ MonoBehaviour:
   effectType: 6
   duration: 10
   specialValue: 0
-  description: ' Place a special bomb that damages players.'
+  description: 'New skill '
   rating: 1
   pickupPrefab: {fileID: 3140720615861595630, guid: b7d9d464765cd0343b1819efa2551353, type: 3}
   vfxPrefab: {fileID: 3140720615861595630, guid: 1face8e28f9701741900124a1fa4199c, type: 3}
   uiIcon: {fileID: 6172493732125829219, guid: 73f60822c0269154da0a74cecb05bcb6, type: 3}
-  mapInfoDescription: 'A trap
-
-'
+  mapInfoDescription: Trap Skill
   placedBombPrefab: {fileID: 3140720615861595630, guid: 0fc9261eda1bd2f4ab932e53100a65be, type: 3}
   fuseSeconds: 2
   damage: 1
