@@ -6548,6 +6548,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &550370429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550370424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e36d9c8bada4855812fc4c3e2b3d383, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoButtonSound
 --- !u!1 &553009596
 GameObject:
   m_ObjectHideFlags: 0
@@ -7681,18 +7693,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 635290919}
   m_CullTransparentMesh: 1
---- !u!114 &550370429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 550370424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e36d9c8bada4855812fc4c3e2b3d383, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AutoButtonSound
 --- !u!1 &637803283
 GameObject:
   m_ObjectHideFlags: 0
@@ -12171,6 +12171,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundManager
   defaultLibrary: {fileID: 11400000, guid: da9b9fa096f1d2545b1794da81db24e2, type: 2}
+  sfxMixerGroup: {fileID: -6107795250436556463, guid: 649eb5bf427535047818b1ed580f5c59, type: 2}
+  bgmMixerGroup: {fileID: 9087109118697001328, guid: 649eb5bf427535047818b1ed580f5c59, type: 2}
   sfxSource: {fileID: 0}
   sfxPitchMin: 0.92
   sfxPitchMax: 1.08
@@ -13258,10 +13260,10 @@ MonoBehaviour:
   closeSoundSettingsbtn: {fileID: 754456656}
   sfxSlider: {fileID: 1978905545}
   bgmSlider: {fileID: 1395418276}
-  muteAllToggle: {fileID: 0}
+  muteAllToggle: {fileID: 1553258266}
   sfxValuelbl: {fileID: 568979355}
   bgmValuelbl: {fileID: 76500189}
-  audioMixer: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: 649eb5bf427535047818b1ed580f5c59, type: 2}
   sfxVolumeParam: SfxVolume
   bgmVolumeParam: BgmVolume
 --- !u!1 &1211633284
@@ -13361,6 +13363,51 @@ MonoBehaviour:
   bindDiscordbtn: {fileID: 1139269374}
   bindSteambtn: {fileID: 466776708}
   bindStatuslbl: {fileID: 0}
+--- !u!1 &1212708618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1212708620}
+  - component: {fileID: 1212708619}
+  m_Layer: 0
+  m_Name: SoundBootstrap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1212708619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212708618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cc97d59d759402cadc01960ae9f2213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MainMenuSoundBootstrap
+  menuLibrary: {fileID: 11400000, guid: da9b9fa096f1d2545b1794da81db24e2, type: 2}
+--- !u!4 &1212708620
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212708618}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.21556, y: -0.7772, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1215809917
 GameObject:
   m_ObjectHideFlags: 0
@@ -13447,51 +13494,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &1212708618
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1212708620}
-  - component: {fileID: 1212708619}
-  m_Layer: 0
-  m_Name: SoundBootstrap
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1212708619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1212708618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cc97d59d759402cadc01960ae9f2213, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MainMenuSoundBootstrap
-  menuLibrary: {fileID: 11400000, guid: da9b9fa096f1d2545b1794da81db24e2, type: 2}
---- !u!4 &1212708620
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1212708618}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.21556, y: -0.7772, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1227907072
 GameObject:
   m_ObjectHideFlags: 0
@@ -13723,7 +13725,8 @@ MonoBehaviour:
 
     Thanks for joining the game.
 
-    This is your day 1 login gift.
+    This is your day
+    1 login gift.
 
 
 

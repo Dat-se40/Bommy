@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
@@ -6,6 +7,10 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField]
     SoundLibrary defaultLibrary;
+    
+    [Header("Audio Mixer Groups")]
+    [SerializeField] AudioMixerGroup sfxMixerGroup;  // thêm
+    [SerializeField] AudioMixerGroup bgmMixerGroup;  // thêm
 
     [Header("SFX")]
     [SerializeField]
@@ -53,6 +58,7 @@ public class SoundManager : MonoBehaviour
             sfxSource = sfxGo.AddComponent<AudioSource>();
             sfxSource.playOnAwake = false;
         }
+        sfxSource.outputAudioMixerGroup = sfxMixerGroup;
 
         if (bgmSource == null)
         {
@@ -62,6 +68,7 @@ public class SoundManager : MonoBehaviour
             bgmSource.playOnAwake = false;
             bgmSource.loop = true;
         }
+        bgmSource.outputAudioMixerGroup = bgmMixerGroup;
     }
 
     public void SetSceneLibrary(SoundLibrary library)
