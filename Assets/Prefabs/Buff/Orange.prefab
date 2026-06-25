@@ -161,7 +161,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  effectTemplate: {fileID: 11400000, guid: a2bde4cc656847f42a26f92a991e4a69, type: 2}
+  effectTemplate: {fileID: 11400000, guid: 875493fde7ef7f8458512de922a61a03, type: 2}
   visualRoot: {fileID: 8013522885725600179}
   floatHeight: 0.15
   floatDuration: 0.5

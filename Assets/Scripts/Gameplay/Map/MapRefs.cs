@@ -42,7 +42,7 @@ public class MapRefs : MonoBehaviour
     public Tilemap Decorate => decorate;
     public Tilemap Shrink => shrinkZone;
     public Transform[] SpawnPoints => spawnPoints;
-
+    public int currentMapId; 
     public static MapRefs Instance { get; private set; }
 
     void Awake()

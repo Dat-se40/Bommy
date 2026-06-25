@@ -117,3 +117,7 @@ InitTestScene*.unity*
 
 # Local dev notes (outside Assets)
 /[Dd]ocuments/
+
+# Backend local dependencies and generated runtime output
+/[Bb]ackend/node_modules/
+/[Bb]ackend/build/

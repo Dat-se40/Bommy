@@ -9,7 +9,6 @@ public class CharacterCardUI : MonoBehaviour
     [SerializeField] private Image icon;
     [SerializeField] private TMP_Text characterNamelbl;
     [SerializeField] private TMP_Text pricelbl;
-    [SerializeField] private TMP_Text requiredLevellbl;
     [SerializeField] private TMP_Text statuslbl;
     [SerializeField] private GameObject lockOverlay;
 
@@ -27,6 +26,9 @@ public class CharacterCardUI : MonoBehaviour
 
         if (cardImage == null)
             cardImage = GetComponent<Image>();
+
+        if (lockOverlay != null)
+            lockOverlay.SetActive(false);
     }
 
     public void Setup(
@@ -34,7 +36,6 @@ public class CharacterCardUI : MonoBehaviour
         int cardIndex,
         CharacterDefinition data,
         bool owned,
-        bool levelUnlocked,
         bool selected
     )
     {
@@ -56,14 +57,11 @@ public class CharacterCardUI : MonoBehaviour
         if (pricelbl != null)
             pricelbl.text = GetPriceText(data, owned);
 
-        if (requiredLevellbl != null)
-            requiredLevellbl.text = "LV " + data.RequiredLevel + "+";
-
         if (statuslbl != null)
-            statuslbl.text = GetStatusText(owned, levelUnlocked);
+            statuslbl.text = GetStatusText(owned);
 
         if (lockOverlay != null)
-            lockOverlay.SetActive(!owned && !levelUnlocked);
+            lockOverlay.SetActive(false);
 
         ApplyCardVisual(selected);
         SetupButton();
@@ -80,16 +78,14 @@ public class CharacterCardUI : MonoBehaviour
         return "Gold: " + data.Price;
     }
 
-    static string GetStatusText(bool owned, bool levelUnlocked)
+    static string GetStatusText(bool owned)
     {
         if (owned)
             return "READY";
 
-        if (!levelUnlocked)
-            return "LOCKED";
-
         return "BUY";
     }
+
 
     void ApplyCardVisual(bool selected)
     {
@@ -153,15 +149,6 @@ public class CharacterCardUI : MonoBehaviour
             "Price"
         );
 
-        requiredLevellbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
-            this,
-            "RequiredLevellbl",
-            "RequiredLevelLbl",
-            "RequireLevellbl",
-            "RequireLevelLbl",
-            "Levellbl",
-            "LevelLbl"
-        );
 
         statuslbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
             this,
@@ -191,7 +178,6 @@ public class CharacterCardUI : MonoBehaviour
             new BindLogItem("Icon", icon),
             new BindLogItem("CharacterNamelbl", characterNamelbl),
             new BindLogItem("Pricelbl", pricelbl),
-            new BindLogItem("RequiredLevellbl", requiredLevellbl),
             new BindLogItem("Statuslbl", statuslbl),
             new BindLogItem("LockOverlay", lockOverlay),
             new BindLogItem("Normal Sprite", normalSprite),

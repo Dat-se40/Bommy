@@ -68,26 +68,42 @@ public class MatchZoneShrinkState : MatchTimedStateNode
         {
             for (int x = minX; x <= maxX; x++)
             {
+                Vector3Int cell = new Vector3Int(x, maxY);
+                if (!IsShrinkZoneCell(shrinkMap, cell))
+                    continue;
+
                 yield return WaitShrinkInterval();
-                authority.ServerAddShrinkCell(new Vector3Int(x, maxY));
+                authority.ServerAddShrinkCell(cell);
             }
 
             for (int y = maxY - 1; y >= minY; y--)
             {
+                Vector3Int cell = new Vector3Int(maxX, y);
+                if (!IsShrinkZoneCell(shrinkMap, cell))
+                    continue;
+
                 yield return WaitShrinkInterval();
-                authority.ServerAddShrinkCell(new Vector3Int(maxX, y));
+                authority.ServerAddShrinkCell(cell);
             }
 
             for (int x = maxX - 1; x >= minX; x--)
             {
+                Vector3Int cell = new Vector3Int(x, minY);
+                if (!IsShrinkZoneCell(shrinkMap, cell))
+                    continue;
+
                 yield return WaitShrinkInterval();
-                authority.ServerAddShrinkCell(new Vector3Int(x, minY));
+                authority.ServerAddShrinkCell(cell);
             }
 
             for (int y = minY + 1; y < maxY; y++)
             {
+                Vector3Int cell = new Vector3Int(minX, y);
+                if (!IsShrinkZoneCell(shrinkMap, cell))
+                    continue;
+
                 yield return WaitShrinkInterval();
-                authority.ServerAddShrinkCell(new Vector3Int(minX, y));
+                authority.ServerAddShrinkCell(cell);
             }
 
             minX++;
@@ -97,6 +113,11 @@ public class MatchZoneShrinkState : MatchTimedStateNode
         }
 
         shrinkRoutine = null;
+    }
+
+    static bool IsShrinkZoneCell(Tilemap shrinkMap, Vector3Int cell)
+    {
+        return shrinkMap != null && shrinkMap.HasTile(cell);
     }
 
     IEnumerator WaitShrinkInterval()

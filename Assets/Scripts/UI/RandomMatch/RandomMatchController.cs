@@ -94,7 +94,7 @@ public class RandomMatchController : MonoBehaviour
 
     private void SetupLocalPlayerSlot(PlayerSlotUI slot)
     {
-        string characterName = PlayerPrefs.GetString("SelectedCharacterName", "You");
+        string characterName = AuthService.GetOrCreate().DisplayName;
 
         if (slot.avatar != null)
         {

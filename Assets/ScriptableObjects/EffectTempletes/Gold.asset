@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5c18516c2baed94bb1f1093cdbfefc9, type: 3}
+  m_Name: Gold
+  m_EditorClassIdentifier: Assembly-CSharp::EffectTemplate
+  effectId: 6
+  displayName: Gold
+  effectType: 8
+  duration: 6000
+  specialValue: 20
+  description: 5
+  rating: 1
+  pickupPrefab: {fileID: 3140720615861595630, guid: d72e559c3ef2cdc4d9483add248ff7a0, type: 3}
+  vfxPrefab: {fileID: 0}
+  uiIcon: {fileID: -3126738845940356929, guid: 5b1c1560612680a40b191ce136e47f30, type: 3}
+  mapInfoDescription: " 5 gold \n"
+  placedBombPrefab: {fileID: 0}
+  fuseSeconds: 2
+  damage: 1
+  ignoreOwner: 1

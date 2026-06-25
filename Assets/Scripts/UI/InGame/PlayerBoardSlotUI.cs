@@ -1,6 +1,7 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 /// <summary>
@@ -13,11 +14,20 @@ public class PlayerBoardSlotUI : MonoBehaviour
 
     [Header("Main UI")]
     [SerializeField] private Image avatar;
+    [FormerlySerializedAs("nameLabel")]
     [SerializeField] private TMP_Text playerNamelbl;
+    [FormerlySerializedAs("hpLabel")]
     [SerializeField] private TMP_Text hplbl;
     [SerializeField] private TMP_Text bomblbl;
+    [SerializeField] private TMP_Text trapSkilllbl;
     [SerializeField] private TMP_Text goldlbl;
+    [FormerlySerializedAs("scoreLabel")]
     [SerializeField] private TMP_Text scorelbl;
+
+    [Header("Placeable Display")]
+    [SerializeField] private string bombCountFormat = "{0}/{1}";
+    [SerializeField] private string trapSkillFormat = "Trap:{0}";
+    [SerializeField] private bool hideTrapSkillWhenZero = true;
 
     [Header("HP Icons")]
     [SerializeField] private GameObject hpGroup;
@@ -47,9 +57,13 @@ public class PlayerBoardSlotUI : MonoBehaviour
     {
         if (shakeTarget == null)
             shakeTarget = transform as RectTransform;
+
+        EnsureUiReferences();
     }
 
     public int SlotIndex => slotIndex;
+
+    public void SetSlotIndex(int index) => slotIndex = index;
 
     public void AssignPlayer(
         PlayerBoardState state,
@@ -99,6 +113,9 @@ public class PlayerBoardSlotUI : MonoBehaviour
         if (bomblbl != null)
             bomblbl.text = string.Empty;
 
+        if (trapSkilllbl != null)
+            trapSkilllbl.text = string.Empty;
+
         if (goldlbl != null)
             goldlbl.text = string.Empty;
 
@@ -127,7 +144,7 @@ public class PlayerBoardSlotUI : MonoBehaviour
         int newMaxHp = trackedState.MaxHp;
         bool tookDamage = lastDisplayedHp >= 0 && newHp < lastDisplayedHp;
         int previousHp = lastDisplayedHp;
-
+        int newGold = trackedState.Gold;
         CharacterDefinition definition = characterDatabase != null
             ? characterDatabase.GetById(trackedState.CharacterId)
             : MatchSessionBroker.ResolveDefinition(new PlayerMatchProfile
@@ -161,15 +178,41 @@ public class PlayerBoardSlotUI : MonoBehaviour
 
         lastDisplayedHp = newHp;
 
-        // Hiện tại PlayerBoardState chưa có Bomb/Gold sync riêng.
-        if (bomblbl != null)
-            bomblbl.text = string.Empty;
+        RefreshPlaceableLabels();
 
         if (goldlbl != null)
-            goldlbl.text = string.Empty;
+            goldlbl.text = "GOLD: " + newGold;
 
         if (scorelbl != null)
             scorelbl.text = trackedState.Score.ToString();
+    }
+
+    void RefreshPlaceableLabels()
+    {
+        if (trackedState == null)
+            return;
+
+        if (bomblbl != null)
+        {
+            bomblbl.text = string.Format(
+                bombCountFormat,
+                trackedState.AvailableBombs,
+                trackedState.MaxBombs
+            );
+        }
+
+        if (trapSkilllbl == null)
+            return;
+
+        int trapCharges = trackedState.TrapSkillCharges;
+
+        if (hideTrapSkillWhenZero && trapCharges <= 0)
+        {
+            trapSkilllbl.text = string.Empty;
+            return;
+        }
+
+        trapSkilllbl.text = string.Format(trapSkillFormat, trapCharges);
     }
 
     /// <summary>
@@ -259,6 +302,20 @@ public class PlayerBoardSlotUI : MonoBehaviour
             trackedState.Changed -= RefreshFromState;
     }
 
+    void EnsureUiReferences()
+    {
+        if (avatar != null
+            && playerNamelbl != null
+            && hplbl != null
+            && bomblbl != null
+            && goldlbl != null)
+        {
+            return;
+        }
+
+        AutoBindUIFromChildren();
+    }
+
     [ContextMenu("Auto Bind UI From Children")]
     void AutoBindUIFromChildren()
     {
@@ -293,6 +350,14 @@ public class PlayerBoardSlotUI : MonoBehaviour
             "Bomblbl",
             "BombLbl",
             "BombText"
+        );
+
+        trapSkilllbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
+            this,
+            "TrapSkilllbl",
+            "TrapLbl",
+            "TrapSkillLbl",
+            "TrapText"
         );
 
         goldlbl = UIAutoBindUtility.FindChildComponent<TMP_Text>(
@@ -360,6 +425,7 @@ public class PlayerBoardSlotUI : MonoBehaviour
             new BindLogItem("PlayerNamelbl", playerNamelbl),
             new BindLogItem("Hplbl", hplbl),
             new BindLogItem("Bomblbl", bomblbl),
+            new BindLogItem("TrapSkilllbl", trapSkilllbl),
             new BindLogItem("Goldlbl", goldlbl),
             new BindLogItem("Scorelbl", scorelbl),
             new BindLogItem("HpGroup", hpGroup),

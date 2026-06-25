@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af9ad96c9f138d7458e8ab4921ab9d84, type: 3}
+  m_Name: Runi 9
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterDefinition
+  characterId: 9
+  characterName: Runi
+  description: Moca
+  icon: {fileID: 198743297064816441, guid: 3c99856db67185e4abe7bed80b820cbf, type: 3}
+  preview: {fileID: -4246943709325784, guid: 7c615902e571263418040db1d1782966, type: 3}
+  spriteLibrary: {fileID: 11400000, guid: acfbcf52f7a66344c997d5b0ecde7ba0, type: 2}
+  playerPrefab: {fileID: 24528305369907493, guid: 0b2ef07dd0781f44c94c28e578b48a03, type: 3}
+  hp: 1
+  bomb: 1
+  speed: 1
+  defaultOwned: 1
+  requiredLevel: 0
+  price: 0

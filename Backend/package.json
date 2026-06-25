@@ -1,0 +1,16 @@
+{
+  "name": "bommy-nakama-backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Bommy Nakama TypeScript server runtime.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "type-check": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "nakama-runtime": "https://github.com/heroiclabs/nakama-common/archive/ce047cc70356030d61b0057cb9d91991c3106aec.tar.gz"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

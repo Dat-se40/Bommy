@@ -21,9 +21,12 @@ public class MatchPhaseBroadcast : NetworkBehaviour
         }
     }
 
+    public const int NoMapId = -1;
+
     readonly SyncVar<MatchPhaseKind> currentPhase = new();
     readonly SyncVar<float> phaseRemainingSeconds = new();
     readonly SyncVar<float> phaseDurationSeconds = new();
+    readonly SyncVar<int> activeMapId = new(NoMapId);
 
     float serverRemainingSeconds;
     bool serverTicking;
@@ -31,9 +34,11 @@ public class MatchPhaseBroadcast : NetworkBehaviour
     public MatchPhaseKind CurrentPhase => currentPhase.value;
     public float PhaseRemainingSeconds => phaseRemainingSeconds.value;
     public float PhaseDurationSeconds => phaseDurationSeconds.value;
+    public int ActiveMapId => activeMapId.value;
 
     public event Action PhaseChanged;
     public event Action PhaseCompleted;
+    public event Action<int> MapIdChanged;
 
     void Awake()
     {
@@ -53,8 +58,10 @@ public class MatchPhaseBroadcast : NetworkBehaviour
         currentPhase.onChanged += OnAnyPhaseReplicated;
         phaseRemainingSeconds.onChanged += OnAnyTimerReplicated;
         phaseDurationSeconds.onChanged += OnAnyTimerReplicated;
+        activeMapId.onChanged += OnMapIdReplicated;
 
         PhaseChanged?.Invoke();
+        NotifyMapIdIfValid(activeMapId.value);
     }
 
     protected override void OnDespawned()
@@ -62,6 +69,7 @@ public class MatchPhaseBroadcast : NetworkBehaviour
         currentPhase.onChanged -= OnAnyPhaseReplicated;
         phaseRemainingSeconds.onChanged -= OnAnyTimerReplicated;
         phaseDurationSeconds.onChanged -= OnAnyTimerReplicated;
+        activeMapId.onChanged -= OnMapIdReplicated;
 
         serverTicking = false;
 
@@ -98,6 +106,24 @@ public class MatchPhaseBroadcast : NetworkBehaviour
 
     void OnAnyPhaseReplicated(MatchPhaseKind _) => PhaseChanged?.Invoke();
     void OnAnyTimerReplicated(float _) => PhaseChanged?.Invoke();
+    void OnMapIdReplicated(int mapId) => NotifyMapIdIfValid(mapId);
+
+    void NotifyMapIdIfValid(int mapId)
+    {
+        if (mapId < 0)
+            return;
+
+        MapIdChanged?.Invoke(mapId);
+    }
+
+    /// <summary>Server — replicate map id cho mọi client (load visual + spawn points).</summary>
+    public void ServerSetActiveMap(int mapId)
+    {
+        if (!isServer)
+            return;
+
+        activeMapId.value = mapId;
+    }
 
     public void ServerStartPhase(MatchPhaseKind phase, float durationSeconds)
     {

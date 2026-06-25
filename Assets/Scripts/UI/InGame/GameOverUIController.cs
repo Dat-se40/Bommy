@@ -38,11 +38,6 @@ public class GameOverUIController : MonoBehaviour
 
     [Header("Reward Labels")]
     [SerializeField] private TMP_Text goldRewardlbl;
-    [SerializeField] private TMP_Text expRewardlbl;
-    [SerializeField] private TMP_Text levellbl;
-    [SerializeField] private TMP_Text nextLevellbl;
-    [SerializeField] private TMP_Text explbl;
-    [SerializeField] private Image expFill;
 
     [Header("Buttons")]
     [SerializeField] private Button playbtn;
@@ -189,22 +184,15 @@ public class GameOverUIController : MonoBehaviour
         string timeText = FormatElapsedTime(Time.time - matchStartTime);
 
         int goldReward = Mathf.Max(10, score / 20);
-        int expReward = Mathf.Max(20, score / 10);
-        int level = PlayerPrefs.GetInt("PlayerLevel", 1);
-        int currentExp = PlayerPrefs.GetInt("PlayerExp", 0);
-        int needExp = 100 + level * 50;
 
         ShowGameOver(
             isWin,
             kills,
             score,
             timeText,
-            goldReward,
-            expReward,
-            level,
-            currentExp,
-            needExp
+            goldReward
         );
+
 
         PopulateLeaderboardFromBoardStates();
     }
@@ -301,11 +289,7 @@ public class GameOverUIController : MonoBehaviour
             kills: 4,
             score: 2500,
             timeText: "02:14",
-            goldReward: 120,
-            expReward: 280,
-            currentLevel: 5,
-            currentExp: 320,
-            needExp: 600
+            goldReward: 120
         );
 
         SetDemoLeaderboard();
@@ -316,12 +300,9 @@ public class GameOverUIController : MonoBehaviour
         int kills,
         int score,
         string timeText,
-        int goldReward,
-        int expReward,
-        int currentLevel,
-        int currentExp,
-        int needExp
+        int goldReward
     )
+
     {
         if (gameOverOverlay != null)
             gameOverOverlay.SetActive(true);
@@ -357,36 +338,7 @@ public class GameOverUIController : MonoBehaviour
         if (goldRewardlbl != null)
             goldRewardlbl.text = "+" + goldReward;
 
-        if (expRewardlbl != null)
-            expRewardlbl.text = "+" + expReward;
-
-        ApplyExp(currentLevel, currentExp, needExp, expReward);
-    }
-
-    void ApplyExp(int currentLevel, int currentExp, int needExp, int expReward)
-    {
-        int newExp = currentExp + expReward;
-        int newLevel = currentLevel;
-        int newNeedExp = needExp;
-
-        while (newExp >= newNeedExp)
-        {
-            newExp -= newNeedExp;
-            newLevel++;
-            newNeedExp = Mathf.RoundToInt(newNeedExp * 1.25f);
-        }
-
-        if (levellbl != null)
-            levellbl.text = "LV " + newLevel;
-
-        if (nextLevellbl != null)
-            nextLevellbl.text = "LV " + (newLevel + 1);
-
-        if (explbl != null)
-            explbl.text = newExp + " / " + newNeedExp + " EXP";
-
-        if (expFill != null)
-            expFill.fillAmount = (float)newExp / newNeedExp;
+        //TODO: cộng vàng vào tài khoản người chơi
     }
 
     void SetDemoLeaderboard()

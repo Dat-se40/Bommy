@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f3a9c2e1b5d4a6082937465bcde0f12, type: 3}
+  m_Name: Dungeon
+  m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
+  levelId: map_03
+  displayName: Classic Garden
+  destructibleDrops:
+    dropChance: 1
+    entries:
+    - effect: {fileID: 11400000, guid: 9ca9e98e68e11f54ba241f9a218dad7d, type: 2}
+      weight: 1
+      maxSpawnCount: 0
+    - effect: {fileID: 11400000, guid: be14013a2caccd44f89763785167e99e, type: 2}
+      weight: 0.197
+      maxSpawnCount: 0
+    - effect: {fileID: 11400000, guid: 46a8cea16360b17468b4cd4cf799fc8c, type: 2}
+      weight: 0.787
+      maxSpawnCount: 4
+    - effect: {fileID: 11400000, guid: e50e855bb04ad4a499b3116fd082e08c, type: 2}
+      weight: 0.41
+      maxSpawnCount: 10
+    - effect: {fileID: 11400000, guid: deb44d1e3e67147408c8697f6efe5c12, type: 2}
+      weight: 0
+      maxSpawnCount: 10
+    - effect: {fileID: 11400000, guid: 875493fde7ef7f8458512de922a61a03, type: 2}
+      weight: 0.475
+      maxSpawnCount: 10

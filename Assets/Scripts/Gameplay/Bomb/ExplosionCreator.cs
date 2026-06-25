@@ -63,13 +63,12 @@ public class ExplosionCreator : NetworkBehaviour
     {
         if (!isServer)
             return;
-
-        if (ContainsShrinkCell(cell))
-            return;
-
         shrinkCells.Add(cell);
     }
-
+    public bool IsShrinkCell(Vector3Int cell)
+    {
+        return ContainsShrinkCell(cell);
+    }
     /// <summary>Gọi khi MapRefs spawn sau network spawn.</summary>
     public void ReplayShrinkCellsOnMapReady()
     {

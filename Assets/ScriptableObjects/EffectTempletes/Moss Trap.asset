@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5c18516c2baed94bb1f1093cdbfefc9, type: 3}
+  m_Name: Moss Trap
+  m_EditorClassIdentifier: Assembly-CSharp::EffectTemplate
+  effectId: 4
+  displayName: Spore Bomb
+  effectType: 6
+  duration: 10
+  specialValue: 0
+  description: ' Place a special bomb that damages players.'
+  rating: 1
+  pickupPrefab: {fileID: 3140720615861595630, guid: b7d9d464765cd0343b1819efa2551353, type: 3}
+  vfxPrefab: {fileID: 3140720615861595630, guid: 1face8e28f9701741900124a1fa4199c, type: 3}
+  uiIcon: {fileID: 6172493732125829219, guid: 73f60822c0269154da0a74cecb05bcb6, type: 3}
+  mapInfoDescription: 'A trap
+
+'
+  placedBombPrefab: {fileID: 3140720615861595630, guid: 0fc9261eda1bd2f4ab932e53100a65be, type: 3}
+  fuseSeconds: 2
+  damage: 1
+  ignoreOwner: 1

@@ -71,7 +71,5 @@ public class BombController : NetworkBehaviour
             Debug.Log("[BOMB] Player goes out bomb range");
             collider2D.isTrigger = false;
         }
-            
-
     }
 }
