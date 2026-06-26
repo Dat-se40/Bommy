@@ -141,6 +141,8 @@ public class MovementController : NetworkBehaviour
         targetCell = nextCell;
         targetWorldPosition = grid.GetCellCenterWorld(targetCell);
         isMoving = true;
+        
+        SoundPlayback.PlayLocal(SoundKey.SfxMove);
     }
 
     private void MoveToTargetCell()

@@ -43,9 +43,9 @@ public class PlayerBoardSlotUI : MonoBehaviour
 
     [Header("Damage Feedback")]
     [SerializeField] private RectTransform shakeTarget;
-    [SerializeField] private float heartPunchScale = 0.35f;
-    [SerializeField] private float heartPunchDuration = 0.35f;
-    [SerializeField] private float slotShakeStrength = 12f;
+    [SerializeField] private float heartPunchScale = 0.4f;
+    [SerializeField] private float heartPunchDuration = 0.2f;
+    [SerializeField] private float slotShakeStrength = 20f;
     [SerializeField] private float slotShakeDuration = 0.4f;
     [SerializeField] private int slotShakeVibrato = 8;
 

@@ -31,6 +31,8 @@ internal static class AuthErrorMapper
             lower.Contains("timeout"))
             return "Cannot reach the server. Check your connection and try again.";
 
-        return message.Length <= 180 ? message : message[..180] + "...";
+        return message.Length <= General.AUTH_ERROR_MESSAGE_MAX_LENGTH
+            ? message
+            : message[..General.AUTH_ERROR_MESSAGE_MAX_LENGTH] + "...";
     }
 }

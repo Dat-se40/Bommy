@@ -5,9 +5,9 @@ using UnityEngine;
 public sealed class AuthService : MonoBehaviour
 {
     [Header("Nakama")]
-    [SerializeField] private string host = "127.0.0.1";
-    [SerializeField] private int port = 7350;
-    [SerializeField] private string serverKey = "defaultkey";
+    [SerializeField] private string host = General.AUTH_NAKAMA_HOST;
+    [SerializeField] private int port = General.AUTH_NAKAMA_PORT;
+    [SerializeField] private string serverKey = General.AUTH_NAKAMA_SERVER_KEY;
 
     NakamaSessionService sessionService;
     NakamaAccountService accountService;
@@ -20,7 +20,7 @@ public sealed class AuthService : MonoBehaviour
 
     public bool IsSocketConnected => socketService != null && socketService.IsConnected;
     public string Username => Account?.User?.Username ?? Session?.Username ?? string.Empty;
-    public string DisplayName => accountService?.GetDisplayName(Session) ?? "Player";
+    public string DisplayName => accountService?.GetDisplayName(Session) ?? General.AUTH_DEFAULT_DISPLAY_NAME;
     public bool IsAuthenticated => Session != null && !Session.IsExpired;
 
     void EnsureClient()

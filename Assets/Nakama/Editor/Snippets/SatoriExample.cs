@@ -22,7 +22,8 @@ namespace Satori.Snippets
 {
     public class SatoriExample : MonoBehaviour
     {
-        private const string ApiKey = "bb4b2da1-71ba-429e-b5f3-36556abbf4c9";
+        // Placeholder — set via Inspector or env; never commit real Satori API keys.
+        private const string ApiKey = "your-satori-api-key-here";
 
         private IClient _client;
 

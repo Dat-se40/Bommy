@@ -11,7 +11,7 @@ public class PlayerBoardState : NetworkBehaviour
     readonly SyncVar<int> slotIndex = new();
     readonly SyncVar<int> characterId = new();
     readonly SyncVar<int> catalogIndex = new();
-    readonly SyncVar<string> displayName = new("Player");
+    readonly SyncVar<string> displayName = new(General.PLAYER_DEFAULT_NAME);
     readonly SyncVar<int> currentHp = new();
     readonly SyncVar<int> maxHp = new();
     readonly SyncVar<int> currentLives = new();
@@ -20,9 +20,9 @@ public class PlayerBoardState : NetworkBehaviour
     readonly SyncVar<int> kills = new();
     readonly SyncVar<int> shield = new();
     readonly SyncVar<bool> isEliminated = new();
-    readonly SyncVar<int> maxBombs = new(1);
+    readonly SyncVar<int> maxBombs = new(General.PLAYER_STATE_MIN_BOMBS);
     readonly SyncVar<int> activeBombs = new();
-    readonly SyncVar<int> maxTrapSlots = new(1);
+    readonly SyncVar<int> maxTrapSlots = new(General.PLAYER_STATE_MIN_TRAP_SLOTS);
     readonly SyncVar<int> activeTraps = new();
     readonly SyncVar<int> trapSkillCharges = new();
     readonly SyncVar<int> gold= new(); 
@@ -158,16 +158,16 @@ public class PlayerBoardState : NetworkBehaviour
         displayName.value = profile.displayName;
         maxHp.value = profile.hp;
         currentHp.value = profile.hp;
-        maxLives.value = 3;
-        currentLives.value = 3;
+        maxLives.value = General.PLAYER_STATE_MATCH_MAX_LIVES;
+        currentLives.value = General.PLAYER_STATE_MATCH_MAX_LIVES;
         score.value = 0;
         gold.value = 0; 
         kills.value = 0;
         shield.value = 0;
         isEliminated.value = false;
-        maxBombs.value = Mathf.Max(1, profile.bomb);
+        maxBombs.value = Mathf.Max(General.PLAYER_STATE_MIN_BOMBS, profile.bomb);
         activeBombs.value = 0;
-        maxTrapSlots.value = Mathf.Max(1, profile.bomb);
+        maxTrapSlots.value = Mathf.Max(General.PLAYER_STATE_MIN_TRAP_SLOTS, profile.bomb);
         activeTraps.value = 0;
         trapSkillCharges.value = 0;
     }
@@ -186,8 +186,8 @@ public class PlayerBoardState : NetworkBehaviour
         kills.value = infor.Kills;
         shield.value = infor.Shield;
         isEliminated.value = infor.IsEliminated;
-        maxBombs.value = Mathf.Max(1, infor.MaxBombs);
-        maxTrapSlots.value = Mathf.Max(1, infor.MaxBombs);
+        maxBombs.value = Mathf.Max(General.PLAYER_STATE_MIN_BOMBS, infor.MaxBombs);
+        maxTrapSlots.value = Mathf.Max(General.PLAYER_STATE_MIN_TRAP_SLOTS, infor.MaxBombs);
     }
 
     /// <summary>Server — đồng bộ bomb/trap đang dùng + charge skill lên HUD.</summary>

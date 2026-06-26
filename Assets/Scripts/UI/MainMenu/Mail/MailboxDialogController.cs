@@ -153,6 +153,8 @@ public class MailboxDialogController : MonoBehaviour
 
     public void OpenDialog()
     {
+        SoundManager.Instance?.PlayOpenDialog();
+
         if (mailboxOverlay != null)
         {
             mailboxOverlay.SetActive(true);

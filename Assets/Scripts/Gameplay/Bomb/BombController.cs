@@ -30,6 +30,8 @@ public class BombController : NetworkBehaviour
         this.owner = owner;
         this.explosionCreator = explosionCreator;
         this.bombCell = bombCell;
+        
+        SoundPlayback.PlaySynced(SoundKey.SfxPlaceBomb);
 
         StartCoroutine(ExplodeAfterDelay());
     }

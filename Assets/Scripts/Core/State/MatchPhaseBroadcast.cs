@@ -127,6 +127,23 @@ public class MatchPhaseBroadcast : NetworkBehaviour
 
     public void ServerStartPhase(MatchPhaseKind phase, float durationSeconds)
     {
+        switch (phase)
+        {
+            case MatchPhaseKind.None:
+                break;
+            case MatchPhaseKind.Prep:
+                break;
+            case MatchPhaseKind.Gameplay:
+                SoundManager.Instance.StopAllSfx();
+                SoundManager.Instance.PlaySfx(SoundKey.SfxEnterGameState);
+                break;
+            case MatchPhaseKind.ZoneShrink:
+                SoundManager.Instance.StopAllSfx();
+                SoundManager.Instance.PlaySfx(SoundKey.SfxEnterShrinkState);
+                break;
+            default:
+                break;
+        }
         if (!isServer)
             return;
 

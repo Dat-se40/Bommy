@@ -123,11 +123,11 @@ internal sealed class NakamaSessionService
         if (session == null)
             throw new InvalidOperationException("Nakama authentication is not available.");
 
-        if (!session.HasExpired(DateTime.UtcNow.AddMinutes(1)))
+        if (!session.HasExpired(DateTime.UtcNow.AddMinutes(General.AUTH_SESSION_REFRESH_BUFFER_MINUTES)))
             return session;
 
         if (string.IsNullOrWhiteSpace(session.RefreshToken) ||
-            session.HasRefreshExpired(DateTime.UtcNow.AddMinutes(1)))
+            session.HasRefreshExpired(DateTime.UtcNow.AddMinutes(General.AUTH_SESSION_REFRESH_BUFFER_MINUTES)))
             throw new InvalidOperationException("Your session has expired. Log in again.");
 
         SetSession(await client.SessionRefreshAsync(session));

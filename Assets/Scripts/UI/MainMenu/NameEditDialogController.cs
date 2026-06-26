@@ -81,6 +81,8 @@ public class NameEditDialogController : MonoBehaviour
     {
         EnsureInitialized();
 
+        SoundManager.Instance?.PlayOpenDialog();
+
         saveCallback = onSave;
 
         if (root != null)

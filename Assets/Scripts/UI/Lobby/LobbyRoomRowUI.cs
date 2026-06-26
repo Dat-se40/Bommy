@@ -36,6 +36,7 @@ public class LobbyRoomRowUI : MonoBehaviour
 
         if (joinbtn != null)
         {
+            ButtonClickSound.EnsureOn(joinbtn);
             joinbtn.onClick.RemoveAllListeners();
             joinbtn.onClick.AddListener(OnJoinClicked);
             joinbtn.interactable = entry.currentPlayers < entry.maxPlayers;

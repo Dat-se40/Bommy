@@ -7,6 +7,6 @@ public class SoundData : ScriptableObject
 
     public AudioClip clip;
 
-    [Range(0f, 1f)]
+    [Range(0f, 2f)]
     public float volume = 1f;
 }
