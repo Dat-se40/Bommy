@@ -6729,6 +6729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e36d9c8bada4855812fc4c3e2b3d383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AutoButtonSound
+  includeInactive: 1
 --- !u!1 &1665930228
 GameObject:
   m_ObjectHideFlags: 0
@@ -7408,7 +7409,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 120}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 125, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1905247093
 MonoBehaviour:
@@ -7430,7 +7431,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -381016780, guid: 3662d6b211977b74f9c2416c932cf619, type: 3}
+  m_Sprite: {fileID: 7479353228502375203, guid: 1f8b48abe67f4ad4ea664a0995cd4252, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
