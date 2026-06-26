@@ -41,7 +41,7 @@ internal sealed class NakamaAccountService
             return displayName.Trim();
 
         string username = Account?.User?.Username ?? session?.Username;
-        return string.IsNullOrWhiteSpace(username) ? "Player" : username;
+        return string.IsNullOrWhiteSpace(username) ? General.AUTH_DEFAULT_DISPLAY_NAME : username;
     }
 
     public void Clear()

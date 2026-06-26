@@ -21,7 +21,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 24528305369907493, guid: 0b2ef07dd0781f44c94c28e578b48a03, type: 3}
   hp: 3
   bomb: 1
-  speed: 5
+  speed: 4
   defaultOwned: 1
   requiredLevel: 1
-  price: 0
+  price: 20
