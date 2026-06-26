@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoundData
   key: bgm.ingame
   clip: {fileID: 8300000, guid: a1589835d2bbf4744a8e9121c41b7865, type: 3}
-  volume: 1
+  volume: 0.2

@@ -521,6 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e36d9c8bada4855812fc4c3e2b3d383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AutoButtonSound
+  includeInactive: 1
 --- !u!1 &48292308
 GameObject:
   m_ObjectHideFlags: 0
@@ -1522,9 +1523,6 @@ MonoBehaviour:
   muteAllToggle: {fileID: 1555217958}
   sfxValuelbl: {fileID: 1363329251}
   bgmValuelbl: {fileID: 1460997805}
-  audioMixer: {fileID: 24100000, guid: 649eb5bf427535047818b1ed580f5c59, type: 2}
-  sfxVolumeParam: SfxVolume
-  bgmVolumeParam: BgmVolume
 --- !u!114 &97728033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4369,7 +4367,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &521837582
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12593,8 +12591,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1628441682}
-  - component: {fileID: 1628441681}
   - component: {fileID: 1628441680}
+  - component: {fileID: 1628441685}
   m_Layer: 0
   m_Name: SoundBootstrap
   m_TagString: Untagged
@@ -12614,19 +12612,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634d9cc0f42e42e2acbdffb086f911f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MatchEndSoundListener
---- !u!114 &1628441681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1628441679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6b8b8ad70d04da4831470fc3fd63e12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameSceneSoundBootstrap
-  gameLibrary: {fileID: 11400000, guid: da9b9fa096f1d2545b1794da81db24e2, type: 2}
 --- !u!4 &1628441682
 Transform:
   m_ObjectHideFlags: 0
@@ -12642,6 +12627,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1628441685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628441679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fafb3027db5ead743a2dc1fb455b14ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundManager
+  defaultLibrary: {fileID: 11400000, guid: da9b9fa096f1d2545b1794da81db24e2, type: 2}
+  sfxMixerGroup: {fileID: -6107795250436556463, guid: 649eb5bf427535047818b1ed580f5c59, type: 2}
+  bgmMixerGroup: {fileID: -6107795250436556463, guid: 649eb5bf427535047818b1ed580f5c59, type: 2}
+  sfxSource: {fileID: 0}
+  sfxPitchMin: 0.64
+  sfxPitchMax: 1.08
+  bgmSource: {fileID: 0}
+  defaultSfxVolumePercent: 100
+  defaultBgmVolumePercent: 100
 --- !u!1 &1664619113
 GameObject:
   m_ObjectHideFlags: 0
@@ -13656,8 +13662,8 @@ MonoBehaviour:
   _directChildren: []
   phaseBroadcast: {fileID: 1835806106}
   prepDurationSeconds: 30
-  fallbackMapId: 4
-  inTestingMode: 0
+  fallbackMapId: 3
+  inTestingMode: 1
 --- !u!114 &1835806110
 MonoBehaviour:
   m_ObjectHideFlags: 0

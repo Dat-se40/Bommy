@@ -277,7 +277,7 @@ public class MapInfoDialogController : MonoBehaviour
 
         if (phase == MatchPhaseKind.Prep)
         {
-            if (lastAutoOverlayPhase != MatchPhaseKind.Prep)
+            if (lastAutoOverlayPhase != MatchPhaseKind.Prep) 
                 BeginPrepPhase();
         }
         else if (lastAutoOverlayPhase == MatchPhaseKind.Prep)

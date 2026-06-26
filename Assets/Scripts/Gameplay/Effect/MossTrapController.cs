@@ -186,6 +186,7 @@ public class MossTrapController : NetworkBehaviour
             return;
 
         Instantiate(effect.vfxPrefab, transform.position, Quaternion.identity);
+        SoundManager.Instance.PlaySfx(SoundKey.SfxPlayerTakenTrap); 
     }
 
     void ReleaseTrapSlot()

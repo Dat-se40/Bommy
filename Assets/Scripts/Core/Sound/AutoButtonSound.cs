@@ -2,18 +2,32 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Gắn vào Canvas hoặc Panel cha — tự động thêm sound cho tất cả Button con.
+/// Gắn vào Canvas hoặc Panel cha — tự thêm ButtonClickSound cho mọi Button con.
+/// Chạy muộn để không bị các script UI SetupButtons ghi đè onClick.
 /// </summary>
+[DefaultExecutionOrder(1000)]
 public class AutoButtonSound : MonoBehaviour
 {
+    [SerializeField]
+    private bool includeInactive = true;
+
     void Start()
     {
-        Button[] buttons = GetComponentsInChildren<Button>(true);
+        RegisterChildButtons();
+    }
 
-        foreach (Button btn in buttons)
+    public void RegisterChildButtons()
+    {
+        Button[] buttons = GetComponentsInChildren<Button>(includeInactive);
+
+        for (int i = 0; i < buttons.Length; i++)
         {
-            btn.onClick.AddListener(() =>
-                SoundPlayback.PlayLocal(SoundKey.SfxClick));
+            Button btn = buttons[i];
+
+            if (btn == null)
+                continue;
+
+            ButtonClickSound.EnsureOn(btn);
         }
     }
 }

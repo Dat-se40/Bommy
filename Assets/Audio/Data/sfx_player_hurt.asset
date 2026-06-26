@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoundData
   key: sfx.player_hurt
   clip: {fileID: 8300000, guid: 612761ace908b624683a11b48dfa8708, type: 3}
-  volume: 1
+  volume: 1.8

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: sfx_pickup
   m_EditorClassIdentifier: Assembly-CSharp::SoundData
   key: sfx.pickup
-  clip: {fileID: 8300000, guid: dfa6694609fc57c4b905ad2918df346f, type: 3}
-  volume: 1
+  clip: {fileID: 8300000, guid: 48b28ffc67950f041b6f7cf978913d31, type: 3}
+  volume: 1.5

@@ -1,55 +1,52 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
 
 /// <summary>
-/// Điều khiển SoundSettingsOverlay.
+/// Điều khiển SoundSettingsOverlay — SFX và BGM tách riêng qua SoundManager (thang 0–100%).
 /// </summary>
 public class SoundSettingsDialogController : MonoBehaviour
 {
     [Header("Root")]
-    [SerializeField] private GameObject dialogRoot;
+    [SerializeField]
+    private GameObject dialogRoot;
 
     [Header("Buttons")]
-    [SerializeField] private Button closeSoundSettingsbtn;
+    [SerializeField]
+    private Button closeSoundSettingsbtn;
 
     [Header("Audio UI")]
-    [SerializeField] private Slider sfxSlider;
-    [SerializeField] private Slider bgmSlider;
-    [SerializeField] private ToggleSwitch muteAllToggle;
-    [SerializeField] private TMP_Text sfxValuelbl;
-    [SerializeField] private TMP_Text bgmValuelbl;
+    [SerializeField]
+    private Slider sfxSlider;
 
-    [Header("Audio Mixer")]
-    [SerializeField] private AudioMixer audioMixer;
-    [SerializeField] private string sfxVolumeParam = "SfxVolume";
-    [SerializeField] private string bgmVolumeParam = "BgmVolume";
+    [SerializeField]
+    private Slider bgmSlider;
 
-    private const string SfxKey = "Audio_SfxVolume";
-    private const string BgmKey = "Audio_BgmVolume";
-    private const string MuteAllKey = "Audio_MuteAll";
+    [SerializeField]
+    private ToggleSwitch muteAllToggle;
 
-    private const float DefaultSfx = 0.7f;
-    private const float DefaultBgm = 0.6f;
+    [SerializeField]
+    private TMP_Text sfxValuelbl;
 
-    private float workingSfx;
-    private float workingBgm;
-    private bool workingMuteAll;
+    [SerializeField]
+    private TMP_Text bgmValuelbl;
 
-    private void Awake()
+    int workingSfxPercent;
+    int workingBgmPercent;
+    bool workingMuteAll;
+
+    void Awake()
     {
         BindButtons();
-
         LoadSavedSettings();
         ApplyToUI();
-        ApplyAudio();
+        SyncAllToSoundManager();
 
         if (dialogRoot != null)
             dialogRoot.SetActive(false);
     }
 
-    private void BindButtons()
+    void BindButtons()
     {
         if (closeSoundSettingsbtn != null)
         {
@@ -80,13 +77,15 @@ public class SoundSettingsDialogController : MonoBehaviour
     {
         LoadSavedSettings();
         ApplyToUI();
-        ApplyAudio();
+        SyncAllToSoundManager();
 
         if (dialogRoot != null)
         {
             dialogRoot.SetActive(true);
             dialogRoot.transform.SetAsLastSibling();
         }
+
+        SoundManager.Instance?.PlayOpenDialog();
     }
 
     public void CloseDialog()
@@ -95,56 +94,56 @@ public class SoundSettingsDialogController : MonoBehaviour
             dialogRoot.SetActive(false);
     }
 
-    private void LoadSavedSettings()
+    void LoadSavedSettings()
     {
-        workingSfx = PlayerPrefs.GetFloat(SfxKey, DefaultSfx);
-        workingBgm = PlayerPrefs.GetFloat(BgmKey, DefaultBgm);
-        workingMuteAll = PlayerPrefs.GetInt(MuteAllKey, 0) == 1;
+        SoundManager manager = SoundManager.Instance;
+
+        if (manager != null)
+        {
+            manager.LoadVolumeSettings();
+            workingSfxPercent = manager.SfxVolumePercent;
+            workingBgmPercent = manager.BgmVolumePercent;
+            workingMuteAll = manager.IsMuteAll;
+            return;
+        }
+
+        workingSfxPercent = 70;
+        workingBgmPercent = 60;
+        workingMuteAll = false;
     }
 
-    private void SaveSettings()
+    void OnSfxSliderChanged(float value)
     {
-        PlayerPrefs.SetFloat(SfxKey, workingSfx);
-        PlayerPrefs.SetFloat(BgmKey, workingBgm);
-        PlayerPrefs.SetInt(MuteAllKey, workingMuteAll ? 1 : 0);
-        PlayerPrefs.Save();
-    }
-
-    private void OnSfxSliderChanged(float value)
-    {
-        workingSfx = value;
+        workingSfxPercent = Mathf.RoundToInt(Mathf.Clamp01(value) * 100f);
         RefreshValueLabels();
-        ApplyAudio();
-        SaveSettings();
+        SoundManager.Instance?.SetSfxVolumePercent(workingSfxPercent);
     }
 
-    private void OnBgmSliderChanged(float value)
+    void OnBgmSliderChanged(float value)
     {
-        workingBgm = value;
+        workingBgmPercent = Mathf.RoundToInt(Mathf.Clamp01(value) * 100f);
         RefreshValueLabels();
-        ApplyAudio();
-        SaveSettings();
+        SoundManager.Instance?.SetBgmVolumePercent(workingBgmPercent);
     }
 
-    private void OnMuteAllChanged(bool value)
+    void OnMuteAllChanged(bool value)
     {
         workingMuteAll = value;
         ApplyToUI();
-        ApplyAudio();
-        SaveSettings();
+        SoundManager.Instance?.SetMuteAll(workingMuteAll);
     }
 
-    private void ApplyToUI()
+    void ApplyToUI()
     {
         if (sfxSlider != null)
         {
-            sfxSlider.SetValueWithoutNotify(workingSfx);
+            sfxSlider.SetValueWithoutNotify(workingSfxPercent / 100f);
             sfxSlider.interactable = !workingMuteAll;
         }
 
         if (bgmSlider != null)
         {
-            bgmSlider.SetValueWithoutNotify(workingBgm);
+            bgmSlider.SetValueWithoutNotify(workingBgmPercent / 100f);
             bgmSlider.interactable = !workingMuteAll;
         }
 
@@ -154,39 +153,24 @@ public class SoundSettingsDialogController : MonoBehaviour
         RefreshValueLabels();
     }
 
-    private void RefreshValueLabels()
+    void RefreshValueLabels()
     {
         if (sfxValuelbl != null)
-            sfxValuelbl.text = Mathf.RoundToInt(workingSfx * 100f).ToString();
+            sfxValuelbl.text = workingSfxPercent.ToString();
 
         if (bgmValuelbl != null)
-            bgmValuelbl.text = Mathf.RoundToInt(workingBgm * 100f).ToString();
+            bgmValuelbl.text = workingBgmPercent.ToString();
     }
 
-    /// <summary>
-    /// Áp âm lượng vào AudioMixer. Volume 0 được map thành -80 dB.
-    /// </summary>
-    private void ApplyAudio()
+    void SyncAllToSoundManager()
     {
-        if (audioMixer == null)
+        SoundManager manager = SoundManager.Instance;
+
+        if (manager == null)
             return;
 
-        if (workingMuteAll)
-        {
-            audioMixer.SetFloat(sfxVolumeParam, -80f);
-            audioMixer.SetFloat(bgmVolumeParam, -80f);
-            return;
-        }
-
-        audioMixer.SetFloat(sfxVolumeParam, VolumeToDb(workingSfx));
-        audioMixer.SetFloat(bgmVolumeParam, VolumeToDb(workingBgm));
-    }
-
-    private float VolumeToDb(float value)
-    {
-        if (value <= 0.0001f)
-            return -80f;
-
-        return Mathf.Log10(value) * 40f; // đổi 20f thành 40f
+        manager.SetSfxVolumePercent(workingSfxPercent);
+        manager.SetBgmVolumePercent(workingBgmPercent);
+        manager.SetMuteAll(workingMuteAll);
     }
 }

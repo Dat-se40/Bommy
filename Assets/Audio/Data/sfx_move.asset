@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: sfx_move
   m_EditorClassIdentifier: Assembly-CSharp::SoundData
   key: sfx.move
-  clip: {fileID: 8300000, guid: 5450441018bcdb54580a844df00aaeba, type: 3}
-  volume: 1
+  clip: {fileID: 8300000, guid: 283c7adb0e7f97b4281080706e72d448, type: 3}
+  volume: 0.7

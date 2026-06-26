@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoundData
   key: sfx.click
   clip: {fileID: 8300000, guid: b948e713b58e29a468a295e266545b1b, type: 3}
-  volume: 1
+  volume: 1.2

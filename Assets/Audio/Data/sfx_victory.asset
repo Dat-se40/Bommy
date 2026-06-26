@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: sfx_victory
   m_EditorClassIdentifier: Assembly-CSharp::SoundData
   key: sfx.victory
-  clip: {fileID: 8300000, guid: 80678b879c7de3742ad9b3717f8d4c59, type: 3}
+  clip: {fileID: 8300000, guid: 4f357a5700131304b8a8a35094bedb98, type: 3}
   volume: 1

@@ -22,7 +22,8 @@ public class MatchEndSoundListener : MonoBehaviour
     void OnMatchFinished(bool finished)
     {
         if (!finished) return;
-
+        SoundManager.Instance.StopAllSfx();
         SoundPlayback.StopBgm();
+        
     }
 }

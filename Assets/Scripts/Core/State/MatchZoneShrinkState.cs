@@ -17,8 +17,9 @@ public class MatchZoneShrinkState : MatchTimedStateNode
 
     public override void Enter(bool asServer)
     {
+        SoundManager.Instance.PlaySfx(SoundKey.SfxEnterShrinkState);
         base.Enter(asServer);
-
+      
         if (!asServer)
             return;
 

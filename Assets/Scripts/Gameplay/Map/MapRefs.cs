@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor.PackageManager;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 /// <summary>
@@ -35,6 +36,12 @@ public class MapRefs : MonoBehaviour
     [SerializeField]
     private Tile blockedTile;
 
+    [Header("Sound")]
+    [SerializeField]
+    private SoundLibrary soundLibrary;
+    [SerializeField]
+    public string mainBgmKey;
+    public string shrinkKey;
     public Tilemap Background => background;
     public Tilemap Playground => playground;
     public Tilemap Indestructibles => indestructibles;
@@ -44,7 +51,7 @@ public class MapRefs : MonoBehaviour
     public Transform[] SpawnPoints => spawnPoints;
     public int currentMapId; 
     public static MapRefs Instance { get; private set; }
-
+    
     void Awake()
     {
         Instance = this;
@@ -92,5 +99,8 @@ public class MapRefs : MonoBehaviour
 
         if (destructibles != null)
             destructibles.SetTile(cell, null);
+        SoundManager.Instance.PlaySfx(shrinkKey); 
     }
+    public SoundLibrary GetSoundLibrary => this.soundLibrary;
+
 }

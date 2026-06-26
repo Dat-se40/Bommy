@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: sfx_explosion
   m_EditorClassIdentifier: Assembly-CSharp::SoundData
   key: sfx.explosion
-  clip: {fileID: 8300000, guid: abce2af11d6c2344d8a864022bcf287c, type: 3}
-  volume: 1
+  clip: {fileID: 8300000, guid: 404a38859d4aa354eb42fdf0d61c96b8, type: 3}
+  volume: 0.7

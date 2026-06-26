@@ -100,6 +100,8 @@ public partial class LobbyUIController
 
     public void OpenFriendsDialog()
     {
+        SoundManager.Instance?.PlayOpenDialog();
+
         if (friendsDialogOverlay != null)
             friendsDialogOverlay.SetActive(true);
 

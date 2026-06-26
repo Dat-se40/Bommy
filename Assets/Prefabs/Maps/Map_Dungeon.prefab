@@ -8910,6 +8910,10 @@ MonoBehaviour:
   - {fileID: 7339459610967324692}
   - {fileID: 3516214519251262572}
   blockedTile: {fileID: 11400000, guid: 4835fd56cc0667c4782992e6d6411492, type: 2}
+  soundLibrary: {fileID: 11400000, guid: 3d5199100b203e841950a64a03ee7a40, type: 2}
+  mainBgmKey: bgm.dungeon
+  shrinkKey: sfx.shrink
+  currentMapId: 0
 --- !u!1 &8711410519440860723
 GameObject:
   m_ObjectHideFlags: 0

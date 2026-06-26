@@ -217,7 +217,7 @@ public class PlayerInfor : MonoBehaviour
             pendingKillAttacker = attacker;
             BeginDeathResolve();
         }
-
+        SoundManager.Instance.PlaySfx(SoundKey.SfxPlayerHurt);
         return hpLoss;
     }
 
