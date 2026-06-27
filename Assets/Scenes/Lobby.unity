@@ -12939,6 +12939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e36d9c8bada4855812fc4c3e2b3d383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AutoButtonSound
+  includeInactive: 1
 --- !u!1 &1862513090
 GameObject:
   m_ObjectHideFlags: 0
