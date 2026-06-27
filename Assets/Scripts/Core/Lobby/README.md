@@ -2,7 +2,7 @@
 
 Middle layer giữa UI và backend lobby. **UI không gọi REST/Nakama trực tiếp** — mọi thao tác đi qua `LobbyManager`.
 
-Hiện tại layer này dùng **mock data trong memory**. Khi backend sẵn sàng, chỉ cần thay body các method `Request*` bằng HTTP/RPC thật; giữ nguyên DTO và events.
+Layer này dùng `LobbyManager` làm facade UI và `NakamaLobbyService` làm client RPC/socket service. Lobby runtime state nằm trong Nakama authoritative match runtime.
 
 ---
 
@@ -11,7 +11,8 @@ Hiện tại layer này dùng **mock data trong memory**. Khi backend sẵn sàn
 | File | Vai trò |
 |------|---------|
 | `LobbyApiContracts.cs` | Hằng số + DTO request/response. Mỗi class có ghi chú endpoint REST tương lai. |
-| `LobbyManager.cs` | Singleton `MonoBehaviour`: xử lý request, phát events, sync `GameSession`. |
+| `LobbyManager.cs` | Singleton `MonoBehaviour`: facade cho UI, phát events, sync `GameSession`. |
+| `NakamaLobbyService.cs` | RPC/socket service cho custom lobby trên Nakama authoritative match runtime. |
 
 ---
 
@@ -24,7 +25,7 @@ LobbyUIController
 LobbyManager  ──►  GameSession (roomName, mapId, maxPlayers, mapName)
        │
        ▼
-[Mock]  hoặc  [Nakama RPC / REST]  (sau này)
+NakamaLobbyService ──► Nakama RPC + socket match
 ```
 
 ---
@@ -60,7 +61,7 @@ Luôn unsubscribe trong `OnDestroy` để tránh leak.
 | `RequestCreateRoom` | `CreateRoomRequest` | Tạo phòng, set host |
 | `RequestJoinRoom` | `JoinRoomRequest` | Join theo `roomId` |
 | `RequestJoinRoomByCode` | `JoinRoomByCodeRequest` | Join theo mã (header input) |
-| `TryStartMatch` | — | Host bấm Start; sync trước khi load GameScene |
+| `TryStartMatch` | — | Host bấm Start; backend chuyển lobby sang `Starting` |
 
 ### API bạn bè (stub)
 
@@ -87,8 +88,8 @@ Luôn unsubscribe trong `OnDestroy` để tránh leak.
 ### Rooms
 
 - `LobbyRoomDto` — một phòng trong list hoặc phòng đang ở.
-- `CreateRoomRequest` — `roomName`, `mapId`, `mapName`, `maxPlayers`, `password`, `preferredRoomId`.
-- `JoinRoomRequest` / `JoinRoomByCodeRequest` — `roomId` hoặc `roomCode` + `password` (nếu private).
+- `CreateRoomRequest` — `roomName`, `mapId`, `mapName`, `maxPlayers`, `preferredRoomId`; backend dùng `roomId` làm join password.
+- `JoinRoomRequest` / `JoinRoomByCodeRequest` — `roomId` hoặc `roomCode` + `password`; password hợp lệ là chính `roomId`.
 
 ### Maps
 
@@ -101,30 +102,21 @@ Luôn unsubscribe trong `OnDestroy` để tránh leak.
 
 ---
 
-## Mock data (test local)
+## Backend runtime
 
-`SeedMockData()` chạy trong `Awake`. Một số phòng mẫu:
-
-| Room ID | Private | Password mock |
-|---------|---------|---------------|
-| `VN01` | Có | `123` |
-| `DEV1` | Có | `dev` |
-| Các phòng khác | Tùy `isPrivate` | Theo `PlayerPrefs` nếu bạn tự tạo phòng có password |
-
-Phòng bạn tạo qua UI: password lưu `PlayerPrefs` (`CurrentRoomPassword`) để validate join sau.
+- Active lobby state lives in Nakama authoritative match runtime, not local mock room data.
+- `list_lobbies` reads live match labels and returns open custom lobbies.
+- `create_lobby`, `join_lobby`, `join_lobby_by_code`, `leave_lobby`, and `start_lobby_match` are Nakama RPCs.
+- Friends remain local stubs until the friends phase.
 
 ---
 
-## Migrate sang backend thật
+## Backend contract
 
-1. Giữ nguyên class trong `LobbyApiContracts.cs` (hoặc map JSON response vào cùng shape).
-2. Trong `LobbyManager`, thay từng region:
-   - `#region Rooms — API: ListRooms` → `GET /v1/lobbies`
-   - `CreateRoom` → `POST /v1/lobbies`
-   - `JoinRoom` → `POST /v1/lobbies/{id}/join`
-   - `TryStartMatch` → `POST /v1/lobbies/{id}/start` + PurrNet / EdgeGap
-3. Lỗi HTTP → gọi `Fail(message)` để UI nhận qua `OperationFailed`.
-4. Thành công → invoke event tương ứng (`RoomsListed`, `CurrentRoomChanged`, ...).
+1. Giữ nguyên class trong `LobbyApiContracts.cs` để UI không đổi.
+2. Lỗi RPC/socket → gọi `Fail(message)` để UI nhận qua `OperationFailed`.
+3. Thành công → invoke event tương ứng (`RoomsListed`, `CurrentRoomChanged`, ...).
+4. `TryStartMatch` không load game scene trong Phase 3; Phase 5 sẽ cấp server PurrNet.
 
 ```csharp
 void Fail(string message)

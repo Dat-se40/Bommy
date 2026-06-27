@@ -11,11 +11,10 @@ public class MainMenu : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private GameObject guideOverlay;
 
-    private const string SessionKey = "AUTH_SESSION_ACTIVE";
-
     private void Start()
     {
-        if (PlayerPrefs.GetInt(SessionKey, 0) != 1)
+        AuthService auth = AuthService.GetOrCreate();
+        if (!auth.IsAuthenticated)
         {
             SceneManager.LoadScene(authGateSceneName);
             return;

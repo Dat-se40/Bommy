@@ -14,6 +14,12 @@ public sealed class MainMenuBootstrapper : MonoBehaviour
     {
         AuthService auth = AuthService.GetOrCreate();
 
+        if (auth.IsAuthenticated)
+        {
+            Debug.Log("[MainMenuBootstrapper] User is already authenticated. Skipping session restore.");
+            return;
+        }
+
         AuthResult result = await auth.TryRestoreSessionAsync();
 
         if (!result.Success)

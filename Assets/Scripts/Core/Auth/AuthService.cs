@@ -8,6 +8,7 @@ public sealed class AuthService : MonoBehaviour
     [SerializeField] private string host = "127.0.0.1";
     [SerializeField] private int port = 7350;
     [SerializeField] private string serverKey = "defaultkey";
+    [SerializeField] private string httpKey = "defaulthttpkey";
 
     NakamaSessionService sessionService;
     NakamaAccountService accountService;
@@ -22,6 +23,7 @@ public sealed class AuthService : MonoBehaviour
     public string Username => Account?.User?.Username ?? Session?.Username ?? string.Empty;
     public string DisplayName => accountService?.GetDisplayName(Session) ?? "Player";
     public bool IsAuthenticated => Session != null && !Session.IsExpired;
+    string RuntimeHttpKey => string.IsNullOrWhiteSpace(httpKey) ? "defaulthttpkey" : httpKey.Trim();
 
     void EnsureClient()
     {
@@ -251,5 +253,11 @@ public sealed class AuthService : MonoBehaviour
     {
         EnsureServices();
         return await Client.RpcAsync(await RequireFreshSessionAsync(), id, payload);
+    }
+
+    public async Task<IApiRpc> RpcUnauthenticatedAsync(string id, string payload = "{}")
+    {
+        EnsureServices();
+        return await Client.RpcAsync(RuntimeHttpKey, id, payload);
     }
 }

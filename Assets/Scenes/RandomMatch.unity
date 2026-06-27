@@ -5513,7 +5513,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterSelectSceneName: CharacterSelect
-  gameSceneName: GameScene
   roomIdlbl: {fileID: 285169937}
   statuslbl: {fileID: 2103599613}
   playerSlots:
@@ -5535,10 +5534,12 @@ MonoBehaviour:
     background: {fileID: 0}
   cancelbtn: {fileID: 1966686831}
   startbtn: {fileID: 517149485}
+  mapId: 1
+  mapName: Classic Garden
+  region: Local
+  pollIntervalSeconds: 2
   defaultSearchingAvatar: {fileID: 840282090, guid: 8f8b1e3b8d8a9ec49aac1bd7bd425198, type: 3}
   selectedCharacterAvatar: {fileID: 2128733132, guid: 8f8b1e3b8d8a9ec49aac1bd7bd425198, type: 3}
-  fakePlayers: []
-  findDelay: 1.2
 --- !u!1 &1742040913
 GameObject:
   m_ObjectHideFlags: 0
