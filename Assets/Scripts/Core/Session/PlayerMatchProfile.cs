@@ -12,6 +12,7 @@ public struct PlayerMatchProfile
     public int characterId;
     public int catalogIndex;
     public string displayName;
+    public string userId;
     public int hp;
     public int bomb;
     public int speed;
@@ -22,7 +23,8 @@ public struct PlayerMatchProfile
         int catalogIndex,
         int slotIndex = 0,
         bool isLocal = true,
-        string displayNameOverride = null
+        string displayNameOverride = null,
+        string userIdOverride = null
     )
     {
         if (definition == null)
@@ -36,6 +38,7 @@ public struct PlayerMatchProfile
             displayName = string.IsNullOrWhiteSpace(displayNameOverride)
                 ? definition.CharacterName
                 : displayNameOverride,
+            userId = userIdOverride ?? string.Empty,
             hp = definition.Hp,
             bomb = definition.Bomb,
             speed = definition.Speed,

@@ -134,7 +134,9 @@ public class NetworkPlayerSpawner : NetworkBehaviour
 
     PlayerMatchProfile ResolveSpawnProfile(PlayerID player)
     {
-        // TODO[NETWORK] Map PlayerID → profile đã gửi lúc join lobby.
+        if (DedicatedMatchRuntime.TryCreateProfileForJoinedPlayer(player, characterDatabase, out PlayerMatchProfile dedicatedProfile))
+            return dedicatedProfile;
+
         MatchSessionBroker.LoadLocalFromProgression(characterDatabase);
 
         PlayerMatchProfile profile = MatchSessionBroker.GetLocalPlayer();

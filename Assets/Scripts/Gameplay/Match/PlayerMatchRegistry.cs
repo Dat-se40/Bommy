@@ -59,9 +59,12 @@ public sealed class PlayerMatchRegistry
                 new LeaderBoardData
                 {
                     slotIndex = entry.BoardState.SlotIndex,
+                    userId = entry.Infor.UserId,
                     name = entry.Infor.PlayerName,
                     kills = entry.Infor.Kills,
+                    deaths = entry.Infor.Deaths,
                     score = entry.Infor.Score,
+                    disconnected = false,
                 }
             );
         }
@@ -90,7 +93,10 @@ public sealed class PlayerRuntimeEntry
 public struct LeaderBoardData
 {
     public int slotIndex;
+    public string userId;
     public string name;
     public int kills;
+    public int deaths;
     public int score;
+    public bool disconnected;
 }

@@ -22,6 +22,9 @@ public class PlayerInfor : MonoBehaviour
     private string playerName = "Player";
 
     [SerializeField]
+    private string userId;
+
+    [SerializeField]
     private bool isLocalPlayer = true;
 
     [Header("Movement")]
@@ -80,6 +83,7 @@ public class PlayerInfor : MonoBehaviour
     public int CharacterId => characterId;
     public int CatalogIndex => catalogIndex;
     public string PlayerName => playerName;
+    public string UserId => userId;
     public bool IsLocalPlayer => isLocalPlayer;
 
     public float MoveSpeed => moveSpeed;
@@ -124,6 +128,7 @@ public class PlayerInfor : MonoBehaviour
         characterId = profile.characterId;
         catalogIndex = profile.catalogIndex;
         playerName = profile.displayName;
+        userId = profile.userId;
         maxHp = profile.hp;
         maxBombs = profile.bomb;
         baseMoveSpeed = profile.speed;
