@@ -7,9 +7,9 @@ public sealed class AuthService : MonoBehaviour
     static AuthService instance;
 
     [Header("Nakama")]
-    [SerializeField] private string scheme = "http";
-    [SerializeField] private string host = "127.0.0.1";
-    [SerializeField] private int port = 7350;
+    [SerializeField] private string scheme = "https";
+    [SerializeField] private string host = "bommy-services-prod.up.railway.app";
+    [SerializeField] private int port = 443;
     [SerializeField] private string serverKey = "defaultkey";
     [SerializeField] private string httpKey = "defaulthttpkey";
 

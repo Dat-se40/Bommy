@@ -55,9 +55,12 @@ public class RandomMatchController : MonoBehaviour
     void OnDestroy()
     {
         polling = false;
-        serverFlowCts?.Cancel();
-        serverFlowCts?.Dispose();
-        serverFlowCts = null;
+        if (!serverFlowStarted)
+        {
+            serverFlowCts?.Cancel();
+            serverFlowCts?.Dispose();
+            serverFlowCts = null;
+        }
     }
 
     void SetupButtons()
@@ -451,7 +454,7 @@ public class RandomMatchController : MonoBehaviour
         }
         catch (OperationCanceledException)
         {
-            if (!cancellationToken.IsCancellationRequested)
+            if (this != null && !cancellationToken.IsCancellationRequested)
             {
                 SetError("Timed out waiting for the dedicated server.");
                 serverFlowStarted = false;
@@ -459,8 +462,12 @@ public class RandomMatchController : MonoBehaviour
         }
         catch (Exception exception)
         {
-            SetError(exception.Message);
-            serverFlowStarted = false;
+            Debug.LogException(exception);
+            if (this != null)
+            {
+                SetError(exception.Message);
+                serverFlowStarted = false;
+            }
         }
     }
 

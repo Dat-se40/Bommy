@@ -291,6 +291,13 @@ public sealed class DedicatedServerBootstrap : MonoBehaviour
 
         currentAllocationId = launchConfig.allocationId;
         currentMatchId = launchConfig.matchId;
+        Debug.LogFormat(
+            "[DedicatedServerBootstrap] Launch configuration claimed. Match ID: {0}, Map ID: {1}, Map Name: {2}, Players Count: {3}",
+            launchConfig.matchId,
+            launchConfig.mapId,
+            launchConfig.mapName,
+            launchConfig.players?.Length ?? 0
+        );
         DedicatedMatchRuntime.Configure(
             launchConfig,
             serverClient,

@@ -48,9 +48,12 @@ public class LobbyManager : MonoBehaviour
 
     void OnDestroy()
     {
-        matchServerConnectCts?.Cancel();
-        matchServerConnectCts?.Dispose();
-        matchServerConnectCts = null;
+        if (!isConnectingToMatchServer)
+        {
+            matchServerConnectCts?.Cancel();
+            matchServerConnectCts?.Dispose();
+            matchServerConnectCts = null;
+        }
 
         if (Instance == this)
             Instance = null;
@@ -447,9 +450,13 @@ public class LobbyManager : MonoBehaviour
         }
         catch (Exception exception)
         {
-            isConnectingToMatchServer = false;
-            connectingAllocationId = null;
-            Fail(exception.Message);
+            Debug.LogException(exception);
+            if (this != null)
+            {
+                isConnectingToMatchServer = false;
+                connectingAllocationId = null;
+                Fail(exception.Message);
+            }
         }
     }
 

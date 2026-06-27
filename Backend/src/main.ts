@@ -663,12 +663,21 @@ function optionalString(value: any, fallback: string): string {
 	return trimmed.length > 0 ? trimmed : fallback;
 }
 
-function clampInteger(value: any, fallback: number, min: number, max: number): number {
+function clampInteger(
+	value: any,
+	fallback: number,
+	min: number,
+	max: number,
+): number {
 	var integer = optionalInteger(value, fallback);
 	return Math.max(min, Math.min(max, integer));
 }
 
-function readEnvString(ctx: nkruntime.Context, key: string, fallback: string): string {
+function readEnvString(
+	ctx: nkruntime.Context,
+	key: string,
+	fallback: string,
+): string {
 	if (ctx.env == null) {
 		return fallback;
 	}
@@ -676,7 +685,11 @@ function readEnvString(ctx: nkruntime.Context, key: string, fallback: string): s
 	return optionalString(ctx.env[key], fallback);
 }
 
-function readEnvInteger(ctx: nkruntime.Context, key: string, fallback: number): number {
+function readEnvInteger(
+	ctx: nkruntime.Context,
+	key: string,
+	fallback: number,
+): number {
 	if (ctx.env == null) {
 		return fallback;
 	}
@@ -704,8 +717,12 @@ function normalizeProvider(value: string): MatchServerProvider {
 	return "EdgegapCloud";
 }
 
-function configuredMatchServerProvider(ctx: nkruntime.Context): MatchServerProvider {
-	return normalizeProvider(readEnvString(ctx, MATCH_SERVER_PROVIDER_ENV, "EdgegapCloud"));
+function configuredMatchServerProvider(
+	ctx: nkruntime.Context,
+): MatchServerProvider {
+	return normalizeProvider(
+		readEnvString(ctx, MATCH_SERVER_PROVIDER_ENV, "EdgegapCloud"),
+	);
 }
 
 function isRailwayRuntime(ctx: nkruntime.Context): boolean {
@@ -718,11 +735,22 @@ function isRailwayRuntime(ctx: nkruntime.Context): boolean {
 }
 
 function localDevOrchestrationAllowed(ctx: nkruntime.Context): boolean {
-	return configuredMatchServerProvider(ctx) === "LocalDev" && envFlag(ctx, LOCALDEV_ORCHESTRATION_ENV) && !isRailwayRuntime(ctx);
+	return (
+		configuredMatchServerProvider(ctx) === "LocalDev" &&
+		envFlag(ctx, LOCALDEV_ORCHESTRATION_ENV) &&
+		!isRailwayRuntime(ctx)
+	);
 }
 
-function randomQueueRequiredPlayers(ctx: nkruntime.Context, maxPlayers: number): number {
-	var configured = readEnvInteger(ctx, RANDOM_QUEUE_REQUIRED_PLAYERS_ENV, maxPlayers);
+function randomQueueRequiredPlayers(
+	ctx: nkruntime.Context,
+	maxPlayers: number,
+): number {
+	var configured = readEnvInteger(
+		ctx,
+		RANDOM_QUEUE_REQUIRED_PLAYERS_ENV,
+		maxPlayers,
+	);
 	return clampInteger(configured, maxPlayers, 1, maxPlayers);
 }
 
@@ -732,22 +760,51 @@ function readEdgegapConfig(ctx: nkruntime.Context): EdgegapConfig {
 	var versionName = readEnvString(ctx, "EDGEGAP_VERSION_NAME", "");
 
 	return {
-		enabled:
-			provider === "EdgegapCloud" ||
-			envFlag(ctx, "EDGEGAP_ENABLED"),
+		enabled: provider === "EdgegapCloud" || envFlag(ctx, "EDGEGAP_ENABLED"),
 		apiToken: apiToken,
 		appName: readEnvString(ctx, "EDGEGAP_APP_NAME", EDGEGAP_DEFAULT_APP_NAME),
 		versionName: versionName,
 		defaultRegion: readEnvString(ctx, "EDGEGAP_DEFAULT_REGION", "Local"),
-		internalGamePort: Math.max(1, readEnvInteger(ctx, "EDGEGAP_INTERNAL_GAME_PORT", 5000)),
+		internalGamePort: Math.max(
+			1,
+			readEnvInteger(ctx, "EDGEGAP_INTERNAL_GAME_PORT", 5000),
+		),
 		protocol: readEnvString(ctx, "EDGEGAP_PROTOCOL", "UDP").toUpperCase(),
-		portName: readEnvString(ctx, "EDGEGAP_PORT_NAME", EDGEGAP_DEFAULT_GAME_PORT_NAME),
-		nakamaScheme: readEnvString(ctx, "BOMMY_PUBLIC_NAKAMA_SCHEME", readEnvString(ctx, "BOMMY_NAKAMA_SCHEME", provider === "EdgegapCloud" ? "https" : "http")).toLowerCase(),
-		nakamaHost: readEnvString(ctx, "BOMMY_PUBLIC_NAKAMA_HOST", readEnvString(ctx, "BOMMY_NAKAMA_HOST", "127.0.0.1")),
+		portName: readEnvString(
+			ctx,
+			"EDGEGAP_PORT_NAME",
+			EDGEGAP_DEFAULT_GAME_PORT_NAME,
+		),
+		nakamaScheme: readEnvString(
+			ctx,
+			"BOMMY_PUBLIC_NAKAMA_SCHEME",
+			readEnvString(
+				ctx,
+				"BOMMY_NAKAMA_SCHEME",
+				provider === "EdgegapCloud" ? "https" : "http",
+			),
+		).toLowerCase(),
+		nakamaHost: readEnvString(
+			ctx,
+			"BOMMY_PUBLIC_NAKAMA_HOST",
+			readEnvString(ctx, "BOMMY_NAKAMA_HOST", "127.0.0.1"),
+		),
 		nakamaPort: Math.max(1, readEnvInteger(ctx, "BOMMY_NAKAMA_PORT", 7350)),
-		nakamaServerKey: readEnvString(ctx, "BOMMY_NAKAMA_SERVER_KEY", "defaultkey"),
-		nakamaHttpKey: readEnvString(ctx, "BOMMY_NAKAMA_HTTP_KEY", "defaulthttpkey"),
-		serverSecret: readEnvString(ctx, "BOMMY_SERVER_SECRET", MATCH_SERVER_SECRET),
+		nakamaServerKey: readEnvString(
+			ctx,
+			"BOMMY_NAKAMA_SERVER_KEY",
+			"defaultkey",
+		),
+		nakamaHttpKey: readEnvString(
+			ctx,
+			"BOMMY_NAKAMA_HTTP_KEY",
+			"defaulthttpkey",
+		),
+		serverSecret: readEnvString(
+			ctx,
+			"BOMMY_SERVER_SECRET",
+			MATCH_SERVER_SECRET,
+		),
 	};
 }
 
@@ -771,7 +828,10 @@ function parseHttpJson(response: nkruntime.HttpResponse): any {
 	}
 }
 
-function edgegapErrorMessage(response: nkruntime.HttpResponse, fallback: string): string {
+function edgegapErrorMessage(
+	response: nkruntime.HttpResponse,
+	fallback: string,
+): string {
 	var body = parseHttpJson(response);
 	return optionalString(body.message, fallback + " HTTP " + response.code);
 }
@@ -780,7 +840,13 @@ function edgegapSafeTag(value: string): string {
 	var result = "";
 	for (var i = 0; i < value.length && result.length < 40; i++) {
 		var ch = value.charAt(i);
-		if ((ch >= "a" && ch <= "z") || (ch >= "A" && ch <= "Z") || (ch >= "0" && ch <= "9") || ch === "-" || ch === "_") {
+		if (
+			(ch >= "a" && ch <= "z") ||
+			(ch >= "A" && ch <= "Z") ||
+			(ch >= "0" && ch <= "9") ||
+			ch === "-" ||
+			ch === "_"
+		) {
 			result += ch;
 		}
 	}
@@ -858,13 +924,24 @@ function normalizeMatchServerPlayer(value: any): MatchServerPlayerDto {
 	value = value || {};
 	return {
 		userId: optionalString(value.userId, ""),
-		username: optionalString(value.username, optionalString(value.userId, "Player")),
-		displayName: optionalString(value.displayName, optionalString(value.username, "Player")),
-		selectedCharacterId: Math.max(1, optionalInteger(value.selectedCharacterId, 1)),
+		username: optionalString(
+			value.username,
+			optionalString(value.userId, "Player"),
+		),
+		displayName: optionalString(
+			value.displayName,
+			optionalString(value.username, "Player"),
+		),
+		selectedCharacterId: Math.max(
+			1,
+			optionalInteger(value.selectedCharacterId, 1),
+		),
 	};
 }
 
-function normalizeAllocation(value: { [key: string]: any } | null): MatchServerAllocationRecord | null {
+function normalizeAllocation(
+	value: { [key: string]: any } | null,
+): MatchServerAllocationRecord | null {
 	if (value == null) {
 		return null;
 	}
@@ -916,7 +993,9 @@ function normalizeAllocation(value: { [key: string]: any } | null): MatchServerA
 	};
 }
 
-function normalizeServer(value: { [key: string]: any } | null): MatchServerRecord | null {
+function normalizeServer(
+	value: { [key: string]: any } | null,
+): MatchServerRecord | null {
 	if (value == null) {
 		return null;
 	}
@@ -937,17 +1016,30 @@ function normalizeServer(value: { [key: string]: any } | null): MatchServerRecor
 	};
 }
 
-function readAllocation(nk: nkruntime.Nakama, matchId: string): MatchServerAllocationRecord | null {
+function readAllocation(
+	nk: nkruntime.Nakama,
+	matchId: string,
+): MatchServerAllocationRecord | null {
 	var result = readStorageValue(nk, allocationKey(matchId));
 	return normalizeAllocation(result.value);
 }
 
-function writeAllocation(nk: nkruntime.Nakama, allocation: MatchServerAllocationRecord): void {
+function writeAllocation(
+	nk: nkruntime.Nakama,
+	allocation: MatchServerAllocationRecord,
+): void {
 	allocation.updatedAtMs = Date.now();
-	writeMatchServerValue(nk, allocationKey(allocation.matchId), allocation as any);
+	writeMatchServerValue(
+		nk,
+		allocationKey(allocation.matchId),
+		allocation as any,
+	);
 }
 
-function readServer(nk: nkruntime.Nakama, serverId: string): MatchServerRecord | null {
+function readServer(
+	nk: nkruntime.Nakama,
+	serverId: string,
+): MatchServerRecord | null {
 	var result = readStorageValue(nk, serverKey(serverId));
 	return normalizeServer(result.value);
 }
@@ -968,11 +1060,16 @@ function normalizeSettlementReward(value: any): MatchSettlementReward {
 		trophiesDelta: optionalInteger(value.trophiesDelta, 0),
 		experienceDelta: optionalInteger(value.experienceDelta, 0),
 		winsDelta: Math.max(0, optionalInteger(value.winsDelta, 0)),
-		matchesPlayedDelta: Math.max(0, optionalInteger(value.matchesPlayedDelta, 0)),
+		matchesPlayedDelta: Math.max(
+			0,
+			optionalInteger(value.matchesPlayedDelta, 0),
+		),
 	};
 }
 
-function normalizeSettlement(value: { [key: string]: any } | null): MatchSettlementRecord | null {
+function normalizeSettlement(
+	value: { [key: string]: any } | null,
+): MatchSettlementRecord | null {
 	if (value == null) {
 		return null;
 	}
@@ -995,16 +1092,31 @@ function normalizeSettlement(value: { [key: string]: any } | null): MatchSettlem
 	};
 }
 
-function readSettlement(nk: nkruntime.Nakama, matchId: string): MatchSettlementRecord | null {
+function readSettlement(
+	nk: nkruntime.Nakama,
+	matchId: string,
+): MatchSettlementRecord | null {
 	var result = readStorageValue(nk, settlementKey(matchId));
 	return normalizeSettlement(result.value);
 }
 
-function writeSettlement(nk: nkruntime.Nakama, settlement: MatchSettlementRecord): void {
-	writeMatchServerValue(nk, settlementKey(settlement.matchId), settlement as any, "*");
+function writeSettlement(
+	nk: nkruntime.Nakama,
+	settlement: MatchSettlementRecord,
+): void {
+	writeMatchServerValue(
+		nk,
+		settlementKey(settlement.matchId),
+		settlement as any,
+		"*",
+	);
 }
 
-function listGlobalStorage(nk: nkruntime.Nakama, collection: string, limit: number): nkruntime.StorageObject[] {
+function listGlobalStorage(
+	nk: nkruntime.Nakama,
+	collection: string,
+	limit: number,
+): nkruntime.StorageObject[] {
 	var result = nk.storageList(MATCH_SERVER_OWNER, collection, limit);
 	return result.objects || [];
 }
@@ -1046,7 +1158,10 @@ function listAllocations(nk: nkruntime.Nakama): MatchServerAllocationRecord[] {
 }
 
 function validateServerSecret(ctx: nkruntime.Context, secret: string): void {
-	if (optionalString(secret, "") !== readEnvString(ctx, "BOMMY_SERVER_SECRET", MATCH_SERVER_SECRET)) {
+	if (
+		optionalString(secret, "") !==
+		readEnvString(ctx, "BOMMY_SERVER_SECRET", MATCH_SERVER_SECRET)
+	) {
 		throw new Error("Server secret is invalid.");
 	}
 }
@@ -1058,7 +1173,9 @@ function allocationResponse(
 ): MatchServerAllocationResponse {
 	return {
 		success: success === true || (success !== false && allocation != null),
-		errorMessage: errorMessage || (allocation != null ? allocation.errorMessage : "Allocation not found."),
+		errorMessage:
+			errorMessage ||
+			(allocation != null ? allocation.errorMessage : "Allocation not found."),
 		allocationId: allocation != null ? allocation.allocationId : "",
 		matchId: allocation != null ? allocation.matchId : "",
 		source: allocation != null ? allocation.source : "",
@@ -1074,7 +1191,9 @@ function statusResponse(
 ): MatchServerStatusResponse {
 	return {
 		success: success === true || (success !== false && allocation != null),
-		errorMessage: errorMessage || (allocation != null ? allocation.errorMessage : "Allocation not found."),
+		errorMessage:
+			errorMessage ||
+			(allocation != null ? allocation.errorMessage : "Allocation not found."),
 		allocationId: allocation != null ? allocation.allocationId : "",
 		matchId: allocation != null ? allocation.matchId : "",
 		status: allocation != null ? allocation.status : "",
@@ -1085,7 +1204,10 @@ function statusResponse(
 	};
 }
 
-function selectedCharacterForUser(nk: nkruntime.Nakama, userId: string): number {
+function selectedCharacterForUser(
+	nk: nkruntime.Nakama,
+	userId: string,
+): number {
 	if (!userId) {
 		return 1;
 	}
@@ -1151,8 +1273,16 @@ function createConnectionToken(matchId: string): string {
 }
 
 function isServerStale(server: MatchServerRecord, now: number): boolean {
-	if (server.status === "Available" || server.status === "Launching" || server.status === "Ready" || server.status === "InMatch") {
-		return server.lastHeartbeatMs > 0 && now - server.lastHeartbeatMs > MATCH_SERVER_STALE_MS;
+	if (
+		server.status === "Available" ||
+		server.status === "Launching" ||
+		server.status === "Ready" ||
+		server.status === "InMatch"
+	) {
+		return (
+			server.lastHeartbeatMs > 0 &&
+			now - server.lastHeartbeatMs > MATCH_SERVER_STALE_MS
+		);
 	}
 
 	return false;
@@ -1174,7 +1304,8 @@ function edgegapServerId(allocation: MatchServerAllocationRecord): string {
 }
 
 function edgegapDeploymentHost(status: any): string {
-	return optionalString(status.fqdn, optionalString(status.public_ip, ""));
+	// return optionalString(status.fqdn, optionalString(status.public_ip, ""));
+	return optionalString(status.public_ip, optionalString(status.fqdn, ""));
 }
 
 function edgegapDeploymentPort(status: any, config: EdgegapConfig): number {
@@ -1203,6 +1334,21 @@ function edgegapDeploymentPort(status: any, config: EdgegapConfig): number {
 		}
 	}
 
+	// 2nd fallback: match by protocol only (ignores internal port mismatch)
+	for (var key in ports) {
+		if (!ports.hasOwnProperty(key)) {
+			continue;
+		}
+
+		var port = ports[key];
+		if (
+			port != null &&
+			optionalString(port.protocol, "").toUpperCase() === config.protocol
+		) {
+			return Math.max(0, optionalInteger(port.external, 0));
+		}
+	}
+
 	return 0;
 }
 
@@ -1214,16 +1360,38 @@ function createEdgegapDeployment(
 ): MatchServerAllocationRecord {
 	var config = readEdgegapConfig(ctx);
 	if (!config.enabled) {
-		logger.warn("Edgegap deployment skipped because Edgegap is disabled. matchId=%s allocationId=%s", allocation.matchId, allocation.allocationId);
+		logger.warn(
+			"Edgegap deployment skipped because Edgegap is disabled. matchId=%s allocationId=%s",
+			allocation.matchId,
+			allocation.allocationId,
+		);
 		return allocation;
 	}
 
 	if (!config.apiToken || !config.versionName) {
-		logger.error("Edgegap deployment config missing. matchId=%s allocationId=%s hasToken=%s hasVersion=%s", allocation.matchId, allocation.allocationId, !!config.apiToken, !!config.versionName);
-		return markAllocationFailed(nk, allocation, "Edgegap is enabled but EDGEGAP_API_TOKEN or EDGEGAP_VERSION_NAME is missing.");
+		logger.error(
+			"Edgegap deployment config missing. matchId=%s allocationId=%s hasToken=%s hasVersion=%s",
+			allocation.matchId,
+			allocation.allocationId,
+			!!config.apiToken,
+			!!config.versionName,
+		);
+		return markAllocationFailed(
+			nk,
+			allocation,
+			"Edgegap is enabled but EDGEGAP_API_TOKEN or EDGEGAP_VERSION_NAME is missing.",
+		);
 	}
 
-	logger.info("Edgegap deployment requested. matchId=%s allocationId=%s app=%s version=%s port=%s/%s", allocation.matchId, allocation.allocationId, config.appName, config.versionName, config.internalGamePort, config.protocol);
+	logger.info(
+		"Edgegap deployment requested. matchId=%s allocationId=%s app=%s version=%s port=%s/%s",
+		allocation.matchId,
+		allocation.allocationId,
+		config.appName,
+		config.versionName,
+		config.internalGamePort,
+		config.protocol,
+	);
 
 	allocation.provider = "EdgegapCloud";
 	allocation.status = "Launching";
@@ -1257,25 +1425,57 @@ function createEdgegapDeployment(
 			{
 				user_type: "geo_coordinates",
 				user_data: {
-					latitude: 0,
-					longitude: 0,
+					latitude: 1.28,
+					longitude: 103.94,
 				},
 			},
 		],
-		tags: ["bommy", edgegapSafeTag(allocation.matchId), edgegapSafeTag(allocation.allocationId)],
+		tags: [
+			"bommy",
+			edgegapSafeTag(allocation.matchId),
+			edgegapSafeTag(allocation.allocationId),
+		],
 		environment_variables: [
 			{ key: "BOMMY_DEDICATED_SERVER", value: "1", is_hidden: false },
 			{ key: "BOMMY_PROVIDER", value: "EdgegapCloud", is_hidden: false },
 			{ key: "BOMMY_SERVER_ID", value: allocation.serverId, is_hidden: false },
-			{ key: "BOMMY_ALLOCATION_ID", value: allocation.allocationId, is_hidden: false },
+			{
+				key: "BOMMY_ALLOCATION_ID",
+				value: allocation.allocationId,
+				is_hidden: false,
+			},
 			{ key: "BOMMY_MATCH_ID", value: allocation.matchId, is_hidden: false },
-			{ key: "BOMMY_NAKAMA_SCHEME", value: config.nakamaScheme, is_hidden: false },
+			{
+				key: "BOMMY_NAKAMA_SCHEME",
+				value: config.nakamaScheme,
+				is_hidden: false,
+			},
 			{ key: "BOMMY_NAKAMA_HOST", value: config.nakamaHost, is_hidden: false },
-			{ key: "BOMMY_NAKAMA_PORT", value: String(config.nakamaPort), is_hidden: false },
-			{ key: "BOMMY_NAKAMA_SERVER_KEY", value: config.nakamaServerKey, is_hidden: true },
-			{ key: "BOMMY_NAKAMA_HTTP_KEY", value: config.nakamaHttpKey, is_hidden: true },
-			{ key: "BOMMY_SERVER_SECRET", value: config.serverSecret, is_hidden: true },
-			{ key: "BOMMY_PURRNET_PORT", value: String(config.internalGamePort), is_hidden: false },
+			{
+				key: "BOMMY_NAKAMA_PORT",
+				value: String(config.nakamaPort),
+				is_hidden: false,
+			},
+			{
+				key: "BOMMY_NAKAMA_SERVER_KEY",
+				value: config.nakamaServerKey,
+				is_hidden: true,
+			},
+			{
+				key: "BOMMY_NAKAMA_HTTP_KEY",
+				value: config.nakamaHttpKey,
+				is_hidden: true,
+			},
+			{
+				key: "BOMMY_SERVER_SECRET",
+				value: config.serverSecret,
+				is_hidden: true,
+			},
+			{
+				key: "BOMMY_PURRNET_PORT",
+				value: String(config.internalGamePort),
+				is_hidden: false,
+			},
 		],
 	};
 
@@ -1288,22 +1488,46 @@ function createEdgegapDeployment(
 	);
 
 	if (response.code !== 202) {
-		logger.error("Edgegap deployment request failed. matchId=%s allocationId=%s http=%s", allocation.matchId, allocation.allocationId, response.code);
-		return markAllocationFailed(nk, allocation, edgegapErrorMessage(response, "Edgegap deployment failed."));
+		logger.error(
+			"Edgegap deployment request failed. matchId=%s allocationId=%s http=%s",
+			allocation.matchId,
+			allocation.allocationId,
+			response.code,
+		);
+		logger.error(response.body || "");
+
+		return markAllocationFailed(
+			nk,
+			allocation,
+			edgegapErrorMessage(response, "Edgegap deployment failed."),
+		);
 	}
 
 	var parsed = parseHttpJson(response);
 	var deploymentId = optionalString(parsed.request_id, "");
 	if (!deploymentId) {
-		logger.error("Edgegap deployment response missing request_id. matchId=%s allocationId=%s", allocation.matchId, allocation.allocationId);
-		return markAllocationFailed(nk, allocation, "Edgegap deployment response did not include request_id.");
+		logger.error(
+			"Edgegap deployment response missing request_id. matchId=%s allocationId=%s",
+			allocation.matchId,
+			allocation.allocationId,
+		);
+		return markAllocationFailed(
+			nk,
+			allocation,
+			"Edgegap deployment response did not include request_id.",
+		);
 	}
 
 	allocation.deploymentId = deploymentId;
 	server.deploymentId = deploymentId;
 	writeAllocation(nk, allocation);
 	writeServer(nk, server);
-	logger.info("Edgegap deployment accepted. matchId=%s allocationId=%s deploymentId=%s", allocation.matchId, allocation.allocationId, deploymentId);
+	logger.info(
+		"Edgegap deployment accepted. matchId=%s allocationId=%s deploymentId=%s",
+		allocation.matchId,
+		allocation.allocationId,
+		deploymentId,
+	);
 	return allocation;
 }
 
@@ -1311,12 +1535,17 @@ function refreshEdgegapDeploymentStatus(
 	ctx: nkruntime.Context,
 	nk: nkruntime.Nakama,
 	allocation: MatchServerAllocationRecord,
+	logger?: nkruntime.Logger | null,
 ): MatchServerAllocationRecord {
 	if (allocation.provider !== "EdgegapCloud" || !allocation.deploymentId) {
 		return allocation;
 	}
 
-	if (allocation.status !== "Launching" && allocation.status !== "Requested" && allocation.status !== "Failed") {
+	if (
+		allocation.status !== "Launching" &&
+		allocation.status !== "Requested" &&
+		allocation.status !== "Failed"
+	) {
 		return allocation;
 	}
 
@@ -1326,7 +1555,9 @@ function refreshEdgegapDeploymentStatus(
 	}
 
 	var response = nk.httpRequest(
-		EDGEGAP_API_BASE + "/v1/status/" + encodeURIComponent(allocation.deploymentId),
+		EDGEGAP_API_BASE +
+			"/v1/status/" +
+			encodeURIComponent(allocation.deploymentId),
 		"get",
 		edgegapHeaders(config),
 		"",
@@ -1334,12 +1565,26 @@ function refreshEdgegapDeploymentStatus(
 	);
 
 	if (response.code < 200 || response.code >= 300) {
-		return markAllocationFailed(nk, allocation, edgegapErrorMessage(response, "Edgegap status request failed."));
+		return markAllocationFailed(
+			nk,
+			allocation,
+			edgegapErrorMessage(response, "Edgegap status request failed."),
+		);
 	}
 
 	var status = parseHttpJson(response);
-	if (status.error === true || optionalString(status.current_status, "").toLowerCase() === "error") {
-		return markAllocationFailed(nk, allocation, optionalString(status.error_detail, "Edgegap deployment entered error state."));
+	if (
+		status.error === true ||
+		optionalString(status.current_status, "").toLowerCase() === "error"
+	) {
+		return markAllocationFailed(
+			nk,
+			allocation,
+			optionalString(
+				status.error_detail,
+				"Edgegap deployment entered error state.",
+			),
+		);
 	}
 
 	var host = edgegapDeploymentHost(status);
@@ -1352,17 +1597,25 @@ function refreshEdgegapDeploymentStatus(
 	}
 	allocation.protocol = config.protocol;
 
+
+
 	var server = allocation.serverId ? readServer(nk, allocation.serverId) : null;
 	if (server != null) {
 		server.host = allocation.host;
-		server.port = allocation.port > 0 ? allocation.port : config.internalGamePort;
+		server.port =
+			allocation.port > 0 ? allocation.port : config.internalGamePort;
 		server.protocol = allocation.protocol;
 		server.deploymentId = allocation.deploymentId;
 		server.status = allocation.status;
 		writeServer(nk, server);
 	}
 
-	if (status.running === true && optionalString(status.current_status, "").toLowerCase() === "ready" && allocation.host && allocation.port > 0) {
+	if (
+		status.running === true &&
+		optionalString(status.current_status, "").toLowerCase() === "ready" &&
+		allocation.host &&
+		allocation.port > 0
+	) {
 		allocation.status = "Ready";
 		allocation.errorMessage = "";
 	}
@@ -1386,7 +1639,9 @@ function stopEdgegapDeployment(
 	}
 
 	nk.httpRequest(
-		EDGEGAP_API_BASE + "/v1/stop/" + encodeURIComponent(allocation.deploymentId),
+		EDGEGAP_API_BASE +
+			"/v1/stop/" +
+			encodeURIComponent(allocation.deploymentId),
 		"delete",
 		edgegapHeaders(config),
 		"",
@@ -1394,7 +1649,10 @@ function stopEdgegapDeployment(
 	);
 }
 
-function findAvailableServer(nk: nkruntime.Nakama, provider: MatchServerProvider): MatchServerRecord | null {
+function findAvailableServer(
+	nk: nkruntime.Nakama,
+	provider: MatchServerProvider,
+): MatchServerRecord | null {
 	var now = Date.now();
 	var servers = listServers(nk);
 
@@ -1464,19 +1722,37 @@ function requestLocalDevAllocation(
 ): MatchServerAllocationRecord {
 	var error = localDevOrchestrationError(ctx);
 	if (error) {
-		logger.error("LocalDev allocation rejected. matchId=%s allocationId=%s error=%s", allocation.matchId, allocation.allocationId, error);
+		logger.error(
+			"LocalDev allocation rejected. matchId=%s allocationId=%s error=%s",
+			allocation.matchId,
+			allocation.allocationId,
+			error,
+		);
 		return markAllocationFailed(nk, allocation, error);
 	}
 
 	var server = findAvailableServer(nk, "LocalDev");
 	if (server != null) {
-		logger.info("LocalDev allocation assigned. matchId=%s allocationId=%s serverId=%s public=%s:%s", allocation.matchId, allocation.allocationId, server.serverId, server.host, server.port);
+		logger.info(
+			"LocalDev allocation assigned. matchId=%s allocationId=%s serverId=%s public=%s:%s",
+			allocation.matchId,
+			allocation.allocationId,
+			server.serverId,
+			server.host,
+			server.port,
+		);
 		return assignServerToAllocation(nk, allocation, server);
 	}
 
 	logNoAvailableServer(logger, nk, "LocalDev", "localdev_allocation");
 	writeAllocation(nk, allocation);
-	logger.info("LocalDev allocation waiting for server. matchId=%s allocationId=%s source=%s players=%s", allocation.matchId, allocation.allocationId, allocation.source, allocation.players.length);
+	logger.info(
+		"LocalDev allocation waiting for server. matchId=%s allocationId=%s source=%s players=%s",
+		allocation.matchId,
+		allocation.allocationId,
+		allocation.source,
+		allocation.players.length,
+	);
 	return allocation;
 }
 
@@ -1488,11 +1764,26 @@ function requestConfiguredOrchestratorAllocation(
 ): MatchServerAllocationRecord {
 	var provider = configuredMatchServerProvider(ctx);
 	allocation.provider = provider;
-	logger.info("Match server allocation requested. matchId=%s allocationId=%s source=%s provider=%s players=%s", allocation.matchId, allocation.allocationId, allocation.source, provider, allocation.players.length);
+	logger.info(
+		"Match server allocation requested. matchId=%s allocationId=%s source=%s provider=%s players=%s",
+		allocation.matchId,
+		allocation.allocationId,
+		allocation.source,
+		provider,
+		allocation.players.length,
+	);
 
 	var server = findAvailableServer(nk, provider);
 	if (server != null) {
-		logger.info("Match server allocation assigned from reusable pool. matchId=%s allocationId=%s provider=%s serverId=%s public=%s:%s", allocation.matchId, allocation.allocationId, provider, server.serverId, server.host, server.port);
+		logger.info(
+			"Match server allocation assigned from reusable pool. matchId=%s allocationId=%s provider=%s serverId=%s public=%s:%s",
+			allocation.matchId,
+			allocation.allocationId,
+			provider,
+			server.serverId,
+			server.host,
+			server.port,
+		);
 		return assignServerToAllocation(nk, allocation, server);
 	}
 
@@ -1520,7 +1811,13 @@ function createOrGetAllocation(
 ): MatchServerAllocationRecord {
 	var existing = readAllocation(nk, matchId);
 	if (existing != null) {
-		logger.info("Match server allocation reused. matchId=%s allocationId=%s provider=%s status=%s", existing.matchId, existing.allocationId, existing.provider, existing.status);
+		logger.info(
+			"Match server allocation reused. matchId=%s allocationId=%s provider=%s status=%s",
+			existing.matchId,
+			existing.allocationId,
+			existing.provider,
+			existing.status,
+		);
 		return existing;
 	}
 
@@ -1533,7 +1830,8 @@ function createOrGetAllocation(
 
 	var now = Date.now();
 	var allocation: MatchServerAllocationRecord = {
-		allocationId: "alloc-" + matchId + "-" + Math.floor(Math.random() * 1000000),
+		allocationId:
+			"alloc-" + matchId + "-" + Math.floor(Math.random() * 1000000),
 		matchId: matchId,
 		source: source,
 		provider: configuredMatchServerProvider(ctx),
@@ -1541,7 +1839,10 @@ function createOrGetAllocation(
 		deploymentId: "",
 		roomId: roomId,
 		mapId: Math.max(0, mapId),
-		mapName: optionalString(mapName, Math.max(0, mapId) === 0 ? "Random" : "Classic Garden"),
+		mapName: optionalString(
+			mapName,
+			Math.max(0, mapId) === 0 ? "Random" : "Classic Garden",
+		),
 		region: optionalString(region, "Local"),
 		maxPlayers: Math.max(1, maxPlayers),
 		players: players,
@@ -1560,7 +1861,10 @@ function createOrGetAllocation(
 	return requestConfiguredOrchestratorAllocation(ctx, nk, logger, allocation);
 }
 
-function findRequestedAllocation(nk: nkruntime.Nakama, provider: MatchServerProvider): MatchServerAllocationRecord | null {
+function findRequestedAllocation(
+	nk: nkruntime.Nakama,
+	provider: MatchServerProvider,
+): MatchServerAllocationRecord | null {
 	var allocations = listAllocations(nk);
 	var selected: MatchServerAllocationRecord | null = null;
 	var now = Date.now();
@@ -1573,8 +1877,15 @@ function findRequestedAllocation(nk: nkruntime.Nakama, provider: MatchServerProv
 			continue;
 		}
 
-		if (provider === "LocalDev" && now - allocations[i].createdAtMs > MATCH_SERVER_REQUEST_STALE_MS) {
-			markAllocationFailed(nk, allocations[i], "LocalDev allocation request expired before a server became available.");
+		if (
+			provider === "LocalDev" &&
+			now - allocations[i].createdAtMs > MATCH_SERVER_REQUEST_STALE_MS
+		) {
+			markAllocationFailed(
+				nk,
+				allocations[i],
+				"LocalDev allocation request expired before a server became available.",
+			);
 			continue;
 		}
 
@@ -1598,7 +1909,12 @@ function assignRequestedAllocationToServer(
 	return assignServerToAllocation(nk, allocation, server);
 }
 
-function logMatchServerAvailable(logger: nkruntime.Logger, source: string, server: MatchServerRecord, extra: string): void {
+function logMatchServerAvailable(
+	logger: nkruntime.Logger,
+	source: string,
+	server: MatchServerRecord,
+	extra: string,
+): void {
 	logger.info(
 		"Match server available. source=" +
 			source +
@@ -1620,7 +1936,12 @@ function logMatchServerAvailable(logger: nkruntime.Logger, source: string, serve
 	);
 }
 
-function logMatchServerAssigned(logger: nkruntime.Logger, source: string, server: MatchServerRecord, allocation: MatchServerAllocationRecord): void {
+function logMatchServerAssigned(
+	logger: nkruntime.Logger,
+	source: string,
+	server: MatchServerRecord,
+	allocation: MatchServerAllocationRecord,
+): void {
 	logger.info(
 		"Match server assigned. source=" +
 			source +
@@ -1641,7 +1962,11 @@ function logMatchServerAssigned(logger: nkruntime.Logger, source: string, server
 	);
 }
 
-function logMatchServerReady(logger: nkruntime.Logger, server: MatchServerRecord, allocation: MatchServerAllocationRecord): void {
+function logMatchServerReady(
+	logger: nkruntime.Logger,
+	server: MatchServerRecord,
+	allocation: MatchServerAllocationRecord,
+): void {
 	logger.info(
 		"Match server ready. serverId=" +
 			server.serverId +
@@ -1662,7 +1987,12 @@ function logMatchServerReady(logger: nkruntime.Logger, server: MatchServerRecord
 	);
 }
 
-function logNoAvailableServer(logger: nkruntime.Logger, nk: nkruntime.Nakama, provider: MatchServerProvider, source: string): void {
+function logNoAvailableServer(
+	logger: nkruntime.Logger,
+	nk: nkruntime.Nakama,
+	provider: MatchServerProvider,
+	source: string,
+): void {
 	var servers = listServers(nk);
 	var details: string[] = [];
 	for (var i = 0; i < servers.length; i++) {
@@ -1695,16 +2025,28 @@ function refreshAllocationStaleness(
 	ctx: nkruntime.Context,
 	nk: nkruntime.Nakama,
 	allocation: MatchServerAllocationRecord,
+	logger?: nkruntime.Logger | null,
 ): MatchServerAllocationRecord {
 	if (allocation.provider === "EdgegapCloud") {
-		return refreshEdgegapDeploymentStatus(ctx, nk, allocation);
+		return refreshEdgegapDeploymentStatus(ctx, nk, allocation, logger);
 	}
 
-	if (allocation.provider === "LocalDev" && !localDevOrchestrationAllowed(ctx)) {
-		return markAllocationFailed(nk, allocation, "LocalDev allocation is disabled outside explicit local Docker orchestration.");
+	if (
+		allocation.provider === "LocalDev" &&
+		!localDevOrchestrationAllowed(ctx)
+	) {
+		return markAllocationFailed(
+			nk,
+			allocation,
+			"LocalDev allocation is disabled outside explicit local Docker orchestration.",
+		);
 	}
 
-	if (!allocation.serverId || allocation.status === "Failed" || allocation.status === "Released") {
+	if (
+		!allocation.serverId ||
+		allocation.status === "Failed" ||
+		allocation.status === "Released"
+	) {
 		return allocation;
 	}
 
@@ -1716,7 +2058,11 @@ function refreshAllocationStaleness(
 	if (isServerStale(server, Date.now())) {
 		server.status = "Failed";
 		writeServer(nk, server);
-		return markAllocationFailed(nk, allocation, "Dedicated server heartbeat timed out.");
+		return markAllocationFailed(
+			nk,
+			allocation,
+			"Dedicated server heartbeat timed out.",
+		);
 	}
 
 	return allocation;
@@ -1786,7 +2132,10 @@ function settlementResponse(
 	};
 }
 
-function calculateSettlementReward(result: MatchSettlementPlayerRequest, maxPlayers: number): MatchSettlementReward {
+function calculateSettlementReward(
+	result: MatchSettlementPlayerRequest,
+	maxPlayers: number,
+): MatchSettlementReward {
 	var placement = Math.max(1, result.placement);
 	var placementCoins = 2;
 	var trophies = 0;
@@ -1822,7 +2171,10 @@ function calculateSettlementReward(result: MatchSettlementPlayerRequest, maxPlay
 	};
 }
 
-function applySettlementReward(nk: nkruntime.Nakama, reward: MatchSettlementReward): void {
+function applySettlementReward(
+	nk: nkruntime.Nakama,
+	reward: MatchSettlementReward,
+): void {
 	mutateProgression(
 		nk,
 		reward.userId,
@@ -1830,7 +2182,10 @@ function applySettlementReward(nk: nkruntime.Nakama, reward: MatchSettlementRewa
 			current.coins = Math.max(0, current.coins + reward.coinsDelta);
 			current.gold = current.coins;
 			current.trophies = Math.max(0, current.trophies + reward.trophiesDelta);
-			current.experience = Math.max(0, current.experience + reward.experienceDelta);
+			current.experience = Math.max(
+				0,
+				current.experience + reward.experienceDelta,
+			);
 			current.matchStats.matchesPlayed += reward.matchesPlayedDelta;
 			current.matchStats.wins += reward.winsDelta;
 			current.matchStats.kills += reward.kills;
@@ -2076,10 +2431,16 @@ function signalLobby(
 	matchId: string,
 	request: LobbyActionRequest,
 ): LobbySignalResponse {
-	var response = JSON.parse(nk.matchSignal(matchId, JSON.stringify(request)) || "{}") as LobbySignalResponse;
+	var response = JSON.parse(
+		nk.matchSignal(matchId, JSON.stringify(request)) || "{}",
+	) as LobbySignalResponse;
 
 	if (typeof response.success !== "boolean") {
-		return { success: false, errorMessage: "Lobby returned an invalid response.", room: null };
+		return {
+			success: false,
+			errorMessage: "Lobby returned an invalid response.",
+			room: null,
+		};
 	}
 
 	return response;
@@ -2090,10 +2451,15 @@ function signalRandomQueue(
 	request: RandomQueueActionRequest,
 ): RandomQueueStatus {
 	var matchId = getOrCreateRandomQueueMatchId(nk);
-	var response = JSON.parse(nk.matchSignal(matchId, JSON.stringify(request)) || "{}") as RandomQueueStatus;
+	var response = JSON.parse(
+		nk.matchSignal(matchId, JSON.stringify(request)) || "{}",
+	) as RandomQueueStatus;
 
 	if (typeof response.success !== "boolean") {
-		return randomQueueDefaultStatus(false, "Queue returned an invalid response.");
+		return randomQueueDefaultStatus(
+			false,
+			"Queue returned an invalid response.",
+		);
 	}
 
 	return response;
@@ -2181,7 +2547,11 @@ function customLobbyMatchJoinAttempt(
 		presence.userId !== state.hostUserId &&
 		state.reservedUserIds[presence.userId] !== true
 	) {
-		return { state: state, accept: false, rejectMessage: "Join was not reserved." };
+		return {
+			state: state,
+			accept: false,
+			rejectMessage: "Join was not reserved.",
+		};
 	}
 
 	return { state: state, accept: true };
@@ -2283,11 +2653,17 @@ function customLobbyMatchSignal(
 			return { state: state, data: lobbySignalFailure("Lobby is not open.") };
 		}
 
-		if (memberCount(state) >= state.maxPlayers && !state.members[request.userId]) {
+		if (
+			memberCount(state) >= state.maxPlayers &&
+			!state.members[request.userId]
+		) {
 			return { state: state, data: lobbySignalFailure("Lobby is full.") };
 		}
 
-		if (optionalString(request.password || request.roomId, "").toUpperCase() !== state.roomId) {
+		if (
+			optionalString(request.password || request.roomId, "").toUpperCase() !==
+			state.roomId
+		) {
 			return { state: state, data: lobbySignalFailure("Incorrect room code.") };
 		}
 
@@ -2309,7 +2685,10 @@ function customLobbyMatchSignal(
 
 	if (request.action === "start") {
 		if (request.userId !== state.hostUserId) {
-			return { state: state, data: lobbySignalFailure("Only the host can start the match.") };
+			return {
+				state: state,
+				data: lobbySignalFailure("Only the host can start the match."),
+			};
 		}
 
 		if (state.status !== "Open") {
@@ -2354,9 +2733,13 @@ function randomQueueDefaultStatus(
 
 	if (match != null) {
 		playerCount = match.players.length;
-		maxPlayers = match.players.length > 0 && ticket != null ? ticket.maxPlayers : 4;
+		maxPlayers =
+			match.players.length > 0 && ticket != null ? ticket.maxPlayers : 4;
 		for (var userId in match.acceptedUserIds) {
-			if (match.acceptedUserIds.hasOwnProperty(userId) && match.acceptedUserIds[userId]) {
+			if (
+				match.acceptedUserIds.hasOwnProperty(userId) &&
+				match.acceptedUserIds[userId]
+			) {
 				acceptedCount++;
 			}
 		}
@@ -2454,9 +2837,14 @@ function refreshRandomQueueTicketLifecycle(
 	}
 }
 
-function generateRandomQueueId(prefix: string, state: RandomQueueState): string {
+function generateRandomQueueId(
+	prefix: string,
+	state: RandomQueueState,
+): string {
 	state.sequence++;
-	return prefix + "-" + state.sequence + "-" + Math.floor(Math.random() * 1000000);
+	return (
+		prefix + "-" + state.sequence + "-" + Math.floor(Math.random() * 1000000)
+	);
 }
 
 function randomQueueMatchInit(
@@ -2493,7 +2881,11 @@ function randomQueueMatchJoinAttempt(
 	presence: nkruntime.Presence,
 	metadata: { [key: string]: any },
 ): { state: RandomQueueState; accept: boolean; rejectMessage?: string } {
-	return { state: state, accept: false, rejectMessage: "Random queue does not accept socket joins." };
+	return {
+		state: state,
+		accept: false,
+		rejectMessage: "Random queue does not accept socket joins.",
+	};
 }
 
 function randomQueueMatchJoin(
@@ -2686,7 +3078,9 @@ function randomQueueMatchSignal(
 
 	if (request.action === "join") {
 		var existingTicketId = state.ticketIdByUserId[request.userId];
-		var existingTicket = existingTicketId ? state.ticketsById[existingTicketId] : null;
+		var existingTicket = existingTicketId
+			? state.ticketsById[existingTicketId]
+			: null;
 		refreshRandomQueueTicketLifecycle(nk, logger, state, existingTicket);
 
 		if (
@@ -2695,14 +3089,20 @@ function randomQueueMatchSignal(
 				existingTicket.status === "MatchFound" ||
 				existingTicket.status === "Accepted")
 		) {
-			return { state: state, data: JSON.stringify(randomQueueTicketStatus(state, existingTicket)) };
+			return {
+				state: state,
+				data: JSON.stringify(randomQueueTicketStatus(state, existingTicket)),
+			};
 		}
 
 		var ticket: RandomQueueTicket = {
 			ticketId: generateRandomQueueId("ticket", state),
 			userId: request.userId,
 			username: optionalString(request.username, request.userId),
-			displayName: optionalString(request.displayName, optionalString(request.username, request.userId)),
+			displayName: optionalString(
+				request.displayName,
+				optionalString(request.username, request.userId),
+			),
 			status: "Searching",
 			matchId: "",
 			mapId: Math.max(0, optionalInteger(request.mapId, 0)),
@@ -2731,21 +3131,40 @@ function randomQueueMatchSignal(
 				ticket.maxPlayers,
 		);
 		state = tryFormRandomQueueMatches(ctx, logger, nk, state, "join");
-		return { state: state, data: JSON.stringify(randomQueueTicketStatus(state, ticket)) };
+		return {
+			state: state,
+			data: JSON.stringify(randomQueueTicketStatus(state, ticket)),
+		};
 	}
 
 	if (request.action === "poll") {
 		var pollTicket = state.ticketsById[request.ticketId];
 		if (pollTicket == null || pollTicket.userId !== request.userId) {
-			logger.warn("Random queue poll rejected. ticketId=" + request.ticketId + " userId=" + request.userId);
+			logger.warn(
+				"Random queue poll rejected. ticketId=" +
+					request.ticketId +
+					" userId=" +
+					request.userId,
+			);
 			return {
 				state: state,
-				data: JSON.stringify(randomQueueDefaultStatus(false, "Queue ticket not found.", null, null, state)),
+				data: JSON.stringify(
+					randomQueueDefaultStatus(
+						false,
+						"Queue ticket not found.",
+						null,
+						null,
+						state,
+					),
+				),
 			};
 		}
 
 		refreshRandomQueueTicketLifecycle(nk, logger, state, pollTicket);
-		if (pollTicket.status === "Searching" || pollTicket.status === "MatchFound") {
+		if (
+			pollTicket.status === "Searching" ||
+			pollTicket.status === "MatchFound"
+		) {
 			logger.info(
 				"Random queue poll received. ticketId=" +
 					pollTicket.ticketId +
@@ -2761,7 +3180,10 @@ function randomQueueMatchSignal(
 		}
 
 		state = tryFormRandomQueueMatches(ctx, logger, nk, state, "poll");
-		return { state: state, data: JSON.stringify(randomQueueTicketStatus(state, pollTicket)) };
+		return {
+			state: state,
+			data: JSON.stringify(randomQueueTicketStatus(state, pollTicket)),
+		};
 	}
 
 	if (request.action === "cancel") {
@@ -2769,7 +3191,15 @@ function randomQueueMatchSignal(
 		if (cancelTicket == null || cancelTicket.userId !== request.userId) {
 			return {
 				state: state,
-				data: JSON.stringify(randomQueueDefaultStatus(false, "Queue ticket not found.", null, null, state)),
+				data: JSON.stringify(
+					randomQueueDefaultStatus(
+						false,
+						"Queue ticket not found.",
+						null,
+						null,
+						state,
+					),
+				),
 			};
 		}
 
@@ -2785,14 +3215,27 @@ function randomQueueMatchSignal(
 			}
 			state.queue = remaining;
 		} else {
-			var cancelMatch = cancelTicket.matchId ? state.matchesById[cancelTicket.matchId] : null;
+			var cancelMatch = cancelTicket.matchId
+				? state.matchesById[cancelTicket.matchId]
+				: null;
 			return {
 				state: state,
-				data: JSON.stringify(randomQueueDefaultStatus(false, "Match already formed.", cancelTicket, cancelMatch, state)),
+				data: JSON.stringify(
+					randomQueueDefaultStatus(
+						false,
+						"Match already formed.",
+						cancelTicket,
+						cancelMatch,
+						state,
+					),
+				),
 			};
 		}
 
-		return { state: state, data: JSON.stringify(randomQueueTicketStatus(state, cancelTicket)) };
+		return {
+			state: state,
+			data: JSON.stringify(randomQueueTicketStatus(state, cancelTicket)),
+		};
 	}
 
 	if (request.action === "accept") {
@@ -2800,18 +3243,37 @@ function randomQueueMatchSignal(
 		if (acceptTicket == null || acceptTicket.userId !== request.userId) {
 			return {
 				state: state,
-				data: JSON.stringify(randomQueueDefaultStatus(false, "Queue ticket not found.", null, null, state)),
+				data: JSON.stringify(
+					randomQueueDefaultStatus(
+						false,
+						"Queue ticket not found.",
+						null,
+						null,
+						state,
+					),
+				),
 			};
 		}
 
 		if (acceptTicket.status === "Accepted") {
-			return { state: state, data: JSON.stringify(randomQueueTicketStatus(state, acceptTicket)) };
+			return {
+				state: state,
+				data: JSON.stringify(randomQueueTicketStatus(state, acceptTicket)),
+			};
 		}
 
 		if (acceptTicket.status !== "MatchFound") {
 			return {
 				state: state,
-				data: JSON.stringify(randomQueueDefaultStatus(false, "Match is not ready.", acceptTicket, null, state)),
+				data: JSON.stringify(
+					randomQueueDefaultStatus(
+						false,
+						"Match is not ready.",
+						acceptTicket,
+						null,
+						state,
+					),
+				),
 			};
 		}
 
@@ -2846,7 +3308,12 @@ function randomQueueMatchSignal(
 			);
 
 			if (acceptedCount >= record.players.length && !record.allocationId) {
-				logger.info("Random queue all players accepted; requesting match server. matchId=" + record.matchId + " players=" + record.players.length);
+				logger.info(
+					"Random queue all players accepted; requesting match server. matchId=" +
+						record.matchId +
+						" players=" +
+						record.players.length,
+				);
 				var allocation = createOrGetAllocation(
 					ctx,
 					nk,
@@ -2870,12 +3337,23 @@ function randomQueueMatchSignal(
 			}
 		}
 
-		return { state: state, data: JSON.stringify(randomQueueTicketStatus(state, acceptTicket)) };
+		return {
+			state: state,
+			data: JSON.stringify(randomQueueTicketStatus(state, acceptTicket)),
+		};
 	}
 
 	return {
 		state: state,
-		data: JSON.stringify(randomQueueDefaultStatus(false, "Unknown queue action.", null, null, state)),
+		data: JSON.stringify(
+			randomQueueDefaultStatus(
+				false,
+				"Unknown queue action.",
+				null,
+				null,
+				state,
+			),
+		),
 	};
 }
 
@@ -3042,7 +3520,9 @@ function rpcSettleMatch(
 	validateServerSecret(ctx, request.serverSecret);
 
 	if (!request.matchId) {
-		return JSON.stringify(settlementResponse(null, false, "matchId is required."));
+		return JSON.stringify(
+			settlementResponse(null, false, "matchId is required."),
+		);
 	}
 
 	var existing = readSettlement(nk, request.matchId);
@@ -3062,23 +3542,40 @@ function rpcSettleMatch(
 
 	var allocation = readAllocation(nk, request.matchId);
 	if (allocation == null) {
-		return JSON.stringify(settlementResponse(null, false, "Allocation not found."));
+		return JSON.stringify(
+			settlementResponse(null, false, "Allocation not found."),
+		);
 	}
 
-	if (request.allocationId && allocation.allocationId !== request.allocationId) {
-		return JSON.stringify(settlementResponse(null, false, "Allocation id does not match."));
+	if (
+		request.allocationId &&
+		allocation.allocationId !== request.allocationId
+	) {
+		return JSON.stringify(
+			settlementResponse(null, false, "Allocation id does not match."),
+		);
 	}
 
-	if (request.serverId && allocation.serverId && allocation.serverId !== request.serverId) {
-		return JSON.stringify(settlementResponse(null, false, "Server does not own this allocation."));
+	if (
+		request.serverId &&
+		allocation.serverId &&
+		allocation.serverId !== request.serverId
+	) {
+		return JSON.stringify(
+			settlementResponse(null, false, "Server does not own this allocation."),
+		);
 	}
 
 	if (allocation.status === "Released" || allocation.status === "Failed") {
-		return JSON.stringify(settlementResponse(null, false, "Allocation is not settleable."));
+		return JSON.stringify(
+			settlementResponse(null, false, "Allocation is not settleable."),
+		);
 	}
 
 	if (request.results.length <= 0) {
-		return JSON.stringify(settlementResponse(null, false, "Settlement results are required."));
+		return JSON.stringify(
+			settlementResponse(null, false, "Settlement results are required."),
+		);
 	}
 
 	logger.info(
@@ -3100,15 +3597,32 @@ function rpcSettleMatch(
 	for (var i = 0; i < request.results.length; i++) {
 		var result = request.results[i];
 		if (!result.userId) {
-			return JSON.stringify(settlementResponse(null, false, "Settlement result userId is required."));
+			return JSON.stringify(
+				settlementResponse(
+					null,
+					false,
+					"Settlement result userId is required.",
+				),
+			);
 		}
 
 		if (seen[result.userId]) {
-			return JSON.stringify(settlementResponse(null, false, "Duplicate player in settlement."));
+			return JSON.stringify(
+				settlementResponse(null, false, "Duplicate player in settlement."),
+			);
 		}
 
-		if (Object.keys(allocation.allowedUserIds).length > 0 && !allocation.allowedUserIds[result.userId]) {
-			return JSON.stringify(settlementResponse(null, false, "Player is not assigned to this match."));
+		if (
+			Object.keys(allocation.allowedUserIds).length > 0 &&
+			!allocation.allowedUserIds[result.userId]
+		) {
+			return JSON.stringify(
+				settlementResponse(
+					null,
+					false,
+					"Player is not assigned to this match.",
+				),
+			);
 		}
 
 		seen[result.userId] = true;
@@ -3216,7 +3730,11 @@ function rpcGetLobby(
 	var match = findLobbyMatch(nk, request.roomId, request.matchId);
 
 	if (match == null) {
-		return JSON.stringify({ success: false, errorMessage: "Room not found.", room: null });
+		return JSON.stringify({
+			success: false,
+			errorMessage: "Room not found.",
+			room: null,
+		});
 	}
 
 	var response = signalLobby(nk, match.matchId, {
@@ -3280,7 +3798,11 @@ function rpcJoinLobby(
 	var match = findLobbyMatch(nk, request.roomId, request.matchId);
 
 	if (match == null) {
-		return JSON.stringify({ success: false, errorMessage: "Room not found.", room: null });
+		return JSON.stringify({
+			success: false,
+			errorMessage: "Room not found.",
+			room: null,
+		});
 	}
 
 	var response = signalLobby(nk, match.matchId, {
@@ -3416,7 +3938,10 @@ function rpcJoinRandomQueue(
 ): string {
 	var userId = requireUserId(ctx);
 	var request = parseRandomQueueRequest(payload);
-	var username = optionalString(request.username, optionalString((ctx as any).username, userId));
+	var username = optionalString(
+		request.username,
+		optionalString((ctx as any).username, userId),
+	);
 	var displayName = optionalString(request.displayName, username);
 
 	return JSON.stringify(
@@ -3516,7 +4041,9 @@ function rpcRequestMatchServer(
 	var request = parseMatchServerRequest(payload);
 
 	if (!request.matchId) {
-		return JSON.stringify(allocationResponse(null, false, "matchId is required."));
+		return JSON.stringify(
+			allocationResponse(null, false, "matchId is required."),
+		);
 	}
 
 	var existing = readAllocation(nk, request.matchId);
@@ -3526,14 +4053,24 @@ function rpcRequestMatchServer(
 			Object.keys(existing.allowedUserIds).length > 0 &&
 			!existing.allowedUserIds[userId]
 		) {
-			return JSON.stringify(allocationResponse(null, false, "You are not assigned to this match."));
+			return JSON.stringify(
+				allocationResponse(null, false, "You are not assigned to this match."),
+			);
 		}
 
-		return JSON.stringify(allocationResponse(refreshAllocationStaleness(ctx, nk, existing)));
+		return JSON.stringify(
+			allocationResponse(refreshAllocationStaleness(ctx, nk, existing, logger)),
+		);
 	}
 
 	if (request.source === "RandomQueue") {
-		return JSON.stringify(allocationResponse(null, false, "Random queue allocation is owned by queue runtime."));
+		return JSON.stringify(
+			allocationResponse(
+				null,
+				false,
+				"Random queue allocation is owned by queue runtime.",
+			),
+		);
 	}
 
 	var players: MatchServerPlayerDto[] = [
@@ -3545,7 +4082,12 @@ function rpcRequestMatchServer(
 		},
 	];
 
-	logger.info("Direct match server request received. matchId=%s source=%s userId=%s", request.matchId, request.source, userId);
+	logger.info(
+		"Direct match server request received. matchId=%s source=%s userId=%s",
+		request.matchId,
+		request.source,
+		userId,
+	);
 
 	var allocation = createOrGetAllocation(
 		ctx,
@@ -3598,10 +4140,14 @@ function rpcGetMatchServerStatus(
 		Object.keys(allocation.allowedUserIds).length > 0 &&
 		!allocation.allowedUserIds[userId]
 	) {
-		return JSON.stringify(statusResponse(null, false, "You are not assigned to this match."));
+		return JSON.stringify(
+			statusResponse(null, false, "You are not assigned to this match."),
+		);
 	}
 
-	return JSON.stringify(statusResponse(refreshAllocationStaleness(ctx, nk, allocation)));
+	return JSON.stringify(
+		statusResponse(refreshAllocationStaleness(ctx, nk, allocation, logger)),
+	);
 }
 
 function rpcRegisterMatchServer(
@@ -3614,18 +4160,36 @@ function rpcRegisterMatchServer(
 	validateServerSecret(ctx, request.serverSecret);
 
 	if (!request.serverId) {
-		return JSON.stringify(allocationResponse(null, false, "serverId is required."));
+		return JSON.stringify(
+			allocationResponse(null, false, "serverId is required."),
+		);
 	}
 
 	var now = Date.now();
 	var existing = readServer(nk, request.serverId);
 
 	if (existing == null && !localDevOrchestrationAllowed(ctx)) {
-		return JSON.stringify(allocationResponse(null, false, "Server registration requires an existing Edgegap allocation or explicit LocalDev orchestration."));
+		return JSON.stringify(
+			allocationResponse(
+				null,
+				false,
+				"Server registration requires an existing Edgegap allocation or explicit LocalDev orchestration.",
+			),
+		);
 	}
 
-	if (existing != null && existing.provider === "LocalDev" && !localDevOrchestrationAllowed(ctx)) {
-		return JSON.stringify(allocationResponse(null, false, "LocalDev server registration is disabled outside explicit local Docker orchestration."));
+	if (
+		existing != null &&
+		existing.provider === "LocalDev" &&
+		!localDevOrchestrationAllowed(ctx)
+	) {
+		return JSON.stringify(
+			allocationResponse(
+				null,
+				false,
+				"LocalDev server registration is disabled outside explicit local Docker orchestration.",
+			),
+		);
 	}
 
 	var server: MatchServerRecord =
@@ -3651,11 +4215,19 @@ function rpcRegisterMatchServer(
 	server.protocol = request.protocol;
 	server.lastHeartbeatMs = now;
 
-	if (request.status === "Available" && !request.allocationId && !request.matchId && server.currentAllocationId) {
-		var staleAllocation = server.currentMatchId ? readAllocation(nk, server.currentMatchId) : null;
+	if (
+		request.status === "Available" &&
+		!request.allocationId &&
+		!request.matchId &&
+		server.currentAllocationId
+	) {
+		var staleAllocation = server.currentMatchId
+			? readAllocation(nk, server.currentMatchId)
+			: null;
 		if (staleAllocation != null && staleAllocation.status !== "Released") {
 			staleAllocation.status = "Released";
-			staleAllocation.errorMessage = "Server re-registered as idle and cleared stale assignment.";
+			staleAllocation.errorMessage =
+				"Server re-registered as idle and cleared stale assignment.";
 			writeAllocation(nk, staleAllocation);
 		}
 
@@ -3670,7 +4242,11 @@ function rpcRegisterMatchServer(
 		server.status = "Available";
 		server.currentAllocationId = "";
 		server.currentMatchId = "";
-	} else if (!server.currentAllocationId || server.status === "Failed" || server.status === "Released") {
+	} else if (
+		!server.currentAllocationId ||
+		server.status === "Failed" ||
+		server.status === "Released"
+	) {
 		server.status = "Available";
 		server.currentAllocationId = "";
 		server.currentMatchId = "";
@@ -3681,9 +4257,12 @@ function rpcRegisterMatchServer(
 		logMatchServerAvailable(logger, "register", server, "");
 	}
 
-	var assigned = server.provider === "LocalDev" && localDevOrchestrationAllowed(ctx) && server.status === "Available"
-		? assignRequestedAllocationToServer(nk, server)
-		: null;
+	var assigned =
+		server.provider === "LocalDev" &&
+		localDevOrchestrationAllowed(ctx) &&
+		server.status === "Available"
+			? assignRequestedAllocationToServer(nk, server)
+			: null;
 	if (assigned != null) {
 		logMatchServerAssigned(logger, "register", server, assigned);
 		return JSON.stringify(allocationResponse(assigned));
@@ -3711,7 +4290,11 @@ function rpcClaimMatchLaunchConfig(
 
 	var server = readServer(nk, request.serverId);
 	if (server == null) {
-		logger.warn("Match server launch config claim rejected. serverId=" + request.serverId + " reason=not_registered");
+		logger.warn(
+			"Match server launch config claim rejected. serverId=" +
+				request.serverId +
+				" reason=not_registered",
+		);
 		return JSON.stringify({
 			success: false,
 			errorMessage: "Server is not registered.",
@@ -3739,7 +4322,12 @@ function rpcClaimMatchLaunchConfig(
 		allocation = readAllocation(nk, request.matchId);
 	}
 
-	if (allocation == null && server.provider === "LocalDev" && localDevOrchestrationAllowed(ctx) && server.status === "Available") {
+	if (
+		allocation == null &&
+		server.provider === "LocalDev" &&
+		localDevOrchestrationAllowed(ctx) &&
+		server.status === "Available"
+	) {
 		allocation = assignRequestedAllocationToServer(nk, server);
 		if (allocation != null) {
 			logMatchServerAssigned(logger, "claim", server, allocation);
@@ -3780,7 +4368,8 @@ function rpcClaimMatchLaunchConfig(
 
 	server.currentAllocationId = allocation.allocationId;
 	server.currentMatchId = allocation.matchId;
-	server.status = allocation.status === "Requested" ? "Launching" : allocation.status;
+	server.status =
+		allocation.status === "Requested" ? "Launching" : allocation.status;
 	server.lastHeartbeatMs = Date.now();
 	writeServer(nk, server);
 
@@ -3863,12 +4452,24 @@ function rpcMarkMatchServerReady(
 				" allocationFound=" +
 				(allocation != null),
 		);
-		return JSON.stringify(statusResponse(null, false, "Server or allocation not found."));
+		return JSON.stringify(
+			statusResponse(null, false, "Server or allocation not found."),
+		);
 	}
 
 	if (server.provider === "LocalDev" && !localDevOrchestrationAllowed(ctx)) {
-		logger.warn("Match server ready rejected. serverId=" + server.serverId + " provider=LocalDev reason=localdev_disabled");
-		return JSON.stringify(statusResponse(null, false, "LocalDev server readiness is disabled outside explicit local Docker orchestration."));
+		logger.warn(
+			"Match server ready rejected. serverId=" +
+				server.serverId +
+				" provider=LocalDev reason=localdev_disabled",
+		);
+		return JSON.stringify(
+			statusResponse(
+				null,
+				false,
+				"LocalDev server readiness is disabled outside explicit local Docker orchestration.",
+			),
+		);
 	}
 
 	var now = Date.now();
@@ -3905,11 +4506,19 @@ function rpcServerHeartbeat(
 
 	var server = readServer(nk, request.serverId);
 	if (server == null) {
-		return JSON.stringify(statusResponse(null, false, "Server is not registered."));
+		return JSON.stringify(
+			statusResponse(null, false, "Server is not registered."),
+		);
 	}
 
 	if (server.provider === "LocalDev" && !localDevOrchestrationAllowed(ctx)) {
-		return JSON.stringify(statusResponse(null, false, "LocalDev server heartbeat is disabled outside explicit local Docker orchestration."));
+		return JSON.stringify(
+			statusResponse(
+				null,
+				false,
+				"LocalDev server heartbeat is disabled outside explicit local Docker orchestration.",
+			),
+		);
 	}
 
 	var now = Date.now();
@@ -3923,11 +4532,17 @@ function rpcServerHeartbeat(
 		server.port = request.port;
 	}
 
-	var allocation: MatchServerAllocationRecord | null = server.currentMatchId ? readAllocation(nk, server.currentMatchId) : null;
+	var allocation: MatchServerAllocationRecord | null = server.currentMatchId
+		? readAllocation(nk, server.currentMatchId)
+		: null;
 
 	if (allocation != null) {
 		allocation.lastHeartbeatMs = now;
-		if (request.status === "InMatch" || request.status === "Ready" || request.status === "Settling") {
+		if (
+			request.status === "InMatch" ||
+			request.status === "Ready" ||
+			request.status === "Settling"
+		) {
 			allocation.status = request.status as MatchServerStatusName;
 			server.status = allocation.status;
 		}
@@ -3947,7 +4562,10 @@ function rpcServerHeartbeat(
 			logger,
 			"heartbeat",
 			server,
-			" previousStatus=" + previousStatus + " previousAllocationId=" + previousAllocationId,
+			" previousStatus=" +
+				previousStatus +
+				" previousAllocationId=" +
+				previousAllocationId,
 		);
 	}
 
@@ -3965,10 +4583,14 @@ function rpcResetMatchServer(
 
 	var server = readServer(nk, request.serverId);
 	if (server == null) {
-		return JSON.stringify(allocationResponse(null, false, "Server is not registered."));
+		return JSON.stringify(
+			allocationResponse(null, false, "Server is not registered."),
+		);
 	}
 
-	var allocation = server.currentMatchId ? readAllocation(nk, server.currentMatchId) : null;
+	var allocation = server.currentMatchId
+		? readAllocation(nk, server.currentMatchId)
+		: null;
 	if (allocation != null) {
 		allocation.status = "Released";
 		writeAllocation(nk, allocation);
@@ -3984,13 +4606,19 @@ function rpcResetMatchServer(
 		"reset",
 		server,
 		allocation != null
-			? " releasedMatchId=" + allocation.matchId + " releasedAllocationId=" + allocation.allocationId + " reason=" + optionalString(request.reason, "")
+			? " releasedMatchId=" +
+					allocation.matchId +
+					" releasedAllocationId=" +
+					allocation.allocationId +
+					" reason=" +
+					optionalString(request.reason, "")
 			: " reason=" + optionalString(request.reason, ""),
 	);
 
-	var assigned = server.provider === "LocalDev" && !localDevOrchestrationAllowed(ctx)
-		? null
-		: assignRequestedAllocationToServer(nk, server);
+	var assigned =
+		server.provider === "LocalDev" && !localDevOrchestrationAllowed(ctx)
+			? null
+			: assignRequestedAllocationToServer(nk, server);
 	if (assigned != null) {
 		logMatchServerAssigned(logger, "reset", server, assigned);
 		return JSON.stringify(allocationResponse(assigned));
@@ -4050,7 +4678,10 @@ function InitModule(
 	initializer.registerRpc("request_match_server", rpcRequestMatchServer);
 	initializer.registerRpc("get_match_server_status", rpcGetMatchServerStatus);
 	initializer.registerRpc("register_match_server", rpcRegisterMatchServer);
-	initializer.registerRpc("claim_match_launch_config", rpcClaimMatchLaunchConfig);
+	initializer.registerRpc(
+		"claim_match_launch_config",
+		rpcClaimMatchLaunchConfig,
+	);
 	initializer.registerRpc("mark_match_server_ready", rpcMarkMatchServerReady);
 	initializer.registerRpc("server_heartbeat", rpcServerHeartbeat);
 	initializer.registerRpc("reset_match_server", rpcResetMatchServer);
@@ -4075,4 +4706,3 @@ function InitModule(
 }
 
 !InitModule && InitModule.bind(null);
-
