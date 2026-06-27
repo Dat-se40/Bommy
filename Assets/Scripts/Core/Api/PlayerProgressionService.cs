@@ -10,6 +10,7 @@ public sealed class PlayerProgressionService : MonoBehaviour
 {
     const string SingletonName = "[PlayerProgressionService]";
     const string LegacyPurgeMarker = "Bommy.Nakama.LegacyProgressionPurged";
+    const int ProgressionRpcTimeoutSeconds = 12;
     static readonly string[] LegacyKeys =
     {
         "PlayerGold",
@@ -60,6 +61,11 @@ public sealed class PlayerProgressionService : MonoBehaviour
         return CallProgressionRpcAsync("select_character", BuildCharacterPayload(characterId));
     }
 
+    public Task<PlayerAccountSnapshot> ApplyMatchRewardsAsync(MatchRewardPreview reward)
+    {
+        return CallProgressionRpcAsync("grant_match_rewards", BuildRewardPayload(reward));
+    }
+
     public bool OwnsCharacter(int characterId)
     {
         int[] owned = Current?.ownedCharacterIds;
@@ -96,21 +102,58 @@ public sealed class PlayerProgressionService : MonoBehaviour
 
     async Task<PlayerAccountSnapshot> CallProgressionRpcAsync(string rpcId, string payload)
     {
-        IApiRpc response = await AuthService.GetOrCreate().RpcAsync(rpcId, payload);
+        IApiRpc response = await AwaitProgressionRpcAsync(rpcId, payload);
         PlayerAccountSnapshot snapshot = JsonUtility.FromJson<PlayerAccountSnapshot>(response.Payload);
 
         if (snapshot == null || snapshot.schemaVersion <= 0)
             throw new InvalidOperationException("Nakama returned invalid player progression.");
 
+        NormalizeSnapshot(snapshot);
         Current = snapshot;
         PurgeLegacyProgressionOnce();
         ProgressionChanged?.Invoke();
         return Current;
     }
 
+    static async Task<IApiRpc> AwaitProgressionRpcAsync(string rpcId, string payload)
+    {
+        Task<IApiRpc> rpcTask = AuthService.GetOrCreate().RpcAsync(rpcId, payload);
+        Task timeoutTask = Task.Delay(TimeSpan.FromSeconds(ProgressionRpcTimeoutSeconds));
+
+        Task completedTask = await Task.WhenAny(rpcTask, timeoutTask);
+        if (completedTask != rpcTask)
+            throw new TimeoutException("Progression server did not respond. Check backend and try again.");
+
+        return await rpcTask;
+    }
+
     static string BuildCharacterPayload(int characterId)
     {
         return "{\"characterId\":" + characterId + "}";
+    }
+
+    static string BuildRewardPayload(MatchRewardPreview reward)
+    {
+        return "{" +
+            "\"coinsDelta\":" + reward.coinsDelta + "," +
+            "\"trophiesDelta\":" + reward.trophiesDelta + "," +
+            "\"experienceDelta\":" + reward.experienceDelta + "," +
+            "\"matchesPlayedDelta\":" + reward.matchesPlayedDelta + "," +
+            "\"winsDelta\":" + reward.winsDelta + "," +
+            "\"killsDelta\":" + reward.killsDelta + "," +
+            "\"deathsDelta\":" + reward.deathsDelta +
+            "}";
+    }
+
+    static void NormalizeSnapshot(PlayerAccountSnapshot snapshot)
+    {
+        if (snapshot.matchStats == null)
+            snapshot.matchStats = new PlayerMatchStatsSnapshot();
+
+        if (snapshot.coins <= 0 && snapshot.gold > 0)
+            snapshot.coins = snapshot.gold;
+
+        snapshot.gold = snapshot.coins;
     }
 
     static void PurgeLegacyProgressionOnce()

@@ -34,7 +34,6 @@ public class CharacterDefinition : ScriptableObject
 
     [Header("Shop")]
     [SerializeField] private bool defaultOwned;
-    [SerializeField] private int requiredLevel = 1;
     [SerializeField] private int price;
 
     public int CharacterId => characterId;
@@ -51,6 +50,5 @@ public class CharacterDefinition : ScriptableObject
     public int Speed => speed;
 
     public bool DefaultOwned => defaultOwned;
-    public int RequiredLevel => requiredLevel;
     public int Price => price;
 }

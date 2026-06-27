@@ -75,7 +75,7 @@ public class CharacterCardUI : MonoBehaviour
         if (data.Price <= 0)
             return "FREE";
 
-        return "Gold: " + data.Price;
+        return "Coins: " + data.Price;
     }
 
     static string GetStatusText(bool owned)

@@ -23,5 +23,4 @@ MonoBehaviour:
   bomb: 1
   speed: 5
   defaultOwned: 0
-  requiredLevel: 2
-  price: 50
+  price: 5

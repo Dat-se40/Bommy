@@ -22,6 +22,5 @@ MonoBehaviour:
   hp: 1
   bomb: 1
   speed: 1
-  defaultOwned: 1
-  requiredLevel: 0
-  price: 0
+  defaultOwned: 0
+  price: 25
