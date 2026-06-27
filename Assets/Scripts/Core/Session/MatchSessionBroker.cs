@@ -46,7 +46,7 @@ public static class MatchSessionBroker
     {
         PlayerMatchProfile profile = localPlayer;
 
-        if (profile.characterId > 0)
+        if (profile.characterId > 0 && !DedicatedServerBootstrap.IsDedicatedServerRuntime)
         {
             profile.displayName = AuthService.GetOrCreate().DisplayName;
             profile.userId = AuthService.GetOrCreate().Session?.UserId ?? profile.userId;
@@ -72,6 +72,9 @@ public static class MatchSessionBroker
 
     public static void LoadLocalFromProgression(CharacterDatabase database)
     {
+        if (DedicatedServerBootstrap.IsDedicatedServerRuntime)
+            return;
+
         if (database == null)
             return;
 

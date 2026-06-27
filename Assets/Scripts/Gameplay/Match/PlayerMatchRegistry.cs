@@ -7,6 +7,7 @@ using PurrNet;
 public sealed class PlayerMatchRegistry
 {
     readonly Dictionary<PlayerID, PlayerRuntimeEntry> byPlayerId = new();
+    readonly Dictionary<PlayerID, LeaderBoardData> lockedResultsByPlayerId = new();
 
     public void Register(PlayerID playerId, PlayerRuntimeEntry entry)
     {
@@ -19,6 +20,21 @@ public sealed class PlayerMatchRegistry
     public void Unregister(PlayerID playerId)
     {
         byPlayerId.Remove(playerId);
+    }
+
+    public void LockResult(PlayerID playerId, bool disconnected)
+    {
+        if (lockedResultsByPlayerId.ContainsKey(playerId))
+            return;
+
+        if (!byPlayerId.TryGetValue(playerId, out PlayerRuntimeEntry entry))
+            return;
+
+        LeaderBoardData data = BuildEntry(entry, disconnected);
+        if (data.slotIndex < 0 && string.IsNullOrWhiteSpace(data.userId))
+            return;
+
+        lockedResultsByPlayerId[playerId] = data;
     }
 
     public bool TryGet(PlayerID playerId, out PlayerRuntimeEntry entry)
@@ -45,8 +61,14 @@ public sealed class PlayerMatchRegistry
     {
         List<LeaderBoardData> result = new List<LeaderBoardData>();
 
+        foreach (LeaderBoardData lockedResult in lockedResultsByPlayerId.Values)
+            result.Add(lockedResult);
+
         foreach (KeyValuePair<PlayerID, PlayerRuntimeEntry> item in byPlayerId)
         {
+            if (lockedResultsByPlayerId.ContainsKey(item.Key))
+                continue;
+
             PlayerRuntimeEntry entry = item.Value;
 
             if (entry?.Infor == null || entry.BoardState == null)
@@ -55,18 +77,7 @@ public sealed class PlayerMatchRegistry
             if (!entry.Infor.IsEliminated)
                 onSurvivorScored?.Invoke(entry);
 
-            result.Add(
-                new LeaderBoardData
-                {
-                    slotIndex = entry.BoardState.SlotIndex,
-                    userId = entry.Infor.UserId,
-                    name = entry.Infor.PlayerName,
-                    kills = entry.Infor.Kills,
-                    deaths = entry.Infor.Deaths,
-                    score = entry.Infor.Score,
-                    disconnected = false,
-                }
-            );
+            result.Add(BuildEntry(entry, disconnected: false));
         }
 
         result.Sort(
@@ -81,10 +92,28 @@ public sealed class PlayerMatchRegistry
 
         return result;
     }
+
+    static LeaderBoardData BuildEntry(PlayerRuntimeEntry entry, bool disconnected)
+    {
+        if (entry?.Infor == null)
+            return new LeaderBoardData { slotIndex = -1, disconnected = disconnected };
+
+        return new LeaderBoardData
+        {
+            slotIndex = entry.BoardState != null ? entry.BoardState.SlotIndex : entry.Infor.PlayerIndex,
+            userId = entry.Infor.UserId,
+            name = entry.Infor.PlayerName,
+            kills = entry.Infor.Kills,
+            deaths = entry.Infor.Deaths,
+            score = entry.Infor.Score,
+            disconnected = disconnected,
+        };
+    }
 }
 
 public sealed class PlayerRuntimeEntry
 {
+    public PlayerID PlayerId;
     public PlayerController Controller;
     public PlayerInfor Infor;
     public PlayerBoardState BoardState;

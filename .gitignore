@@ -121,3 +121,5 @@ InitTestScene*.unity*
 # Backend local dependencies and generated runtime output
 /[Bb]ackend/node_modules/
 /[Bb]ackend/build/
+
+.env

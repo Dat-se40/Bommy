@@ -5,6 +5,7 @@ using Nakama;
 using PurrNet;
 using PurrNet.Transports;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class DedicatedServerRpcRequest
@@ -17,6 +18,7 @@ public class DedicatedServerRpcRequest
     public string protocol = "UDP";
     public string status;
     public string serverSecret;
+    public string reason;
 }
 
 [Serializable]
@@ -36,6 +38,17 @@ public class MatchLaunchConfig
     public string nakamaHost;
     public int nakamaPort;
     public int purrnetPort;
+
+    public int IntendedPlayerCount
+    {
+        get
+        {
+            if (players != null && players.Length > 0)
+                return players.Length;
+
+            return Mathf.Max(0, maxPlayers);
+        }
+    }
 }
 
 [Serializable]
@@ -84,6 +97,12 @@ public sealed class DedicatedServerBootstrap : MonoBehaviour
     string currentAllocationId;
     string currentMatchId;
     bool readyMarked;
+    bool registrationConfirmed;
+    bool reloadingForNextMatch;
+
+    public static bool IsDedicatedServerRuntime =>
+        Application.isBatchMode
+        || string.Equals(Environment.GetEnvironmentVariable("BOMMY_DEDICATED_SERVER"), "1", StringComparison.Ordinal);
 
     void Start()
     {
@@ -93,6 +112,10 @@ public sealed class DedicatedServerBootstrap : MonoBehaviour
         DedicatedMatchRuntime.MatchLifecycleReleased += OnMatchLifecycleReleased;
         lifetime = new CancellationTokenSource();
         config = DedicatedServerRuntimeConfig.Read(defaultServerId, defaultPublicHost, defaultPort, defaultServerSecret);
+        currentAllocationId = config.allocationId;
+        currentMatchId = config.matchId;
+        registrationConfirmed = !string.IsNullOrWhiteSpace(currentAllocationId) || !string.IsNullOrWhiteSpace(currentMatchId);
+        LogDedicatedRuntimeStart();
         _ = RunServerAsync(lifetime.Token);
     }
 
@@ -109,13 +132,40 @@ public sealed class DedicatedServerBootstrap : MonoBehaviour
         currentAllocationId = string.Empty;
         currentMatchId = string.Empty;
         readyMarked = false;
+        registrationConfirmed = true;
+
+        if (reloadingForNextMatch)
+            return;
+
+        reloadingForNextMatch = true;
+        Debug.Log("[DedicatedServerBootstrap] Match lifecycle released. Reloading GameScene for next allocation.", this);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     bool ShouldRunDedicatedServer()
     {
         return forceDedicatedServer
-            || Application.isBatchMode
-            || string.Equals(Environment.GetEnvironmentVariable("BOMMY_DEDICATED_SERVER"), "1", StringComparison.Ordinal);
+            || IsDedicatedServerRuntime;
+    }
+
+    void LogDedicatedRuntimeStart()
+    {
+        Debug.LogFormat(
+            this,
+            "[DedicatedServerBootstrap] Dedicated runtime starting. batchMode={0} envDedicated={1} forceDedicated={2} serverId={3} provider={4} bindPort={5} public={6}:{7} nakama={8}:{9} allocationId={10} matchId={11}",
+            Application.isBatchMode,
+            Environment.GetEnvironmentVariable("BOMMY_DEDICATED_SERVER") ?? "",
+            forceDedicatedServer,
+            config.serverId,
+            config.provider,
+            config.bindPort,
+            config.publicHost,
+            config.publicPort,
+            config.nakamaScheme + "://" + config.nakamaHost,
+            config.nakamaPort,
+            string.IsNullOrWhiteSpace(config.allocationId) ? "-" : config.allocationId,
+            string.IsNullOrWhiteSpace(config.matchId) ? "-" : config.matchId
+        );
     }
 
     async Task RunServerAsync(CancellationToken cancellationToken)
@@ -123,22 +173,66 @@ public sealed class DedicatedServerBootstrap : MonoBehaviour
         try
         {
             StartPurrNetServer();
-            serverClient = new Client("http", config.nakamaHost, config.nakamaPort, config.nakamaServerKey, UnityWebRequestAdapter.Instance);
-            await RegisterServerAsync(cancellationToken);
-
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                await ClaimAndReadyIfAssignedAsync(cancellationToken);
-                await SendHeartbeatAsync(cancellationToken);
-                await Task.Delay(TimeSpan.FromSeconds(heartbeatSeconds), cancellationToken);
-            }
         }
         catch (OperationCanceledException)
         {
+            return;
         }
         catch (Exception exception)
         {
-            Debug.LogError("[DedicatedServerBootstrap] Server loop failed: " + exception.Message, this);
+            Debug.LogError("[DedicatedServerBootstrap] Failed to start PurrNet server: " + exception.Message, this);
+            return;
+        }
+
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            try
+            {
+                EnsureServerClient();
+
+                if (!registrationConfirmed && string.IsNullOrWhiteSpace(currentAllocationId) && !readyMarked)
+                    await RegisterServerAsync(cancellationToken);
+
+                await ClaimAndReadyIfAssignedAsync(cancellationToken);
+                await SendHeartbeatAsync(cancellationToken);
+                float delaySeconds = readyMarked ? heartbeatSeconds : claimRetrySeconds;
+                await Task.Delay(TimeSpan.FromSeconds(Mathf.Max(0.25f, delaySeconds)), cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning("[DedicatedServerBootstrap] Backend sync failed; retrying registration. " + exception.Message, this);
+                ResetBackendRegistration();
+                await DelayRetryAsync(cancellationToken);
+            }
+        }
+    }
+
+    void EnsureServerClient()
+    {
+        serverClient ??= new Client(config.nakamaScheme, config.nakamaHost, config.nakamaPort, config.nakamaServerKey, UnityWebRequestAdapter.Instance);
+    }
+
+    void ResetBackendRegistration()
+    {
+        serverClient = null;
+        currentAllocationId = string.Empty;
+        currentMatchId = string.Empty;
+        readyMarked = false;
+        registrationConfirmed = false;
+    }
+
+    async Task DelayRetryAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            await Task.Delay(TimeSpan.FromSeconds(claimRetrySeconds), cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
         }
     }
 
@@ -168,6 +262,8 @@ public sealed class DedicatedServerBootstrap : MonoBehaviour
         if (!allocation.success && !string.IsNullOrWhiteSpace(allocation.errorMessage))
             Debug.LogWarning("[DedicatedServerBootstrap] Register returned: " + allocation.errorMessage, this);
 
+        registrationConfirmed = allocation.success;
+
         if (!string.IsNullOrWhiteSpace(allocation.allocationId))
         {
             currentAllocationId = allocation.allocationId;
@@ -187,7 +283,9 @@ public sealed class DedicatedServerBootstrap : MonoBehaviour
 
         if (!launchConfig.success)
         {
-            await Task.Delay(TimeSpan.FromSeconds(claimRetrySeconds), cancellationToken);
+            if (string.Equals(launchConfig.errorMessage, "Server is not registered.", StringComparison.OrdinalIgnoreCase))
+                registrationConfirmed = false;
+
             return;
         }
 
@@ -258,10 +356,13 @@ public sealed class DedicatedServerBootstrap : MonoBehaviour
         public int publicPort;
         public string serverSecret;
         public string nakamaHost;
+        public string nakamaScheme;
         public int nakamaPort;
         public string nakamaServerKey;
         public string nakamaHttpKey;
         public string provider;
+        public string allocationId;
+        public string matchId;
 
         public static DedicatedServerRuntimeConfig Read(string defaultServerId, string defaultPublicHost, int defaultPort, string defaultServerSecret)
         {
@@ -284,11 +385,14 @@ public sealed class DedicatedServerBootstrap : MonoBehaviour
                 bindPort = bindPort,
                 publicPort = publicPort > 0 ? publicPort : bindPort,
                 serverSecret = ReadString("BOMMY_SERVER_SECRET", defaultServerSecret),
+                nakamaScheme = ReadString("BOMMY_NAKAMA_SCHEME", "http").ToLowerInvariant(),
                 nakamaHost = ReadString("BOMMY_NAKAMA_HOST", "127.0.0.1"),
                 nakamaPort = ReadInt("BOMMY_NAKAMA_PORT", 7350),
                 nakamaServerKey = ReadString("BOMMY_NAKAMA_SERVER_KEY", "defaultkey"),
                 nakamaHttpKey = ReadString("BOMMY_NAKAMA_HTTP_KEY", "defaulthttpkey"),
-                provider = ReadString("BOMMY_PROVIDER", "LocalPool")
+                provider = ReadString("BOMMY_PROVIDER", "LocalDev"),
+                allocationId = ReadString("BOMMY_ALLOCATION_ID", ""),
+                matchId = ReadString("BOMMY_MATCH_ID", "")
             };
         }
 

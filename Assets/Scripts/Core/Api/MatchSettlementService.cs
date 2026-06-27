@@ -67,6 +67,8 @@ public static class DedicatedMatchRuntime
     public static bool HasLaunchConfig => launchConfig != null && launchConfig.success;
     public static string MatchId => launchConfig != null ? launchConfig.matchId : string.Empty;
     public static string AllocationId => launchConfig != null ? launchConfig.allocationId : string.Empty;
+    public static int IntendedPlayerCount => launchConfig != null ? launchConfig.IntendedPlayerCount : 0;
+    public static int RequestedMapId => launchConfig != null ? Mathf.Max(0, launchConfig.mapId) : 0;
 
     public static void Configure(
         MatchLaunchConfig config,
@@ -82,7 +84,7 @@ public static class DedicatedMatchRuntime
         nakamaHttpKey = httpKey;
         serverId = dedicatedServerId;
         serverSecret = dedicatedServerSecret;
-        provider = string.IsNullOrWhiteSpace(serverProvider) ? "LocalPool" : serverProvider;
+        provider = string.IsNullOrWhiteSpace(serverProvider) ? "LocalDev" : serverProvider;
         nextPlayerIndex = 0;
         settlementStarted = false;
 
@@ -193,21 +195,76 @@ public static class DedicatedMatchRuntime
                 ? "Match settlement failed."
                 : settlement.errorMessage);
 
-        string lifecycleRpc = string.Equals(provider, "EdgegapCloud", StringComparison.OrdinalIgnoreCase)
-            ? "release_match_server"
-            : "reset_match_server";
+        Debug.Log("[DedicatedMatchRuntime] Settlement completed for match " + launchConfig.matchId + ".");
 
-        await serverClient.RpcAsync(nakamaHttpKey, lifecycleRpc, JsonUtility.ToJson(new DedicatedServerRpcRequest
+        await serverClient.RpcAsync(nakamaHttpKey, "reset_match_server", JsonUtility.ToJson(new DedicatedServerRpcRequest
         {
             serverId = serverId,
             allocationId = launchConfig.allocationId,
             matchId = launchConfig.matchId,
             serverSecret = serverSecret,
-            status = "Released"
+            status = "Available",
+            reason = "Match settled"
         }));
 
+        ClearForNextMatch();
         MatchLifecycleReleased?.Invoke();
         return settlement;
+    }
+
+    public static async Task CancelAndResetAsync(string reason)
+    {
+        if (settlementStarted)
+            return;
+
+        settlementStarted = true;
+
+        if (serverClient == null || launchConfig == null)
+            throw new InvalidOperationException("Dedicated match runtime is not configured.");
+
+        await serverClient.RpcAsync(nakamaHttpKey, "reset_match_server", JsonUtility.ToJson(new DedicatedServerRpcRequest
+        {
+            serverId = serverId,
+            allocationId = launchConfig.allocationId,
+            matchId = launchConfig.matchId,
+            serverSecret = serverSecret,
+            status = "Available",
+            reason = string.IsNullOrWhiteSpace(reason) ? "Match cancelled" : reason
+        }));
+
+        ClearForNextMatch();
+        MatchLifecycleReleased?.Invoke();
+    }
+
+    public static void ClearForNextMatch()
+    {
+        launchConfig = null;
+        serverClient = null;
+        nakamaHttpKey = string.Empty;
+        serverId = string.Empty;
+        serverSecret = string.Empty;
+        provider = string.Empty;
+        nextPlayerIndex = 0;
+        settlementStarted = false;
+        MatchSessionBroker.ClearRoster();
+    }
+
+    public static int ResolveMapId(MapLoader mapLoader, int fallbackMapId)
+    {
+        if (RequestedMapId > 0)
+        {
+            Debug.Log("[DedicatedMatchRuntime] Using requested map id " + RequestedMapId + ".");
+            return RequestedMapId;
+        }
+
+        if (mapLoader != null && mapLoader.TryResolveRandomMapId(out int randomMapId))
+        {
+            Debug.Log("[DedicatedMatchRuntime] Random map resolved to id " + randomMapId + ".");
+            return randomMapId;
+        }
+
+        Debug.LogWarning("[DedicatedMatchRuntime] Random map unavailable; using fallback map id " + fallbackMapId + ".");
+        return fallbackMapId;
     }
 
     static MatchSettlementPlayerResult[] BuildResults(IReadOnlyList<LeaderBoardData> leaderboard)

@@ -1,41 +1,59 @@
 using UnityEngine;
 
 /// <summary>
-/// Phase chuẩn bị — server replicate map id + timer; client load map / UI qua SyncVar listeners.
+/// Server starts Prep, resolves the concrete map, and replicates it to every client.
 /// </summary>
 public class MatchPrepState : MatchTimedStateNode
 {
     [SerializeField] private float prepDurationSeconds = MatchTiming.PrepSeconds;
     [SerializeField] private int fallbackMapId = 2;
-    // Ignore data from server
-    [SerializeField] private bool inTestingMode; 
+    [SerializeField] private bool inTestingMode;
+
     protected override MatchPhaseKind PhaseKind => MatchPhaseKind.Prep;
     protected override float DurationSeconds => prepDurationSeconds;
 
     public override void Enter(bool asServer)
     {
+        if (IsDedicatedWaitingForLaunchConfig(asServer))
+        {
+            FlowGuard.Info(FlowGuard.TagSetup, "Dedicated server is idle; Prep is waiting for Nakama launch config.", this);
+            return;
+        }
+
         base.Enter(asServer);
 
         if (!asServer)
             return;
 
-        int resolvedMapId = (GameSession.MapId >= 0 ) && !inTestingMode ? GameSession.MapId : fallbackMapId;
+        int resolvedMapId = ResolveMapId();
         MatchPhaseBroadcast broadcast = PhaseBroadcast;
 
         if (broadcast == null)
         {
             FlowGuard.Error(
                 FlowGuard.TagGameplay,
-                "MatchPrepState: thiếu MatchPhaseBroadcast — không replicate map id.",
+                "MatchPrepState: missing MatchPhaseBroadcast; cannot replicate map id.",
                 machine
             );
             return;
         }
 
+        GameSession.MapId = resolvedMapId;
         broadcast.ServerSetActiveMap(resolvedMapId);
         FlowGuard.Info(
             FlowGuard.TagGameplay,
-            $"Prep started — activeMapId={resolvedMapId} (GameSession.MapId={GameSession.MapId})"
+            $"Prep started - activeMapId={resolvedMapId} requestedMapId={DedicatedMatchRuntime.RequestedMapId}"
         );
+    }
+
+    int ResolveMapId()
+    {
+        if (DedicatedServerBootstrap.IsDedicatedServerRuntime && DedicatedMatchRuntime.HasLaunchConfig)
+            return DedicatedMatchRuntime.ResolveMapId(MapLoader.Instance, fallbackMapId);
+
+        if (GameSession.MapId >= 0 && !inTestingMode)
+            return GameSession.MapId;
+
+        return fallbackMapId;
     }
 }

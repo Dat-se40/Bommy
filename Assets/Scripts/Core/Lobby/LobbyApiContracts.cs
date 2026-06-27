@@ -48,6 +48,8 @@ public class LobbyRoomDto
     public string hostPlayerId;
     public string matchId;
     public string status;
+    public string allocationId;
+    public string serverStatus;
 }
 
 /// <summary>

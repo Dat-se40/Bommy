@@ -77,6 +77,7 @@ public class PlayerInfor : MonoBehaviour
     private int shield;
 
     PlayerID? pendingKillAttacker;
+    PlayerID? authorityPlayerId;
 
     public int Shield => shield;
     public int PlayerIndex => playerIndex;
@@ -116,7 +117,7 @@ public class PlayerInfor : MonoBehaviour
 
     void Start()
     {
-        if (isLocalPlayer)
+        if (isLocalPlayer && !DedicatedServerBootstrap.IsDedicatedServerRuntime)
             ApplyLocalProfileFromBroker();
 
         ResetForMatch();
@@ -138,6 +139,11 @@ public class PlayerInfor : MonoBehaviour
             move.SetSpeed(profile.speed);
 
         Debug.Log($"[PLayer Infor] player {profile.displayName} completed apply match profile");
+    }
+
+    public void SetAuthorityPlayerId(PlayerID playerId)
+    {
+        authorityPlayerId = playerId;
     }
 
     void ApplyLocalProfileFromBroker()
@@ -324,8 +330,6 @@ public class PlayerInfor : MonoBehaviour
             if (authority != null)
                 authority.NotifyPlayerEliminated(selfId.Value);
         }
-
-        gameObject.SetActive(false);
     }
 
     public void Heal(int amount)
@@ -436,6 +440,9 @@ public class PlayerInfor : MonoBehaviour
 
     public PlayerID? GetPlayerID()
     {
+        if (authorityPlayerId.HasValue)
+            return authorityPlayerId.Value;
+
         if (TryGetComponent(out PlayerController playerController) && playerController.owner.HasValue)
             return playerController.owner.Value;
 

@@ -9564,7 +9564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: PurrNet.Runtime::PurrNet.Transports.UDPTransport
   _automaticCloudSetups:
     _adaptToEdgegap: 1
-  _serverPort: 5000
+  _serverPort: 7777
   _maxConnections: 100
   _address: 127.0.0.1
   _timeoutInSeconds: 5
@@ -9589,7 +9589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: PurrNet.Runtime::PurrNet.NetworkManager
   _stopPlayingOnDisconnect: 0
-  _startServerFlags: 9
+  _startServerFlags: 0
   _startClientFlags: 7
   _cookieScope: 1
   _dontDestroyOnLoad: 0

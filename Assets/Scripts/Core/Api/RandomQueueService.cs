@@ -6,10 +6,12 @@ using UnityEngine;
 [Serializable]
 public class RandomQueueRequest
 {
-    public int mapId = 1;
-    public string mapName = "Classic Garden";
+    public int mapId = 0;
+    public string mapName = "Random";
     public string region = "Local";
     public int maxPlayers = 4;
+    public string username;
+    public string displayName;
 }
 
 [Serializable]
@@ -101,6 +103,9 @@ public sealed class RandomQueueService : MonoBehaviour
     {
         request ??= new RandomQueueRequest();
         request.maxPlayers = 4;
+        AuthService authService = AuthService.GetOrCreate();
+        request.username = authService.Username;
+        request.displayName = authService.DisplayName;
         CurrentStatus = await CallQueueRpcAsync("join_random_queue", JsonUtility.ToJson(request));
         EnsureSuccess(CurrentStatus, "Join queue failed.");
         return CurrentStatus;

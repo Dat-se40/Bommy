@@ -14,13 +14,19 @@ public class MatchStateMachineBootstrap : NetworkBehaviour
     {
         base.OnSpawned();
 
+        MatchRoundCoordinator coordinator = MatchRoundCoordinator.EnsureOn(gameObject);
+        coordinator.Configure(this, isServer);
+
         if (!isServer)
             return;
 
-        TryStartFirstState();
+        if (DedicatedServerBootstrap.IsDedicatedServerRuntime)
+            return;
+
+        StartFirstStateIfNeeded();
     }
 
-    void TryStartFirstState()
+    public void StartFirstStateIfNeeded(bool forceEnterCurrentState = false)
     {
         if (stateMachine == null)
             stateMachine = GetComponent<StateMachine>();
@@ -35,9 +41,6 @@ public class MatchStateMachineBootstrap : NetworkBehaviour
             return;
         }
 
-        if (stateMachine.currentState.stateId >= 0)
-            return;
-
         var states = stateMachine.states;
         if (states == null || states.Count == 0)
         {
@@ -46,6 +49,17 @@ public class MatchStateMachineBootstrap : NetworkBehaviour
                 $"{nameof(MatchStateMachineBootstrap)}: StateMachine has no states.",
                 this
             );
+            return;
+        }
+
+        if (stateMachine.currentState.stateId >= 0)
+        {
+            if (forceEnterCurrentState)
+            {
+                states[0].Enter(true);
+                FlowGuard.Info(FlowGuard.TagSetup, "Match state machine entered first state after dedicated allocation.", this);
+            }
+
             return;
         }
 

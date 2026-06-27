@@ -11,6 +11,7 @@ public sealed class GlobalLoadingController : MonoBehaviour
     [Header("Scenes")]
     [SerializeField] private string mainMenuSceneName = "MainMenu";
     [SerializeField] private string authGateSceneName = "AuthGate";
+    [SerializeField] private string dedicatedServerSceneName = "GameScene";
 
     [Header("UI References")]
     public TMP_Text connectionStatusText;
@@ -23,6 +24,14 @@ public sealed class GlobalLoadingController : MonoBehaviour
 
     private void Awake()
     {
+        if (DedicatedServerBootstrap.IsDedicatedServerRuntime)
+        {
+            Debug.Log("[GlobalLoadingController] Dedicated server runtime detected. Loading dedicated server scene...");
+            enabled = false;
+            SceneManager.LoadScene(dedicatedServerSceneName);
+            return;
+        }
+
         // Ensure services exist
         connectionService = FindAnyObjectByType<BackendConnectionService>();
         if (connectionService == null)
@@ -37,6 +46,9 @@ public sealed class GlobalLoadingController : MonoBehaviour
 
     private void Start()
     {
+        if (DedicatedServerBootstrap.IsDedicatedServerRuntime)
+            return;
+
         if (retryButton != null)
         {
             retryButton.onClick.RemoveAllListeners();

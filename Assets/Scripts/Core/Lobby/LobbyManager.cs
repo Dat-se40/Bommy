@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
@@ -8,6 +10,8 @@ using UnityEngine;
 /// </summary>
 public class LobbyManager : MonoBehaviour
 {
+    const float MatchServerStatusPollIntervalSeconds = 0.5f;
+
     public static LobbyManager Instance { get; private set; }
 
     public event Action<ListRoomsResponse> RoomsListed;
@@ -20,6 +24,9 @@ public class LobbyManager : MonoBehaviour
     readonly List<FriendRequestDto> mockFriendRequests = new();
 
     LobbyRoomDto currentRoom;
+    CancellationTokenSource matchServerConnectCts;
+    bool isConnectingToMatchServer;
+    string connectingAllocationId;
     NakamaLobbyService LobbyService => NakamaLobbyService.EnsureExists();
 
     public LobbyRoomDto CurrentRoom => currentRoom;
@@ -41,6 +48,10 @@ public class LobbyManager : MonoBehaviour
 
     void OnDestroy()
     {
+        matchServerConnectCts?.Cancel();
+        matchServerConnectCts?.Dispose();
+        matchServerConnectCts = null;
+
         if (Instance == this)
             Instance = null;
 
@@ -170,11 +181,17 @@ public class LobbyManager : MonoBehaviour
             return false;
         }
 
+        if (IsLobbyStarting(currentRoom))
+        {
+            error = "Match is already starting.";
+            return false;
+        }
+
         _ = StartMatchAsync();
         return true;
     }
 
-    async System.Threading.Tasks.Task StartMatchAsync()
+    async Task StartMatchAsync()
     {
         try
         {
@@ -185,17 +202,13 @@ public class LobbyManager : MonoBehaviour
             });
 
             currentRoom.status = response.status;
+            currentRoom.matchId = string.IsNullOrWhiteSpace(response.matchId) ? currentRoom.matchId : response.matchId;
+            currentRoom.allocationId = response.allocationId;
+            currentRoom.serverStatus = response.serverStatus;
             FlowGuard.Info(FlowGuard.TagSetup, $"StartMatch room={currentRoom.roomId} match={response.matchId} status={response.status}");
 
-            if (!string.IsNullOrWhiteSpace(response.matchId) && !string.IsNullOrWhiteSpace(response.allocationId))
-            {
-                MatchServerStatus serverStatus = await MatchServerService.EnsureExists().WaitForReadyAsync(
-                    response.matchId,
-                    response.allocationId,
-                    System.Threading.CancellationToken.None
-                );
-                await MatchConnectionService.EnsureExists().ConnectAsync(serverStatus);
-            }
+            CurrentRoomChanged?.Invoke(currentRoom);
+            TryBeginMatchServerConnect(currentRoom);
         }
         catch (Exception exception)
         {
@@ -346,7 +359,7 @@ public class LobbyManager : MonoBehaviour
     void ApplyCurrentRoom(LobbyRoomDto room, bool isHost)
     {
         currentRoom = room;
-        GameSession.SetRoom(room.roomName, room.mapId, room.maxPlayers, room.mapName);
+        GameSession.SetRoom(room.roomId, room.roomName, room.mapId, room.maxPlayers, room.mapName);
     }
 
     void OnServiceCurrentRoomUpdated(LobbyRoomDto room)
@@ -361,6 +374,7 @@ public class LobbyManager : MonoBehaviour
         ApplyCurrentRoom(room, room.hostPlayerId == AuthService.GetOrCreate().Session?.UserId);
         CurrentRoomChanged?.Invoke(room);
         RequestRoomList();
+        TryBeginMatchServerConnect(room);
     }
 
     public void ReplayCurrentRoom()
@@ -370,10 +384,78 @@ public class LobbyManager : MonoBehaviour
 
     public void ClearCurrentRoom()
     {
+        if (IsLobbyStarting(currentRoom) || isConnectingToMatchServer)
+        {
+            Fail("Match is starting.");
+            return;
+        }
+
         currentRoom = null;
         _ = LobbyService.LeaveCurrentRoomAsync();
         CurrentRoomChanged?.Invoke(null);
         RequestRoomList();
+    }
+
+    void TryBeginMatchServerConnect(LobbyRoomDto room)
+    {
+        if (room == null || !IsLobbyStarting(room))
+            return;
+
+        if (string.IsNullOrWhiteSpace(room.matchId) || string.IsNullOrWhiteSpace(room.allocationId))
+            return;
+
+        if (isConnectingToMatchServer)
+        {
+            if (string.Equals(connectingAllocationId, room.allocationId, StringComparison.Ordinal))
+                return;
+
+            FlowGuard.Info(
+                FlowGuard.TagSetup,
+                $"Ignoring lobby server allocation {room.allocationId}; already connecting to {connectingAllocationId}"
+            );
+            return;
+        }
+
+        matchServerConnectCts?.Cancel();
+        matchServerConnectCts?.Dispose();
+        matchServerConnectCts = new CancellationTokenSource();
+        isConnectingToMatchServer = true;
+        connectingAllocationId = room.allocationId;
+
+        FlowGuard.Info(
+            FlowGuard.TagSetup,
+            $"Lobby match server connect begin room={room.roomId} match={room.matchId} allocation={room.allocationId} status={room.serverStatus}"
+        );
+
+        _ = WaitForLobbyMatchServerAndConnectAsync(room.matchId, room.allocationId, matchServerConnectCts.Token);
+    }
+
+    async Task WaitForLobbyMatchServerAndConnectAsync(string matchId, string allocationId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            MatchServerStatus serverStatus = await MatchServerService.EnsureExists().WaitForReadyAsync(
+                matchId,
+                allocationId,
+                cancellationToken,
+                MatchServerStatusPollIntervalSeconds
+            );
+            await MatchConnectionService.EnsureExists().ConnectAsync(serverStatus, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (Exception exception)
+        {
+            isConnectingToMatchServer = false;
+            connectingAllocationId = null;
+            Fail(exception.Message);
+        }
+    }
+
+    static bool IsLobbyStarting(LobbyRoomDto room)
+    {
+        return room != null && string.Equals(room.status, "Starting", StringComparison.OrdinalIgnoreCase);
     }
 
     #endregion

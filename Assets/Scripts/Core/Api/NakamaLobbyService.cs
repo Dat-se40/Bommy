@@ -194,6 +194,8 @@ public sealed class NakamaLobbyService : MonoBehaviour
         if (CurrentRoom != null && response != null && CurrentRoom.matchId == response.matchId)
         {
             CurrentRoom.status = response.status;
+            CurrentRoom.allocationId = response.allocationId;
+            CurrentRoom.serverStatus = response.serverStatus;
             CurrentRoomUpdated?.Invoke(CurrentRoom);
         }
 

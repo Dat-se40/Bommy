@@ -12,6 +12,9 @@ public sealed class MainMenuBootstrapper : MonoBehaviour
 
     private async void Awake()
     {
+        if (DedicatedServerBootstrap.IsDedicatedServerRuntime)
+            return;
+
         AuthService auth = AuthService.GetOrCreate();
 
         if (auth.IsAuthenticated)

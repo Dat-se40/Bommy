@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -8,7 +9,10 @@ using UnityEngine;
 /// </summary>
 public class MapLoader : MonoBehaviour
 {
+    static MapLoader instance;
+
     public static event Action<MapRefs> MapReady;
+    public static MapLoader Instance => instance;
 
     [Serializable]
     public class MapEntry
@@ -34,6 +38,19 @@ public class MapLoader : MonoBehaviour
     public MapRefs CurrentMap => currentMap;
     public int LoadedMapId => loadedMapId;
 
+    void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Debug.LogWarning($"{nameof(MapLoader)}: duplicate on '{name}'.", this);
+            return;
+        }
+
+        instance = this;
+        LevelRuntime.Clear();
+        ValidateMapEntries();
+    }
+
     void OnEnable()
     {
         bindBroadcastRoutine = StartCoroutine(BindBroadcastWhenReady());
@@ -48,6 +65,12 @@ public class MapLoader : MonoBehaviour
         }
 
         UnsubscribeBroadcast();
+    }
+
+    void OnDestroy()
+    {
+        if (instance == this)
+            instance = null;
     }
 
     IEnumerator BindBroadcastWhenReady()
@@ -103,14 +126,31 @@ public class MapLoader : MonoBehaviour
 
         MapEntry entry = FindMapEntry(selectedMapId);
 
-        if (entry?.mapPrefab == null && maps.Length > 0)
-            entry = maps[0];
-
-        if (entry == null || entry.mapPrefab == null)
+        if (entry == null)
         {
             FlowGuard.Error(
                 FlowGuard.TagGameplay,
-                $"MapLoader: không tìm thấy map prefab cho id={selectedMapId}.",
+                $"MapLoader: no map entry configured for id={selectedMapId}.",
+                this
+            );
+            return;
+        }
+
+        if (entry.mapPrefab == null)
+        {
+            FlowGuard.Error(
+                FlowGuard.TagGameplay,
+                $"MapLoader: map id={selectedMapId} has no prefab configured.",
+                this
+            );
+            return;
+        }
+
+        if (entry.levelConfig == null)
+        {
+            FlowGuard.Error(
+                FlowGuard.TagGameplay,
+                $"MapLoader: map id={selectedMapId} has no LevelConfig configured.",
                 this
             );
             return;
@@ -122,15 +162,15 @@ public class MapLoader : MonoBehaviour
         currentMap = Instantiate(entry.mapPrefab, mapParent);
         currentMap.transform.SetParent(mapParent, false);
         currentMap.transform.localPosition = Vector3.zero;
-        currentMap.currentMapId = selectedMapId;
-        loadedMapId = selectedMapId;
+        currentMap.currentMapId = entry.mapId;
+        loadedMapId = entry.mapId;
 
         SetupSystems(currentMap);
         MapReady?.Invoke(currentMap);
 
         FlowGuard.Info(
             FlowGuard.TagGameplay,
-            $"Map loaded id={selectedMapId} prefab={entry.mapPrefab.name}",
+            $"Map loaded id={entry.mapId} config={entry.levelConfig.levelId} prefab={entry.mapPrefab.name}",
             this
         );
     }
@@ -162,6 +202,7 @@ public class MapLoader : MonoBehaviour
         Destroy(currentMap.gameObject);
         currentMap = null;
         loadedMapId = MatchPhaseBroadcast.NoMapId;
+        LevelRuntime.Clear();
     }
 
     MapEntry FindMapEntry(int id)
@@ -176,6 +217,115 @@ public class MapLoader : MonoBehaviour
         }
 
         return null;
+    }
+
+    void ValidateMapEntries()
+    {
+        if (maps == null || maps.Length == 0)
+        {
+            Debug.LogWarning("MapLoader has no maps configured.", this);
+            return;
+        }
+
+        HashSet<int> seenIds = new HashSet<int>();
+
+        for (int i = 0; i < maps.Length; i++)
+        {
+            MapEntry entry = maps[i];
+
+            if (entry == null)
+            {
+                Debug.LogWarning($"MapLoader map entry {i} is null.", this);
+                continue;
+            }
+
+            if (entry.mapId <= 0)
+                Debug.LogWarning($"MapLoader map entry {i} has invalid mapId={entry.mapId}.", this);
+
+            if (!seenIds.Add(entry.mapId))
+                Debug.LogWarning($"MapLoader has duplicate mapId={entry.mapId}.", this);
+
+            if (entry.mapPrefab == null)
+                Debug.LogWarning($"MapLoader mapId={entry.mapId} has no prefab.", this);
+
+            if (entry.levelConfig == null)
+            {
+                Debug.LogWarning($"MapLoader mapId={entry.mapId} has no LevelConfig.", this);
+                continue;
+            }
+
+            if (TryParseMapId(entry.levelConfig.levelId, out int configMapId)
+                && configMapId != entry.mapId)
+            {
+                Debug.LogWarning(
+                    $"MapLoader mapId={entry.mapId} does not match LevelConfig.levelId={entry.levelConfig.levelId}.",
+                    this
+                );
+            }
+        }
+    }
+
+    static bool TryParseMapId(string levelId, out int mapId)
+    {
+        mapId = MatchPhaseBroadcast.NoMapId;
+
+        if (string.IsNullOrWhiteSpace(levelId))
+            return false;
+
+        const string Prefix = "map_";
+        string trimmed = levelId.Trim();
+
+        if (!trimmed.StartsWith(Prefix, StringComparison.OrdinalIgnoreCase))
+            return false;
+
+        return int.TryParse(trimmed.Substring(Prefix.Length), out mapId) && mapId > 0;
+    }
+
+    public bool TryResolveRandomMapId(out int mapId)
+    {
+        mapId = MatchPhaseBroadcast.NoMapId;
+
+        int[] mapIds = GetAvailableMapIds();
+        if (mapIds.Length == 0)
+            return false;
+
+        mapId = mapIds[UnityEngine.Random.Range(0, mapIds.Length)];
+        return true;
+    }
+
+    public int[] GetAvailableMapIds()
+    {
+        if (maps == null || maps.Length == 0)
+            return Array.Empty<int>();
+
+        int count = 0;
+        for (int i = 0; i < maps.Length; i++)
+        {
+            if (IsUsableMapEntry(maps[i]))
+                count++;
+        }
+
+        if (count <= 0)
+            return Array.Empty<int>();
+
+        int[] ids = new int[count];
+        int index = 0;
+
+        for (int i = 0; i < maps.Length; i++)
+        {
+            if (IsUsableMapEntry(maps[i]))
+                ids[index++] = maps[i].mapId;
+        }
+
+        return ids;
+    }
+
+    static bool IsUsableMapEntry(MapEntry entry)
+    {
+        return entry != null
+            && entry.mapId > 0
+            && entry.mapPrefab != null
+            && entry.levelConfig != null;
     }
 
     void SetupSystems(MapRefs map)

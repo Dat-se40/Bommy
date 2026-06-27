@@ -13,6 +13,9 @@ public class MatchSetupBootstrap : MonoBehaviour
         if (characterDatabase != null)
             MatchSessionBroker.SetCharacterCatalog(characterDatabase);
 
+        if (DedicatedServerBootstrap.IsDedicatedServerRuntime)
+            return;
+
         MatchSessionBroker.LoadLocalFromProgression(characterDatabase);
     }
 }

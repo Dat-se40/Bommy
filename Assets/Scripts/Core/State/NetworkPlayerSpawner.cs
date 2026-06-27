@@ -1,4 +1,5 @@
-﻿using PurrNet;
+using System.Collections.Generic;
+using PurrNet;
 using UnityEngine;
 
 public class NetworkPlayerSpawner : NetworkBehaviour
@@ -10,6 +11,8 @@ public class NetworkPlayerSpawner : NetworkBehaviour
     [SerializeField] private GameObject players;
     [SerializeField] private MapRefs mapRefs;
     readonly SyncList<PlayerController> playerControllers = new();
+    readonly List<PlayerID> pendingSpawnPlayers = new();
+    readonly List<PlayerID> spawnedPlayers = new();
 
     protected override void OnSpawned()
     {
@@ -19,13 +22,18 @@ public class NetworkPlayerSpawner : NetworkBehaviour
             MatchSessionBroker.SetCharacterCatalog(characterDatabase);
 
         networkManager.onPlayerJoined += SpawnPlayer;
+        networkManager.onPlayerLeft += OnPlayerLeft;
         MapLoader.MapReady += OnMapReady;
         TryResolveSpawnPoints();
+
+        if (isServer && networkManager.players != null)
+            MatchRoundCoordinator.Instance?.NotifyConnectedPlayerCountChanged(networkManager.players.Count);
     }
 
     protected override void OnDespawned()
     {
         networkManager.onPlayerJoined -= SpawnPlayer;
+        networkManager.onPlayerLeft -= OnPlayerLeft;
         MapLoader.MapReady -= OnMapReady;
         base.OnDespawned();
     }
@@ -34,6 +42,7 @@ public class NetworkPlayerSpawner : NetworkBehaviour
     {
         mapRefs = map;
         TryResolveSpawnPoints();
+        TrySpawnPendingPlayers();
     }
 
     /// <summary>
@@ -69,6 +78,25 @@ public class NetworkPlayerSpawner : NetworkBehaviour
         if (!asServer)
             return;
 
+        MatchRoundCoordinator.Instance?.NotifyConnectedPlayerCountChanged(networkManager.players?.Count ?? 0);
+        TrySpawnPlayer(player);
+    }
+
+    void OnPlayerLeft(PlayerID player, bool asServer)
+    {
+        if (!asServer)
+            return;
+
+        pendingSpawnPlayers.Remove(player);
+        spawnedPlayers.Remove(player);
+        MatchRoundCoordinator.Instance?.NotifyConnectedPlayerCountChanged(networkManager.players?.Count ?? 0);
+    }
+
+    bool TrySpawnPlayer(PlayerID player)
+    {
+        if (spawnedPlayers.Contains(player))
+            return true;
+
         Debug.Log($"[FLOW:NETWORK] SpawnPlayer start id={player.id}");
 
         PlayerMatchProfile profile = ResolveSpawnProfile(player);
@@ -76,24 +104,25 @@ public class NetworkPlayerSpawner : NetworkBehaviour
         if (!FlowGuard.IsValidSpawnProfile(profile, out string invalidReason))
         {
             FlowGuard.Error(FlowGuard.TagNetwork, $"Spawn aborted: {invalidReason}", this);
-            return;
+            return false;
         }
 
         GameObject prefab = MatchSessionBroker.ResolvePlayerPrefab(profile, fallbackPlayerPrefab);
 
         if (!FlowGuard.RequireNotNull(prefab, FlowGuard.TagNetwork, "Player prefab", this))
-            return;
+            return false;
 
         int playerCount = playerControllers.Count;
 
         if (!TryResolveSpawnPoints())
         {
-            FlowGuard.Error(
+            QueuePendingSpawn(player);
+            FlowGuard.Info(
                 FlowGuard.TagNetwork,
-                "spawnPoints trống — MapLoader chưa load map hoặc map prefab thiếu SpawnPoints.",
+                "Spawn delayed until map spawn points are ready.",
                 this
             );
-            return;
+            return false;
         }
 
         int spawnIndex = Mathf.Clamp(playerCount, 0, spawnPoints.Length - 1);
@@ -108,7 +137,7 @@ public class NetworkPlayerSpawner : NetworkBehaviour
         newPlayer.transform.SetParent(players.transform);
 
         if (!newPlayer.TryGetComponent(out PlayerController playerController))
-            return;
+            return false;
 
         playerController.GiveOwnership(player);
         networkManager.Spawn(newPlayer);
@@ -123,6 +152,27 @@ public class NetworkPlayerSpawner : NetworkBehaviour
             PlayerBoardHub.Instance.OnNetworkPlayerRegistered(profile);
 
         BroadcastPlayerBoardRegistration(profile);
+        spawnedPlayers.Add(player);
+        pendingSpawnPlayers.Remove(player);
+        return true;
+    }
+
+    void QueuePendingSpawn(PlayerID player)
+    {
+        if (pendingSpawnPlayers.Contains(player))
+            return;
+
+        pendingSpawnPlayers.Add(player);
+    }
+
+    void TrySpawnPendingPlayers()
+    {
+        if (!isServer || pendingSpawnPlayers.Count == 0)
+            return;
+
+        PlayerID[] snapshot = pendingSpawnPlayers.ToArray();
+        for (int i = 0; i < snapshot.Length; i++)
+            TrySpawnPlayer(snapshot[i]);
     }
 
     [ObserversRpc(runLocally: false)]
@@ -137,6 +187,9 @@ public class NetworkPlayerSpawner : NetworkBehaviour
         if (DedicatedMatchRuntime.TryCreateProfileForJoinedPlayer(player, characterDatabase, out PlayerMatchProfile dedicatedProfile))
             return dedicatedProfile;
 
+        if (DedicatedServerBootstrap.IsDedicatedServerRuntime)
+            return CreateDedicatedFallbackProfile(player);
+
         MatchSessionBroker.LoadLocalFromProgression(characterDatabase);
 
         PlayerMatchProfile profile = MatchSessionBroker.GetLocalPlayer();
@@ -146,4 +199,43 @@ public class NetworkPlayerSpawner : NetworkBehaviour
         return profile;
     }
 
+    PlayerMatchProfile CreateDedicatedFallbackProfile(PlayerID player)
+    {
+        CharacterDefinition definition = null;
+        int characterId = 1;
+        int catalogIndex = 0;
+
+        if (characterDatabase != null && characterDatabase.Count > 0)
+        {
+            definition = characterDatabase.GetByIndex(0);
+            if (definition != null)
+                characterId = definition.CharacterId;
+        }
+
+        PlayerMatchProfile profile = definition != null
+            ? PlayerMatchProfile.FromDefinition(
+                definition,
+                catalogIndex,
+                playerControllers.Count,
+                false,
+                "Player",
+                string.Empty
+            )
+            : new PlayerMatchProfile
+            {
+                slotIndex = playerControllers.Count,
+                characterId = characterId,
+                catalogIndex = catalogIndex,
+                displayName = "Player",
+                hp = 3,
+                bomb = 1,
+                speed = 4,
+                isLocal = false,
+                userId = string.Empty
+            };
+
+        profile.owner = player;
+        MatchSessionBroker.RegisterRemotePlayer(profile);
+        return profile;
+    }
 }

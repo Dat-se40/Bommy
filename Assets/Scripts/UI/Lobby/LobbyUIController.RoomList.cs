@@ -162,10 +162,12 @@ public partial class LobbyUIController
         if (room == null)
         {
             SetCurrentRoomEmpty();
+            ApplyLobbyLaunchLock(false);
             return;
         }
 
         ApplyCurrentRoomUi(room);
+        ApplyLobbyLaunchLock(!string.IsNullOrEmpty(room.status) && room.status == "Starting");
         CloseCreateRoomDialog();
         ClosePasswordDialog();
 
@@ -198,5 +200,23 @@ public partial class LobbyUIController
 
         if (currentRoomMaplbl != null)
             currentRoomMaplbl.text = "Map: " + room.mapName;
+    }
+
+    void ApplyLobbyLaunchLock(bool locked)
+    {
+        if (joinByRoomIdbtn != null)
+            joinByRoomIdbtn.interactable = !locked;
+
+        if (createRoombtn != null)
+            createRoombtn.interactable = !locked;
+
+        if (chooseCharbtn != null)
+            chooseCharbtn.interactable = !locked;
+
+        if (startbtn != null)
+            startbtn.interactable = !locked;
+
+        if (backbtn != null)
+            backbtn.interactable = !locked;
     }
 }

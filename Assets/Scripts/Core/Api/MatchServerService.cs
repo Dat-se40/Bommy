@@ -108,24 +108,6 @@ public sealed class MatchServerService : MonoBehaviour
         });
     }
 
-    public async Task<MatchServerAllocation> RequestForRandomMatchAsync(RandomQueueStatus queueStatus)
-    {
-        if (queueStatus == null)
-            throw new ArgumentNullException(nameof(queueStatus));
-
-        string matchId = !string.IsNullOrWhiteSpace(queueStatus.matchId)
-            ? queueStatus.matchId
-            : queueStatus.match?.matchId;
-
-        return await RequestAllocationAsync(new MatchServerRequest
-        {
-            source = "RandomQueue",
-            matchId = matchId,
-            roomId = queueStatus.match?.roomId,
-            maxPlayers = queueStatus.maxPlayers
-        });
-    }
-
     public async Task<MatchServerAllocation> RequestAllocationAsync(MatchServerRequest request)
     {
         if (request == null || string.IsNullOrWhiteSpace(request.matchId))
@@ -159,12 +141,46 @@ public sealed class MatchServerService : MonoBehaviour
         CancellationToken cancellationToken,
         float pollIntervalSeconds = 2f)
     {
+        float startTime = Time.realtimeSinceStartup;
+        string lastStatus = null;
+        int polls = 0;
+        Debug.LogFormat(
+            "[MatchServerService] Waiting for server ready matchId={0} allocationId={1} pollInterval={2:0.000}s",
+            matchId,
+            allocationId,
+            pollIntervalSeconds
+        );
+
         while (!cancellationToken.IsCancellationRequested)
         {
             MatchServerStatus status = await PollStatusAsync(matchId, allocationId);
+            polls++;
+
+            if (!string.Equals(lastStatus, status.status, StringComparison.OrdinalIgnoreCase))
+            {
+                Debug.LogFormat(
+                    "[MatchServerService] Server status={0} matchId={1} allocationId={2} elapsed={3:0.000}s polls={4}",
+                    status.status,
+                    status.matchId,
+                    status.allocationId,
+                    Time.realtimeSinceStartup - startTime,
+                    polls
+                );
+                lastStatus = status.status;
+            }
 
             if (status.IsReady)
+            {
+                Debug.LogFormat(
+                    "[MatchServerService] Server ready after {0:0.000}s polls={1} endpoint={2}:{3}/{4}",
+                    Time.realtimeSinceStartup - startTime,
+                    polls,
+                    status.host,
+                    status.port,
+                    status.protocol
+                );
                 return status;
+            }
 
             if (string.Equals(status.status, "Failed", StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException(string.IsNullOrWhiteSpace(status.errorMessage)

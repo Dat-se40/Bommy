@@ -12296,10 +12296,10 @@ MonoBehaviour:
   roomNameInput: {fileID: 1208892073}
   mapDropdown: {fileID: 645026348}
   mapOptions:
-  - displayName: Class Garden
+  - displayName: Garden
   - displayName: Summer
   - displayName: Dungeon
-  - displayName: Winner
+  - displayName: Winter
   maxPlayersDropdown: {fileID: 1971440981}
   passwordInput: {fileID: 1655471953}
   currentRoomNamelbl: {fileID: 1624755185}

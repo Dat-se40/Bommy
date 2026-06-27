@@ -867,6 +867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b542fb50933428349bad02e3d3e3707e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AuthService
+  scheme: http
   host: 127.0.0.1
   port: 7350
   serverKey: defaultkey

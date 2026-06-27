@@ -56,9 +56,21 @@ public sealed class MatchConnectionService : MonoBehaviour
         if (status == null || !status.IsReady)
             throw new InvalidOperationException("Dedicated server is not ready.");
 
+        float startTime = Time.realtimeSinceStartup;
+        Debug.LogFormat(
+            "[MatchConnectionService] Connect begin matchId={0} allocationId={1} endpoint={2}:{3}/{4}",
+            status.matchId,
+            status.allocationId,
+            status.host,
+            status.port,
+            status.protocol
+        );
+
         await EnsureGameSceneLoadedAsync(cancellationToken);
+        LogElapsed("GameScene ready", startTime);
 
         NetworkManager manager = await WaitForNetworkManagerAsync(cancellationToken);
+        LogElapsed("NetworkManager ready", startTime);
         UDPTransport transport = manager.transport as UDPTransport;
 
         if (transport == null)
@@ -69,9 +81,16 @@ public sealed class MatchConnectionService : MonoBehaviour
 
         transport.address = status.host;
         transport.serverPort = (ushort)status.port;
+        Debug.LogFormat(
+            "[MatchConnectionService] Starting PurrNet client endpoint={0}:{1} previousState={2}",
+            transport.address,
+            transport.serverPort,
+            manager.clientState
+        );
         manager.StartClient();
 
         await WaitForClientConnectedAsync(manager, cancellationToken);
+        LogElapsed("PurrNet client connected", startTime);
     }
 
     public Task DisconnectAsync()
@@ -88,6 +107,8 @@ public sealed class MatchConnectionService : MonoBehaviour
         if (activeScene.IsValid() && activeScene.name == gameSceneName)
             return;
 
+        float sceneStart = Time.realtimeSinceStartup;
+        Debug.Log("[MatchConnectionService] Loading " + gameSceneName + " before connecting to dedicated server.");
         AsyncOperation operation = SceneManager.LoadSceneAsync(gameSceneName);
         if (operation == null)
             throw new InvalidOperationException("Unable to load " + gameSceneName + ".");
@@ -97,6 +118,12 @@ public sealed class MatchConnectionService : MonoBehaviour
             cancellationToken.ThrowIfCancellationRequested();
             await Task.Yield();
         }
+
+        Debug.LogFormat(
+            "[MatchConnectionService] Loaded {0} in {1:0.000}s.",
+            gameSceneName,
+            Time.realtimeSinceStartup - sceneStart
+        );
     }
 
     static async Task<NetworkManager> WaitForNetworkManagerAsync(CancellationToken cancellationToken)
@@ -134,5 +161,14 @@ public sealed class MatchConnectionService : MonoBehaviour
         }
 
         throw new TimeoutException("Timed out connecting to dedicated server.");
+    }
+
+    static void LogElapsed(string step, float startTime)
+    {
+        Debug.LogFormat(
+            "[MatchConnectionService] {0} after {1:0.000}s.",
+            step,
+            Time.realtimeSinceStartup - startTime
+        );
     }
 }

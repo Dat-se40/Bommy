@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Winter
   m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
   levelId: map_04
-  displayName: Classic Garden
+  displayName: Winter
   destructibleDrops:
     dropChance: 1
     entries:

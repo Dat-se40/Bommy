@@ -3,7 +3,7 @@
 /// </summary>
 public static class MatchTiming
 {
-    public const float PrepSeconds = 5f;
+    public const float PrepSeconds = 30f;
     public const float GameplaySeconds = 5f;
     public const float ZoneShrinkSeconds = 120f;
     public const float TotalGameplaySeconds = GameplaySeconds + ZoneShrinkSeconds;

@@ -28,10 +28,12 @@ public class RandomMatchController : MonoBehaviour
     [SerializeField] private Button startbtn;
 
     [Header("Queue")]
-    [SerializeField] private int mapId = 1;
-    [SerializeField] private string mapName = "Classic Garden";
+    [SerializeField] private int mapId = 0;
+    [SerializeField] private string mapName = "Random";
     [SerializeField] private string region = "Local";
     [SerializeField] private float pollIntervalSeconds = 2f;
+    [SerializeField] private float serverStatusPollIntervalSeconds = 0.5f;
+    [SerializeField] private float serverReadyTimeoutSeconds = 60f;
 
     [Header("Avatars")]
     [SerializeField] private Sprite defaultSearchingAvatar;
@@ -69,8 +71,8 @@ public class RandomMatchController : MonoBehaviour
         if (startbtn != null)
         {
             startbtn.onClick.RemoveAllListeners();
-            startbtn.onClick.AddListener(AcceptMatch);
             startbtn.interactable = false;
+            startbtn.gameObject.SetActive(false);
         }
     }
 
@@ -106,6 +108,7 @@ public class RandomMatchController : MonoBehaviour
             });
 
             ticketId = status.ticketId;
+            Debug.Log("[RandomMatchController] Joined random queue ticket=" + ticketId + " status=" + status.status, this);
             ApplyStatus(status);
             polling = true;
             _ = PollLoopAsync();
@@ -118,6 +121,8 @@ public class RandomMatchController : MonoBehaviour
 
     async Task PollLoopAsync()
     {
+        Debug.Log("[RandomMatchController] Poll loop started ticket=" + ticketId + " interval=" + pollIntervalSeconds, this);
+
         while (polling && !string.IsNullOrEmpty(ticketId))
         {
             await Task.Delay(TimeSpan.FromSeconds(pollIntervalSeconds));
@@ -130,8 +135,11 @@ public class RandomMatchController : MonoBehaviour
                 RandomQueueStatus status = await RandomQueueService.EnsureExists().PollQueueAsync(ticketId);
                 ApplyStatus(status);
 
-                if (status.status == "MatchFound")
+                if (status.status == "Cancelled" ||
+                    status.status == "Expired")
+                {
                     polling = false;
+                }
             }
             catch (Exception exception)
             {
@@ -154,20 +162,30 @@ public class RandomMatchController : MonoBehaviour
         {
             if (status.status == "Accepted")
             {
-                SetStatus(string.IsNullOrWhiteSpace(status.serverStatus)
-                    ? "Match accepted. Waiting for all players..."
-                    : "Server " + status.serverStatus + "...");
-                BeginServerFlow(status);
+                if (string.IsNullOrWhiteSpace(status.allocationId))
+                {
+                    SetStatus("Match locked. Waiting for server allocation...");
+                }
+                else
+                {
+                    SetStatus(string.IsNullOrWhiteSpace(status.serverStatus)
+                        ? "Match locked. Waiting for server..."
+                        : "Server " + status.serverStatus + "...");
+                    BeginServerFlow(status);
+                }
             }
             else
             {
-                SetStatus("Match found! " + status.playerCount + "/" + status.maxPlayers + " players ready.");
+                SetStatus("Match found. Locking players...");
             }
 
             ApplyMatchedPlayers(status.match);
 
             if (startbtn != null)
-                startbtn.interactable = status.status == "MatchFound";
+                startbtn.interactable = false;
+
+            if (cancelbtn != null)
+                cancelbtn.interactable = false;
 
             return;
         }
@@ -177,6 +195,18 @@ public class RandomMatchController : MonoBehaviour
             SetStatus("Queue cancelled.");
             if (startbtn != null)
                 startbtn.interactable = false;
+            if (cancelbtn != null)
+                cancelbtn.interactable = false;
+            return;
+        }
+
+        if (status.status == "Expired")
+        {
+            SetStatus("Previous match finished. Queue again to find a new match.");
+            if (startbtn != null)
+                startbtn.interactable = false;
+            if (cancelbtn != null)
+                cancelbtn.interactable = false;
             return;
         }
 
@@ -185,6 +215,9 @@ public class RandomMatchController : MonoBehaviour
 
         if (startbtn != null)
             startbtn.interactable = false;
+
+        if (cancelbtn != null)
+            cancelbtn.interactable = true;
     }
 
     void ApplyMatchedPlayers(RandomMatchDto match)
@@ -291,20 +324,51 @@ public class RandomMatchController : MonoBehaviour
 
     public async void CancelMatch()
     {
-        polling = false;
+        if (requestInProgress)
+            return;
+
+        requestInProgress = true;
+
+        if (cancelbtn != null)
+            cancelbtn.interactable = false;
 
         if (!string.IsNullOrEmpty(ticketId))
         {
             try
             {
-                await RandomQueueService.EnsureExists().CancelQueueAsync(ticketId);
+                RandomQueueStatus status = await RandomQueueService.EnsureExists().CancelQueueAsync(ticketId);
+                ApplyStatus(status);
+
+                if (status.status == "Cancelled")
+                {
+                    polling = false;
+                    SceneManager.LoadScene(characterSelectSceneName);
+                    return;
+                }
             }
             catch (Exception exception)
             {
                 Debug.LogWarning("[RandomMatchController] Cancel queue failed: " + exception.Message, this);
+                RandomQueueStatus status = RandomQueueService.Instance != null
+                    ? RandomQueueService.Instance.CurrentStatus
+                    : null;
+
+                if (status != null)
+                    ApplyStatus(status);
+
+                SetStatus(string.IsNullOrWhiteSpace(exception.Message)
+                    ? "Cancel failed. Waiting for match..."
+                    : exception.Message);
             }
+            finally
+            {
+                requestInProgress = false;
+            }
+
+            return;
         }
 
+        polling = false;
         SceneManager.LoadScene(characterSelectSceneName);
     }
 
@@ -338,7 +402,12 @@ public class RandomMatchController : MonoBehaviour
         if (serverFlowStarted || string.IsNullOrEmpty(ticketId))
             return;
 
+        if (status == null || string.IsNullOrWhiteSpace(status.allocationId))
+            return;
+
+        ApplyGameSession(status);
         serverFlowStarted = true;
+        polling = false;
         serverFlowCts?.Cancel();
         serverFlowCts?.Dispose();
         serverFlowCts = new CancellationTokenSource();
@@ -351,35 +420,64 @@ public class RandomMatchController : MonoBehaviour
         {
             RandomQueueStatus status = initialStatus;
 
-            while (!cancellationToken.IsCancellationRequested && string.IsNullOrWhiteSpace(status.allocationId))
-            {
-                await Task.Delay(TimeSpan.FromSeconds(pollIntervalSeconds), cancellationToken);
-                status = await RandomQueueService.EnsureExists().PollQueueAsync(ticketId);
-                ApplyStatusWithoutRestartingServerFlow(status);
-            }
-
             if (string.IsNullOrWhiteSpace(status.matchId))
                 throw new InvalidOperationException("Match server allocation did not include a match id.");
 
+            MatchServerAllocation allocation = new MatchServerAllocation
+            {
+                success = true,
+                allocationId = status.allocationId,
+                matchId = status.matchId,
+                source = "RandomQueue",
+                status = status.serverStatus
+            };
+
+            if (string.IsNullOrWhiteSpace(allocation.allocationId))
+                throw new InvalidOperationException("Match server allocation did not include an allocation id.");
+
             SetStatus("Starting dedicated server...");
+            using CancellationTokenSource timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            timeoutCts.CancelAfter(TimeSpan.FromSeconds(Mathf.Max(5f, serverReadyTimeoutSeconds)));
+
             MatchServerStatus serverStatus = await MatchServerService.EnsureExists().WaitForReadyAsync(
-                status.matchId,
-                status.allocationId,
-                cancellationToken,
-                pollIntervalSeconds
+                allocation.matchId,
+                allocation.allocationId,
+                timeoutCts.Token,
+                serverStatusPollIntervalSeconds
             );
 
             SetStatus("Connecting to match...");
-            await MatchConnectionService.EnsureExists().ConnectAsync(serverStatus, cancellationToken);
+            await MatchConnectionService.EnsureExists().ConnectAsync(serverStatus, timeoutCts.Token);
         }
         catch (OperationCanceledException)
         {
+            if (!cancellationToken.IsCancellationRequested)
+            {
+                SetError("Timed out waiting for the dedicated server.");
+                serverFlowStarted = false;
+            }
         }
         catch (Exception exception)
         {
             SetError(exception.Message);
             serverFlowStarted = false;
         }
+    }
+
+    void ApplyGameSession(RandomQueueStatus status)
+    {
+        string roomId = status.match != null ? status.match.roomId : string.Empty;
+
+        if (string.IsNullOrWhiteSpace(roomId))
+            roomId = status.matchId;
+
+        GameSession.SetRoom(
+            roomId,
+            "Random Match",
+            mapId,
+            status.maxPlayers > 0 ? status.maxPlayers : 4,
+            string.IsNullOrWhiteSpace(mapName) ? "Random" : mapName
+        );
     }
 
     void ApplyStatusWithoutRestartingServerFlow(RandomQueueStatus status)

@@ -42,6 +42,9 @@ public sealed class BackendConnectionService : MonoBehaviour
 
     public async Task<BackendConnectionResult> CheckBackendAsync()
     {
+        if (DedicatedServerBootstrap.IsDedicatedServerRuntime)
+            return BackendConnectionResult.SuccessResult();
+
         AuthService authService = AuthService.GetOrCreate();
 
         try
@@ -63,6 +66,9 @@ public sealed class BackendConnectionService : MonoBehaviour
 
     public async Task<BackendConnectionResult> WaitForBackendAsync(CancellationToken token)
     {
+        if (DedicatedServerBootstrap.IsDedicatedServerRuntime)
+            return BackendConnectionResult.SuccessResult();
+
         int attempt = 0;
         float delay = 0.5f; // Starting delay
 

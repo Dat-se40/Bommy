@@ -28,11 +28,14 @@ services:
       - "-ecx"
       - >
         /nakama/nakama migrate up --database.address postgres:localdb@postgres:5432/nakama &&
-        exec /nakama/nakama --config /nakama/data/local.yml --database.address postgres:localdb@postgres:5432/nakama
+        exec /nakama/data/start-nakama.sh --database.address postgres:localdb@postgres:5432/nakama
     restart: unless-stopped
     environment:
-      MATCH_SERVER_PROVIDER: ${MATCH_SERVER_PROVIDER:-LocalPool}
+      MATCH_SERVER_PROVIDER: ${MATCH_SERVER_PROVIDER:-LocalDev}
+      BOMMY_LOCALDEV_ORCHESTRATION: ${BOMMY_LOCALDEV_ORCHESTRATION:-1}
+      BOMMY_RANDOM_QUEUE_REQUIRED_PLAYERS: ${BOMMY_RANDOM_QUEUE_REQUIRED_PLAYERS:-4}
       BOMMY_SERVER_SECRET: ${BOMMY_SERVER_SECRET:-dev-local-secret}
+      BOMMY_NAKAMA_SCHEME: ${BOMMY_NAKAMA_SCHEME:-http}
       BOMMY_NAKAMA_HOST: ${BOMMY_NAKAMA_HOST:-127.0.0.1}
       BOMMY_NAKAMA_PORT: ${BOMMY_NAKAMA_PORT:-7350}
       BOMMY_NAKAMA_SERVER_KEY: ${BOMMY_NAKAMA_SERVER_KEY:-defaultkey}

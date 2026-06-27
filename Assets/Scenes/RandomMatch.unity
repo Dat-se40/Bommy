@@ -5534,8 +5534,8 @@ MonoBehaviour:
     background: {fileID: 0}
   cancelbtn: {fileID: 1966686831}
   startbtn: {fileID: 517149485}
-  mapId: 1
-  mapName: Classic Garden
+  mapId: 0
+  mapName: Random
   region: Local
   pollIntervalSeconds: 2
   defaultSearchingAvatar: {fileID: 840282090, guid: 8f8b1e3b8d8a9ec49aac1bd7bd425198, type: 3}

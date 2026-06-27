@@ -6,6 +6,6 @@ watchPatterns = [
 ]
 
 [deploy]
-startCommand = "/bin/sh -ec '/nakama/nakama migrate up --database.address \"$PGUSER:$PGPASSWORD@$PGHOST:$PGPORT/$PGDATABASE?sslmode=require\" && exec /nakama/nakama --config /nakama/data/local.yml --database.address \"$PGUSER:$PGPASSWORD@$PGHOST:$PGPORT/$PGDATABASE?sslmode=require\" --console.username \"$NAKAMA_CONSOLE_USERNAME\" --console.password \"$NAKAMA_CONSOLE_PASSWORD\" --console.signing_key \"$NAKAMA_CONSOLE_SIGNING_KEY\"'"
+startCommand = "/bin/sh -ec '/nakama/nakama migrate up --database.address \"$PGUSER:$PGPASSWORD@$PGHOST:$PGPORT/$PGDATABASE?sslmode=require\" && exec /nakama/data/start-nakama.sh --database.address \"$PGUSER:$PGPASSWORD@$PGHOST:$PGPORT/$PGDATABASE?sslmode=require\" --console.username \"$NAKAMA_CONSOLE_USERNAME\" --console.password \"$NAKAMA_CONSOLE_PASSWORD\" --console.signing_key \"$NAKAMA_CONSOLE_SIGNING_KEY\"'"
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
