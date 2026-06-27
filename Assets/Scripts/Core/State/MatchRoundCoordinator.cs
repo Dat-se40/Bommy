@@ -17,6 +17,7 @@ public sealed class MatchRoundCoordinator : MonoBehaviour
     bool cancellationStarted;
     bool gameplayStarted;
     int connectedPlayerCount;
+    float waitingStartTime;
 
     public static MatchRoundCoordinator Instance => instance;
 
@@ -72,6 +73,22 @@ public sealed class MatchRoundCoordinator : MonoBehaviour
 
         PublishWaitingState();
         TryStartWhenReady();
+
+        if (DedicatedMatchRuntime.HasLaunchConfig)
+        {
+            if (waitingStartTime == 0f)
+                waitingStartTime = Time.realtimeSinceStartup;
+
+            if (Time.realtimeSinceStartup - waitingStartTime > 30f)
+            {
+                _ = CancelAndResetAsync("Timed out waiting for expected players to connect");
+                return;
+            }
+        }
+        else
+        {
+            waitingStartTime = 0f;
+        }
     }
 
     public void NotifyConnectedPlayerCountChanged(int connectedCount)

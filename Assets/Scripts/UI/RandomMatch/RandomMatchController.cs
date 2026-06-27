@@ -199,7 +199,7 @@ public class RandomMatchController : MonoBehaviour
             if (startbtn != null)
                 startbtn.interactable = false;
             if (cancelbtn != null)
-                cancelbtn.interactable = false;
+                cancelbtn.interactable = true;
             return;
         }
 
@@ -209,7 +209,7 @@ public class RandomMatchController : MonoBehaviour
             if (startbtn != null)
                 startbtn.interactable = false;
             if (cancelbtn != null)
-                cancelbtn.interactable = false;
+                cancelbtn.interactable = true;
             return;
         }
 
@@ -351,17 +351,10 @@ public class RandomMatchController : MonoBehaviour
             }
             catch (Exception exception)
             {
-                Debug.LogWarning("[RandomMatchController] Cancel queue failed: " + exception.Message, this);
-                RandomQueueStatus status = RandomQueueService.Instance != null
-                    ? RandomQueueService.Instance.CurrentStatus
-                    : null;
-
-                if (status != null)
-                    ApplyStatus(status);
-
-                SetStatus(string.IsNullOrWhiteSpace(exception.Message)
-                    ? "Cancel failed. Waiting for match..."
-                    : exception.Message);
+                Debug.LogWarning("[RandomMatchController] Cancel queue failed, returning to menu: " + exception.Message, this);
+                polling = false;
+                SceneManager.LoadScene(characterSelectSceneName);
+                return;
             }
             finally
             {
@@ -514,6 +507,8 @@ public class RandomMatchController : MonoBehaviour
     {
         polling = false;
         SetStatus(string.IsNullOrWhiteSpace(message) ? "Queue failed. Try again." : message);
+        if (cancelbtn != null)
+            cancelbtn.interactable = true;
     }
 
     static Color HexToColor(string hex)
