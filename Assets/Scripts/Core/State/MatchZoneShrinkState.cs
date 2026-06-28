@@ -20,6 +20,7 @@ public class MatchZoneShrinkState : MatchTimedStateNode
         if (IsDedicatedWaitingForLaunchConfig(asServer))
             return;
 
+        SoundManager.Instance.PlaySfx(SoundKey.SfxEnterShrinkState);
         base.Enter(asServer);
 
         if (!asServer)

@@ -89,6 +89,8 @@ public class PickableBuff : NetworkBehaviour
     [ObserversRpc(runLocally: true)]
     void PickupFxRpc()
     {
+        SoundPlayback.PlaySynced(SoundKey.SfxPickup);
+        
         // Sinh ra Particle/VFX rời (nếu có)
         if (effectTemplate != null && effectTemplate.vfxPrefab != null)
             Instantiate(effectTemplate.vfxPrefab, transform.position, Quaternion.identity);

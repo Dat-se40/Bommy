@@ -56,6 +56,8 @@ public class BindAccountDialogController : MonoBehaviour
 
     public void OpenDialog()
     {
+        SoundManager.Instance?.PlayOpenDialog();
+
         if (dialogRoot != null)
         {
             dialogRoot.SetActive(true);

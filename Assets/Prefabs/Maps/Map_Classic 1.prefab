@@ -8158,6 +8158,10 @@ MonoBehaviour:
   - {fileID: 7339459610967324692}
   - {fileID: 3516214519251262572}
   blockedTile: {fileID: 11400000, guid: b9f1f577a099bcf46960d09ce07c4686, type: 2}
+  soundLibrary: {fileID: 11400000, guid: 72a6183be0b42c149bc8b08e544180da, type: 2}
+  mainBgmKey: bgm.summer
+  shrinkKey: sfx.shrink
+  currentMapId: 0
 --- !u!1 &8063889559177548138
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,12 +15,12 @@ MonoBehaviour:
   characterId: 2
   characterName: Luna
   description: Lucky bomber.
-  icon: {fileID: -889619879, guid: 3662d6b211977b74f9c2416c932cf619, type: 3}
+  icon: {fileID: 4467321204178095187, guid: 8af6af06d1b5aeb4c8530c5a8f8cace8, type: 3}
   preview: {fileID: -1074142214, guid: 9a16e9cff30bf084e985a525797c857f, type: 3}
   spriteLibrary: {fileID: 7108339969198208228, guid: b816c74d71b69a94cbd4683b6dfbbca3, type: 3}
   playerPrefab: {fileID: 24528305369907493, guid: 0b2ef07dd0781f44c94c28e578b48a03, type: 3}
   hp: 3
   bomb: 1
-  speed: 5
+  speed: 4
   defaultOwned: 0
   price: 5

@@ -82,6 +82,7 @@ public class MatchTimerChipUI : MonoBehaviour
         {
             lastShakeSecond = secondBucket;
             PlayLightShake();
+            SoundManager.Instance?.PlaySfx(SoundKey.SfxCountdown);
         }
     }
 

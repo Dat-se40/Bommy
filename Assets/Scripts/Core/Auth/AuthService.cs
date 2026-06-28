@@ -7,10 +7,10 @@ public sealed class AuthService : MonoBehaviour
     static AuthService instance;
 
     [Header("Nakama")]
-    [SerializeField] private string scheme = "https";
-    [SerializeField] private string host = "bommy-services-prod.up.railway.app";
-    [SerializeField] private int port = 443;
-    [SerializeField] private string serverKey = "defaultkey";
+    [SerializeField] private string scheme = "http";
+    [SerializeField] private string host = General.AUTH_NAKAMA_HOST;
+    [SerializeField] private int port = General.AUTH_NAKAMA_PORT;
+    [SerializeField] private string serverKey = General.AUTH_NAKAMA_SERVER_KEY;
     [SerializeField] private string httpKey = "defaulthttpkey";
 
     NakamaSessionService sessionService;
@@ -25,7 +25,7 @@ public sealed class AuthService : MonoBehaviour
     public static AuthService Instance => instance;
     public bool IsSocketConnected => socketService != null && socketService.IsConnected;
     public string Username => Account?.User?.Username ?? Session?.Username ?? string.Empty;
-    public string DisplayName => accountService?.GetDisplayName(Session) ?? "Player";
+    public string DisplayName => accountService?.GetDisplayName(Session) ?? General.AUTH_DEFAULT_DISPLAY_NAME;
     public bool IsAuthenticated => Session != null && !Session.IsExpired;
     string RuntimeHttpKey => string.IsNullOrWhiteSpace(httpKey) ? "defaulthttpkey" : httpKey.Trim();
 

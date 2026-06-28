@@ -19,7 +19,7 @@ public class PlayerInfor : MonoBehaviour
     private int catalogIndex;
 
     [SerializeField]
-    private string playerName = "Player";
+    private string playerName = General.PLAYER_DEFAULT_NAME;
 
     [SerializeField]
     private string userId;
@@ -29,29 +29,29 @@ public class PlayerInfor : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField]
-    private float moveSpeed = 4f;
-    private float baseMoveSpeed = 4f;
-    private float maxMoveSpeed = 7f;
+    private float moveSpeed = General.PLAYER_MOVE_SPEED;
+    private float baseMoveSpeed = General.PLAYER_MOVE_SPEED;
+    private float maxMoveSpeed = General.PLAYER_MAX_MOVE_SPEED;
     [Header("HP")]
     [SerializeField]
-    private int maxHp = 3;
+    private int maxHp = General.PLAYER_MAX_HP;
 
     [SerializeField]
-    private int currentHp = 3;
+    private int currentHp = General.PLAYER_MAX_HP;
 
     [Header("Lives")]
     [SerializeField]
-    private int maxLives = 1;
+    private int maxLives = General.PLAYER_MAX_LIVES;
 
     [SerializeField]
-    private int currentLives = 1;
+    private int currentLives = General.PLAYER_MAX_LIVES;
 
     [Header("Bomb")]
     [SerializeField]
-    private int maxBombs = 1;
+    private int maxBombs = General.PLAYER_MAX_BOMBS;
 
     [SerializeField]
-    private int bombRange = 2;
+    private int bombRange = General.PLAYER_BOMB_RANGE;
 
     [Header("Match Stats")]
     [SerializeField]
@@ -68,10 +68,10 @@ public class PlayerInfor : MonoBehaviour
 
     [Header("Combat Timing")]
     [SerializeField]
-    private float hitInvincibilityDuration = 0.45f;
+    private float hitInvincibilityDuration = General.PLAYER_HIT_INVINCIBILITY_DURATION;
 
     [SerializeField]
-    private float deathResolveDuration = 0.55f;
+    private float deathResolveDuration = General.PLAYER_DEATH_RESOLVE_DURATION;
 
     [SerializeField]
     private int shield;
@@ -228,7 +228,7 @@ public class PlayerInfor : MonoBehaviour
             pendingKillAttacker = attacker;
             BeginDeathResolve();
         }
-
+        SoundManager.Instance.PlaySfx(SoundKey.SfxPlayerHurt);
         return hpLoss;
     }
 
@@ -365,7 +365,7 @@ public class PlayerInfor : MonoBehaviour
             return;
 
         gold += amount;
-        AddScore(amount * 5);
+        AddScore(amount * General.PLAYER_GOLD_TO_SCORE_RATE);
         PublishBoardState();
     }
 
@@ -407,7 +407,7 @@ public class PlayerInfor : MonoBehaviour
         if (amount == 0)
             return;
 
-        int maxShield = Mathf.Max(1, maxHp / 2);
+        int maxShield = Mathf.Max(1, maxHp / General.PLAYER_SHIELD_MAX_HP_DIVISOR);
         shield = Mathf.Clamp(shield + amount, 0, maxShield);
         PublishBoardState();
     }

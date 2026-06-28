@@ -74,9 +74,6 @@ public sealed class AuthGateUIController : MonoBehaviour
     //private const string AccountProviderKey = "AUTH_ACCOUNT_PROVIDER";
 
 
-    private const int MinNameLength = 1;
-    private const int MaxNameLength = 12;
-
     private void Awake()
     {
         CollectControls();
@@ -290,7 +287,11 @@ public sealed class AuthGateUIController : MonoBehaviour
         string password = loginPasswordInput.text ?? "";
 
         if (!IsValidEmail(email)) { SetFeedback("Enter a valid email address.", true); return; }
-        if (password.Length < 8) { SetFeedback("Password must be at least 8 characters.", true); return; }
+        if (password.Length < General.AUTH_MIN_PASSWORD_LENGTH)
+        {
+            SetFeedback($"Password must be at least {General.AUTH_MIN_PASSWORD_LENGTH} characters.", true);
+            return;
+        }
 
         SetBusy(true, "Signing in…");
         AuthResult result = await authService.LoginAsync(email, password);
@@ -309,9 +310,20 @@ public sealed class AuthGateUIController : MonoBehaviour
         string password = registerPasswordInput.text ?? "";
         string confirm = confirmPasswordInput.text ?? "";
 
-        if (!IsValidName(name)) { SetFeedback($"Name must be {MinNameLength}–{MaxNameLength} characters.", true); return; }
+        if (!IsValidName(name))
+        {
+            SetFeedback(
+                $"Name must be {General.AUTH_MIN_NAME_LENGTH}–{General.AUTH_MAX_NAME_LENGTH} characters.",
+                true
+            );
+            return;
+        }
         if (!IsValidEmail(email)) { SetFeedback("Enter a valid email address.", true); return; }
-        if (password.Length < 8) { SetFeedback("Password must be at least 8 characters.", true); return; }
+        if (password.Length < General.AUTH_MIN_PASSWORD_LENGTH)
+        {
+            SetFeedback($"Password must be at least {General.AUTH_MIN_PASSWORD_LENGTH} characters.", true);
+            return;
+        }
         if (password != confirm) { SetFeedback("Passwords do not match.", true); return; }
 
         SetBusy(true, "Creating account…");
@@ -479,7 +491,9 @@ public sealed class AuthGateUIController : MonoBehaviour
 
         return string.IsNullOrWhiteSpace(message)
             ? "The account request failed. Try again."
-            : message.Length <= 180 ? message : message[..180] + "...";
+            : message.Length <= General.AUTH_ERROR_MESSAGE_MAX_LENGTH
+                ? message
+                : message[..General.AUTH_ERROR_MESSAGE_MAX_LENGTH] + "...";
     }
 
     private static string GetNameFromEmail(string email)
@@ -487,12 +501,12 @@ public sealed class AuthGateUIController : MonoBehaviour
         int index = email.IndexOf('@');
 
         if (index <= 0)
-            return "Player";
+            return General.AUTH_DEFAULT_DISPLAY_NAME;
 
         string name = email[..index];
 
         if (string.IsNullOrWhiteSpace(name))
-            return "Player";
+            return General.AUTH_DEFAULT_DISPLAY_NAME;
 
         return name;
     }
@@ -514,7 +528,8 @@ public sealed class AuthGateUIController : MonoBehaviour
         if (string.IsNullOrWhiteSpace(value))
             return false;
 
-        return value.Length >= MinNameLength && value.Length <= MaxNameLength;
+        return value.Length >= General.AUTH_MIN_NAME_LENGTH
+            && value.Length <= General.AUTH_MAX_NAME_LENGTH;
     }
 
     private static string GenerateAccountId(string prefix)

@@ -15,12 +15,12 @@ MonoBehaviour:
   characterId: 4
   characterName: Bobo
   description: Tank bomber.
-  icon: {fileID: -199718241, guid: 3662d6b211977b74f9c2416c932cf619, type: 3}
+  icon: {fileID: -3332060074661746009, guid: 4874536d2413b6c4292d0cdb8e1294af, type: 3}
   preview: {fileID: 184286363, guid: 7bc83c692a9f3374789a660fb96bb6f3, type: 3}
   spriteLibrary: {fileID: 7108339969198208228, guid: 1b5d251916225a64399c25e3c0504518, type: 3}
   playerPrefab: {fileID: 24528305369907493, guid: 0b2ef07dd0781f44c94c28e578b48a03, type: 3}
   hp: 3
   bomb: 1
-  speed: 5
+  speed: 4
   defaultOwned: 0
   price: 15

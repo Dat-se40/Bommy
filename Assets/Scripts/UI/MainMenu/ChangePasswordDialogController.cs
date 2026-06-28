@@ -53,6 +53,8 @@ public class ChangePasswordDialogController : MonoBehaviour
 
     public void OpenDialog()
     {
+        SoundManager.Instance?.PlayOpenDialog();
+
         ClearInputs();
         SetStatus("");
 

@@ -110,6 +110,7 @@ public partial class LobbyUIController
             return;
         }
 
+        SoundManager.Instance?.PlayOpenDialog();
         passwordDialog.SetActive(true);
 
         if (joinPasswordInput != null)

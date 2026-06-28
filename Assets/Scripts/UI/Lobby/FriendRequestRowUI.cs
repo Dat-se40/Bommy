@@ -41,12 +41,14 @@ public class FriendRequestRowUI : MonoBehaviour
 
         if (acceptbtn != null)
         {
+            ButtonClickSound.EnsureOn(acceptbtn);
             acceptbtn.onClick.RemoveAllListeners();
             acceptbtn.onClick.AddListener(OnAcceptClicked);
         }
 
         if (declinebtn != null)
         {
+            ButtonClickSound.EnsureOn(declinebtn);
             declinebtn.onClick.RemoveAllListeners();
             declinebtn.onClick.AddListener(OnDeclineClicked);
         }

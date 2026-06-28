@@ -51,6 +51,8 @@ public class RedeemCodeDialogController : MonoBehaviour
 
     public void OpenDialog()
     {
+        SoundManager.Instance?.PlayOpenDialog();
+
         if (redeemCodeInput != null)
             redeemCodeInput.text = "";
 

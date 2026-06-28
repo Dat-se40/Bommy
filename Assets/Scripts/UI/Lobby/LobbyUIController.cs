@@ -177,6 +177,8 @@ public partial class LobbyUIController : MonoBehaviour
 
     public void OpenCreateRoomDialog()
     {
+        SoundManager.Instance?.PlayOpenDialog();
+
         pendingRoomId = LobbyManager.GenerateRoomCodePreview();
 
         if (generatedRoomIdlbl != null)

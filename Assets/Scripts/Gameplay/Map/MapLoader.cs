@@ -30,7 +30,6 @@ public class MapLoader : MonoBehaviour
     [Header("Systems")]
     [SerializeField] private ExplosionCreator explosionCreator;
     [SerializeField] private MovementController localPlayerMovement;
-
     MapRefs currentMap;
     int loadedMapId = MatchPhaseBroadcast.NoMapId;
     Coroutine bindBroadcastRoutine;
@@ -164,7 +163,8 @@ public class MapLoader : MonoBehaviour
         currentMap.transform.localPosition = Vector3.zero;
         currentMap.currentMapId = entry.mapId;
         loadedMapId = entry.mapId;
-
+        SoundManager.Instance.SetSceneLibrary(MapRefs.Instance.GetSoundLibrary);
+        SoundManager.Instance.PlayBgm(MapRefs.Instance.mainBgmKey);
         SetupSystems(currentMap);
         MapReady?.Invoke(currentMap);
 

@@ -55,6 +55,7 @@ public class FriendRowUI : MonoBehaviour
 
         if (invitebtn != null)
         {
+            ButtonClickSound.EnsureOn(invitebtn);
             invitebtn.interactable = online;
             invitebtn.onClick.RemoveAllListeners();
             invitebtn.onClick.AddListener(OnInviteClicked);
@@ -62,6 +63,7 @@ public class FriendRowUI : MonoBehaviour
 
         if (joinbtn != null)
         {
+            ButtonClickSound.EnsureOn(joinbtn);
             joinbtn.interactable = online && !string.IsNullOrEmpty(currentRoomId);
             joinbtn.onClick.RemoveAllListeners();
             joinbtn.onClick.AddListener(OnJoinRoomClicked);

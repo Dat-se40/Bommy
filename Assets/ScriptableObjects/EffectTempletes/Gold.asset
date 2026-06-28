@@ -16,13 +16,13 @@ MonoBehaviour:
   displayName: Gold
   effectType: 8
   duration: 6000
-  specialValue: 20
-  description: 5
+  specialValue: 5
+  description: +5 Gold
   rating: 1
   pickupPrefab: {fileID: 3140720615861595630, guid: d72e559c3ef2cdc4d9483add248ff7a0, type: 3}
   vfxPrefab: {fileID: 0}
   uiIcon: {fileID: -3126738845940356929, guid: 5b1c1560612680a40b191ce136e47f30, type: 3}
-  mapInfoDescription: " 5 gold \n"
+  mapInfoDescription: +5 Gold
   placedBombPrefab: {fileID: 0}
   fuseSeconds: 2
   damage: 1

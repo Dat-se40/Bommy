@@ -13,25 +13,19 @@ MonoBehaviour:
   m_Name: Dungeon
   m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
   levelId: map_03
-  displayName: Dungeon
+  displayName: Darkness Dungeon
   destructibleDrops:
-    dropChance: 1
+    dropChance: 0.7
     entries:
-    - effect: {fileID: 11400000, guid: 9ca9e98e68e11f54ba241f9a218dad7d, type: 2}
-      weight: 1
-      maxSpawnCount: 0
-    - effect: {fileID: 11400000, guid: be14013a2caccd44f89763785167e99e, type: 2}
-      weight: 0.197
-      maxSpawnCount: 0
-    - effect: {fileID: 11400000, guid: 46a8cea16360b17468b4cd4cf799fc8c, type: 2}
-      weight: 0.787
-      maxSpawnCount: 4
-    - effect: {fileID: 11400000, guid: e50e855bb04ad4a499b3116fd082e08c, type: 2}
-      weight: 0.41
-      maxSpawnCount: 10
-    - effect: {fileID: 11400000, guid: deb44d1e3e67147408c8697f6efe5c12, type: 2}
-      weight: 0
-      maxSpawnCount: 10
     - effect: {fileID: 11400000, guid: 875493fde7ef7f8458512de922a61a03, type: 2}
-      weight: 0.475
+      weight: 0.27
+      maxSpawnCount: 8
+    - effect: {fileID: 11400000, guid: deb44d1e3e67147408c8697f6efe5c12, type: 2}
+      weight: 0.3
       maxSpawnCount: 10
+    - effect: {fileID: 11400000, guid: e50e855bb04ad4a499b3116fd082e08c, type: 2}
+      weight: 0.22
+      maxSpawnCount: 6
+    - effect: {fileID: 11400000, guid: be14013a2caccd44f89763785167e99e, type: 2}
+      weight: 0.21
+      maxSpawnCount: 6

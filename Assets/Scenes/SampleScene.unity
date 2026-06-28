@@ -3167,6 +3167,7 @@ GameObject:
   - component: {fileID: 189002447}
   - component: {fileID: 189002446}
   - component: {fileID: 189002445}
+  - component: {fileID: 189002449}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3260,6 +3261,18 @@ RectTransform:
   m_AnchoredPosition: {x: 1.6068, y: 0.9461}
   m_SizeDelta: {x: 384.9474, y: 217.5911}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &189002449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189002444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e36d9c8bada4855812fc4c3e2b3d383, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoButtonSound
 --- !u!1 &207610224
 GameObject:
   m_ObjectHideFlags: 0
