@@ -536,6 +536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GlobalLoadingController
   mainMenuSceneName: MainMenu
   authGateSceneName: AuthGate
+  dedicatedServerSceneName: GameScene
   connectionStatusText: {fileID: 1981053395}
   retryAttemptText: {fileID: 63085234}
   retryButton: {fileID: 1966830900}
@@ -867,9 +868,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b542fb50933428349bad02e3d3e3707e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AuthService
-  scheme: http
-  host: 127.0.0.1
-  port: 7350
+  scheme: https
+  host: bommy-services-prod.up.railway.app
+  port: 443
   serverKey: defaultkey
   httpKey: defaulthttpkey
 --- !u!4 &1700768559

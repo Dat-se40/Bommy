@@ -8,6 +8,7 @@ var MATCH_SERVER_OWNER = "00000000-0000-0000-0000-000000000000";
 var MATCH_SERVER_SECRET = "dev-local-secret";
 var MATCH_SERVER_STALE_MS = 15000;
 var MATCH_SERVER_REQUEST_STALE_MS = 120000;
+var EDGEGAP_DEPLOYMENT_RETRY_MS = 60000;
 var MATCH_SERVER_PROVIDER_ENV = "MATCH_SERVER_PROVIDER";
 var LOCALDEV_ORCHESTRATION_ENV = "BOMMY_LOCALDEV_ORCHESTRATION";
 var RANDOM_QUEUE_REQUIRED_PLAYERS_ENV = "BOMMY_RANDOM_QUEUE_REQUIRED_PLAYERS";
@@ -60,6 +61,7 @@ type MatchServerProvider = "LocalDev" | "EdgegapCloud";
 type MatchSource = "CustomLobby" | "RandomQueue";
 type MatchServerStatusName =
 	| "Requested"
+	| "WaitingForServer"
 	| "Launching"
 	| "Ready"
 	| "InMatch"
@@ -1299,6 +1301,31 @@ function markAllocationFailed(
 	return allocation;
 }
 
+function markAllocationWaitingForServer(
+	nk: nkruntime.Nakama,
+	allocation: MatchServerAllocationRecord,
+	message: string,
+): MatchServerAllocationRecord {
+	if (allocation.serverId) {
+		var server = readServer(nk, allocation.serverId);
+		if (server != null && server.currentAllocationId === allocation.allocationId) {
+			server.status = "Failed";
+			server.currentAllocationId = "";
+			server.currentMatchId = "";
+			writeServer(nk, server);
+		}
+	}
+
+	allocation.status = "WaitingForServer";
+	allocation.errorMessage = message;
+	allocation.serverId = "";
+	allocation.deploymentId = "";
+	allocation.host = "";
+	allocation.port = 0;
+	writeAllocation(nk, allocation);
+	return allocation;
+}
+
 function edgegapServerId(allocation: MatchServerAllocationRecord): string {
 	return "edgegap-" + allocation.allocationId;
 }
@@ -1365,7 +1392,11 @@ function createEdgegapDeployment(
 			allocation.matchId,
 			allocation.allocationId,
 		);
-		return allocation;
+		return markAllocationWaitingForServer(
+			nk,
+			allocation,
+			"Edgegap is disabled. Waiting for an available match server.",
+		);
 	}
 
 	if (!config.apiToken || !config.versionName) {
@@ -1376,10 +1407,10 @@ function createEdgegapDeployment(
 			!!config.apiToken,
 			!!config.versionName,
 		);
-		return markAllocationFailed(
+		return markAllocationWaitingForServer(
 			nk,
 			allocation,
-			"Edgegap is enabled but EDGEGAP_API_TOKEN or EDGEGAP_VERSION_NAME is missing.",
+			"Edgegap config is missing. Waiting for an available match server.",
 		);
 	}
 
@@ -1416,7 +1447,6 @@ function createEdgegapDeployment(
 		updatedAtMs: Date.now(),
 		lastHeartbeatMs: 0,
 	};
-	writeServer(nk, server);
 
 	var body = {
 		application: config.appName,
@@ -1496,10 +1526,13 @@ function createEdgegapDeployment(
 		);
 		logger.error(response.body || "");
 
-		return markAllocationFailed(
+		return markAllocationWaitingForServer(
 			nk,
 			allocation,
-			edgegapErrorMessage(response, "Edgegap deployment failed."),
+			edgegapErrorMessage(
+				response,
+				"Edgegap deployment failed. Waiting for an available match server.",
+			),
 		);
 	}
 
@@ -1511,10 +1544,10 @@ function createEdgegapDeployment(
 			allocation.matchId,
 			allocation.allocationId,
 		);
-		return markAllocationFailed(
+		return markAllocationWaitingForServer(
 			nk,
 			allocation,
-			"Edgegap deployment response did not include request_id.",
+			"Edgegap deployment response did not include request_id. Waiting for an available match server.",
 		);
 	}
 
@@ -1565,10 +1598,13 @@ function refreshEdgegapDeploymentStatus(
 	);
 
 	if (response.code < 200 || response.code >= 300) {
-		return markAllocationFailed(
+		return markAllocationWaitingForServer(
 			nk,
 			allocation,
-			edgegapErrorMessage(response, "Edgegap status request failed."),
+			edgegapErrorMessage(
+				response,
+				"Edgegap status request failed. Waiting for an available match server.",
+			),
 		);
 	}
 
@@ -1577,12 +1613,12 @@ function refreshEdgegapDeploymentStatus(
 		status.error === true ||
 		optionalString(status.current_status, "").toLowerCase() === "error"
 	) {
-		return markAllocationFailed(
+		return markAllocationWaitingForServer(
 			nk,
 			allocation,
 			optionalString(
 				status.error_detail,
-				"Edgegap deployment entered error state.",
+				"Edgegap deployment entered error state. Waiting for an available match server.",
 			),
 		);
 	}
@@ -1622,6 +1658,55 @@ function refreshEdgegapDeploymentStatus(
 
 	writeAllocation(nk, allocation);
 	return allocation;
+}
+
+function refreshEdgegapWaitingAllocation(
+	ctx: nkruntime.Context,
+	nk: nkruntime.Nakama,
+	allocation: MatchServerAllocationRecord,
+	logger?: nkruntime.Logger | null,
+): MatchServerAllocationRecord {
+	if (allocation.provider !== "EdgegapCloud") {
+		return allocation;
+	}
+
+	if (allocation.status !== "WaitingForServer") {
+		return refreshEdgegapDeploymentStatus(ctx, nk, allocation, logger);
+	}
+
+	var server = findAvailableServer(nk, "EdgegapCloud");
+	if (server != null) {
+		if (logger != null) {
+			logger.info(
+				"Waiting Edgegap allocation assigned from reusable pool. matchId=%s allocationId=%s serverId=%s public=%s:%s",
+				allocation.matchId,
+				allocation.allocationId,
+				server.serverId,
+				server.host,
+				server.port,
+			);
+		}
+		return assignServerToAllocation(nk, allocation, server);
+	}
+
+	if (Date.now() - allocation.updatedAtMs < EDGEGAP_DEPLOYMENT_RETRY_MS) {
+		return allocation;
+	}
+
+	if (logger != null) {
+		logger.info(
+			"Retrying Edgegap deployment for waiting allocation. matchId=%s allocationId=%s retryAfterMs=%s",
+			allocation.matchId,
+			allocation.allocationId,
+			EDGEGAP_DEPLOYMENT_RETRY_MS,
+		);
+	}
+
+	if (logger == null) {
+		return allocation;
+	}
+
+	return createEdgegapDeployment(ctx, nk, logger, allocation);
 }
 
 function stopEdgegapDeployment(
@@ -1885,7 +1970,10 @@ function findRequestedAllocation(
 	var now = Date.now();
 
 	for (var i = 0; i < allocations.length; i++) {
-		if (allocations[i].status !== "Requested") {
+		if (
+			allocations[i].status !== "Requested" &&
+			allocations[i].status !== "WaitingForServer"
+		) {
 			continue;
 		}
 		if (allocations[i].provider !== provider) {
@@ -1904,7 +1992,7 @@ function findRequestedAllocation(
 			continue;
 		}
 
-		if (selected == null || allocations[i].createdAtMs > selected.createdAtMs) {
+		if (selected == null || allocations[i].createdAtMs < selected.createdAtMs) {
 			selected = allocations[i];
 		}
 	}
@@ -2043,7 +2131,7 @@ function refreshAllocationStaleness(
 	logger?: nkruntime.Logger | null,
 ): MatchServerAllocationRecord {
 	if (allocation.provider === "EdgegapCloud") {
-		return refreshEdgegapDeploymentStatus(ctx, nk, allocation, logger);
+		return refreshEdgegapWaitingAllocation(ctx, nk, allocation, logger);
 	}
 
 	if (

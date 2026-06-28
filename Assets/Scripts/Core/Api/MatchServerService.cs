@@ -184,7 +184,7 @@ public sealed class MatchServerService : MonoBehaviour
 
             if (string.Equals(status.status, "Failed", StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException(string.IsNullOrWhiteSpace(status.errorMessage)
-                    ? "Dedicated server allocation failed."
+                    ? "Match server allocation failed."
                     : status.errorMessage);
 
             int delayMs = Mathf.Max(250, Mathf.RoundToInt(pollIntervalSeconds * 1000f));

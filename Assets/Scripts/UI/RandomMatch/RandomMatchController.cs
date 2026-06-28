@@ -33,7 +33,6 @@ public class RandomMatchController : MonoBehaviour
     [SerializeField] private string region = "Local";
     [SerializeField] private float pollIntervalSeconds = 2f;
     [SerializeField] private float serverStatusPollIntervalSeconds = 0.5f;
-    [SerializeField] private float serverReadyTimeoutSeconds = 60f;
 
     [Header("Avatars")]
     [SerializeField] private Sprite defaultSearchingAvatar;
@@ -167,13 +166,13 @@ public class RandomMatchController : MonoBehaviour
             {
                 if (string.IsNullOrWhiteSpace(status.allocationId))
                 {
-                    SetStatus("Match locked. Waiting for server allocation...");
+                    SetStatus("Match locked. Waiting for match server...");
                 }
                 else
                 {
                     SetStatus(string.IsNullOrWhiteSpace(status.serverStatus)
-                        ? "Match locked. Waiting for server..."
-                        : "Server " + status.serverStatus + "...");
+                        ? "Match locked. Waiting for match server..."
+                        : FormatServerStatus(status.serverStatus));
                     BeginServerFlow(status);
                 }
             }
@@ -431,27 +430,21 @@ public class RandomMatchController : MonoBehaviour
             if (string.IsNullOrWhiteSpace(allocation.allocationId))
                 throw new InvalidOperationException("Match server allocation did not include an allocation id.");
 
-            SetStatus("Starting dedicated server...");
-            using CancellationTokenSource timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            timeoutCts.CancelAfter(TimeSpan.FromSeconds(Mathf.Max(5f, serverReadyTimeoutSeconds)));
+            SetStatus("Waiting for match server...");
 
             MatchServerStatus serverStatus = await MatchServerService.EnsureExists().WaitForReadyAsync(
                 allocation.matchId,
                 allocation.allocationId,
-                timeoutCts.Token,
+                cancellationToken,
                 serverStatusPollIntervalSeconds
             );
 
             SetStatus("Connecting to match...");
-            await MatchConnectionService.EnsureExists().ConnectAsync(serverStatus, timeoutCts.Token);
+            await MatchConnectionService.EnsureExists().ConnectAsync(serverStatus, cancellationToken);
         }
         catch (OperationCanceledException)
         {
-            if (this != null && !cancellationToken.IsCancellationRequested)
-            {
-                SetError("Timed out waiting for the dedicated server.");
-                serverFlowStarted = false;
-            }
+            serverFlowStarted = false;
         }
         catch (Exception exception)
         {
@@ -492,9 +485,24 @@ public class RandomMatchController : MonoBehaviour
         {
             SetStatus(string.IsNullOrWhiteSpace(status.serverStatus)
                 ? "Match accepted. Waiting for all players..."
-                : "Server " + status.serverStatus + "...");
+                : FormatServerStatus(status.serverStatus));
             ApplyMatchedPlayers(status.match);
         }
+    }
+
+    static string FormatServerStatus(string serverStatus)
+    {
+        if (string.IsNullOrWhiteSpace(serverStatus))
+            return "Waiting for match server...";
+
+        if (string.Equals(serverStatus, "WaitingForServer", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(serverStatus, "Requested", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(serverStatus, "Launching", StringComparison.OrdinalIgnoreCase))
+        {
+            return "Waiting for match server...";
+        }
+
+        return "Server " + serverStatus + "...";
     }
 
     void SetStatus(string message)
