@@ -61,6 +61,7 @@ public static class DedicatedMatchRuntime
     static string provider;
     static int nextPlayerIndex;
     static bool settlementStarted;
+    static readonly HashSet<int> claimedProfileSlots = new();
 
     public static event Action MatchLifecycleReleased;
 
@@ -87,6 +88,8 @@ public static class DedicatedMatchRuntime
         provider = string.IsNullOrWhiteSpace(serverProvider) ? "LocalDev" : serverProvider;
         nextPlayerIndex = 0;
         settlementStarted = false;
+        claimedProfileSlots.Clear();
+        BommyPurrNetMatchAuthenticator.ClearServerBindings();
 
         MatchSessionBroker.ClearRoster();
 
@@ -119,8 +122,34 @@ public static class DedicatedMatchRuntime
         if (launchConfig?.players == null || launchConfig.players.Length == 0)
             return false;
 
-        int slotIndex = Mathf.Clamp(nextPlayerIndex, 0, launchConfig.players.Length - 1);
-        nextPlayerIndex++;
+        int slotIndex = -1;
+
+        if (BommyPurrNetMatchAuthenticator.TryGetUserId(owner, out string authenticatedUserId))
+        {
+            slotIndex = FindPlayerSlotByUserId(authenticatedUserId);
+            if (slotIndex < 0)
+            {
+                Debug.LogWarning("[DedicatedMatchRuntime] Authenticated user " + authenticatedUserId + " is not in launch config.");
+                return false;
+            }
+
+            if (claimedProfileSlots.Contains(slotIndex))
+            {
+                Debug.LogWarning("[DedicatedMatchRuntime] Launch slot " + slotIndex + " already claimed by another player.");
+                return false;
+            }
+        }
+
+        if (slotIndex < 0)
+            slotIndex = ClaimNextUnassignedSlot();
+
+        if (slotIndex < 0)
+        {
+            Debug.LogWarning("[DedicatedMatchRuntime] No launch roster slot is available for PurrNet player " + owner.id + ".");
+            return false;
+        }
+
+        claimedProfileSlots.Add(slotIndex);
 
         MatchLaunchPlayer launchPlayer = launchConfig.players[slotIndex];
         int characterId = Mathf.Max(1, launchPlayer.selectedCharacterId);
@@ -156,7 +185,54 @@ public static class DedicatedMatchRuntime
 
         profile.owner = owner;
         MatchSessionBroker.RegisterRemotePlayer(profile);
+        Debug.Log(
+            "[DedicatedMatchRuntime] Bound PurrNet player " + owner.id
+            + " to slot " + slotIndex
+            + " userId=" + launchPlayer.userId
+            + " displayName=" + profile.displayName
+            + "."
+        );
         return true;
+    }
+
+    static int FindPlayerSlotByUserId(string userId)
+    {
+        if (launchConfig?.players == null || string.IsNullOrWhiteSpace(userId))
+            return -1;
+
+        for (int i = 0; i < launchConfig.players.Length; i++)
+        {
+            if (string.Equals(launchConfig.players[i].userId, userId, StringComparison.Ordinal))
+                return i;
+        }
+
+        return -1;
+    }
+
+    static int ClaimNextUnassignedSlot()
+    {
+        if (launchConfig?.players == null)
+            return -1;
+
+        for (int i = Mathf.Max(0, nextPlayerIndex); i < launchConfig.players.Length; i++)
+        {
+            if (!claimedProfileSlots.Contains(i))
+            {
+                nextPlayerIndex = i + 1;
+                return i;
+            }
+        }
+
+        for (int i = 0; i < launchConfig.players.Length; i++)
+        {
+            if (!claimedProfileSlots.Contains(i))
+            {
+                nextPlayerIndex = i + 1;
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     public static string GetUserIdForSlot(int slotIndex)
@@ -246,7 +322,23 @@ public static class DedicatedMatchRuntime
         provider = string.Empty;
         nextPlayerIndex = 0;
         settlementStarted = false;
+        claimedProfileSlots.Clear();
+        BommyPurrNetMatchAuthenticator.ClearServerBindings();
         MatchSessionBroker.ClearRoster();
+    }
+
+    public static bool ContainsUser(string userId)
+    {
+        if (launchConfig?.players == null || string.IsNullOrWhiteSpace(userId))
+            return false;
+
+        for (int i = 0; i < launchConfig.players.Length; i++)
+        {
+            if (string.Equals(launchConfig.players[i].userId, userId, StringComparison.Ordinal))
+                return true;
+        }
+
+        return false;
     }
 
     public static int ResolveMapId(MapLoader mapLoader, int fallbackMapId)

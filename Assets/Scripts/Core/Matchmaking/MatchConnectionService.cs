@@ -77,7 +77,12 @@ public sealed class MatchConnectionService : MonoBehaviour
             throw new InvalidOperationException("GameScene NetworkManager must use PurrNet UDPTransport for Phase 5A.");
 
         if (manager.clientState != ConnectionState.Disconnected)
+        {
             manager.StopClient();
+            await WaitForClientDisconnectedAsync(manager, cancellationToken);
+        }
+
+        ConfigureAuthenticator(manager, status);
 
         transport.address = status.host;
         transport.serverPort = (ushort)status.port;
@@ -93,11 +98,48 @@ public sealed class MatchConnectionService : MonoBehaviour
         LogElapsed("PurrNet client connected", startTime);
     }
 
+    static void ConfigureAuthenticator(NetworkManager manager, MatchServerStatus status)
+    {
+        AuthService authService = AuthService.GetOrCreate();
+        string userId = authService.Session?.UserId;
+
+        if (string.IsNullOrWhiteSpace(userId))
+            throw new InvalidOperationException("Cannot connect to match server without an authenticated Nakama user.");
+
+        BommyPurrNetMatchAuthenticator.ConfigureClientPayload(status.matchId, status.allocationId, userId);
+        BommyPurrNetMatchAuthenticator.EnsureInstalled(manager);
+
+        Debug.LogFormat(
+            "[MatchConnectionService] Configured PurrNet auth userId={0} matchId={1} allocationId={2}",
+            userId,
+            status.matchId,
+            status.allocationId
+        );
+    }
+
+    async Task WaitForClientDisconnectedAsync(NetworkManager manager, CancellationToken cancellationToken)
+    {
+        float deadline = Time.realtimeSinceStartup + 5f;
+
+        while (Time.realtimeSinceStartup < deadline)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if (manager.clientState == ConnectionState.Disconnected)
+                return;
+
+            await Task.Yield();
+        }
+
+        throw new TimeoutException("Timed out disconnecting previous match client.");
+    }
+
     public Task DisconnectAsync()
     {
         if (NetworkManager.main != null && NetworkManager.main.clientState != ConnectionState.Disconnected)
             NetworkManager.main.StopClient();
 
+        BommyPurrNetMatchAuthenticator.ClearClientPayload();
         return Task.CompletedTask;
     }
 

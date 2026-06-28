@@ -99,6 +99,17 @@ public class NetworkPlayerSpawner : NetworkBehaviour
 
         Debug.Log($"[FLOW:NETWORK] SpawnPlayer start id={player.id}");
 
+        if (!TryResolveSpawnPoints())
+        {
+            QueuePendingSpawn(player);
+            FlowGuard.Info(
+                FlowGuard.TagNetwork,
+                "Spawn delayed until map spawn points are ready.",
+                this
+            );
+            return false;
+        }
+
         PlayerMatchProfile profile = ResolveSpawnProfile(player);
 
         if (!FlowGuard.IsValidSpawnProfile(profile, out string invalidReason))
@@ -112,21 +123,7 @@ public class NetworkPlayerSpawner : NetworkBehaviour
         if (!FlowGuard.RequireNotNull(prefab, FlowGuard.TagNetwork, "Player prefab", this))
             return false;
 
-        int playerCount = playerControllers.Count;
-
-        if (!TryResolveSpawnPoints())
-        {
-            QueuePendingSpawn(player);
-            FlowGuard.Info(
-                FlowGuard.TagNetwork,
-                "Spawn delayed until map spawn points are ready.",
-                this
-            );
-            return false;
-        }
-
-        int spawnIndex = Mathf.Clamp(playerCount, 0, spawnPoints.Length - 1);
-        profile.slotIndex = spawnIndex;
+        int spawnIndex = Mathf.Clamp(profile.slotIndex, 0, spawnPoints.Length - 1);
 
         GameObject newPlayer = Instantiate(
             prefab,
@@ -154,6 +151,11 @@ public class NetworkPlayerSpawner : NetworkBehaviour
         BroadcastPlayerBoardRegistration(profile);
         spawnedPlayers.Add(player);
         pendingSpawnPlayers.Remove(player);
+        FlowGuard.Info(
+            FlowGuard.TagNetwork,
+            $"Spawned PurrNet player {player.id} at spawnIndex={spawnIndex} slot={profile.slotIndex} userId={profile.userId} displayName={profile.displayName}",
+            this
+        );
         return true;
     }
 

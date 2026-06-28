@@ -246,6 +246,7 @@ public sealed class DedicatedServerBootstrap : MonoBehaviour
         if (transport == null)
             throw new InvalidOperationException("Dedicated server requires PurrNet UDPTransport for Phase 5A.");
 
+        BommyPurrNetMatchAuthenticator.EnsureInstalled(manager);
         transport.serverPort = (ushort)config.bindPort;
 
         if (manager.serverState == ConnectionState.Disconnected)
