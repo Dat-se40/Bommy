@@ -5,13 +5,15 @@ using UnityEngine.UI;
 
 public partial class LobbyUIController
 {
+    const float RoomListRefreshIntervalSeconds = 2f;
+
     [Header("Room List")]
     [SerializeField] private Transform roomListContent;
     [SerializeField] private LobbyRoomRowUI roomRowTemplate;
     [SerializeField] private TMP_Text roomCountlbl;
     [SerializeField] private Button refreshRoomListbtn;
 
-    [Header("Join Password Dialog (optional)")]
+    [Header("Join Password Dialog")]
     [SerializeField] private GameObject passwordDialog;
     [SerializeField] private TMP_InputField joinPasswordInput;
     [SerializeField] private TMP_Text passwordErrorText;
@@ -47,12 +49,15 @@ public partial class LobbyUIController
             passwordCancelbtn.onClick.AddListener(ClosePasswordDialog);
         }
 
-        RefreshRoomList();
+        CancelInvoke(nameof(RefreshRoomList));
+        InvokeRepeating(nameof(RefreshRoomList), 0f, RoomListRefreshIntervalSeconds);
     }
 
     void RefreshRoomList()
     {
-        LobbyManager.EnsureExists().RequestRoomList();
+        LobbyManager manager = LobbyManager.EnsureExists();
+        manager.RequestRoomList();
+        manager.RequestCurrentRoomRefresh();
     }
 
     void OnRoomsListed(ListRoomsResponse response)
@@ -90,25 +95,18 @@ public partial class LobbyUIController
         if (room == null)
             return;
 
-        if (room.isPrivate)
-        {
-            pendingJoinRoom = room;
-            OpenPasswordDialog();
-            return;
-        }
-
-        LobbyManager.EnsureExists().RequestJoinRoom(new JoinRoomRequest { roomId = room.roomId });
+        pendingJoinRoom = room;
+        OpenPasswordDialog();
     }
 
     void OpenPasswordDialog()
     {
+        if (pendingJoinRoom == null)
+            return;
+
         if (passwordDialog == null)
         {
-            LobbyManager.EnsureExists().RequestJoinRoom(new JoinRoomRequest
-            {
-                roomId = pendingJoinRoom.roomId,
-                password = ""
-            });
+            SetLobbyStatus("Join password dialog is not configured.");
             return;
         }
 
@@ -116,10 +114,14 @@ public partial class LobbyUIController
         passwordDialog.SetActive(true);
 
         if (joinPasswordInput != null)
+        {
             joinPasswordInput.text = "";
+            joinPasswordInput.Select();
+            joinPasswordInput.ActivateInputField();
+        }
 
         if (passwordErrorText != null)
-            passwordErrorText.text = "";
+            passwordErrorText.text = "Enter room ID " + pendingJoinRoom.roomId + " to join.";
     }
 
     void ClosePasswordDialog()
@@ -135,11 +137,12 @@ public partial class LobbyUIController
         if (pendingJoinRoom == null)
             return;
 
-        string password = joinPasswordInput != null ? joinPasswordInput.text : "";
+        string password = joinPasswordInput != null ? joinPasswordInput.text.Trim().ToUpperInvariant() : "";
 
         LobbyManager.EnsureExists().RequestJoinRoom(new JoinRoomRequest
         {
             roomId = pendingJoinRoom.roomId,
+            matchId = pendingJoinRoom.matchId,
             password = password
         });
     }
@@ -160,13 +163,19 @@ public partial class LobbyUIController
         if (room == null)
         {
             SetCurrentRoomEmpty();
+            ApplyLobbyLaunchLock(false);
             return;
         }
 
         ApplyCurrentRoomUi(room);
+        ApplyLobbyLaunchLock(!string.IsNullOrEmpty(room.status) && room.status == "Starting");
         CloseCreateRoomDialog();
         ClosePasswordDialog();
-        SetLobbyStatus("In room " + room.roomId + ".");
+
+        if (!string.IsNullOrEmpty(room.status) && room.status != "Open")
+            SetLobbyStatus("Room " + room.roomId + " is " + room.status + ".");
+        else
+            SetLobbyStatus("In room " + room.roomId + ".");
     }
 
     void OnLobbyOperationFailed(string message)
@@ -192,5 +201,23 @@ public partial class LobbyUIController
 
         if (currentRoomMaplbl != null)
             currentRoomMaplbl.text = "Map: " + room.mapName;
+    }
+
+    void ApplyLobbyLaunchLock(bool locked)
+    {
+        if (joinByRoomIdbtn != null)
+            joinByRoomIdbtn.interactable = !locked;
+
+        if (createRoombtn != null)
+            createRoombtn.interactable = !locked;
+
+        if (chooseCharbtn != null)
+            chooseCharbtn.interactable = !locked;
+
+        if (startbtn != null)
+            startbtn.interactable = !locked;
+
+        if (backbtn != null)
+            backbtn.interactable = !locked;
     }
 }

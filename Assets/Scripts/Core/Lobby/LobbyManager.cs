@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
@@ -8,6 +10,8 @@ using UnityEngine;
 /// </summary>
 public class LobbyManager : MonoBehaviour
 {
+    const float MatchServerStatusPollIntervalSeconds = 0.5f;
+
     public static LobbyManager Instance { get; private set; }
 
     public event Action<ListRoomsResponse> RoomsListed;
@@ -16,11 +20,14 @@ public class LobbyManager : MonoBehaviour
     public event Action<FriendDto[]> FriendsListed;
     public event Action<FriendRequestDto[]> FriendRequestsListed;
 
-    readonly List<LobbyRoomDto> mockRooms = new();
     readonly List<FriendDto> mockFriends = new();
     readonly List<FriendRequestDto> mockFriendRequests = new();
 
     LobbyRoomDto currentRoom;
+    CancellationTokenSource matchServerConnectCts;
+    bool isConnectingToMatchServer;
+    string connectingAllocationId;
+    NakamaLobbyService LobbyService => NakamaLobbyService.EnsureExists();
 
     public LobbyRoomDto CurrentRoom => currentRoom;
     public bool HasCurrentRoom => currentRoom != null && !string.IsNullOrEmpty(currentRoom.roomId);
@@ -34,13 +41,25 @@ public class LobbyManager : MonoBehaviour
         }
 
         Instance = this;
-        SeedMockData();
+        SeedMockFriendData();
+        LobbyService.CurrentRoomUpdated -= OnServiceCurrentRoomUpdated;
+        LobbyService.CurrentRoomUpdated += OnServiceCurrentRoomUpdated;
     }
 
     void OnDestroy()
     {
+        if (!isConnectingToMatchServer)
+        {
+            matchServerConnectCts?.Cancel();
+            matchServerConnectCts?.Dispose();
+            matchServerConnectCts = null;
+        }
+
         if (Instance == this)
             Instance = null;
+
+        if (NakamaLobbyService.Instance != null)
+            NakamaLobbyService.Instance.CurrentRoomUpdated -= OnServiceCurrentRoomUpdated;
     }
 
     public static LobbyManager EnsureExists()
@@ -54,36 +73,43 @@ public class LobbyManager : MonoBehaviour
 
     #region Rooms — API: ListRooms
 
-    public void RequestRoomList(ListRoomsRequest request = null)
+    public async void RequestRoomList(ListRoomsRequest request = null)
     {
-        request ??= new ListRoomsRequest { page = 0, pageSize = LobbyApiContracts.MaxPageSize };
-
-        int page = Mathf.Max(0, request.page);
-        int pageSize = Mathf.Clamp(request.pageSize, 1, LobbyApiContracts.MaxPageSize);
-        int start = page * pageSize;
-        int end = Mathf.Min(start + pageSize, mockRooms.Count);
-
-        var slice = new LobbyRoomDto[Mathf.Max(0, end - start)];
-        for (int i = start; i < end; i++)
-            slice[i - start] = mockRooms[i];
-
-        var response = new ListRoomsResponse
+        try
         {
-            rooms = slice,
-            totalCount = mockRooms.Count,
-            page = page,
-            pageSize = pageSize
-        };
+            ListRoomsResponse response = await LobbyService.ListRoomsAsync(request);
 
-        FlowGuard.Info(FlowGuard.TagSetup, $"ListRooms mock page={page} count={slice.Length}");
-        RoomsListed?.Invoke(response);
+            if (response.rooms == null)
+                response.rooms = Array.Empty<LobbyRoomDto>();
+
+            RoomsListed?.Invoke(response);
+        }
+        catch (Exception exception)
+        {
+            Fail(exception.Message);
+        }
     }
 
     #endregion
 
+    public async void RequestCurrentRoomRefresh()
+    {
+        if (!LobbyService.HasCurrentRoom)
+            return;
+
+        try
+        {
+            await LobbyService.RefreshCurrentRoomAsync();
+        }
+        catch (Exception exception)
+        {
+            Fail(exception.Message);
+        }
+    }
+
     #region Rooms — API: CreateRoom
 
-    public void RequestCreateRoom(CreateRoomRequest request)
+    public async void RequestCreateRoom(CreateRoomRequest request)
     {
         if (request == null)
         {
@@ -91,55 +117,22 @@ public class LobbyManager : MonoBehaviour
             return;
         }
 
-        string roomName = string.IsNullOrWhiteSpace(request.roomName)
-            ? "Casual Room"
-            : request.roomName.Trim();
-
-        string roomId = string.IsNullOrWhiteSpace(request.preferredRoomId)
-            ? GenerateRoomCode()
-            : request.preferredRoomId.Trim().ToUpperInvariant();
-
-        bool isPrivate = !string.IsNullOrEmpty(request.password);
-
-        var room = new LobbyRoomDto
+        try
         {
-            roomId = roomId,
-            roomName = roomName,
-            mapId = request.mapId > 0 ? request.mapId : LobbyApiContracts.DefaultMapId,
-            mapName = string.IsNullOrEmpty(request.mapName) ? "Classic Garden" : request.mapName,
-            currentPlayers = 1,
-            maxPlayers = Mathf.Clamp(request.maxPlayers, 2, 4),
-            pingMs = 0,
-            region = "Local",
-            isPrivate = isPrivate,
-            hostPlayerId = LocalPlayerId()
-        };
-
-        mockRooms.Insert(0, room);
-        ApplyCurrentRoom(room, isHost: true);
-
-        if (isPrivate)
-        {
-            PlayerPrefs.SetString("CurrentRoomPassword", request.password);
-            PlayerPrefs.SetInt("CurrentRoomIsPrivate", 1);
+            LobbyRoomDto room = await LobbyService.CreateRoomAsync(request);
+            FlowGuard.Info(FlowGuard.TagSetup, $"CreateRoom id={room.roomId} match={room.matchId}");
         }
-        else
+        catch (Exception exception)
         {
-            PlayerPrefs.SetString("CurrentRoomPassword", "");
-            PlayerPrefs.SetInt("CurrentRoomIsPrivate", 0);
+            Fail(exception.Message);
         }
-
-        PlayerPrefs.Save();
-
-        FlowGuard.Info(FlowGuard.TagSetup, $"CreateRoom mock id={roomId} name={roomName}");
-        CurrentRoomChanged?.Invoke(room);
     }
 
     #endregion
 
     #region Rooms — API: JoinRoom / JoinByCode
 
-    public void RequestJoinRoom(JoinRoomRequest request)
+    public async void RequestJoinRoom(JoinRoomRequest request)
     {
         if (request == null || string.IsNullOrWhiteSpace(request.roomId))
         {
@@ -147,24 +140,18 @@ public class LobbyManager : MonoBehaviour
             return;
         }
 
-        LobbyRoomDto room = FindRoom(request.roomId);
-
-        if (room == null)
+        try
         {
-            Fail("Room not found: " + request.roomId);
-            return;
+            LobbyRoomDto room = await LobbyService.JoinRoomAsync(request);
+            FlowGuard.Info(FlowGuard.TagSetup, $"JoinRoom id={room.roomId} match={room.matchId}");
         }
-
-        if (room.isPrivate && !ValidatePassword(room, request.password))
+        catch (Exception exception)
         {
-            Fail("Incorrect password.");
-            return;
+            Fail(exception.Message);
         }
-
-        CompleteJoin(room);
     }
 
-    public void RequestJoinRoomByCode(JoinRoomByCodeRequest request)
+    public async void RequestJoinRoomByCode(JoinRoomByCodeRequest request)
     {
         if (request == null || string.IsNullOrWhiteSpace(request.roomCode))
         {
@@ -172,19 +159,15 @@ public class LobbyManager : MonoBehaviour
             return;
         }
 
-        RequestJoinRoom(new JoinRoomRequest
+        try
         {
-            roomId = request.roomCode.Trim().ToUpperInvariant(),
-            password = request.password
-        });
-    }
-
-    void CompleteJoin(LobbyRoomDto room)
-    {
-        room.currentPlayers = Mathf.Min(room.currentPlayers + 1, room.maxPlayers);
-        ApplyCurrentRoom(room, isHost: false);
-        FlowGuard.Info(FlowGuard.TagSetup, $"JoinRoom mock id={room.roomId}");
-        CurrentRoomChanged?.Invoke(room);
+            LobbyRoomDto room = await LobbyService.JoinRoomByCodeAsync(request);
+            FlowGuard.Info(FlowGuard.TagSetup, $"JoinRoomByCode id={room.roomId} match={room.matchId}");
+        }
+        catch (Exception exception)
+        {
+            Fail(exception.Message);
+        }
     }
 
     #endregion
@@ -201,9 +184,39 @@ public class LobbyManager : MonoBehaviour
             return false;
         }
 
-        // TODO[NETWORK] POST /v1/lobbies/{roomId}/start — host start PurrNet + EdgeGap.
-        FlowGuard.Info(FlowGuard.TagSetup, $"StartMatch mock room={currentRoom.roomId}");
+        if (IsLobbyStarting(currentRoom))
+        {
+            error = "Match is already starting.";
+            return false;
+        }
+
+        _ = StartMatchAsync();
         return true;
+    }
+
+    async Task StartMatchAsync()
+    {
+        try
+        {
+            StartMatchResponse response = await LobbyService.StartMatchAsync(new StartMatchRequest
+            {
+                roomId = currentRoom.roomId,
+                matchId = currentRoom.matchId
+            });
+
+            currentRoom.status = response.status;
+            currentRoom.matchId = string.IsNullOrWhiteSpace(response.matchId) ? currentRoom.matchId : response.matchId;
+            currentRoom.allocationId = response.allocationId;
+            currentRoom.serverStatus = response.serverStatus;
+            FlowGuard.Info(FlowGuard.TagSetup, $"StartMatch room={currentRoom.roomId} match={response.matchId} status={response.status}");
+
+            CurrentRoomChanged?.Invoke(currentRoom);
+            TryBeginMatchServerConnect(currentRoom);
+        }
+        catch (Exception exception)
+        {
+            Fail(exception.Message);
+        }
     }
 
     #endregion
@@ -335,7 +348,11 @@ public class LobbyManager : MonoBehaviour
             return;
         }
 
-        RequestJoinRoomByCode(new JoinRoomByCodeRequest { roomCode = friend.currentRoomId });
+        RequestJoinRoomByCode(new JoinRoomByCodeRequest
+        {
+            roomCode = friend.currentRoomId,
+            password = friend.currentRoomId
+        });
     }
 
     #endregion
@@ -345,30 +362,115 @@ public class LobbyManager : MonoBehaviour
     void ApplyCurrentRoom(LobbyRoomDto room, bool isHost)
     {
         currentRoom = room;
-        GameSession.SetRoom(room.roomName, room.mapId, room.maxPlayers, room.mapName);
+        GameSession.SetRoom(room.roomId, room.roomName, room.mapId, room.maxPlayers, room.mapName);
+    }
+
+    void OnServiceCurrentRoomUpdated(LobbyRoomDto room)
+    {
+        if (room == null)
+        {
+            currentRoom = null;
+            CurrentRoomChanged?.Invoke(null);
+            return;
+        }
+
+        ApplyCurrentRoom(room, room.hostPlayerId == AuthService.GetOrCreate().Session?.UserId);
+        CurrentRoomChanged?.Invoke(room);
+        RequestRoomList();
+        TryBeginMatchServerConnect(room);
+    }
+
+    public void ReplayCurrentRoom()
+    {
+        LobbyService.ReplayCurrentRoom();
     }
 
     public void ClearCurrentRoom()
     {
+        if (IsLobbyStarting(currentRoom) || isConnectingToMatchServer)
+        {
+            Fail("Match is starting.");
+            return;
+        }
+
         currentRoom = null;
+        _ = LobbyService.LeaveCurrentRoomAsync();
+        CurrentRoomChanged?.Invoke(null);
+        RequestRoomList();
+    }
+
+    void TryBeginMatchServerConnect(LobbyRoomDto room)
+    {
+        if (room == null || !IsLobbyStarting(room))
+            return;
+
+        if (string.IsNullOrWhiteSpace(room.matchId) || string.IsNullOrWhiteSpace(room.allocationId))
+            return;
+
+        if (isConnectingToMatchServer)
+        {
+            if (string.Equals(connectingAllocationId, room.allocationId, StringComparison.Ordinal))
+                return;
+
+            FlowGuard.Info(
+                FlowGuard.TagSetup,
+                $"Ignoring lobby server allocation {room.allocationId}; already connecting to {connectingAllocationId}"
+            );
+            return;
+        }
+
+        matchServerConnectCts?.Cancel();
+        matchServerConnectCts?.Dispose();
+        matchServerConnectCts = new CancellationTokenSource();
+        isConnectingToMatchServer = true;
+        connectingAllocationId = room.allocationId;
+
+        FlowGuard.Info(
+            FlowGuard.TagSetup,
+            $"Lobby match server connect begin room={room.roomId} match={room.matchId} allocation={room.allocationId} status={room.serverStatus}"
+        );
+
+        _ = WaitForLobbyMatchServerAndConnectAsync(room.matchId, room.allocationId, matchServerConnectCts.Token);
+    }
+
+    async Task WaitForLobbyMatchServerAndConnectAsync(string matchId, string allocationId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            MatchServerStatus serverStatus = await MatchServerService.EnsureExists().WaitForReadyAsync(
+                matchId,
+                allocationId,
+                cancellationToken,
+                MatchServerStatusPollIntervalSeconds
+            );
+            await MatchConnectionService.EnsureExists().ConnectAsync(serverStatus, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (Exception exception)
+        {
+            Debug.LogException(exception);
+            if (this != null)
+            {
+                isConnectingToMatchServer = false;
+                connectingAllocationId = null;
+                Fail(exception.Message);
+            }
+        }
+    }
+
+    static bool IsLobbyStarting(LobbyRoomDto room)
+    {
+        return room != null && string.Equals(room.status, "Starting", StringComparison.OrdinalIgnoreCase);
     }
 
     #endregion
 
-    #region Mock data
+    #region Friend stubs
 
-    void SeedMockData()
+    void SeedMockFriendData()
     {
-        mockRooms.Clear();
-        mockRooms.Add(MakeRoom("RX45", "SG Casual Play", 1, 4, 45, "Singapore", false));
-        mockRooms.Add(MakeRoom("VN01", "VN PRO ONLY", 1, 4, 30, "Singapore", true));
-        mockRooms.Add(MakeRoom("USW1", "US West Fun Match", 2, 4, 150, "US West", false));
-        mockRooms.Add(MakeRoom("EU01", "Europe Chill Room", 1, 4, 210, "Europe", false));
-        mockRooms.Add(MakeRoom("JP01", "Japan Dev Test", 4, 4, 90, "Japan", false));
-        mockRooms.Add(MakeRoom("DEV1", "Secret Room (dev)", 2, 4, 52, "Singapore", true));
-        mockRooms.Add(MakeRoom("M007", "Mock Lobby 7", 1, 2, 80, "US East", false));
-        mockRooms.Add(MakeRoom("M008", "Mock Lobby 8", 2, 3, 110, "Australia", false));
-
         mockFriends.Clear();
         mockFriends.Add(new FriendDto
         {
@@ -418,33 +520,6 @@ public class LobbyManager : MonoBehaviour
         });
     }
 
-    static LobbyRoomDto MakeRoom(
-        string id,
-        string name,
-        int players,
-        int max,
-        int ping,
-        string region,
-        bool isPrivate
-    )
-    {
-        return new LobbyRoomDto
-        {
-            roomId = id,
-            roomName = name,
-            mapId = LobbyApiContracts.DefaultMapId,
-            mapName = "Classic Garden",
-            currentPlayers = players,
-            maxPlayers = max,
-            pingMs = ping,
-            region = region,
-            isPrivate = isPrivate,
-            hostPlayerId = "host-" + id
-        };
-    }
-
-    static string LocalPlayerId() => "local-player";
-
     public static string GenerateRoomCodePreview()
     {
         return GenerateRoomCode();
@@ -459,34 +534,6 @@ public class LobbyManager : MonoBehaviour
             id[i] = chars[UnityEngine.Random.Range(0, chars.Length)];
 
         return new string(id);
-    }
-
-    LobbyRoomDto FindRoom(string roomId)
-    {
-        string code = roomId.Trim().ToUpperInvariant();
-
-        for (int i = 0; i < mockRooms.Count; i++)
-        {
-            if (mockRooms[i].roomId == code)
-                return mockRooms[i];
-        }
-
-        return null;
-    }
-
-    static bool ValidatePassword(LobbyRoomDto room, string password)
-    {
-        if (!room.isPrivate)
-            return true;
-
-        // Mock: dev room VN01 password "123", DEV1 password "dev"
-        if (room.roomId == "VN01")
-            return password == "123";
-
-        if (room.roomId == "DEV1")
-            return password == "dev";
-
-        return password == PlayerPrefs.GetString("CurrentRoomPassword", "");
     }
 
     FriendDto FindFriend(string friendId)

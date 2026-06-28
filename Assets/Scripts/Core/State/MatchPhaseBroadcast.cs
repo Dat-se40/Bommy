@@ -27,6 +27,10 @@ public class MatchPhaseBroadcast : NetworkBehaviour
     readonly SyncVar<float> phaseRemainingSeconds = new();
     readonly SyncVar<float> phaseDurationSeconds = new();
     readonly SyncVar<int> activeMapId = new(NoMapId);
+    readonly SyncVar<int> connectedPlayerCount = new();
+    readonly SyncVar<int> intendedPlayerCount = new();
+    readonly SyncVar<bool> matchCancelled = new();
+    readonly SyncVar<string> cancellationReason = new();
 
     float serverRemainingSeconds;
     bool serverTicking;
@@ -35,10 +39,15 @@ public class MatchPhaseBroadcast : NetworkBehaviour
     public float PhaseRemainingSeconds => phaseRemainingSeconds.value;
     public float PhaseDurationSeconds => phaseDurationSeconds.value;
     public int ActiveMapId => activeMapId.value;
+    public int ConnectedPlayerCount => connectedPlayerCount.value;
+    public int IntendedPlayerCount => intendedPlayerCount.value;
+    public bool MatchCancelled => matchCancelled.value;
+    public string CancellationReason => cancellationReason.value;
 
     public event Action PhaseChanged;
     public event Action PhaseCompleted;
     public event Action<int> MapIdChanged;
+    public event Action WaitingForPlayersChanged;
 
     void Awake()
     {
@@ -59,8 +68,13 @@ public class MatchPhaseBroadcast : NetworkBehaviour
         phaseRemainingSeconds.onChanged += OnAnyTimerReplicated;
         phaseDurationSeconds.onChanged += OnAnyTimerReplicated;
         activeMapId.onChanged += OnMapIdReplicated;
+        connectedPlayerCount.onChanged += OnAnyWaitingReplicated;
+        intendedPlayerCount.onChanged += OnAnyWaitingReplicated;
+        matchCancelled.onChanged += OnAnyWaitingReplicated;
+        cancellationReason.onChanged += OnAnyWaitingReplicated;
 
         PhaseChanged?.Invoke();
+        WaitingForPlayersChanged?.Invoke();
         NotifyMapIdIfValid(activeMapId.value);
     }
 
@@ -70,6 +84,10 @@ public class MatchPhaseBroadcast : NetworkBehaviour
         phaseRemainingSeconds.onChanged -= OnAnyTimerReplicated;
         phaseDurationSeconds.onChanged -= OnAnyTimerReplicated;
         activeMapId.onChanged -= OnMapIdReplicated;
+        connectedPlayerCount.onChanged -= OnAnyWaitingReplicated;
+        intendedPlayerCount.onChanged -= OnAnyWaitingReplicated;
+        matchCancelled.onChanged -= OnAnyWaitingReplicated;
+        cancellationReason.onChanged -= OnAnyWaitingReplicated;
 
         serverTicking = false;
 
@@ -107,6 +125,11 @@ public class MatchPhaseBroadcast : NetworkBehaviour
     void OnAnyPhaseReplicated(MatchPhaseKind _) => PhaseChanged?.Invoke();
     void OnAnyTimerReplicated(float _) => PhaseChanged?.Invoke();
     void OnMapIdReplicated(int mapId) => NotifyMapIdIfValid(mapId);
+    void OnAnyWaitingReplicated<T>(T _)
+    {
+        WaitingForPlayersChanged?.Invoke();
+        PhaseChanged?.Invoke();
+    }
 
     void NotifyMapIdIfValid(int mapId)
     {
@@ -147,6 +170,8 @@ public class MatchPhaseBroadcast : NetworkBehaviour
         if (!isServer)
             return;
 
+        matchCancelled.value = false;
+        cancellationReason.value = string.Empty;
         currentPhase.value = phase;
         phaseDurationSeconds.value = Mathf.Max(0.01f, durationSeconds);
         serverRemainingSeconds = durationSeconds;
@@ -160,5 +185,39 @@ public class MatchPhaseBroadcast : NetworkBehaviour
             return;
 
         serverTicking = false;
+    }
+
+    public void ServerStartWaitingForPlayers(int connectedCount, int intendedCount)
+    {
+        if (!isServer)
+            return;
+
+        serverTicking = false;
+        currentPhase.value = MatchPhaseKind.WaitingForPlayers;
+        phaseDurationSeconds.value = 0f;
+        phaseRemainingSeconds.value = 0f;
+        matchCancelled.value = false;
+        cancellationReason.value = string.Empty;
+        ServerSetWaitingForPlayers(connectedCount, intendedCount);
+    }
+
+    public void ServerSetWaitingForPlayers(int connectedCount, int intendedCount)
+    {
+        if (!isServer)
+            return;
+
+        connectedPlayerCount.value = Mathf.Max(0, connectedCount);
+        intendedPlayerCount.value = Mathf.Max(0, intendedCount);
+    }
+
+    public void ServerCancelMatch(string reason)
+    {
+        if (!isServer)
+            return;
+
+        serverTicking = false;
+        phaseRemainingSeconds.value = 0f;
+        matchCancelled.value = true;
+        cancellationReason.value = string.IsNullOrWhiteSpace(reason) ? "Match cancelled" : reason;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,7 +10,7 @@ public class CharacterSelectShopController : MonoBehaviour
     [Header("Scenes")]
     [SerializeField] private string mainMenuSceneName = "MainMenu";
     [SerializeField] private string lobbySceneName = "Lobby";
-    [SerializeField] private string randomMatchSceneName = "RandomMatchDemo";
+    [SerializeField] private string randomMatchSceneName = "RandomMatch";
 
     [Header("Player Progress UI")]
     [SerializeField] private TMP_Text goldlbl;
@@ -40,7 +41,7 @@ public class CharacterSelectShopController : MonoBehaviour
     [SerializeField] private Button rightbtn;
 
     int selectedIndex;
-    int playerGold;
+    int playerCoins;
     bool requestInProgress;
 
     const string ModeKey = "CharacterSelectMode";
@@ -55,10 +56,19 @@ public class CharacterSelectShopController : MonoBehaviour
         PlayerProgressionService.ProgressionChanged -= OnProgressionChanged;
     }
 
-    void Start()
+    async void Start()
     {
         if (characterDatabase != null)
             MatchSessionBroker.SetCharacterCatalog(characterDatabase);
+
+        try
+        {
+            await PlayerProgressionService.EnsureExists().RefreshAsync();
+        }
+        catch (System.Exception exception)
+        {
+            Debug.LogWarning("[CharacterSelectShopController] Failed to refresh progression: " + exception.Message, this);
+        }
 
         LoadProgress();
         SetupButtons();
@@ -69,14 +79,14 @@ public class CharacterSelectShopController : MonoBehaviour
     void LoadProgress()
     {
         PlayerAccountSnapshot progression = PlayerProgressionService.Instance?.Current;
-        playerGold = progression?.gold ?? 0;
+        playerCoins = progression?.SpendableCurrency ?? 0;
         RefreshProgressUI();
     }
 
     void RefreshProgressUI()
     {
         if (goldlbl != null)
-            goldlbl.text = "Gold: " + playerGold;
+            goldlbl.text = "Coins: " + playerCoins;
 
     }
 
@@ -222,7 +232,7 @@ public class CharacterSelectShopController : MonoBehaviour
             return;
 
         bool owned = IsOwned(data);
-        bool enoughGold = playerGold >= data.Price;
+        bool enoughCoins = playerCoins >= data.Price;
 
         if (owned)
         {
@@ -234,12 +244,12 @@ public class CharacterSelectShopController : MonoBehaviour
             return;
         }
 
-        if (!enoughGold)
+        if (!enoughCoins)
         {
             SetReadyButton("BUY " + data.Price, false);
 
             if (requirelbl != null)
-                requirelbl.text = "Need " + (data.Price - playerGold) + " more gold";
+                requirelbl.text = "Need " + (data.Price - playerCoins) + " more coins";
 
             return;
         }
@@ -280,7 +290,7 @@ public class CharacterSelectShopController : MonoBehaviour
 
     async System.Threading.Tasks.Task TryBuyCharacterAsync(CharacterDefinition data)
     {
-        if (requestInProgress || playerGold < data.Price)
+        if (requestInProgress || playerCoins < data.Price)
             return;
 
         requestInProgress = true;
@@ -292,8 +302,10 @@ public class CharacterSelectShopController : MonoBehaviour
         }
         catch (System.Exception exception)
         {
+            Debug.LogWarning("[CharacterSelectShopController] Purchase failed: " + exception);
+
             if (requirelbl != null)
-                requirelbl.text = exception.Message;
+                requirelbl.text = GetProgressionErrorMessage(exception);
         }
         finally
         {
@@ -343,6 +355,16 @@ public class CharacterSelectShopController : MonoBehaviour
             SceneManager.LoadScene(lobbySceneName);
         else
             SceneManager.LoadScene(randomMatchSceneName);
+    }
+
+    static string GetProgressionErrorMessage(Exception exception)
+    {
+        if (exception is TimeoutException)
+            return "Progression server did not respond. Check backend and try again.";
+
+        return string.IsNullOrWhiteSpace(exception.Message)
+            ? "Progression request failed. Try again."
+            : exception.Message;
     }
 
 

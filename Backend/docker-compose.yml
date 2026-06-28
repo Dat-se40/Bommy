@@ -28,8 +28,26 @@ services:
       - "-ecx"
       - >
         /nakama/nakama migrate up --database.address postgres:localdb@postgres:5432/nakama &&
-        exec /nakama/nakama --config /nakama/data/local.yml --database.address postgres:localdb@postgres:5432/nakama
+        exec /nakama/data/start-nakama.sh --database.address postgres:localdb@postgres:5432/nakama
     restart: unless-stopped
+    environment:
+      MATCH_SERVER_PROVIDER: ${MATCH_SERVER_PROVIDER:-LocalDev}
+      BOMMY_LOCALDEV_ORCHESTRATION: ${BOMMY_LOCALDEV_ORCHESTRATION:-1}
+      BOMMY_RANDOM_QUEUE_REQUIRED_PLAYERS: ${BOMMY_RANDOM_QUEUE_REQUIRED_PLAYERS:-4}
+      BOMMY_SERVER_SECRET: ${BOMMY_SERVER_SECRET:-dev-local-secret}
+      BOMMY_NAKAMA_SCHEME: ${BOMMY_NAKAMA_SCHEME:-http}
+      BOMMY_NAKAMA_HOST: ${BOMMY_NAKAMA_HOST:-127.0.0.1}
+      BOMMY_NAKAMA_PORT: ${BOMMY_NAKAMA_PORT:-7350}
+      BOMMY_NAKAMA_SERVER_KEY: ${BOMMY_NAKAMA_SERVER_KEY:-defaultkey}
+      BOMMY_NAKAMA_HTTP_KEY: ${BOMMY_NAKAMA_HTTP_KEY:-defaulthttpkey}
+      EDGEGAP_ENABLED: ${EDGEGAP_ENABLED:-0}
+      EDGEGAP_API_TOKEN: ${EDGEGAP_API_TOKEN:-}
+      EDGEGAP_APP_NAME: ${EDGEGAP_APP_NAME:-bommy-server}
+      EDGEGAP_VERSION_NAME: ${EDGEGAP_VERSION_NAME:-}
+      EDGEGAP_DEFAULT_REGION: ${EDGEGAP_DEFAULT_REGION:-Local}
+      EDGEGAP_INTERNAL_GAME_PORT: ${EDGEGAP_INTERNAL_GAME_PORT:-5000}
+      EDGEGAP_PROTOCOL: ${EDGEGAP_PROTOCOL:-UDP}
+      EDGEGAP_PORT_NAME: ${EDGEGAP_PORT_NAME:-gameport}
     ports:
       - "7349:7349"
       - "7350:7350"

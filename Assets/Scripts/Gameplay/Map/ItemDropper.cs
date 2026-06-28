@@ -59,10 +59,7 @@ public class ItemDropper : MonoBehaviour
     void Awake()
     {
         if (networkManager == null)
-            networkManager = FindFirstObjectByType<NetworkManager>();
-
-        if (LevelRuntime.Current == null && defaultLevelConfig != null)
-            LevelRuntime.SetLevel(defaultLevelConfig);
+            networkManager = FindAnyObjectByType<NetworkManager>();
 
         spawnedCounts.Clear();
     }

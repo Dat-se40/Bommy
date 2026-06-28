@@ -22,6 +22,9 @@ public class PlayerInfor : MonoBehaviour
     private string playerName = General.PLAYER_DEFAULT_NAME;
 
     [SerializeField]
+    private string userId;
+
+    [SerializeField]
     private bool isLocalPlayer = true;
 
     [Header("Movement")]
@@ -74,12 +77,14 @@ public class PlayerInfor : MonoBehaviour
     private int shield;
 
     PlayerID? pendingKillAttacker;
+    PlayerID? authorityPlayerId;
 
     public int Shield => shield;
     public int PlayerIndex => playerIndex;
     public int CharacterId => characterId;
     public int CatalogIndex => catalogIndex;
     public string PlayerName => playerName;
+    public string UserId => userId;
     public bool IsLocalPlayer => isLocalPlayer;
 
     public float MoveSpeed => moveSpeed;
@@ -112,7 +117,7 @@ public class PlayerInfor : MonoBehaviour
 
     void Start()
     {
-        if (isLocalPlayer)
+        if (isLocalPlayer && !DedicatedServerBootstrap.IsDedicatedServerRuntime)
             ApplyLocalProfileFromBroker();
 
         ResetForMatch();
@@ -124,6 +129,7 @@ public class PlayerInfor : MonoBehaviour
         characterId = profile.characterId;
         catalogIndex = profile.catalogIndex;
         playerName = profile.displayName;
+        userId = profile.userId;
         maxHp = profile.hp;
         maxBombs = profile.bomb;
         baseMoveSpeed = profile.speed;
@@ -133,6 +139,11 @@ public class PlayerInfor : MonoBehaviour
             move.SetSpeed(profile.speed);
 
         Debug.Log($"[PLayer Infor] player {profile.displayName} completed apply match profile");
+    }
+
+    public void SetAuthorityPlayerId(PlayerID playerId)
+    {
+        authorityPlayerId = playerId;
     }
 
     void ApplyLocalProfileFromBroker()
@@ -319,8 +330,6 @@ public class PlayerInfor : MonoBehaviour
             if (authority != null)
                 authority.NotifyPlayerEliminated(selfId.Value);
         }
-
-        gameObject.SetActive(false);
     }
 
     public void Heal(int amount)
@@ -431,6 +440,9 @@ public class PlayerInfor : MonoBehaviour
 
     public PlayerID? GetPlayerID()
     {
+        if (authorityPlayerId.HasValue)
+            return authorityPlayerId.Value;
+
         if (TryGetComponent(out PlayerController playerController) && playerController.owner.HasValue)
             return playerController.owner.Value;
 

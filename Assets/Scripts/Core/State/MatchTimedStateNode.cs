@@ -12,10 +12,19 @@ public abstract class MatchTimedStateNode : StateNode
     protected abstract float DurationSeconds { get; }
 
     protected MatchPhaseBroadcast PhaseBroadcast => phaseBroadcast;
+    protected bool IsDedicatedWaitingForLaunchConfig(bool asServer)
+    {
+        return asServer
+            && DedicatedServerBootstrap.IsDedicatedServerRuntime
+            && !DedicatedMatchRuntime.HasLaunchConfig;
+    }
 
     public override void Enter(bool asServer)
     {
         if (!asServer)
+            return;
+
+        if (IsDedicatedWaitingForLaunchConfig(asServer))
             return;
 
         MatchPhaseBroadcast broadcast = ResolveBroadcast();

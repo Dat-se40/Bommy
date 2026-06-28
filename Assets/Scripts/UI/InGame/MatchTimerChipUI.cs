@@ -61,6 +61,14 @@ public class MatchTimerChipUI : MonoBehaviour
         if (broadcast == null || timerLabel == null)
             return;
 
+        if (broadcast.CurrentPhase == MatchPhaseKind.WaitingForPlayers)
+        {
+            timerLabel.color = normalColor;
+            int intended = Mathf.Max(1, broadcast.IntendedPlayerCount);
+            timerLabel.text = broadcast.ConnectedPlayerCount + "/" + intended;
+            return;
+        }
+
         float remaining = broadcast.PhaseRemainingSeconds;
         float duration = broadcast.PhaseDurationSeconds;
         float urgency = duration > 0.01f ? 1f - Mathf.Clamp01(remaining / duration) : 1f;

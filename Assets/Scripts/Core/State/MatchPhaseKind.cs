@@ -1,7 +1,8 @@
 public enum MatchPhaseKind
 {
     None = 0,
-    Prep = 1,
-    Gameplay = 2,
-    ZoneShrink = 3,
+    WaitingForPlayers = 1,
+    Prep = 2,
+    Gameplay = 3,
+    ZoneShrink = 4,
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public partial class LobbyUIController : MonoBehaviour
@@ -10,7 +11,6 @@ public partial class LobbyUIController : MonoBehaviour
     [Header("Scenes")]
     [SerializeField] private string mainMenuSceneName = "MainMenu";
     [SerializeField] private string characterSelectSceneName = "CharacterSelect";
-    [SerializeField] private string gameSceneName = "GameScene";
 
     [Header("Status")]
     [SerializeField] private TMP_Text lobbyStatuslbl;
@@ -33,6 +33,7 @@ public partial class LobbyUIController : MonoBehaviour
     [SerializeField] private TMP_Dropdown mapDropdown;
     [SerializeField] private LobbyMapOption[] mapOptions;
     [SerializeField] private TMP_Dropdown maxPlayersDropdown;
+    [FormerlySerializedAs("legacyPasswordInput")]
     [SerializeField] private TMP_InputField passwordInput;
 
     [Header("Current Room UI")]
@@ -64,7 +65,11 @@ public partial class LobbyUIController : MonoBehaviour
         InitializeRoomListFeature();
         InitializeFriendsFeature();
 
+        if (passwordInput != null)
+            passwordInput.interactable = false;
+
         SetCurrentRoomEmpty();
+        LobbyManager.EnsureExists().ReplayCurrentRoom();
     }
 
     private void BindLobbyManagerEvents()
@@ -157,7 +162,11 @@ public partial class LobbyUIController : MonoBehaviour
             return;
         }
 
-        LobbyManager.EnsureExists().RequestJoinRoomByCode(new JoinRoomByCodeRequest { roomCode = roomId });
+        LobbyManager.EnsureExists().RequestJoinRoomByCode(new JoinRoomByCodeRequest
+        {
+            roomCode = roomId,
+            password = roomId
+        });
     }
 
     public void BackToMainMenu()
@@ -195,7 +204,12 @@ public partial class LobbyUIController : MonoBehaviour
             maxPlayersDropdown.value = Mathf.Clamp(1, 0, maxPlayersDropdown.options.Count - 1);
 
         if (passwordInput != null)
-            passwordInput.text = "";
+        {
+            passwordInput.gameObject.SetActive(true);
+            passwordInput.text = pendingRoomId;
+            passwordInput.interactable = false;
+        }
+
     }
 
     public void CloseCreateRoomDialog()
@@ -228,7 +242,6 @@ public partial class LobbyUIController : MonoBehaviour
             mapId = mapId,
             mapName = mapName,
             maxPlayers = GetMaxPlayers(),
-            password = passwordInput != null ? passwordInput.text : "",
             preferredRoomId = pendingRoomId
         };
 
@@ -252,7 +265,7 @@ public partial class LobbyUIController : MonoBehaviour
             return;
         }
 
-        SceneManager.LoadScene(gameSceneName);
+        SetLobbyStatus("Starting match...");
     }
 
     void InitializeMapDropdown()
@@ -330,6 +343,8 @@ public partial class LobbyUIController : MonoBehaviour
 
     void OnDestroy()
     {
+        CancelInvoke(nameof(RefreshRoomList));
+
         if (LobbyManager.Instance == null)
             return;
 

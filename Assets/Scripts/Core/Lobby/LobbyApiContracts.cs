@@ -46,6 +46,10 @@ public class LobbyRoomDto
     public string region;
     public bool isPrivate;
     public string hostPlayerId;
+    public string matchId;
+    public string status;
+    public string allocationId;
+    public string serverStatus;
 }
 
 /// <summary>
@@ -59,7 +63,6 @@ public class CreateRoomRequest
     public int mapId;
     public string mapName;
     public int maxPlayers;
-    public string password;
     public string preferredRoomId;
 }
 
@@ -79,6 +82,7 @@ public class CreateRoomResponse
 public class JoinRoomRequest
 {
     public string roomId;
+    public string matchId;
     public string password;
 }
 
@@ -180,6 +184,7 @@ public class LobbyMapOption
 public class StartMatchRequest
 {
     public string roomId;
+    public string matchId;
 }
 
 [Serializable]
@@ -188,6 +193,9 @@ public class StartMatchResponse
     public bool success;
     public string errorMessage;
     public string matchId;
+    public string status;
+    public string allocationId;
+    public string serverStatus;
 }
 
 #endregion

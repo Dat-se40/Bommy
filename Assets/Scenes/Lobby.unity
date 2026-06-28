@@ -1590,7 +1590,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: JOIN
+  m_text: jOIN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3c3d51abb1eae1248a61dfd98f54cfd8, type: 2}
   m_sharedMaterial: {fileID: 2310723587292996789, guid: 3c3d51abb1eae1248a61dfd98f54cfd8, type: 2}
@@ -12283,7 +12283,6 @@ MonoBehaviour:
   passwordCancelbtn: {fileID: 0}
   mainMenuSceneName: MainMenu
   characterSelectSceneName: CharacterSelect
-  gameSceneName: GameScene
   lobbyStatuslbl: {fileID: 0}
   createRoomDialog: {fileID: 280072769}
   generatedRoomIdlbl: {fileID: 1742320953}
@@ -12297,10 +12296,10 @@ MonoBehaviour:
   roomNameInput: {fileID: 1208892073}
   mapDropdown: {fileID: 645026348}
   mapOptions:
-  - displayName: Class Garden
+  - displayName: Garden
   - displayName: Summer
   - displayName: Dungeon
-  - displayName: Winner
+  - displayName: Winter
   maxPlayersDropdown: {fileID: 1971440981}
   passwordInput: {fileID: 1655471953}
   currentRoomNamelbl: {fileID: 1624755185}

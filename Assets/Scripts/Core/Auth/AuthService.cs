@@ -4,10 +4,14 @@ using UnityEngine;
 
 public sealed class AuthService : MonoBehaviour
 {
+    static AuthService instance;
+
     [Header("Nakama")]
+    [SerializeField] private string scheme = "http";
     [SerializeField] private string host = General.AUTH_NAKAMA_HOST;
     [SerializeField] private int port = General.AUTH_NAKAMA_PORT;
     [SerializeField] private string serverKey = General.AUTH_NAKAMA_SERVER_KEY;
+    [SerializeField] private string httpKey = "defaulthttpkey";
 
     NakamaSessionService sessionService;
     NakamaAccountService accountService;
@@ -18,14 +22,31 @@ public sealed class AuthService : MonoBehaviour
     public ISocket Socket => socketService?.Socket;
     public IApiAccount Account => accountService?.Account;
 
+    public static AuthService Instance => instance;
     public bool IsSocketConnected => socketService != null && socketService.IsConnected;
     public string Username => Account?.User?.Username ?? Session?.Username ?? string.Empty;
     public string DisplayName => accountService?.GetDisplayName(Session) ?? General.AUTH_DEFAULT_DISPLAY_NAME;
     public bool IsAuthenticated => Session != null && !Session.IsExpired;
+    string RuntimeHttpKey => string.IsNullOrWhiteSpace(httpKey) ? "defaulthttpkey" : httpKey.Trim();
 
     void EnsureClient()
     {
-        Client ??= new Client("http", host, port, serverKey, UnityWebRequestAdapter.Instance);
+        if (Client != null)
+            return;
+
+        string runtimeScheme = string.IsNullOrWhiteSpace(scheme) ? "http" : scheme.Trim();
+        string runtimeHost = string.IsNullOrWhiteSpace(host) ? "127.0.0.1" : host.Trim();
+
+        Debug.LogFormat(
+            "[AuthService] Creating Nakama client at {0}://{1}:{2}. Server key configured: {3}. HTTP key configured: {4}.",
+            runtimeScheme,
+            runtimeHost,
+            port,
+            !string.IsNullOrWhiteSpace(serverKey),
+            !string.IsNullOrWhiteSpace(httpKey)
+        );
+
+        Client = new Client(runtimeScheme, runtimeHost, port, serverKey, UnityWebRequestAdapter.Instance);
     }
 
     void EnsureServices()
@@ -38,8 +59,29 @@ public sealed class AuthService : MonoBehaviour
 
     private void Awake()
     {
+        if (DedicatedServerBootstrap.IsDedicatedServerRuntime)
+        {
+            Debug.Log("[AuthService] Dedicated server runtime detected. Skipping client auth service.");
+            Destroy(gameObject);
+            return;
+        }
+
+        if (instance != null && instance != this)
+        {
+            Debug.LogWarning("[AuthService] Duplicate AuthService found. Keeping the existing persistent instance.");
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
         DontDestroyOnLoad(gameObject);
         EnsureServices();
+    }
+
+    void OnDestroy()
+    {
+        if (instance == this)
+            instance = null;
     }
 
     /// <summary>
@@ -48,10 +90,19 @@ public sealed class AuthService : MonoBehaviour
     /// </summary>
     public static AuthService GetOrCreate()
     {
+        if (DedicatedServerBootstrap.IsDedicatedServerRuntime)
+            throw new System.InvalidOperationException("AuthService is client-only and cannot be used in dedicated server runtime.");
+
+        if (instance != null)
+            return instance;
+
         AuthService existing = FindAnyObjectByType<AuthService>();
 
         if (existing != null)
+        {
+            instance = existing;
             return existing;
+        }
 
         GameObject go = new("AuthService");
         return go.AddComponent<AuthService>();
@@ -251,5 +302,11 @@ public sealed class AuthService : MonoBehaviour
     {
         EnsureServices();
         return await Client.RpcAsync(await RequireFreshSessionAsync(), id, payload);
+    }
+
+    public async Task<IApiRpc> RpcUnauthenticatedAsync(string id, string payload = "{}")
+    {
+        EnsureServices();
+        return await Client.RpcAsync(RuntimeHttpKey, id, payload);
     }
 }

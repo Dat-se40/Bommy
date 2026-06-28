@@ -15,13 +15,12 @@ MonoBehaviour:
   characterId: 9
   characterName: Runi
   description: Moca
-  icon: {fileID: -746272505709595426, guid: 22a3f4a3482abbc4187cfd0697eb96d6, type: 3}
+  icon: {fileID: 198743297064816441, guid: 3c99856db67185e4abe7bed80b820cbf, type: 3}
   preview: {fileID: -4246943709325784, guid: 7c615902e571263418040db1d1782966, type: 3}
   spriteLibrary: {fileID: 11400000, guid: acfbcf52f7a66344c997d5b0ecde7ba0, type: 2}
   playerPrefab: {fileID: 24528305369907493, guid: 0b2ef07dd0781f44c94c28e578b48a03, type: 3}
   hp: 1
-  bomb: 3
-  speed: 5
-  defaultOwned: 1
-  requiredLevel: 0
-  price: 100
+  bomb: 1
+  speed: 1
+  defaultOwned: 0
+  price: 50

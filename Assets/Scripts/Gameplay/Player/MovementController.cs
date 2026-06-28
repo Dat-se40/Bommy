@@ -35,6 +35,9 @@ public class MovementController : NetworkBehaviour
     PlayerBoardState boardState;
 
     readonly SyncVar<float> networkMoveSpeed = new();
+    readonly SyncVar<Vector3Int> networkCell = new();
+    readonly SyncVar<bool> networkCellInitialized = new();
+    readonly SyncVar<int> networkDirection = new();
 
     public Vector3Int CurrentCell => currentCell;
     public bool IsMoving => isMoving;
@@ -52,14 +55,23 @@ public class MovementController : NetworkBehaviour
         base.OnSpawned();
 
         networkMoveSpeed.onChanged += OnNetworkMoveSpeedChanged;
+        networkCell.onChanged += OnNetworkCellChanged;
+        networkCellInitialized.onChanged += OnNetworkCellInitializedChanged;
+        networkDirection.onChanged += OnNetworkDirectionChanged;
 
         if (networkMoveSpeed.value > 0f)
             moveSpeed = networkMoveSpeed.value;
+
+        if (networkCellInitialized.value)
+            ApplyNetworkCell(networkCell.value, snap: true);
     }
 
     protected override void OnDespawned()
     {
         networkMoveSpeed.onChanged -= OnNetworkMoveSpeedChanged;
+        networkCell.onChanged -= OnNetworkCellChanged;
+        networkCellInitialized.onChanged -= OnNetworkCellInitializedChanged;
+        networkDirection.onChanged -= OnNetworkDirectionChanged;
         base.OnDespawned();
     }
 
@@ -67,6 +79,23 @@ public class MovementController : NetworkBehaviour
     {
         if (value > 0f)
             moveSpeed = value;
+    }
+
+    void OnNetworkCellChanged(Vector3Int cell)
+    {
+        ApplyNetworkCell(cell, snap: !networkCellInitialized.value);
+    }
+
+    void OnNetworkCellInitializedChanged(bool initialized)
+    {
+        if (initialized)
+            ApplyNetworkCell(networkCell.value, snap: true);
+    }
+
+    void OnNetworkDirectionChanged(int value)
+    {
+        if (!isOwner)
+            direction = value;
     }
 
     private void Update()
@@ -82,7 +111,12 @@ public class MovementController : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (!isOwner) return;
+        if (!isOwner)
+        {
+            MoveRemoteToReplicatedCell();
+            return;
+        }
+
         MoveToTargetCell();
     }
 
@@ -173,16 +207,68 @@ public class MovementController : NetworkBehaviour
         currentCell = cell;
         targetCell = cell;
 
-        // Client gửi lên server; host đã là server nên cập nhật local là đủ.
+        if (isServer)
+            PublishServerCell(cell);
+
         if (isOwner && !isServer)
-            ReportCurrentCellRpc(cell);
+            ReportCurrentCellRpc(cell, direction);
     }
 
     [ServerRpc]
-    void ReportCurrentCellRpc(Vector3Int cell, RPCInfo rpcInfo = default)
+    void ReportCurrentCellRpc(Vector3Int cell, int reportedDirection, RPCInfo rpcInfo = default)
     {
         currentCell = cell;
         targetCell = cell;
+        direction = reportedDirection;
+        SnapTransformToCell(cell);
+        PublishServerCell(cell);
+    }
+
+    void PublishServerCell(Vector3Int cell)
+    {
+        networkCell.value = cell;
+        networkDirection.value = direction;
+        networkCellInitialized.value = true;
+    }
+
+    void ApplyNetworkCell(Vector3Int cell, bool snap)
+    {
+        if (isOwner || !networkCellInitialized.value || grid == null)
+            return;
+
+        targetCell = cell;
+        targetWorldPosition = grid.GetCellCenterWorld(cell);
+
+        if (snap)
+        {
+            currentCell = cell;
+            SnapTransformToCell(cell);
+            isMoving = false;
+            return;
+        }
+
+        isMoving = true;
+    }
+
+    void MoveRemoteToReplicatedCell()
+    {
+        if (!isMoving || rb == null || grid == null)
+            return;
+
+        Vector2 newPosition = Vector2.MoveTowards(
+            rb.position,
+            targetWorldPosition,
+            moveSpeed * Time.fixedDeltaTime
+        );
+
+        rb.MovePosition(newPosition);
+
+        if (Vector2.Distance(newPosition, targetWorldPosition) > 0.001f)
+            return;
+
+        rb.MovePosition(targetWorldPosition);
+        currentCell = targetCell;
+        isMoving = false;
     }
 
     public void SnapToNearestValidCell()
@@ -200,8 +286,15 @@ public class MovementController : NetworkBehaviour
 
         SetCurrentCell(startCell);
 
-        Vector3 center = grid.GetCellCenterWorld(startCell);
+        SnapTransformToCell(startCell);
+    }
 
+    void SnapTransformToCell(Vector3Int cell)
+    {
+        if (grid == null)
+            return;
+
+        Vector3 center = grid.GetCellCenterWorld(cell);
         transform.position = center;
 
         if (rb != null)

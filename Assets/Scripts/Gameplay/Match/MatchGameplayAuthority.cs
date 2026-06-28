@@ -17,6 +17,8 @@ public class MatchGameplayAuthority : NetworkBehaviour
 {
     static MatchGameplayAuthority instance;
 
+    [SerializeField] private float postMatchSettlementDelaySeconds = 5f;
+
     public static MatchGameplayAuthority Instance
     {
         get
@@ -100,12 +102,14 @@ public class MatchGameplayAuthority : NetworkBehaviour
             playerId,
             new PlayerRuntimeEntry
             {
+                PlayerId = playerId,
                 Controller = controller,
                 Infor = infor,
                 BoardState = boardState,
             }
         );
 
+        infor.SetAuthorityPlayerId(playerId);
         matchPlayerCount.value = registry.Count;
 
         FlowGuard.Info(
@@ -120,7 +124,14 @@ public class MatchGameplayAuthority : NetworkBehaviour
         if (!isServer)
             return;
 
+        if (ShouldLockDisconnectedResult())
+            registry.LockResult(playerId, disconnected: true);
+
         registry.Unregister(playerId);
+        matchPlayerCount.value = registry.Count;
+
+        if (ShouldResolveMatchFromPlayerLoss())
+            TryEndMatchFromPlayerLoss("disconnect");
     }
 
     public void SubmitAttack(AttackDTO attack)
@@ -168,10 +179,9 @@ public class MatchGameplayAuthority : NetworkBehaviour
         if (!isServer)
             return;
 
-        if (registry.CountNotEliminated() > 1)
-            return;
+        registry.LockResult(eliminatedId, disconnected: false);
 
-        EndMatch();
+        TryEndMatchFromPlayerLoss("elimination");
     }
 
     public void GrantScore(PlayerID playerId, int amount)
@@ -228,8 +238,23 @@ public class MatchGameplayAuthority : NetworkBehaviour
         BuildLeaderBoard();
         PublishLeaderBoard();
         matchFinished.value = true;
+        SubmitSettlementAfterMatchEnd();
 
         AppendEvent(MatchEventType.GameOver, new PlayerID(0, true), new PlayerID(0, true), 0);
+    }
+
+    void TryEndMatchFromPlayerLoss(string reason)
+    {
+        if (!isServer || matchFinished.value)
+            return;
+
+        int survivors = registry.CountNotEliminated();
+        Debug.Log("[MatchGameplayAuthority] Player loss check reason=" + reason + " survivors=" + survivors + " registered=" + registry.Count + ".", this);
+
+        if (survivors > 1)
+            return;
+
+        EndMatch();
     }
     void BuildLeaderBoard()
     {
@@ -258,5 +283,56 @@ public class MatchGameplayAuthority : NetworkBehaviour
             leaderBoardData.Add(pendingLeaderBoard[i]);
 
         pendingLeaderBoard = null;
+    }
+
+    async void SubmitSettlementAfterMatchEnd()
+    {
+        if (!isServer || !DedicatedMatchRuntime.HasLaunchConfig)
+            return;
+
+        List<LeaderBoardData> snapshot = new();
+        for (int i = 0; i < leaderBoardData.Count; i++)
+            snapshot.Add(leaderBoardData[i]);
+
+        try
+        {
+            if (postMatchSettlementDelaySeconds > 0f)
+                await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(postMatchSettlementDelaySeconds));
+
+            Debug.Log("[MatchGameplayAuthority] Settlement requested for match " + DedicatedMatchRuntime.MatchId + " with " + snapshot.Count + " result(s).", this);
+            MatchSettlementResponse settlement = await DedicatedMatchRuntime.SettleAndReleaseAsync(snapshot);
+            if (settlement != null && settlement.success)
+                Debug.Log("[MatchGameplayAuthority] Settled match " + settlement.matchId + " with " + snapshot.Count + " result(s).", this);
+        }
+        catch (Exception exception)
+        {
+            Debug.LogError("[MatchGameplayAuthority] Match settlement failed: " + exception.Message, this);
+        }
+    }
+
+    bool ShouldLockDisconnectedResult()
+    {
+        if (matchFinished.value)
+            return true;
+
+        MatchPhaseBroadcast broadcast = MatchPhaseBroadcast.Instance;
+        if (broadcast == null)
+            return false;
+
+        return broadcast.CurrentPhase == MatchPhaseKind.Gameplay
+            || broadcast.CurrentPhase == MatchPhaseKind.ZoneShrink;
+    }
+
+    bool ShouldResolveMatchFromPlayerLoss()
+    {
+        if (matchFinished.value)
+            return false;
+
+        MatchPhaseBroadcast broadcast = MatchPhaseBroadcast.Instance;
+        if (broadcast == null)
+            return false;
+
+        return broadcast.CurrentPhase == MatchPhaseKind.Gameplay
+            || broadcast.CurrentPhase == MatchPhaseKind.ZoneShrink;
     }
 }

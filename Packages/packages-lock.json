@@ -16,7 +16,7 @@
       "dependencies": {
         "com.unity.nuget.newtonsoft-json": "3.2.2"
       },
-      "hash": "3a5ab46f9c6fadb4483bbc84e70ad7416288c3ad"
+      "hash": "81123a9c273005924e2e19bf9bc42edc8f82a0b4"
     },
     "com.edgegap.unity-servers-plugin": {
       "version": "https://github.com/edgegap/edgegap-unity-plugin.git#partner/purrnet-source",
@@ -26,7 +26,7 @@
         "com.unity.nuget.newtonsoft-json": "3.2.1",
         "com.unity.modules.uielements": "1.0.0"
       },
-      "hash": "924b312fae5c340f5349ccdc878d33f23fec704e"
+      "hash": "530447eb7c6a784287c7ea4404a06dfcb65217cc"
     },
     "com.unity.2d.animation": {
       "version": "14.0.4",
@@ -164,6 +164,13 @@
         "com.unity.test-framework": "1.4.6",
         "com.unity.test-framework.performance": "3.0.3"
       }
+    },
+    "com.unity.dedicated-server": {
+      "version": "2.0.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {
       "version": "2.0.5",
@@ -376,16 +383,16 @@
       "url": "https://packages.unity.com"
     },
     "dev.purrnet.purrdiction": {
-      "version": "https://github.com/PurrNet/PurrDiction.git?path=/Assets/PurrDiction#v1.3.0-beta.31",
+      "version": "https://github.com/PurrNet/PurrDiction.git?path=/Assets/PurrDiction#v1.3.0-beta.42",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.nuget.mono-cecil": "1.11.4"
       },
-      "hash": "3cbbb07d0e398dfdf19740949bc15af5c419ccee"
+      "hash": "d1ac7de4b417c471acec9c56c54c6f873a7b63e2"
     },
     "dev.purrnet.purrnet": {
-      "version": "https://github.com/PurrNet/PurrNet.git?path=/Assets/PurrNet#v1.20.0-beta.212",
+      "version": "https://github.com/PurrNet/PurrNet.git?path=/Assets/PurrNet#v1.20.0-beta.235",
       "depth": 0,
       "source": "git",
       "dependencies": {
@@ -393,7 +400,7 @@
         "com.unity.nuget.newtonsoft-json": "3.2.1",
         "com.unity.collections": "2.6.2"
       },
-      "hash": "fbc551c9c54043de997948242da1227747bea658"
+      "hash": "132463e8690b31ed6a6f2717d6a4af095612f209"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",

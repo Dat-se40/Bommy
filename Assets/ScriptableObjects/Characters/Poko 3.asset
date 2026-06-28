@@ -15,13 +15,12 @@ MonoBehaviour:
   characterId: 3
   characterName: Poko
   description: Fast runner.
-  icon: {fileID: -7775415013111828621, guid: c981c63d431178f4a8516008cee4c1b7, type: 3}
+  icon: {fileID: -1875616277, guid: 3662d6b211977b74f9c2416c932cf619, type: 3}
   preview: {fileID: 1497621365, guid: 4bcf9749096756a49a5bc7d708d58349, type: 3}
   spriteLibrary: {fileID: 7108339969198208228, guid: 511732e69796bb540a69e44344e604a7, type: 3}
   playerPrefab: {fileID: 24528305369907493, guid: 0b2ef07dd0781f44c94c28e578b48a03, type: 3}
   hp: 3
   bomb: 1
-  speed: 4
+  speed: 5
   defaultOwned: 0
-  requiredLevel: 1
   price: 10

@@ -46,8 +46,11 @@ public static class MatchSessionBroker
     {
         PlayerMatchProfile profile = localPlayer;
 
-        if (profile.characterId > 0)
+        if (profile.characterId > 0 && !DedicatedServerBootstrap.IsDedicatedServerRuntime)
+        {
             profile.displayName = AuthService.GetOrCreate().DisplayName;
+            profile.userId = AuthService.GetOrCreate().Session?.UserId ?? profile.userId;
+        }
 
         return profile;
     }
@@ -69,6 +72,9 @@ public static class MatchSessionBroker
 
     public static void LoadLocalFromProgression(CharacterDatabase database)
     {
+        if (DedicatedServerBootstrap.IsDedicatedServerRuntime)
+            return;
+
         if (database == null)
             return;
 
@@ -87,13 +93,15 @@ public static class MatchSessionBroker
             return;
 
         string displayName = AuthService.GetOrCreate().DisplayName;
+        string userId = AuthService.GetOrCreate().Session?.UserId ?? string.Empty;
 
         localPlayer = PlayerMatchProfile.FromDefinition(
             definition,
             catalogIndex,
             slotIndex: 0,
             isLocal: true,
-            displayNameOverride: displayName
+            displayNameOverride: displayName,
+            userIdOverride: userId
         );
     }
 

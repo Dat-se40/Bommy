@@ -5,8 +5,8 @@ public static class MatchPhaseRules
 {
     public static bool CanPlaceBomb =>
         MatchPhaseBroadcast.Instance != null &&
-        MatchPhaseBroadcast.Instance.CurrentPhase != MatchPhaseKind.Prep &&
-        MatchPhaseBroadcast.Instance.CurrentPhase != MatchPhaseKind.None;
+        (MatchPhaseBroadcast.Instance.CurrentPhase == MatchPhaseKind.Gameplay ||
+         MatchPhaseBroadcast.Instance.CurrentPhase == MatchPhaseKind.ZoneShrink);
 
     public static bool CanUseSkill => CanPlaceBomb;
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -57,6 +58,7 @@ public class MapInfoDialogController : MonoBehaviour
 
     readonly List<MapInfoItemCardUI> spawnedCards = new();
     InputAction resolvedToggleAction;
+    Coroutine phaseSubscribeRoutine;
     MatchPhaseKind lastAutoOverlayPhase = MatchPhaseKind.None;
     CanvasGroup overlayCanvasGroup;
     bool overlayVisible;
@@ -97,11 +99,17 @@ public class MapInfoDialogController : MonoBehaviour
     void Start()
     {
         BindToggleInput();
-        SubscribeMatchPhase();
+        phaseSubscribeRoutine = StartCoroutine(SubscribeMatchPhaseWhenReady());
     }
 
     void OnDestroy()
     {
+        if (phaseSubscribeRoutine != null)
+        {
+            StopCoroutine(phaseSubscribeRoutine);
+            phaseSubscribeRoutine = null;
+        }
+
         UnbindToggleInput();
         UnsubscribeMatchPhase();
 
@@ -160,7 +168,7 @@ public class MapInfoDialogController : MonoBehaviour
     /// <summary>Hết Prep — đóng overlay, khóa E toggle.</summary>
     public void EndPrepPhase()
     {
-        allowToggleInPrep = true;
+        allowToggleInPrep = false;
         Close();
     }
 
@@ -226,6 +234,15 @@ public class MapInfoDialogController : MonoBehaviour
         resolvedToggleAction = null;
     }
 
+    IEnumerator SubscribeMatchPhaseWhenReady()
+    {
+        while (MatchPhaseBroadcast.Instance == null)
+            yield return null;
+
+        SubscribeMatchPhase();
+        phaseSubscribeRoutine = null;
+    }
+
     void SubscribeMatchPhase()
     {
         MatchPhaseBroadcast broadcast = MatchPhaseBroadcast.Instance;
@@ -233,6 +250,7 @@ public class MapInfoDialogController : MonoBehaviour
         if (broadcast == null)
             return;
 
+        broadcast.PhaseChanged -= HandleMatchPhaseForOverlay;
         broadcast.PhaseChanged += HandleMatchPhaseForOverlay;
         HandleMatchPhaseForOverlay();
     }

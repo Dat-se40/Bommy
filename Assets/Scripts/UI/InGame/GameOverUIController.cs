@@ -53,6 +53,7 @@ public class GameOverUIController : MonoBehaviour
     [SerializeField] private float matchStartTime;
 
     bool matchEnded;
+    bool gameOverShown;
 
     void Awake()
     {
@@ -64,6 +65,7 @@ public class GameOverUIController : MonoBehaviour
         SetupButtons();
         HideGameOver();
         StartCoroutine(BindMatchEndWhenReady());
+        StartCoroutine(WatchLocalElimination());
     }
 
     IEnumerator BindMatchEndWhenReady()
@@ -107,6 +109,21 @@ public class GameOverUIController : MonoBehaviour
         yield return null;
 
         PresentMatchEnd();
+    }
+
+    IEnumerator WatchLocalElimination()
+    {
+        while (!matchEnded)
+        {
+            PlayerBoardState localBoard = FindLocalBoardState();
+            if (localBoard != null && localBoard.IsEliminated)
+            {
+                PresentLocalElimination(localBoard);
+                yield break;
+            }
+
+            yield return null;
+        }
     }
 
     static PlayerBoardState FindLocalBoardState()
@@ -195,6 +212,20 @@ public class GameOverUIController : MonoBehaviour
 
 
         PopulateLeaderboardFromBoardStates();
+    }
+
+    void PresentLocalElimination(PlayerBoardState localBoard)
+    {
+        if (gameOverShown || localBoard == null)
+            return;
+
+        ShowGameOver(
+            isWin: false,
+            kills: localBoard.Kills,
+            score: localBoard.Score,
+            timeText: FormatElapsedTime(Time.time - matchStartTime),
+            goldReward: Mathf.Max(10, localBoard.Score / 20)
+        );
     }
 
     static string FormatElapsedTime(float seconds)
@@ -304,6 +335,8 @@ public class GameOverUIController : MonoBehaviour
     )
 
     {
+        gameOverShown = true;
+
         if (gameOverOverlay != null)
             gameOverOverlay.SetActive(true);
         
@@ -387,15 +420,17 @@ public class GameOverUIController : MonoBehaviour
             gameOverPanel.SetActive(true);
     }
 
-    public void PlayAgain()
+    public async void PlayAgain()
     {
         Time.timeScale = 1f;
+        await MatchConnectionService.EnsureExists().DisconnectAsync();
         SceneManager.LoadScene(randomMatchSceneName);
     }
 
-    public void GoMainMenu()
+    public async void GoMainMenu()
     {
         Time.timeScale = 1f;
+        await MatchConnectionService.EnsureExists().DisconnectAsync();
         SceneManager.LoadScene(mainMenuSceneName);
     }
 }

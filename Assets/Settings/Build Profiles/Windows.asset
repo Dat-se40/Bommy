@@ -17,9 +17,30 @@ MonoBehaviour:
   m_Subtarget: 2
   m_PlatformId: 4e3c793746204150860bf175a9a41a05
   m_PlatformBuildProfile:
-    rid: 2869992008523186258
-  m_OverrideGlobalSceneList: 0
-  m_Scenes: []
+    rid: 7626245150978081033
+  m_OverrideGlobalSceneList: 1
+  m_Scenes:
+  - m_enabled: 1
+    m_path: Assets/Scenes/GlobalLoading.unity
+    m_guid: 3208ff5c2d09b694099df1f8e1612f7b
+  - m_enabled: 1
+    m_path: Assets/Scenes/AuthGate.unity
+    m_guid: 9c2f6c8cc05aae74d8601a44b97607fd
+  - m_enabled: 1
+    m_path: Assets/Scenes/RandomMatch.unity
+    m_guid: eb794374e348a8849b57fae0951b26cc
+  - m_enabled: 1
+    m_path: Assets/Scenes/MainMenu.unity
+    m_guid: eb6187a1520ac89438582162ee68f4b1
+  - m_enabled: 1
+    m_path: Assets/Scenes/Lobby.unity
+    m_guid: 398af9a19b974ae4cb81a440f18c83db
+  - m_enabled: 1
+    m_path: Assets/Scenes/GameScene.unity
+    m_guid: 2267861597e5db043b6bc18481445da9
+  - m_enabled: 1
+    m_path: Assets/Scenes/CharacterSelect.unity
+    m_guid: 71d570f236f08cd4db37592e7f77898e
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
@@ -27,7 +48,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2869992008523186258
+    - rid: 7626245150978081033
       type: {class: WindowsPlatformSettings, ns: UnityEditor.WindowsStandalone, asm: UnityEditor.WindowsStandalone.Extensions}
       data:
         m_Development: 0
