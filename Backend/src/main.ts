@@ -1599,6 +1599,16 @@ function refreshEdgegapDeploymentStatus(
 
 
 
+	if (
+		status.running === true &&
+		optionalString(status.current_status, "").toLowerCase() === "ready" &&
+		allocation.host &&
+		allocation.port > 0
+	) {
+		allocation.status = "Ready";
+		allocation.errorMessage = "";
+	}
+
 	var server = allocation.serverId ? readServer(nk, allocation.serverId) : null;
 	if (server != null) {
 		server.host = allocation.host;
@@ -1608,16 +1618,6 @@ function refreshEdgegapDeploymentStatus(
 		server.deploymentId = allocation.deploymentId;
 		server.status = allocation.status;
 		writeServer(nk, server);
-	}
-
-	if (
-		status.running === true &&
-		optionalString(status.current_status, "").toLowerCase() === "ready" &&
-		allocation.host &&
-		allocation.port > 0
-	) {
-		allocation.status = "Ready";
-		allocation.errorMessage = "";
 	}
 
 	writeAllocation(nk, allocation);
@@ -1712,6 +1712,21 @@ function localDevOrchestrationError(ctx: nkruntime.Context): string {
 	}
 
 	return "";
+}
+
+function canAssignRequestedAllocationToServer(
+	ctx: nkruntime.Context,
+	server: MatchServerRecord,
+): boolean {
+	if (server.provider !== configuredMatchServerProvider(ctx)) {
+		return false;
+	}
+
+	if (server.provider === "LocalDev") {
+		return localDevOrchestrationAllowed(ctx);
+	}
+
+	return server.provider === "EdgegapCloud";
 }
 
 function requestLocalDevAllocation(
@@ -4258,9 +4273,8 @@ function rpcRegisterMatchServer(
 	}
 
 	var assigned =
-		server.provider === "LocalDev" &&
-		localDevOrchestrationAllowed(ctx) &&
-		server.status === "Available"
+		server.status === "Available" &&
+		canAssignRequestedAllocationToServer(ctx, server)
 			? assignRequestedAllocationToServer(nk, server)
 			: null;
 	if (assigned != null) {
@@ -4324,9 +4338,8 @@ function rpcClaimMatchLaunchConfig(
 
 	if (
 		allocation == null &&
-		server.provider === "LocalDev" &&
-		localDevOrchestrationAllowed(ctx) &&
-		server.status === "Available"
+		server.status === "Available" &&
+		canAssignRequestedAllocationToServer(ctx, server)
 	) {
 		allocation = assignRequestedAllocationToServer(nk, server);
 		if (allocation != null) {
@@ -4615,10 +4628,9 @@ function rpcResetMatchServer(
 			: " reason=" + optionalString(request.reason, ""),
 	);
 
-	var assigned =
-		server.provider === "LocalDev" && !localDevOrchestrationAllowed(ctx)
-			? null
-			: assignRequestedAllocationToServer(nk, server);
+	var assigned = canAssignRequestedAllocationToServer(ctx, server)
+		? assignRequestedAllocationToServer(nk, server)
+		: null;
 	if (assigned != null) {
 		logMatchServerAssigned(logger, "reset", server, assigned);
 		return JSON.stringify(allocationResponse(assigned));

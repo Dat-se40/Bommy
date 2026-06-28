@@ -83,6 +83,8 @@ public class EdgegapPort
 
 public sealed class DedicatedServerBootstrap : MonoBehaviour
 {
+    static readonly System.Collections.Generic.HashSet<string> consumedLaunchHints = new();
+
     [SerializeField] private bool forceDedicatedServer;
     [SerializeField] private string defaultServerId = "local-001";
     [SerializeField] private string defaultPublicHost = "127.0.0.1";
@@ -112,6 +114,7 @@ public sealed class DedicatedServerBootstrap : MonoBehaviour
         DedicatedMatchRuntime.MatchLifecycleReleased += OnMatchLifecycleReleased;
         lifetime = new CancellationTokenSource();
         config = DedicatedServerRuntimeConfig.Read(defaultServerId, defaultPublicHost, defaultPort, defaultServerSecret);
+        ClearConsumedLaunchHintIfNeeded();
         currentAllocationId = config.allocationId;
         currentMatchId = config.matchId;
         registrationConfirmed = !string.IsNullOrWhiteSpace(currentAllocationId) || !string.IsNullOrWhiteSpace(currentMatchId);
@@ -129,6 +132,7 @@ public sealed class DedicatedServerBootstrap : MonoBehaviour
 
     void OnMatchLifecycleReleased()
     {
+        RememberConsumedLaunchHint(currentAllocationId, currentMatchId);
         currentAllocationId = string.Empty;
         currentMatchId = string.Empty;
         readyMarked = false;
@@ -140,6 +144,38 @@ public sealed class DedicatedServerBootstrap : MonoBehaviour
         reloadingForNextMatch = true;
         Debug.Log("[DedicatedServerBootstrap] Match lifecycle released. Reloading GameScene for next allocation.", this);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    void ClearConsumedLaunchHintIfNeeded()
+    {
+        if (!IsConsumedLaunchHint(config.allocationId, config.matchId))
+            return;
+
+        Debug.Log(
+            "[DedicatedServerBootstrap] Ignoring consumed launch hint allocationId="
+            + config.allocationId
+            + " matchId="
+            + config.matchId
+            + ". Server will register as reusable and wait for the next backend allocation.",
+            this
+        );
+        config.allocationId = string.Empty;
+        config.matchId = string.Empty;
+    }
+
+    static void RememberConsumedLaunchHint(string allocationId, string matchId)
+    {
+        if (!string.IsNullOrWhiteSpace(allocationId))
+            consumedLaunchHints.Add("alloc:" + allocationId);
+
+        if (!string.IsNullOrWhiteSpace(matchId))
+            consumedLaunchHints.Add("match:" + matchId);
+    }
+
+    static bool IsConsumedLaunchHint(string allocationId, string matchId)
+    {
+        return (!string.IsNullOrWhiteSpace(allocationId) && consumedLaunchHints.Contains("alloc:" + allocationId))
+            || (!string.IsNullOrWhiteSpace(matchId) && consumedLaunchHints.Contains("match:" + matchId));
     }
 
     bool ShouldRunDedicatedServer()

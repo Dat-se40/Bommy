@@ -17,6 +17,8 @@ public class MatchGameplayAuthority : NetworkBehaviour
 {
     static MatchGameplayAuthority instance;
 
+    [SerializeField] private float postMatchSettlementDelaySeconds = 5f;
+
     public static MatchGameplayAuthority Instance
     {
         get
@@ -294,6 +296,9 @@ public class MatchGameplayAuthority : NetworkBehaviour
 
         try
         {
+            if (postMatchSettlementDelaySeconds > 0f)
+                await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(postMatchSettlementDelaySeconds));
+
             Debug.Log("[MatchGameplayAuthority] Settlement requested for match " + DedicatedMatchRuntime.MatchId + " with " + snapshot.Count + " result(s).", this);
             MatchSettlementResponse settlement = await DedicatedMatchRuntime.SettleAndReleaseAsync(snapshot);
             if (settlement != null && settlement.success)
