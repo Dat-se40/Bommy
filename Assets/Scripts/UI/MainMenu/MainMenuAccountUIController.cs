@@ -220,19 +220,22 @@ public class MainMenuAccountUIController : MonoBehaviour
     {
         // Pull directly from the live session — no PlayerPrefs needed
         string name = authService.DisplayName;
-        string id = authService.Session?.UserId ?? "—";
+        string username = authService.Username;
 
         if (accountNamelbl != null)
             accountNamelbl.text = name;
 
         if (accountIdlbl != null)
-            accountIdlbl.text = "ID: " + id;
+            accountIdlbl.text = "Username: " + (string.IsNullOrWhiteSpace(username) ? "—" : username);
     }
 
     private void CopyAccountId()
     {
-        string id = authService.Session?.UserId ?? string.Empty;
-        GUIUtility.systemCopyBuffer = id;
+        string username = authService.Username;
+        if (!string.IsNullOrWhiteSpace(username))
+        {
+            GUIUtility.systemCopyBuffer = username;
+        }
     }
 
     private async void SwitchAccount()
