@@ -64,6 +64,8 @@ public class CreateRoomRequest
     public string mapName;
     public int maxPlayers;
     public string preferredRoomId;
+    public string username;
+    public string displayName;
 }
 
 [Serializable]
@@ -84,6 +86,8 @@ public class JoinRoomRequest
     public string roomId;
     public string matchId;
     public string password;
+    public string username;
+    public string displayName;
 }
 
 [Serializable]
@@ -103,6 +107,8 @@ public class JoinRoomByCodeRequest
 {
     public string roomCode;
     public string password;
+    public string username;
+    public string displayName;
 }
 
 #endregion

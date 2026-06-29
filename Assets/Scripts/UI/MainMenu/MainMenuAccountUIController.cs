@@ -173,7 +173,7 @@ public class MainMenuAccountUIController : MonoBehaviour
         if (nameEditDialog == null)
             return;
 
-        string currentName = authService?.Session?.Username ?? "Player";
+        string currentName = authService?.DisplayName ?? "Player";
         nameEditDialog.OpenDialog(currentName, SaveAccountName);
     }
 

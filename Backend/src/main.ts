@@ -119,6 +119,8 @@ interface CreateLobbyRequest {
 	mapName: string;
 	maxPlayers: number;
 	preferredRoomId: string;
+	username: string;
+	displayName: string;
 }
 
 interface JoinLobbyRequest {
@@ -126,6 +128,8 @@ interface JoinLobbyRequest {
 	matchId: string;
 	roomCode: string;
 	password: string;
+	username: string;
+	displayName: string;
 }
 
 interface StartLobbyRequest {
@@ -328,6 +332,8 @@ interface LobbyActionRequest {
 	userId: string;
 	roomId?: string;
 	password?: string;
+	username?: string;
+	displayName?: string;
 }
 
 interface LobbySignalResponse {
@@ -349,6 +355,7 @@ interface CustomLobbyState {
 	status: LobbyStatus;
 	members: { [userId: string]: LobbyMember };
 	reservedUserIds: { [userId: string]: boolean };
+	pendingMembers: { [userId: string]: LobbyMember };
 }
 
 interface RandomQueueRequest {
@@ -2443,6 +2450,8 @@ function parseCreateLobbyRequest(payload: string): CreateLobbyRequest {
 		mapName: optionalString(parsed.mapName, "Classic Garden").substring(0, 32),
 		maxPlayers: clampInteger(parsed.maxPlayers, 4, 2, 4),
 		preferredRoomId: roomId,
+		username: optionalString(parsed.username, "").substring(0, 64),
+		displayName: optionalString(parsed.displayName, "").substring(0, 64),
 	};
 }
 
@@ -2454,6 +2463,8 @@ function parseJoinLobbyRequest(payload: string): JoinLobbyRequest {
 		matchId: optionalString(parsed.matchId, ""),
 		roomCode: optionalString(parsed.roomCode, "").toUpperCase(),
 		password: optionalString(parsed.password, "").toUpperCase(),
+		username: optionalString(parsed.username, "").substring(0, 64),
+		displayName: optionalString(parsed.displayName, "").substring(0, 64),
 	};
 }
 
@@ -2624,6 +2635,31 @@ function lobbySignalFailure(errorMessage: string): string {
 	});
 }
 
+function lobbyMemberFromIdentity(
+	userId: string,
+	username: string,
+	displayName: string,
+): LobbyMember {
+	var normalizedUsername = optionalString(username, userId);
+	return {
+		userId: userId,
+		username: normalizedUsername,
+		displayName: optionalString(displayName, normalizedUsername),
+	};
+}
+
+function lobbyMemberFromMetadata(
+	presence: nkruntime.Presence,
+	metadata: { [key: string]: any } | null,
+): LobbyMember {
+	metadata = metadata || {};
+	return lobbyMemberFromIdentity(
+		presence.userId,
+		optionalString(metadata.username, presence.username || presence.userId),
+		optionalString(metadata.displayName, presence.username || presence.userId),
+	);
+}
+
 function customLobbyMatchInit(
 	ctx: nkruntime.Context,
 	logger: nkruntime.Logger,
@@ -2643,10 +2679,16 @@ function customLobbyMatchInit(
 		status: "Open",
 		members: {},
 		reservedUserIds: {},
+		pendingMembers: {},
 	};
 
 	if (state.hostUserId.length > 0) {
 		state.reservedUserIds[state.hostUserId] = true;
+		state.pendingMembers[state.hostUserId] = lobbyMemberFromIdentity(
+			state.hostUserId,
+			optionalString(params.hostUsername, state.hostUserId),
+			optionalString(params.hostDisplayName, optionalString(params.hostUsername, state.hostUserId)),
+		);
 	}
 
 	return {
@@ -2689,6 +2731,10 @@ function customLobbyMatchJoinAttempt(
 		};
 	}
 
+	state.pendingMembers[presence.userId] = lobbyMemberFromMetadata(
+		presence,
+		metadata,
+	);
 	return { state: state, accept: true };
 }
 
@@ -2703,12 +2749,15 @@ function customLobbyMatchJoin(
 ): { state: CustomLobbyState } {
 	for (var i = 0; i < presences.length; i++) {
 		var presence = presences[i];
-		state.members[presence.userId] = {
-			userId: presence.userId,
-			username: presence.username || "",
-			displayName: presence.username || presence.userId,
-		};
+		state.members[presence.userId] =
+			state.pendingMembers[presence.userId] ||
+			lobbyMemberFromIdentity(
+				presence.userId,
+				presence.username || presence.userId,
+				presence.username || presence.userId,
+			);
 		delete state.reservedUserIds[presence.userId];
+		delete state.pendingMembers[presence.userId];
 	}
 
 	dispatcher.matchLabelUpdate(lobbyLabel(state, ctx.matchId || ""));
@@ -2727,6 +2776,7 @@ function customLobbyMatchLeave(
 	for (var i = 0; i < presences.length; i++) {
 		var presence = presences[i];
 		delete state.members[presence.userId];
+		delete state.pendingMembers[presence.userId];
 
 		if (presence.userId === state.hostUserId && state.status === "Open") {
 			state.status = "Closed";
@@ -2803,12 +2853,18 @@ function customLobbyMatchSignal(
 		}
 
 		state.reservedUserIds[request.userId] = true;
+		state.pendingMembers[request.userId] = lobbyMemberFromIdentity(
+			request.userId,
+			optionalString(request.username, request.userId),
+			optionalString(request.displayName, optionalString(request.username, request.userId)),
+		);
 		dispatcher.matchLabelUpdate(lobbyLabel(state, matchId));
 		return { state: state, data: lobbySignalSuccess(state, matchId) };
 	}
 
 	if (request.action === "leave") {
 		delete state.members[request.userId];
+		delete state.pendingMembers[request.userId];
 
 		if (request.userId === state.hostUserId && state.status === "Open") {
 			state.status = "Closed";
@@ -3905,6 +3961,11 @@ function rpcCreateLobby(
 		mapName: request.mapName,
 		maxPlayers: request.maxPlayers,
 		hostUserId: userId,
+		hostUsername: optionalString(request.username, optionalString((ctx as any).username, userId)),
+		hostDisplayName: optionalString(
+			request.displayName,
+			optionalString(request.username, optionalString((ctx as any).username, userId)),
+		),
 		region: "Local",
 	});
 
@@ -3945,6 +4006,11 @@ function rpcJoinLobby(
 		userId: userId,
 		roomId: request.roomId,
 		password: request.password,
+		username: optionalString(request.username, optionalString((ctx as any).username, userId)),
+		displayName: optionalString(
+			request.displayName,
+			optionalString(request.username, optionalString((ctx as any).username, userId)),
+		),
 	});
 
 	return JSON.stringify({
@@ -3968,6 +4034,8 @@ function rpcJoinLobbyByCode(
 		JSON.stringify({
 			roomId: parsed.roomCode || parsed.roomId,
 			password: parsed.password || parsed.roomCode || parsed.roomId,
+			username: parsed.username,
+			displayName: parsed.displayName,
 		}),
 	);
 }

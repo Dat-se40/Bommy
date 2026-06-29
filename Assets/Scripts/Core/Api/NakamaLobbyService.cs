@@ -66,6 +66,7 @@ public sealed class NakamaLobbyService : MonoBehaviour
 
     public async Task<LobbyRoomDto> CreateRoomAsync(CreateRoomRequest request)
     {
+        PopulateIdentity(request);
         CreateRoomResponse response = await CallLobbyRpcAsync<CreateRoomResponse>(
             "create_lobby",
             JsonUtility.ToJson(request)
@@ -76,6 +77,7 @@ public sealed class NakamaLobbyService : MonoBehaviour
 
     public async Task<LobbyRoomDto> JoinRoomAsync(JoinRoomRequest request)
     {
+        PopulateIdentity(request);
         JoinRoomResponse response = await CallLobbyRpcAsync<JoinRoomResponse>(
             "join_lobby",
             JsonUtility.ToJson(request)
@@ -86,6 +88,7 @@ public sealed class NakamaLobbyService : MonoBehaviour
 
     public async Task<LobbyRoomDto> JoinRoomByCodeAsync(JoinRoomByCodeRequest request)
     {
+        PopulateIdentity(request);
         JoinRoomResponse response = await CallLobbyRpcAsync<JoinRoomResponse>(
             "join_lobby_by_code",
             JsonUtility.ToJson(request)
@@ -176,11 +179,46 @@ public sealed class NakamaLobbyService : MonoBehaviour
         if (currentMatch != null && currentMatch.Id != room.matchId)
             await socket.LeaveMatchAsync(currentMatch);
 
-        currentMatch = await socket.JoinMatchAsync(room.matchId, new Dictionary<string, string>());
+        AuthService auth = AuthService.GetOrCreate();
+        currentMatch = await socket.JoinMatchAsync(room.matchId, new Dictionary<string, string>
+        {
+            { "username", auth.Username },
+            { "displayName", auth.DisplayName }
+        });
         room.currentPlayers = Mathf.Clamp(Math.Max(1, Math.Max(room.currentPlayers, currentMatch.Size)), 1, room.maxPlayers);
         CurrentRoom = room;
         CurrentRoomUpdated?.Invoke(CurrentRoom);
         return CurrentRoom;
+    }
+
+    static void PopulateIdentity(CreateRoomRequest request)
+    {
+        if (request == null)
+            return;
+
+        AuthService auth = AuthService.GetOrCreate();
+        request.username = auth.Username;
+        request.displayName = auth.DisplayName;
+    }
+
+    static void PopulateIdentity(JoinRoomRequest request)
+    {
+        if (request == null)
+            return;
+
+        AuthService auth = AuthService.GetOrCreate();
+        request.username = auth.Username;
+        request.displayName = auth.DisplayName;
+    }
+
+    static void PopulateIdentity(JoinRoomByCodeRequest request)
+    {
+        if (request == null)
+            return;
+
+        AuthService auth = AuthService.GetOrCreate();
+        request.username = auth.Username;
+        request.displayName = auth.DisplayName;
     }
 
     async Task<StartMatchResponse> StartMatchInternalAsync(StartMatchRequest request)
