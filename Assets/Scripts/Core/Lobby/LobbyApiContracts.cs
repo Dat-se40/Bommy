@@ -119,6 +119,7 @@ public class FriendDto
     public string displayName;
     public bool online;
     public bool isSteamFriend;
+    public string steamId;
     public string currentRoomId;
 }
 
@@ -131,6 +132,7 @@ public class FriendRequestDto
     public string friendId;
     public string displayName;
     public bool isSteamFriend;
+    public string steamId;
 }
 
 /// <summary>
