@@ -7,11 +7,11 @@ public sealed class AuthService : MonoBehaviour
     static AuthService instance;
 
     [Header("Nakama")]
-    [SerializeField] private string scheme = "http";
+    [SerializeField] private string scheme = General.AUTH_NAKAMA_SCHEME;
     [SerializeField] private string host = General.AUTH_NAKAMA_HOST;
     [SerializeField] private int port = General.AUTH_NAKAMA_PORT;
     [SerializeField] private string serverKey = General.AUTH_NAKAMA_SERVER_KEY;
-    [SerializeField] private string httpKey = "defaulthttpkey";
+    [SerializeField] private string httpKey = General.AUTH_NAKAMA_HTTP_KEY;
 
     NakamaSessionService sessionService;
     NakamaAccountService accountService;

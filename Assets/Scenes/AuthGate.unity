@@ -8020,7 +8020,6 @@ MonoBehaviour:
   inactiveTabColor: {r: 0.18, g: 0.2, b: 0.2, a: 1}
   normalFeedbackColor: {r: 0.66, g: 0.7, b: 0.68, a: 1}
   errorFeedbackColor: {r: 0.9, g: 0.3, b: 0.26, a: 1}
-  authService: {fileID: 0}
 --- !u!4 &1422524448
 Transform:
   m_ObjectHideFlags: 0
@@ -9801,7 +9800,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1935473949
 RectTransform:
   m_ObjectHideFlags: 0

@@ -14,9 +14,11 @@ public static class General
 
     #region Auth — Nakama & session
 
-    public const string AUTH_NAKAMA_HOST = "127.0.0.1";
-    public const int AUTH_NAKAMA_PORT = 7350;
+    public const string AUTH_NAKAMA_SCHEME = "https";
+    public const string AUTH_NAKAMA_HOST = "bommy-services-prod.up.railway.app";
+    public const int AUTH_NAKAMA_PORT = 443;
     public const string AUTH_NAKAMA_SERVER_KEY = "defaultkey";
+    public const string AUTH_NAKAMA_HTTP_KEY = "defaulthttpkey";
 
     public const string AUTH_SESSION_KEY_AUTH_TOKEN = "NK_AUTH_TOKEN";
     public const string AUTH_SESSION_KEY_REFRESH_TOKEN = "NK_REFRESH_TOKEN";
