@@ -5533,7 +5533,7 @@ MonoBehaviour:
     namelbl: {fileID: 653867349}
     statelbl: {fileID: 2012603603}
     background: {fileID: 0}
-  - avatar: {fileID: 395737202}
+  - avatar: {fileID: 568009681}
     namelbl: {fileID: 86675172}
     statelbl: {fileID: 312755424}
     background: {fileID: 0}
@@ -5551,6 +5551,7 @@ MonoBehaviour:
   mapName: Random
   region: Local
   pollIntervalSeconds: 2
+  characterDatabase: {fileID: 11400000, guid: 10b150e7cdf3bd248909da9b165ac36d, type: 2}
   defaultSearchingAvatar: {fileID: 840282090, guid: 8f8b1e3b8d8a9ec49aac1bd7bd425198, type: 3}
   selectedCharacterAvatar: {fileID: 2128733132, guid: 8f8b1e3b8d8a9ec49aac1bd7bd425198, type: 3}
 --- !u!1 &1742040913

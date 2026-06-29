@@ -8012,7 +8012,6 @@ MonoBehaviour:
     killslbl: {fileID: 2065666478}
     scorelbl: {fileID: 1423084558}
     gameObject: {fileID: 91591207}
-  matchStartTime: 0
 --- !u!4 &1017975539
 Transform:
   m_ObjectHideFlags: 0
@@ -13622,6 +13621,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
+  postMatchSettlementDelaySeconds: 5
 --- !u!114 &1835806106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13665,8 +13665,8 @@ MonoBehaviour:
   _invertedPathToNearestParent: 
   _directChildren: []
   phaseBroadcast: {fileID: 1835806106}
-  zoneShrinkDurationSeconds: 60
-  shrinkCellIntervalSeconds: 0.8
+  zoneShrinkDurationSeconds: 30
+  shrinkCellIntervalSeconds: 0.4
 --- !u!114 &1835806108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13689,7 +13689,7 @@ MonoBehaviour:
   _invertedPathToNearestParent: 
   _directChildren: []
   phaseBroadcast: {fileID: 1835806106}
-  gameplayDurationSeconds: 150
+  gameplayDurationSeconds: 90
 --- !u!114 &1835806109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14397,7 +14397,6 @@ MonoBehaviour:
     killslbl: {fileID: 2065666478}
     scorelbl: {fileID: 1423084558}
     gameObject: {fileID: 0}
-  matchStartTime: 0
 --- !u!1 &1958205709
 GameObject:
   m_ObjectHideFlags: 0

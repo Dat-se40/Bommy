@@ -365,6 +365,7 @@ interface RandomQueueRequest {
 	maxPlayers: number;
 	username: string;
 	displayName: string;
+	selectedCharacterId?: number;
 }
 
 interface RandomQueueActionRequest extends RandomQueueRequest {
@@ -379,6 +380,7 @@ interface RandomQueuePlayerDto {
 	userId: string;
 	username: string;
 	displayName: string;
+	selectedCharacterId: number;
 }
 
 interface RandomMatchDto {
@@ -2499,6 +2501,7 @@ function parseRandomQueueRequest(payload: string): RandomQueueRequest {
 		maxPlayers: 4,
 		username: optionalString(parsed.username, ""),
 		displayName: optionalString(parsed.displayName, ""),
+		selectedCharacterId: Math.max(1, optionalInteger(parsed.selectedCharacterId, 1)),
 	};
 }
 
@@ -3156,6 +3159,7 @@ function tryFormRandomQueueMatches(
 					userId: group[k].userId,
 					username: group[k].username,
 					displayName: group[k].displayName,
+					selectedCharacterId: selectedCharacterForUser(nk, group[k].userId),
 				});
 				acceptedUserIds[group[k].userId] = true;
 			}
@@ -4267,6 +4271,7 @@ function rpcJoinRandomQueue(
 			mapName: request.mapName,
 			region: request.region,
 			maxPlayers: request.maxPlayers,
+			selectedCharacterId: request.selectedCharacterId,
 		}),
 	);
 }

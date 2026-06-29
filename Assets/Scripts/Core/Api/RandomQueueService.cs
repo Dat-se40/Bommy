@@ -12,6 +12,7 @@ public class RandomQueueRequest
     public int maxPlayers = 4;
     public string username;
     public string displayName;
+    public int selectedCharacterId = 1;
 }
 
 [Serializable]
@@ -53,6 +54,7 @@ public class RandomQueuePlayerDto
     public string userId;
     public string username;
     public string displayName;
+    public int selectedCharacterId;
 }
 
 public sealed class RandomQueueService : MonoBehaviour
@@ -106,6 +108,7 @@ public sealed class RandomQueueService : MonoBehaviour
         AuthService authService = AuthService.GetOrCreate();
         request.username = authService.Username;
         request.displayName = authService.DisplayName;
+        request.selectedCharacterId = Mathf.Max(1, PlayerProgressionService.Instance?.Current?.selectedCharacterId ?? 1);
         CurrentStatus = await CallQueueRpcAsync("join_random_queue", JsonUtility.ToJson(request));
         EnsureSuccess(CurrentStatus, "Join queue failed.");
         return CurrentStatus;

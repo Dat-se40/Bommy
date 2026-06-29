@@ -35,6 +35,7 @@ public class RandomMatchController : MonoBehaviour
     [SerializeField] private float serverStatusPollIntervalSeconds = 0.5f;
 
     [Header("Avatars")]
+    [SerializeField] private CharacterDatabase characterDatabase;
     [SerializeField] private Sprite defaultSearchingAvatar;
     [SerializeField] private Sprite selectedCharacterAvatar;
 
@@ -106,7 +107,8 @@ public class RandomMatchController : MonoBehaviour
                 mapId = mapId,
                 mapName = mapName,
                 region = region,
-                maxPlayers = 4
+                maxPlayers = 4,
+                selectedCharacterId = GetLocalSelectedCharacterId()
             });
 
             ticketId = status.ticketId;
@@ -234,7 +236,7 @@ public class RandomMatchController : MonoBehaviour
         {
             if (i < count)
             {
-                FillPlayerSlot(playerSlots[i], players[i].displayName);
+                FillPlayerSlot(playerSlots[i], players[i].displayName, players[i].selectedCharacterId);
             }
             else
             {
@@ -257,7 +259,7 @@ public class RandomMatchController : MonoBehaviour
             }
 
             if (i < playerCount)
-                FillPlayerSlot(playerSlots[i], "Queued Player " + (i + 1));
+                FillPlayerSlot(playerSlots[i], "Queued Player " + (i + 1), 0);
             else
                 SetupSearchingSlot(playerSlots[i]);
         }
@@ -265,7 +267,7 @@ public class RandomMatchController : MonoBehaviour
 
     void SetupLocalPlayerSlot(PlayerSlotUI slot)
     {
-        FillPlayerSlot(slot, AuthService.GetOrCreate().DisplayName);
+        FillPlayerSlot(slot, AuthService.GetOrCreate().DisplayName, GetLocalSelectedCharacterId());
     }
 
     void SetupSearchingSlot(PlayerSlotUI slot)
@@ -296,16 +298,18 @@ public class RandomMatchController : MonoBehaviour
             slot.background.color = HexToColor("#FFE6BC");
     }
 
-    void FillPlayerSlot(PlayerSlotUI slot, string playerName)
+    void FillPlayerSlot(PlayerSlotUI slot, string playerName, int characterId)
     {
         if (slot == null)
             return;
 
         if (slot.avatar != null)
         {
-            if (selectedCharacterAvatar != null)
+            Sprite avatar = ResolveCharacterIcon(characterId);
+
+            if (avatar != null)
             {
-                slot.avatar.sprite = selectedCharacterAvatar;
+                slot.avatar.sprite = avatar;
                 slot.avatar.enabled = true;
             }
             else
@@ -322,6 +326,32 @@ public class RandomMatchController : MonoBehaviour
 
         if (slot.background != null)
             slot.background.color = HexToColor("#FFF1C9");
+    }
+
+    int GetLocalSelectedCharacterId()
+    {
+        int selectedCharacterId = PlayerProgressionService.Instance?.Current?.selectedCharacterId ?? 0;
+        if (selectedCharacterId > 0)
+            return selectedCharacterId;
+
+        PlayerMatchProfile localProfile = MatchSessionBroker.GetLocalPlayer();
+        return Mathf.Max(1, localProfile.characterId);
+    }
+
+    Sprite ResolveCharacterIcon(int characterId)
+    {
+        CharacterDatabase database = characterDatabase != null
+            ? characterDatabase
+            : MatchSessionBroker.CharacterCatalog;
+
+        if (database != null && characterId > 0)
+        {
+            CharacterDefinition definition = database.GetById(characterId);
+            if (definition != null && definition.Icon != null)
+                return definition.Icon;
+        }
+
+        return selectedCharacterAvatar;
     }
 
     public async void CancelMatch()
