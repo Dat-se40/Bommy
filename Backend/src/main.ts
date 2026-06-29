@@ -2505,6 +2505,13 @@ function findLobbyMatch(
 	roomId: string,
 	matchId: string,
 ): nkruntime.Match | null {
+	if (matchId) {
+		var directMatch = nk.matchGet(matchId);
+		if (directMatch != null) {
+			return directMatch;
+		}
+	}
+
 	var matches = listCustomLobbyMatches(nk);
 	var normalizedRoomId = roomId ? roomId.toUpperCase() : "";
 
