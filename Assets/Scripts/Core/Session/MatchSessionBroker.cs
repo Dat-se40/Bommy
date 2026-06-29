@@ -133,6 +133,13 @@ public static class MatchSessionBroker
 
     public static void RegisterRemotePlayer(PlayerMatchProfile profile)
     {
+        string localUserId = AuthService.GetOrCreate().Session?.UserId;
+        if (!string.IsNullOrEmpty(localUserId) && string.Equals(profile.userId, localUserId, StringComparison.Ordinal))
+        {
+            profile.isLocal = true;
+            localPlayer = profile;
+        }
+
         UpsertRosterSlot(profile);
         // TODO[NETWORK] Nhận từ ServerRpc / SyncList trên server.
     }

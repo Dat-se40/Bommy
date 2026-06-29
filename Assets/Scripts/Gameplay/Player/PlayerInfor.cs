@@ -117,6 +117,11 @@ public class PlayerInfor : MonoBehaviour
 
     void Start()
     {
+        if (TryGetComponent(out PlayerController pc))
+        {
+            isLocalPlayer = pc.isOwner;
+        }
+
         if (isLocalPlayer && !DedicatedServerBootstrap.IsDedicatedServerRuntime)
             ApplyLocalProfileFromBroker();
 
