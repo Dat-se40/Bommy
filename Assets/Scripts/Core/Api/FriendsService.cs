@@ -90,6 +90,7 @@ public sealed class FriendsService : MonoBehaviour
                     {
                         friendId = "steam:" + steamIdStr,
                         displayName = name,
+                        username = string.Empty,
                         online = isOnline,
                         isSteamFriend = true,
                         steamId = steamIdStr,
@@ -179,6 +180,7 @@ public sealed class FriendsService : MonoBehaviour
         {
             friendId = user?.Id ?? string.Empty,
             displayName = DisplayName(user),
+            username = user?.Username ?? string.Empty,
             online = user?.Online ?? false,
             isSteamFriend = !string.IsNullOrWhiteSpace(user?.SteamId),
             steamId = user?.SteamId ?? string.Empty,
@@ -193,6 +195,7 @@ public sealed class FriendsService : MonoBehaviour
         {
             friendId = user?.Id ?? string.Empty,
             displayName = DisplayName(user),
+            username = user?.Username ?? string.Empty,
             isSteamFriend = !string.IsNullOrWhiteSpace(user?.SteamId),
             steamId = user?.SteamId ?? string.Empty
         };

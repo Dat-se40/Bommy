@@ -190,6 +190,7 @@ public partial class LobbyUIController
             row.Setup(
                 friend.friendId,
                 friend.displayName,
+                friend.username,
                 friend.online,
                 friend.isSteamFriend,
                 friend.currentRoomId,
@@ -249,6 +250,7 @@ public partial class LobbyUIController
             row.Setup(
                 request.friendId,
                 request.displayName,
+                request.username,
                 request.isSteamFriend,
                 AcceptFriendRequest,
                 DeclineFriendRequest

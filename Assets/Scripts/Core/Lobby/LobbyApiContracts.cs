@@ -123,6 +123,7 @@ public class FriendDto
 {
     public string friendId;
     public string displayName;
+    public string username;
     public bool online;
     public bool isSteamFriend;
     public string steamId;
@@ -137,6 +138,7 @@ public class FriendRequestDto
 {
     public string friendId;
     public string displayName;
+    public string username;
     public bool isSteamFriend;
     public string steamId;
 }

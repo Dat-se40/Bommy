@@ -23,6 +23,7 @@ public class FriendRowUI : MonoBehaviour
     public void Setup(
         string id,
         string displayName,
+        string username,
         bool online,
         bool isSteamFriend,
         string currentRoomId,
@@ -41,7 +42,20 @@ public class FriendRowUI : MonoBehaviour
             steamIcon.gameObject.SetActive(isSteamFriend);
 
         if (friendIdlbl != null)
-            friendIdlbl.text = "ID: " + id;
+        {
+            if (id.StartsWith("steam:", StringComparison.OrdinalIgnoreCase))
+            {
+                friendIdlbl.text = "Steam Friend";
+            }
+            else if (!string.IsNullOrEmpty(username))
+            {
+                friendIdlbl.text = "ID: " + username;
+            }
+            else
+            {
+                friendIdlbl.text = "ID: " + (id.Length > 8 ? id.Substring(0, 8) + "..." : id);
+            }
+        }
 
         if (friendStatuslbl != null)
         {

@@ -21,6 +21,7 @@ public class FriendRequestRowUI : MonoBehaviour
     public void Setup(
         string id,
         string displayName,
+        string username,
         bool isSteamFriend,
         Action<string> acceptCallback,
         Action<string> declineCallback
@@ -37,7 +38,20 @@ public class FriendRequestRowUI : MonoBehaviour
             steamIcon.gameObject.SetActive(isSteamFriend);
 
         if (requestIdlbl != null)
-            requestIdlbl.text = "ID: " + id;
+        {
+            if (id.StartsWith("steam:", StringComparison.OrdinalIgnoreCase))
+            {
+                requestIdlbl.text = "Steam Friend";
+            }
+            else if (!string.IsNullOrEmpty(username))
+            {
+                requestIdlbl.text = "ID: " + username;
+            }
+            else
+            {
+                requestIdlbl.text = "ID: " + (id.Length > 8 ? id.Substring(0, 8) + "..." : id);
+            }
+        }
 
         if (acceptbtn != null)
         {
