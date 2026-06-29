@@ -16,6 +16,7 @@ public sealed class SteamService : MonoBehaviour
 #if !DISABLE_STEAM
     private HAuthTicket activeTicket = HAuthTicket.Invalid;
     private Callback<GameRichPresenceJoinRequested_t> m_GameRichPresenceJoinRequested;
+    private string m_CurrentConnectString = null;
 #endif
 
     private void Awake()
@@ -175,7 +176,16 @@ public sealed class SteamService : MonoBehaviour
         if (IsInitialized)
         {
             string connectValue = "nakama_lobby:" + lobbyCode;
+            if (m_CurrentConnectString == connectValue)
+            {
+                return;
+            }
+
             bool success = SteamFriends.SetRichPresence("connect", connectValue);
+            if (success)
+            {
+                m_CurrentConnectString = connectValue;
+            }
             Debug.LogFormat("[SteamService] Set connect rich presence to '{0}'. Success: {1}", connectValue, success);
         }
 #endif
@@ -186,7 +196,16 @@ public sealed class SteamService : MonoBehaviour
 #if !DISABLE_STEAM
         if (IsInitialized)
         {
+            if (m_CurrentConnectString == null)
+            {
+                return;
+            }
+
             bool success = SteamFriends.SetRichPresence("connect", null);
+            if (success)
+            {
+                m_CurrentConnectString = null;
+            }
             Debug.LogFormat("[SteamService] Cleared connect rich presence. Success: {0}", success);
         }
 #endif
