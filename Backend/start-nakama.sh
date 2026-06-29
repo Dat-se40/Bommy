@@ -37,5 +37,12 @@ write_env "EDGEGAP_DEFAULT_REGION" "${EDGEGAP_DEFAULT_REGION:-Local}"
 write_env "EDGEGAP_INTERNAL_GAME_PORT" "${EDGEGAP_INTERNAL_GAME_PORT:-5000}"
 write_env "EDGEGAP_PROTOCOL" "${EDGEGAP_PROTOCOL:-UDP}"
 write_env "EDGEGAP_PORT_NAME" "${EDGEGAP_PORT_NAME:-gameport}"
+cat >> "$runtime_env_file" <<YAML
+
+social:
+  steam:
+    app_id: ${NAKAMA_SOCIAL_STEAM_APP_ID:-${SOCIAL_STEAM_APP_ID:-0}}
+    publisher_key: "${NAKAMA_SOCIAL_STEAM_PUBLISHER_KEY:-${SOCIAL_STEAM_PUBLISHER_KEY:-}}"
+YAML
 
 exec /nakama/nakama --config /nakama/data/local.yml --config "$runtime_env_file" "$@"
