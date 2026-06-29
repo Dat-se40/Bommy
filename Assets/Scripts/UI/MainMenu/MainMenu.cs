@@ -20,6 +20,8 @@ public class MainMenu : MonoBehaviour
             return;
         }
 
+        LobbyInviteService.EnsureExists();
+
         if (guideOverlay != null)
             guideOverlay.SetActive(false);
     }

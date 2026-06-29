@@ -2735,53 +2735,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
   m_Padding: {x: -8, y: -5, z: -8, w: -5}
   m_Softness: {x: 0, y: 0}
---- !u!1 &725484361
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 725484363}
-  - component: {fileID: 725484362}
-  m_Layer: 0
-  m_Name: AuthService
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &725484362
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 725484361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b542fb50933428349bad02e3d3e3707e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AuthService
-  host: 127.0.0.1
-  port: 7350
-  serverKey: defaultkey
---- !u!4 &725484363
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 725484361}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &779318212
 GameObject:
   m_ObjectHideFlags: 0
@@ -8067,7 +8020,7 @@ MonoBehaviour:
   inactiveTabColor: {r: 0.18, g: 0.2, b: 0.2, a: 1}
   normalFeedbackColor: {r: 0.66, g: 0.7, b: 0.68, a: 1}
   errorFeedbackColor: {r: 0.9, g: 0.3, b: 0.26, a: 1}
-  authService: {fileID: 725484362}
+  authService: {fileID: 0}
 --- !u!4 &1422524448
 Transform:
   m_ObjectHideFlags: 0
@@ -10845,4 +10798,3 @@ SceneRoots:
   - {fileID: 1245001711}
   - {fileID: 917613480}
   - {fileID: 1422524448}
-  - {fileID: 725484363}

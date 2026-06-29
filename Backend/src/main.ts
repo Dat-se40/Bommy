@@ -133,6 +133,19 @@ interface StartLobbyRequest {
 	matchId: string;
 }
 
+interface InviteLobbyFriendRequest {
+	friendId: string;
+	roomId: string;
+	matchId: string;
+	roomName: string;
+	mapName: string;
+}
+
+interface InviteLobbyFriendResponse {
+	success: boolean;
+	errorMessage: string;
+}
+
 interface MatchServerPlayerDto {
 	userId: string;
 	username: string;
@@ -2453,6 +2466,18 @@ function parseStartLobbyRequest(payload: string): StartLobbyRequest {
 	};
 }
 
+function parseInviteLobbyFriendRequest(payload: string): InviteLobbyFriendRequest {
+	var parsed = parseJsonPayload(payload);
+
+	return {
+		friendId: optionalString(parsed.friendId, ""),
+		roomId: optionalString(parsed.roomId, "").toUpperCase(),
+		matchId: optionalString(parsed.matchId, ""),
+		roomName: optionalString(parsed.roomName, "Lobby").substring(0, 32),
+		mapName: optionalString(parsed.mapName, "Unknown map").substring(0, 32),
+	};
+}
+
 function parseRandomQueueRequest(payload: string): RandomQueueRequest {
 	var parsed = parseJsonPayload(payload);
 
@@ -4033,6 +4058,115 @@ function rpcStartLobbyMatch(
 	});
 }
 
+function rpcInviteLobbyFriend(
+	ctx: nkruntime.Context,
+	logger: nkruntime.Logger,
+	nk: nkruntime.Nakama,
+	payload: string,
+): string {
+	var userId = requireUserId(ctx);
+	var request = parseInviteLobbyFriendRequest(payload);
+
+	if (!request.friendId) {
+		return JSON.stringify({
+			success: false,
+			errorMessage: "Friend ID is empty.",
+		} as InviteLobbyFriendResponse);
+	}
+
+	if (request.friendId === userId) {
+		return JSON.stringify({
+			success: false,
+			errorMessage: "You cannot invite yourself.",
+		} as InviteLobbyFriendResponse);
+	}
+
+	var match = findLobbyMatch(nk, request.roomId, request.matchId);
+	if (match == null) {
+		return JSON.stringify({
+			success: false,
+			errorMessage: "Room not found.",
+		} as InviteLobbyFriendResponse);
+	}
+
+	var response = signalLobby(nk, match.matchId, {
+		action: "get",
+		userId: userId,
+	});
+
+	if (!response.success || response.room == null) {
+		return JSON.stringify({
+			success: false,
+			errorMessage: response.errorMessage || "Room not found.",
+		} as InviteLobbyFriendResponse);
+	}
+
+	if (response.room.status !== "Open") {
+		return JSON.stringify({
+			success: false,
+			errorMessage: "Lobby is not open.",
+		} as InviteLobbyFriendResponse);
+	}
+
+	var senderIsMember = false;
+	if (response.members != null) {
+		for (var i = 0; i < response.members.length; i++) {
+			if (response.members[i].userId === userId) {
+				senderIsMember = true;
+				break;
+			}
+		}
+	}
+
+	if (!senderIsMember) {
+		return JSON.stringify({
+			success: false,
+			errorMessage: "Join the lobby before inviting friends.",
+		} as InviteLobbyFriendResponse);
+	}
+
+	var senderName = optionalString((ctx as any).username, userId);
+	try {
+		nk.notificationsSend([
+			{
+				userId: request.friendId,
+				senderId: userId,
+				subject: "Lobby Invite",
+				code: 1001,
+				persistent: false,
+				content: {
+					type: "lobby_invite",
+					senderId: userId,
+					senderName: senderName,
+					roomId: response.room.roomId,
+					matchId: response.room.matchId,
+					roomName: response.room.roomName || request.roomName,
+					mapName: response.room.mapName || request.mapName,
+				},
+			},
+		]);
+	} catch (error) {
+		logger.error("Lobby invite notification failed: " + error);
+		return JSON.stringify({
+			success: false,
+			errorMessage: "Invite could not be delivered.",
+		} as InviteLobbyFriendResponse);
+	}
+
+	logger.info(
+		"Lobby invite sent. senderId=%s friendId=%s roomId=%s matchId=%s",
+		userId,
+		request.friendId,
+		response.room.roomId,
+		response.room.matchId,
+	);
+
+	return JSON.stringify({
+		success: true,
+		errorMessage: "",
+	} as InviteLobbyFriendResponse);
+}
+
 function rpcJoinRandomQueue(
 	ctx: nkruntime.Context,
 	logger: nkruntime.Logger,
@@ -4775,6 +4909,7 @@ function InitModule(
 	initializer.registerRpc("join_lobby_by_code", rpcJoinLobbyByCode);
 	initializer.registerRpc("leave_lobby", rpcLeaveLobby);
 	initializer.registerRpc("start_lobby_match", rpcStartLobbyMatch);
+	initializer.registerRpc("invite_lobby_friend", rpcInviteLobbyFriend);
 	initializer.registerRpc("request_match_server", rpcRequestMatchServer);
 	initializer.registerRpc("get_match_server_status", rpcGetMatchServerStatus);
 	initializer.registerRpc("register_match_server", rpcRegisterMatchServer);

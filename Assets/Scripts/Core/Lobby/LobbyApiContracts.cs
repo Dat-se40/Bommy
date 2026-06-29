@@ -159,6 +159,28 @@ public class InviteFriendRequest
 {
     public string friendId;
     public string roomId;
+    public string matchId;
+    public string roomName;
+    public string mapName;
+}
+
+[Serializable]
+public class InviteFriendResponse
+{
+    public bool success;
+    public string errorMessage;
+}
+
+[Serializable]
+public class LobbyInviteNotification
+{
+    public string type;
+    public string senderId;
+    public string senderName;
+    public string roomId;
+    public string matchId;
+    public string roomName;
+    public string mapName;
 }
 
 #endregion
