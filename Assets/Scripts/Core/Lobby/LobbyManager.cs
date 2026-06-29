@@ -45,6 +45,15 @@ public class LobbyManager : MonoBehaviour
         LobbyService.CurrentRoomUpdated += OnServiceCurrentRoomUpdated;
     }
 
+    void Start()
+    {
+        if (SteamService.Instance != null)
+        {
+            SteamService.Instance.OnSteamJoinRequested -= OnSteamJoinRequested;
+            SteamService.Instance.OnSteamJoinRequested += OnSteamJoinRequested;
+        }
+    }
+
     void OnDestroy()
     {
         if (!isConnectingToMatchServer)
@@ -59,6 +68,21 @@ public class LobbyManager : MonoBehaviour
 
         if (NakamaLobbyService.Instance != null)
             NakamaLobbyService.Instance.CurrentRoomUpdated -= OnServiceCurrentRoomUpdated;
+
+        if (SteamService.Instance != null)
+        {
+            SteamService.Instance.OnSteamJoinRequested -= OnSteamJoinRequested;
+        }
+    }
+
+    private void OnSteamJoinRequested(string connectString)
+    {
+        if (!string.IsNullOrEmpty(connectString) && connectString.StartsWith("nakama_lobby:"))
+        {
+            string code = connectString.Substring("nakama_lobby:".Length);
+            FlowGuard.Info(FlowGuard.TagSetup, $"Steam Join requested with code: {code}");
+            RequestJoinRoomByCode(new JoinRoomByCodeRequest { roomCode = code, password = code });
+        }
     }
 
     public static LobbyManager EnsureExists()
@@ -381,12 +405,20 @@ public class LobbyManager : MonoBehaviour
         {
             currentRoom = null;
             CurrentRoomChanged?.Invoke(null);
+            if (SteamService.Instance != null)
+            {
+                SteamService.Instance.ClearRichPresenceConnectString();
+            }
             return;
         }
 
         ApplyCurrentRoom(room, room.hostPlayerId == AuthService.GetOrCreate().Session?.UserId);
         CurrentRoomChanged?.Invoke(room);
         RequestRoomList();
+        if (SteamService.Instance != null)
+        {
+            SteamService.Instance.SetRichPresenceConnectString(room.roomId);
+        }
         TryBeginMatchServerConnect(room);
     }
 

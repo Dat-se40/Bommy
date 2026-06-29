@@ -11,8 +11,11 @@ public sealed class SteamService : MonoBehaviour
 
     public bool IsInitialized { get; private set; }
 
+    public event System.Action<string> OnSteamJoinRequested;
+
 #if !DISABLE_STEAM
     private HAuthTicket activeTicket = HAuthTicket.Invalid;
+    private Callback<GameRichPresenceJoinRequested_t> m_GameRichPresenceJoinRequested;
 #endif
 
     private void Awake()
@@ -50,6 +53,7 @@ public sealed class SteamService : MonoBehaviour
             if (IsInitialized)
             {
                 Debug.LogFormat("[SteamService] Steam successfully initialized. AppID: {0}", SteamUtils.GetAppID());
+                m_GameRichPresenceJoinRequested = Callback<GameRichPresenceJoinRequested_t>.Create(OnGameRichPresenceJoinRequested);
             }
             else
             {
@@ -155,5 +159,62 @@ public sealed class SteamService : MonoBehaviour
             Debug.Log("[SteamService] Cancelled active Steam auth ticket.");
         }
 #endif
+    }
+
+#if !DISABLE_STEAM
+    private void OnGameRichPresenceJoinRequested(GameRichPresenceJoinRequested_t pCallback)
+    {
+        Debug.LogFormat("[SteamService] Rich presence join requested: {0}", pCallback.m_rgchConnect);
+        OnSteamJoinRequested?.Invoke(pCallback.m_rgchConnect);
+    }
+#endif
+
+    public void SetRichPresenceConnectString(string lobbyCode)
+    {
+#if !DISABLE_STEAM
+        if (IsInitialized)
+        {
+            string connectValue = "nakama_lobby:" + lobbyCode;
+            bool success = SteamFriends.SetRichPresence("connect", connectValue);
+            Debug.LogFormat("[SteamService] Set connect rich presence to '{0}'. Success: {1}", connectValue, success);
+        }
+#endif
+    }
+
+    public void ClearRichPresenceConnectString()
+    {
+#if !DISABLE_STEAM
+        if (IsInitialized)
+        {
+            bool success = SteamFriends.SetRichPresence("connect", null);
+            Debug.LogFormat("[SteamService] Cleared connect rich presence. Success: {0}", success);
+        }
+#endif
+    }
+
+    public string GetLaunchCommandLineConnectString()
+    {
+#if !DISABLE_STEAM
+        if (IsInitialized)
+        {
+            if (SteamApps.GetLaunchCommandLine(out string launchCmd, 1024) > 0)
+            {
+                Debug.LogFormat("[SteamService] Found Steam launch command line: {0}", launchCmd);
+                return launchCmd;
+            }
+        }
+#endif
+        // Fallback to standard command-line arguments
+        string[] args = System.Environment.GetCommandLineArgs();
+        for (int i = 0; i < args.Length - 1; i++)
+        {
+            if (args[i].Equals("+connect_lobby", StringComparison.OrdinalIgnoreCase))
+            {
+                string connectVal = args[i + 1];
+                Debug.LogFormat("[SteamService] Found +connect_lobby fallback argument: {0}", connectVal);
+                return connectVal;
+            }
+        }
+        return null;
     }
 }
