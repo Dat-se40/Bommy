@@ -55,6 +55,7 @@ public sealed class AuthService : MonoBehaviour
         sessionService ??= new NakamaSessionService(Client);
         accountService ??= new NakamaAccountService(Client);
         socketService ??= new NakamaSocketService(Client);
+        SteamService.GetOrCreate();
     }
 
     private void Awake()
@@ -201,6 +202,46 @@ public sealed class AuthService : MonoBehaviour
         EnsureServices();
 
         AuthResult result = await sessionService.LoginSteamAsync(steamToken);
+
+        if (!result.Success)
+            return result;
+
+        try
+        {
+            await RefreshAccountAsync();
+            return AuthResult.Ok();
+        }
+        catch (System.Exception ex)
+        {
+            return AuthResult.Fail(AuthErrorMapper.Map(ex));
+        }
+    }
+
+    public async Task<AuthResult> LinkSteamAsync(string steamToken, bool importFriends = true)
+    {
+        EnsureServices();
+
+        AuthResult result = await sessionService.LinkSteamAsync(steamToken, importFriends);
+
+        if (!result.Success)
+            return result;
+
+        try
+        {
+            await RefreshAccountAsync();
+            return AuthResult.Ok();
+        }
+        catch (System.Exception ex)
+        {
+            return AuthResult.Fail(AuthErrorMapper.Map(ex));
+        }
+    }
+
+    public async Task<AuthResult> UnlinkSteamAsync(string steamToken)
+    {
+        EnsureServices();
+
+        AuthResult result = await sessionService.UnlinkSteamAsync(steamToken);
 
         if (!result.Success)
             return result;

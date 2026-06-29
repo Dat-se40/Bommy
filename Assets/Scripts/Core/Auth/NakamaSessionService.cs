@@ -107,7 +107,7 @@ internal sealed class NakamaSessionService
     {
         try
         {
-            SetSession(await client.AuthenticateSteamAsync(steamToken, create: true));
+            SetSession(await client.AuthenticateSteamAsync(steamToken, create: true, import: true));
             return AuthResult.Ok();
         }
         catch (Exception ex)
@@ -115,6 +115,33 @@ internal sealed class NakamaSessionService
             return AuthResult.Fail(AuthErrorMapper.Map(ex));
         }
     }
+
+    public async Task<AuthResult> LinkSteamAsync(string steamToken, bool import = true)
+    {
+        try
+        {
+            await client.LinkSteamAsync(Session, steamToken, import);
+            return AuthResult.Ok();
+        }
+        catch (Exception ex)
+        {
+            return AuthResult.Fail(AuthErrorMapper.Map(ex));
+        }
+    }
+
+    public async Task<AuthResult> UnlinkSteamAsync(string steamToken)
+    {
+        try
+        {
+            await client.UnlinkSteamAsync(Session, steamToken);
+            return AuthResult.Ok();
+        }
+        catch (Exception ex)
+        {
+            return AuthResult.Fail(AuthErrorMapper.Map(ex));
+        }
+    }
+
 
     public async Task<ISession> RequireFreshSessionAsync()
     {
