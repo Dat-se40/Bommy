@@ -84,6 +84,7 @@ public class EdgegapPort
 public sealed class DedicatedServerBootstrap : MonoBehaviour
 {
     static readonly System.Collections.Generic.HashSet<string> consumedLaunchHints = new();
+    static bool ignoreEnvironmentLaunchHints;
 
     [SerializeField] private bool forceDedicatedServer;
     [SerializeField] private string defaultServerId = "local-001";
@@ -133,6 +134,7 @@ public sealed class DedicatedServerBootstrap : MonoBehaviour
     void OnMatchLifecycleReleased()
     {
         RememberConsumedLaunchHint(currentAllocationId, currentMatchId);
+        ignoreEnvironmentLaunchHints = true;
         currentAllocationId = string.Empty;
         currentMatchId = string.Empty;
         readyMarked = false;
@@ -148,11 +150,17 @@ public sealed class DedicatedServerBootstrap : MonoBehaviour
 
     void ClearConsumedLaunchHintIfNeeded()
     {
-        if (!IsConsumedLaunchHint(config.allocationId, config.matchId))
+        bool hasEnvironmentLaunchHint = !string.IsNullOrWhiteSpace(config.allocationId)
+            || !string.IsNullOrWhiteSpace(config.matchId);
+
+        if (!hasEnvironmentLaunchHint)
+            return;
+
+        if (!ignoreEnvironmentLaunchHints && !IsConsumedLaunchHint(config.allocationId, config.matchId))
             return;
 
         Debug.Log(
-            "[DedicatedServerBootstrap] Ignoring consumed launch hint allocationId="
+            "[DedicatedServerBootstrap] Ignoring consumed environment launch hint allocationId="
             + config.allocationId
             + " matchId="
             + config.matchId

@@ -338,7 +338,10 @@ public class GameOverUIController : MonoBehaviour
         gameOverShown = true;
 
         if (gameOverOverlay != null)
+        {
             gameOverOverlay.SetActive(true);
+            gameOverOverlay.transform.SetAsLastSibling();
+        }
         
         if (isWin)
             SoundPlayback.PlayLocal(SoundKey.SfxVictory);
