@@ -105,6 +105,7 @@ public sealed class FriendsService : MonoBehaviour
         }
 #endif
 
+        await PopulateLobbyPresenceAsync(friends);
         return friends.ToArray();
     }
 
@@ -239,6 +240,54 @@ public sealed class FriendsService : MonoBehaviour
 
         IApiRpc response = await rpcTask;
         return JsonUtility.FromJson<InviteFriendResponse>(response.Payload);
+    }
+
+    static async Task PopulateLobbyPresenceAsync(List<FriendDto> friends)
+    {
+        if (friends == null || friends.Count == 0)
+            return;
+
+        List<string> friendIds = new();
+        for (int i = 0; i < friends.Count; i++)
+        {
+            if (friends[i] == null || string.IsNullOrWhiteSpace(friends[i].friendId))
+                continue;
+
+            if (friends[i].friendId.StartsWith("steam:", StringComparison.OrdinalIgnoreCase))
+                continue;
+
+            friendIds.Add(friends[i].friendId);
+        }
+
+        if (friendIds.Count == 0)
+            return;
+
+        Task<IApiRpc> rpcTask = AuthService.GetOrCreate().RpcAsync(
+            "get_friend_lobby_presence",
+            JsonUtility.ToJson(new FriendLobbyPresenceRequest { friendIds = friendIds.ToArray() })
+        );
+        Task timeoutTask = Task.Delay(TimeSpan.FromSeconds(12));
+
+        Task completedTask = await Task.WhenAny(rpcTask, timeoutTask);
+        if (completedTask != rpcTask)
+            throw new TimeoutException("Friend presence server did not respond. Check backend and try again.");
+
+        IApiRpc response = await rpcTask;
+        FriendLobbyPresenceResponse presence = JsonUtility.FromJson<FriendLobbyPresenceResponse>(response.Payload);
+
+        if (presence == null || !presence.success || presence.entries == null)
+            return;
+
+        for (int i = 0; i < presence.entries.Length; i++)
+        {
+            FriendLobbyPresenceEntry entry = presence.entries[i];
+            if (entry == null || string.IsNullOrWhiteSpace(entry.friendId))
+                continue;
+
+            FriendDto friend = friends.Find(candidate => candidate != null && candidate.friendId == entry.friendId);
+            if (friend != null)
+                friend.currentRoomId = entry.roomId ?? string.Empty;
+        }
     }
 
     [Serializable]

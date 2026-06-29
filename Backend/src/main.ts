@@ -1,6 +1,8 @@
 var SERVER_VERSION = "0.2.0";
 var PROGRESSION_COLLECTION = "player_progression";
 var PROGRESSION_KEY = "state";
+var LOBBY_PRESENCE_COLLECTION = "lobby_presence";
+var LOBBY_PRESENCE_KEY = "current";
 var PROGRESSION_SCHEMA_VERSION = 2;
 var PROGRESSION_WRITE_RETRIES = 3;
 var MATCH_SERVER_COLLECTION = "match_servers";
@@ -148,6 +150,22 @@ interface InviteLobbyFriendRequest {
 interface InviteLobbyFriendResponse {
 	success: boolean;
 	errorMessage: string;
+}
+
+interface FriendLobbyPresenceRequest {
+	friendIds: string[];
+}
+
+interface FriendLobbyPresenceEntry {
+	friendId: string;
+	roomId: string;
+	matchId: string;
+}
+
+interface FriendLobbyPresenceResponse {
+	success: boolean;
+	errorMessage: string;
+	entries: FriendLobbyPresenceEntry[];
 }
 
 interface MatchServerPlayerDto {
@@ -608,6 +626,49 @@ function readOrCreateProgression(
 	var progression = defaultProgression();
 	nk.storageWrite([progressionWriteRequest(userId, progression, "*")]);
 	return progression;
+}
+
+function writeLobbyPresence(
+	nk: nkruntime.Nakama,
+	userId: string,
+	room: LobbyRoomDto | null,
+): void {
+	if (!userId || room == null || !room.roomId) {
+		return;
+	}
+
+	nk.storageWrite([
+		{
+			collection: LOBBY_PRESENCE_COLLECTION,
+			key: LOBBY_PRESENCE_KEY,
+			userId: userId,
+			value: {
+				roomId: room.roomId,
+				matchId: room.matchId,
+				updatedAtMs: Date.now(),
+			},
+			version: "*",
+			permissionRead: 2,
+			permissionWrite: 0,
+		},
+	]);
+}
+
+function clearLobbyPresence(nk: nkruntime.Nakama, userId: string): void {
+	if (!userId) {
+		return;
+	}
+
+	try {
+		nk.storageDelete([
+			{
+				collection: LOBBY_PRESENCE_COLLECTION,
+				key: LOBBY_PRESENCE_KEY,
+				userId: userId,
+			},
+		]);
+	} catch (_) {
+	}
 }
 
 function parseCharacterRequest(payload: string): CharacterRequest {
@@ -2491,6 +2552,24 @@ function parseInviteLobbyFriendRequest(payload: string): InviteLobbyFriendReques
 	};
 }
 
+function parseFriendLobbyPresenceRequest(
+	payload: string,
+): FriendLobbyPresenceRequest {
+	var parsed = parseJsonPayload(payload);
+	var ids: string[] = [];
+
+	if (Array.isArray(parsed.friendIds)) {
+		for (var i = 0; i < parsed.friendIds.length && ids.length < 100; i++) {
+			var friendId = optionalString(parsed.friendIds[i], "");
+			if (friendId) {
+				ids.push(friendId);
+			}
+		}
+	}
+
+	return { friendIds: ids };
+}
+
 function parseRandomQueueRequest(payload: string): RandomQueueRequest {
 	var parsed = parseJsonPayload(payload);
 
@@ -3980,6 +4059,8 @@ function rpcCreateLobby(
 		throw new Error("Lobby was created but could not be read.");
 	}
 
+	writeLobbyPresence(nk, userId, room);
+
 	return JSON.stringify({
 		success: true,
 		errorMessage: "",
@@ -4016,6 +4097,10 @@ function rpcJoinLobby(
 			optionalString(request.username, optionalString((ctx as any).username, userId)),
 		),
 	});
+
+	if (response.success && response.room != null) {
+		writeLobbyPresence(nk, userId, response.room);
+	}
 
 	return JSON.stringify({
 		success: response.success,
@@ -4062,6 +4147,10 @@ function rpcLeaveLobby(
 		action: "leave",
 		userId: userId,
 	});
+
+	if (response.success) {
+		clearLobbyPresence(nk, userId);
+	}
 
 	return JSON.stringify({
 		success: response.success,
@@ -4135,6 +4224,44 @@ function rpcStartLobbyMatch(
 		allocationId: allocation != null ? allocation.allocationId : "",
 		serverStatus: allocation != null ? allocation.status : "",
 	});
+}
+
+function rpcGetFriendLobbyPresence(
+	ctx: nkruntime.Context,
+	logger: nkruntime.Logger,
+	nk: nkruntime.Nakama,
+	payload: string,
+): string {
+	requireUserId(ctx);
+	var request = parseFriendLobbyPresenceRequest(payload);
+	var reads: nkruntime.StorageReadRequest[] = [];
+
+	for (var i = 0; i < request.friendIds.length; i++) {
+		reads.push({
+			collection: LOBBY_PRESENCE_COLLECTION,
+			key: LOBBY_PRESENCE_KEY,
+			userId: request.friendIds[i],
+		});
+	}
+
+	var entries: FriendLobbyPresenceEntry[] = [];
+	if (reads.length > 0) {
+		var objects = nk.storageRead(reads);
+		for (var j = 0; j < objects.length; j++) {
+			var value = objects[j].value || {};
+			entries.push({
+				friendId: objects[j].userId,
+				roomId: optionalString(value.roomId, ""),
+				matchId: optionalString(value.matchId, ""),
+			});
+		}
+	}
+
+	return JSON.stringify({
+		success: true,
+		errorMessage: "",
+		entries: entries,
+	} as FriendLobbyPresenceResponse);
 }
 
 function rpcInviteLobbyFriend(
@@ -4989,6 +5116,7 @@ function InitModule(
 	initializer.registerRpc("join_lobby_by_code", rpcJoinLobbyByCode);
 	initializer.registerRpc("leave_lobby", rpcLeaveLobby);
 	initializer.registerRpc("start_lobby_match", rpcStartLobbyMatch);
+	initializer.registerRpc("get_friend_lobby_presence", rpcGetFriendLobbyPresence);
 	initializer.registerRpc("invite_lobby_friend", rpcInviteLobbyFriend);
 	initializer.registerRpc("request_match_server", rpcRequestMatchServer);
 	initializer.registerRpc("get_match_server_status", rpcGetMatchServerStatus);

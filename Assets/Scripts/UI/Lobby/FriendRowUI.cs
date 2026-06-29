@@ -70,7 +70,7 @@ public class FriendRowUI : MonoBehaviour
         if (invitebtn != null)
         {
             ButtonClickSound.EnsureOn(invitebtn);
-            invitebtn.interactable = online;
+            invitebtn.interactable = !IsSteamOnlyFriend();
             invitebtn.onClick.RemoveAllListeners();
             invitebtn.onClick.AddListener(OnInviteClicked);
         }
@@ -78,7 +78,7 @@ public class FriendRowUI : MonoBehaviour
         if (joinbtn != null)
         {
             ButtonClickSound.EnsureOn(joinbtn);
-            joinbtn.interactable = online && !string.IsNullOrEmpty(currentRoomId);
+            joinbtn.interactable = !IsSteamOnlyFriend();
             joinbtn.onClick.RemoveAllListeners();
             joinbtn.onClick.AddListener(OnJoinRoomClicked);
         }
@@ -86,12 +86,24 @@ public class FriendRowUI : MonoBehaviour
 
     private void OnInviteClicked()
     {
+        if (IsSteamOnlyFriend())
+            return;
+
         onInviteClicked?.Invoke(friendId);
     }
 
     private void OnJoinRoomClicked()
     {
+        if (IsSteamOnlyFriend())
+            return;
+
         onJoinRoomClicked?.Invoke(friendId);
+    }
+
+    private bool IsSteamOnlyFriend()
+    {
+        return !string.IsNullOrWhiteSpace(friendId)
+            && friendId.StartsWith("steam:", StringComparison.OrdinalIgnoreCase);
     }
 
     [ContextMenu("Auto Bind UI From Children")]

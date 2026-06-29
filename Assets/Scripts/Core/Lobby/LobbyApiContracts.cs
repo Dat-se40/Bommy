@@ -180,6 +180,28 @@ public class InviteFriendResponse
 }
 
 [Serializable]
+public class FriendLobbyPresenceRequest
+{
+    public string[] friendIds;
+}
+
+[Serializable]
+public class FriendLobbyPresenceResponse
+{
+    public bool success;
+    public string errorMessage;
+    public FriendLobbyPresenceEntry[] entries;
+}
+
+[Serializable]
+public class FriendLobbyPresenceEntry
+{
+    public string friendId;
+    public string roomId;
+    public string matchId;
+}
+
+[Serializable]
 public class LobbyInviteNotification
 {
     public string type;
