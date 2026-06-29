@@ -15,7 +15,7 @@ MonoBehaviour:
   characterId: 5
   characterName: Moca
   description: Moca
-  icon: {fileID: 526181530, guid: 3662d6b211977b74f9c2416c932cf619, type: 3}
+  icon: {fileID: 7669334750274126886, guid: 8d9c1965ca013d64290d1ef9595168d4, type: 3}
   preview: {fileID: 1687356694, guid: d0cbed405ad81af47825078b1e86e7b0, type: 3}
   spriteLibrary: {fileID: 7108339969198208228, guid: 8d088d8f861ab904eb8156f1ee188b61, type: 3}
   playerPrefab: {fileID: 24528305369907493, guid: 0b2ef07dd0781f44c94c28e578b48a03, type: 3}

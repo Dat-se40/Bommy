@@ -19,8 +19,8 @@ MonoBehaviour:
   preview: {fileID: -7075430680714171506, guid: 48a992da3590e3044a107e3ed8750d52, type: 3}
   spriteLibrary: {fileID: 11400000, guid: a1f636f4dbffa6e4cb2fe17964c59e84, type: 2}
   playerPrefab: {fileID: 24528305369907493, guid: 0b2ef07dd0781f44c94c28e578b48a03, type: 3}
-  hp: 1
+  hp: 3
   bomb: 1
-  speed: 1
+  speed: 5
   defaultOwned: 0
   price: 40
