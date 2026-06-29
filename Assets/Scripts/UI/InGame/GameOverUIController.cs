@@ -49,16 +49,8 @@ public class GameOverUIController : MonoBehaviour
     [Header("Leaderboard Rows")]
     [SerializeField] private LeaderboardRowUI[] leaderboardRows;
 
-    [Header("Match End")]
-    [SerializeField] private float matchStartTime;
-
     bool matchEnded;
     bool gameOverShown;
-
-    void Awake()
-    {
-        matchStartTime = Time.time;
-    }
 
     void Start()
     {
@@ -198,7 +190,7 @@ public class GameOverUIController : MonoBehaviour
         bool isWin = localBoard != null && !localBoard.IsEliminated;
         int kills = hasLeaderData ? localData.kills : (localBoard != null ? localBoard.Kills : 0);
         int score = hasLeaderData ? localData.score : (localBoard != null ? localBoard.Score : 0);
-        string timeText = FormatElapsedTime(Time.time - matchStartTime);
+        string timeText = FormatElapsedTime(GetReplicatedMatchElapsedSeconds());
 
         int goldReward = Mathf.Max(10, score / 20);
 
@@ -223,9 +215,15 @@ public class GameOverUIController : MonoBehaviour
             isWin: false,
             kills: localBoard.Kills,
             score: localBoard.Score,
-            timeText: FormatElapsedTime(Time.time - matchStartTime),
+            timeText: FormatElapsedTime(GetReplicatedMatchElapsedSeconds()),
             goldReward: Mathf.Max(10, localBoard.Score / 20)
         );
+    }
+
+    static float GetReplicatedMatchElapsedSeconds()
+    {
+        MatchPhaseBroadcast broadcast = MatchPhaseBroadcast.Instance;
+        return broadcast != null ? broadcast.MatchElapsedSeconds : 0f;
     }
 
     static string FormatElapsedTime(float seconds)

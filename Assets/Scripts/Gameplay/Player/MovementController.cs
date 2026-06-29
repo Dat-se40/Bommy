@@ -447,7 +447,23 @@ public class MovementController : NetworkBehaviour
         indestructibleTilemap = newIndestructibles;
         destructibleTilemap = newDestructibles;
 
-        SnapToNearestValidCell();
+        if (networkCellInitialized.value)
+        {
+            ApplyReplicatedCellAfterMapBind();
+            return;
+        }
+
+        if (isServer)
+            SnapToNearestValidCell();
+    }
+
+    void ApplyReplicatedCellAfterMapBind()
+    {
+        currentCell = networkCell.value;
+        targetCell = networkCell.value;
+        targetWorldPosition = grid.GetCellCenterWorld(networkCell.value);
+        SnapTransformToCell(networkCell.value);
+        isMoving = false;
     }
 
     public bool IsMapReady => grid != null;

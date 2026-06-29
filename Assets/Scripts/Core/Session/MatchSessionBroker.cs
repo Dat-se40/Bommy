@@ -133,11 +133,14 @@ public static class MatchSessionBroker
 
     public static void RegisterRemotePlayer(PlayerMatchProfile profile)
     {
-        string localUserId = AuthService.GetOrCreate().Session?.UserId;
-        if (!string.IsNullOrEmpty(localUserId) && string.Equals(profile.userId, localUserId, StringComparison.Ordinal))
+        if (!DedicatedServerBootstrap.IsDedicatedServerRuntime)
         {
-            profile.isLocal = true;
-            localPlayer = profile;
+            string localUserId = AuthService.GetOrCreate().Session?.UserId;
+            if (!string.IsNullOrEmpty(localUserId) && string.Equals(profile.userId, localUserId, StringComparison.Ordinal))
+            {
+                profile.isLocal = true;
+                localPlayer = profile;
+            }
         }
 
         UpsertRosterSlot(profile);

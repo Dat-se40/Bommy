@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Threading.Tasks;
 using PurrNet;
+using PurrNet.Transports;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +17,7 @@ public sealed class MatchRoundCoordinator : MonoBehaviour
     bool configuredAsServer;
     bool stateMachineStarted;
     bool cancellationStarted;
+    bool clientCancellationReturnStarted;
     bool gameplayStarted;
     int connectedPlayerCount;
     float waitingStartTime;
@@ -227,13 +230,36 @@ public sealed class MatchRoundCoordinator : MonoBehaviour
         gameplayStarted |= phase == MatchPhaseKind.Gameplay || phase == MatchPhaseKind.ZoneShrink;
     }
 
-    async void OnWaitingForPlayersChanged()
+    void OnWaitingForPlayersChanged()
     {
         if (configuredAsServer || broadcast == null || !broadcast.MatchCancelled)
             return;
 
-        Debug.LogWarning("[MatchRoundCoordinator] " + broadcast.CancellationReason + ". Returning to main menu.", this);
-        await MatchConnectionService.EnsureExists().DisconnectAsync();
+        if (clientCancellationReturnStarted)
+            return;
+
+        clientCancellationReturnStarted = true;
+        StartCoroutine(ReturnToMainMenuAfterCancellation());
+    }
+
+    IEnumerator ReturnToMainMenuAfterCancellation()
+    {
+        string reason = broadcast != null ? broadcast.CancellationReason : DefaultCancellationReason;
+        Debug.LogWarning("[MatchRoundCoordinator] " + reason + ". Returning to main menu.", this);
+
+        yield return null;
+
+        _ = MatchConnectionService.EnsureExists().DisconnectAsync();
+
+        float deadline = Time.realtimeSinceStartup + 5f;
+        while (NetworkManager.main != null
+            && NetworkManager.main.clientState != ConnectionState.Disconnected
+            && Time.realtimeSinceStartup < deadline)
+        {
+            yield return null;
+        }
+
+        Debug.LogWarning("[MatchRoundCoordinator] " + reason + ". Loading MainMenu.", this);
         SceneManager.LoadScene("MainMenu");
     }
 }

@@ -26,6 +26,7 @@ public class MatchPhaseBroadcast : NetworkBehaviour
     readonly SyncVar<MatchPhaseKind> currentPhase = new();
     readonly SyncVar<float> phaseRemainingSeconds = new();
     readonly SyncVar<float> phaseDurationSeconds = new();
+    readonly SyncVar<float> matchElapsedSeconds = new();
     readonly SyncVar<int> activeMapId = new(NoMapId);
     readonly SyncVar<int> connectedPlayerCount = new();
     readonly SyncVar<int> intendedPlayerCount = new();
@@ -33,11 +34,13 @@ public class MatchPhaseBroadcast : NetworkBehaviour
     readonly SyncVar<string> cancellationReason = new();
 
     float serverRemainingSeconds;
+    float serverMatchElapsedSeconds;
     bool serverTicking;
 
     public MatchPhaseKind CurrentPhase => currentPhase.value;
     public float PhaseRemainingSeconds => phaseRemainingSeconds.value;
     public float PhaseDurationSeconds => phaseDurationSeconds.value;
+    public float MatchElapsedSeconds => matchElapsedSeconds.value;
     public int ActiveMapId => activeMapId.value;
     public int ConnectedPlayerCount => connectedPlayerCount.value;
     public int IntendedPlayerCount => intendedPlayerCount.value;
@@ -67,6 +70,7 @@ public class MatchPhaseBroadcast : NetworkBehaviour
         currentPhase.onChanged += OnAnyPhaseReplicated;
         phaseRemainingSeconds.onChanged += OnAnyTimerReplicated;
         phaseDurationSeconds.onChanged += OnAnyTimerReplicated;
+        matchElapsedSeconds.onChanged += OnAnyTimerReplicated;
         activeMapId.onChanged += OnMapIdReplicated;
         connectedPlayerCount.onChanged += OnAnyWaitingReplicated;
         intendedPlayerCount.onChanged += OnAnyWaitingReplicated;
@@ -83,6 +87,7 @@ public class MatchPhaseBroadcast : NetworkBehaviour
         currentPhase.onChanged -= OnAnyPhaseReplicated;
         phaseRemainingSeconds.onChanged -= OnAnyTimerReplicated;
         phaseDurationSeconds.onChanged -= OnAnyTimerReplicated;
+        matchElapsedSeconds.onChanged -= OnAnyTimerReplicated;
         activeMapId.onChanged -= OnMapIdReplicated;
         connectedPlayerCount.onChanged -= OnAnyWaitingReplicated;
         intendedPlayerCount.onChanged -= OnAnyWaitingReplicated;
@@ -110,7 +115,15 @@ public class MatchPhaseBroadcast : NetworkBehaviour
         if (!isServer || !serverTicking)
             return;
 
-        serverRemainingSeconds -= Time.deltaTime;
+        float deltaTime = Time.deltaTime;
+        serverRemainingSeconds -= deltaTime;
+
+        if (currentPhase.value == MatchPhaseKind.Gameplay || currentPhase.value == MatchPhaseKind.ZoneShrink)
+        {
+            serverMatchElapsedSeconds += deltaTime;
+            matchElapsedSeconds.value = Mathf.Max(0f, serverMatchElapsedSeconds);
+        }
+
         phaseRemainingSeconds.value = Mathf.Max(0f, serverRemainingSeconds);
 
         if (serverRemainingSeconds > 0f)
@@ -119,6 +132,7 @@ public class MatchPhaseBroadcast : NetworkBehaviour
         serverTicking = false;
         serverRemainingSeconds = 0f;
         phaseRemainingSeconds.value = 0f;
+        matchElapsedSeconds.value = Mathf.Max(0f, serverMatchElapsedSeconds);
         PhaseCompleted?.Invoke();
     }
 
@@ -172,6 +186,13 @@ public class MatchPhaseBroadcast : NetworkBehaviour
 
         matchCancelled.value = false;
         cancellationReason.value = string.Empty;
+
+        if (phase == MatchPhaseKind.Gameplay)
+        {
+            serverMatchElapsedSeconds = 0f;
+            matchElapsedSeconds.value = 0f;
+        }
+
         currentPhase.value = phase;
         phaseDurationSeconds.value = Mathf.Max(0.01f, durationSeconds);
         serverRemainingSeconds = durationSeconds;
@@ -193,9 +214,11 @@ public class MatchPhaseBroadcast : NetworkBehaviour
             return;
 
         serverTicking = false;
+        serverMatchElapsedSeconds = 0f;
         currentPhase.value = MatchPhaseKind.WaitingForPlayers;
         phaseDurationSeconds.value = 0f;
         phaseRemainingSeconds.value = 0f;
+        matchElapsedSeconds.value = 0f;
         matchCancelled.value = false;
         cancellationReason.value = string.Empty;
         ServerSetWaitingForPlayers(connectedCount, intendedCount);
@@ -217,6 +240,7 @@ public class MatchPhaseBroadcast : NetworkBehaviour
 
         serverTicking = false;
         phaseRemainingSeconds.value = 0f;
+        matchElapsedSeconds.value = Mathf.Max(0f, serverMatchElapsedSeconds);
         matchCancelled.value = true;
         cancellationReason.value = string.IsNullOrWhiteSpace(reason) ? "Match cancelled" : reason;
     }
