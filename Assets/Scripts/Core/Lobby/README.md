@@ -13,6 +13,8 @@ Layer này dùng `LobbyManager` làm facade UI và `NakamaLobbyService` làm cli
 | `LobbyApiContracts.cs` | Hằng số + DTO request/response. Mỗi class có ghi chú endpoint REST tương lai. |
 | `LobbyManager.cs` | Singleton `MonoBehaviour`: facade cho UI, phát events, sync `GameSession`. |
 | `NakamaLobbyService.cs` | RPC/socket service cho custom lobby trên Nakama authoritative match runtime. |
+| `FriendsService.cs` | Nakama client friend graph wrapper: list, add, accept, decline, invite RPC. |
+| `LobbyInviteService.cs` | Socket notification listener for lobby invites. |
 
 ---
 
@@ -63,7 +65,7 @@ Luôn unsubscribe trong `OnDestroy` để tránh leak.
 | `RequestJoinRoomByCode` | `JoinRoomByCodeRequest` | Join theo mã (header input) |
 | `TryStartMatch` | — | Host bấm Start; backend chuyển lobby sang `Starting` |
 
-### API bạn bè (stub)
+### API bạn bè
 
 | Method | Request |
 |--------|---------|
@@ -107,7 +109,8 @@ Luôn unsubscribe trong `OnDestroy` để tránh leak.
 - Active lobby state lives in Nakama authoritative match runtime, not local mock room data.
 - `list_lobbies` reads live match labels and returns open custom lobbies.
 - `create_lobby`, `join_lobby`, `join_lobby_by_code`, `leave_lobby`, and `start_lobby_match` are Nakama RPCs.
-- Friends remain local stubs until the friends phase.
+- Friends use Nakama's built-in friend APIs on the client.
+- Lobby invites use backend RPC `invite_lobby_friend`, which validates lobby membership and sends a Nakama notification.
 
 ---
 

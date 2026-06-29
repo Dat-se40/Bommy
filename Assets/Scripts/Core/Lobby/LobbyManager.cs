@@ -20,14 +20,13 @@ public class LobbyManager : MonoBehaviour
     public event Action<FriendDto[]> FriendsListed;
     public event Action<FriendRequestDto[]> FriendRequestsListed;
 
-    readonly List<FriendDto> mockFriends = new();
-    readonly List<FriendRequestDto> mockFriendRequests = new();
-
     LobbyRoomDto currentRoom;
+    FriendDto[] friendsCache = Array.Empty<FriendDto>();
     CancellationTokenSource matchServerConnectCts;
     bool isConnectingToMatchServer;
     string connectingAllocationId;
     NakamaLobbyService LobbyService => NakamaLobbyService.EnsureExists();
+    FriendsService FriendService => FriendsService.EnsureExists();
 
     public LobbyRoomDto CurrentRoom => currentRoom;
     public bool HasCurrentRoom => currentRoom != null && !string.IsNullOrEmpty(currentRoom.roomId);
@@ -41,7 +40,7 @@ public class LobbyManager : MonoBehaviour
         }
 
         Instance = this;
-        SeedMockFriendData();
+        LobbyInviteService.EnsureExists();
         LobbyService.CurrentRoomUpdated -= OnServiceCurrentRoomUpdated;
         LobbyService.CurrentRoomUpdated += OnServiceCurrentRoomUpdated;
     }
@@ -221,19 +220,35 @@ public class LobbyManager : MonoBehaviour
 
     #endregion
 
-    #region Friends — API stubs
+    #region Friends — API
 
-    public void RequestFriendsList()
+    public async void RequestFriendsList()
     {
-        FriendsListed?.Invoke(mockFriends.ToArray());
+        try
+        {
+            friendsCache = await FriendService.ListFriendsAsync();
+            FriendsListed?.Invoke(friendsCache);
+        }
+        catch (Exception exception)
+        {
+            Fail(exception.Message);
+        }
     }
 
-    public void RequestFriendRequests()
+    public async void RequestFriendRequests()
     {
-        FriendRequestsListed?.Invoke(mockFriendRequests.ToArray());
+        try
+        {
+            FriendRequestDto[] requests = await FriendService.ListFriendRequestsAsync();
+            FriendRequestsListed?.Invoke(requests);
+        }
+        catch (Exception exception)
+        {
+            Fail(exception.Message);
+        }
     }
 
-    public void RequestAddFriend(AddFriendRequest request)
+    public async void RequestAddFriend(AddFriendRequest request)
     {
         if (request == null || string.IsNullOrWhiteSpace(request.friendId))
         {
@@ -241,71 +256,58 @@ public class LobbyManager : MonoBehaviour
             return;
         }
 
-        string id = request.friendId.Trim();
-
-        if (FindFriend(id) != null)
+        try
         {
-            Fail("Friend already exists.");
-            return;
-        }
-
-        if (FindFriendRequest(id) != null)
-        {
-            Fail("Request already pending.");
-            return;
-        }
-
-        mockFriendRequests.Insert(0, new FriendRequestDto
-        {
-            friendId = id,
-            displayName = "Friend " + id,
-            isSteamFriend = false
-        });
-
-        RequestFriendRequests();
-    }
-
-    public void RequestAcceptFriend(string friendId)
-    {
-        for (int i = 0; i < mockFriendRequests.Count; i++)
-        {
-            if (mockFriendRequests[i].friendId != friendId)
-                continue;
-
-            FriendRequestDto req = mockFriendRequests[i];
-            mockFriends.Insert(0, new FriendDto
-            {
-                friendId = req.friendId,
-                displayName = req.displayName,
-                online = true,
-                isSteamFriend = req.isSteamFriend,
-                currentRoomId = ""
-            });
-            mockFriendRequests.RemoveAt(i);
+            await FriendService.AddFriendAsync(request.friendId);
             RequestFriendsList();
             RequestFriendRequests();
-            return;
         }
-
-        Fail("Request not found.");
-    }
-
-    public void RequestDeclineFriend(string friendId)
-    {
-        for (int i = 0; i < mockFriendRequests.Count; i++)
+        catch (Exception exception)
         {
-            if (mockFriendRequests[i].friendId != friendId)
-                continue;
+            Fail(exception.Message);
+        }
+    }
 
-            mockFriendRequests.RemoveAt(i);
-            RequestFriendRequests();
+    public async void RequestAcceptFriend(string friendId)
+    {
+        if (string.IsNullOrWhiteSpace(friendId))
+        {
+            Fail("Friend ID is empty.");
             return;
         }
 
-        Fail("Request not found.");
+        try
+        {
+            await FriendService.AcceptFriendAsync(friendId);
+            RequestFriendsList();
+            RequestFriendRequests();
+        }
+        catch (Exception exception)
+        {
+            Fail(exception.Message);
+        }
     }
 
-    public void RequestInviteFriend(InviteFriendRequest request)
+    public async void RequestDeclineFriend(string friendId)
+    {
+        if (string.IsNullOrWhiteSpace(friendId))
+        {
+            Fail("Friend ID is empty.");
+            return;
+        }
+
+        try
+        {
+            await FriendService.DeclineFriendAsync(friendId);
+            RequestFriendRequests();
+        }
+        catch (Exception exception)
+        {
+            Fail(exception.Message);
+        }
+    }
+
+    public async void RequestInviteFriend(InviteFriendRequest request)
     {
         if (!HasCurrentRoom)
         {
@@ -319,11 +321,19 @@ public class LobbyManager : MonoBehaviour
             return;
         }
 
-        // TODO[STEAM/NETWORK] POST invite endpoint.
-        FlowGuard.Info(
-            FlowGuard.TagSetup,
-            $"InviteFriend mock friend={request.friendId} room={currentRoom.roomId}"
-        );
+        try
+        {
+            request.roomId = currentRoom.roomId;
+            request.matchId = currentRoom.matchId;
+            request.roomName = currentRoom.roomName;
+            request.mapName = currentRoom.mapName;
+            await FriendService.InviteFriendToLobbyAsync(request);
+            FlowGuard.Info(FlowGuard.TagSetup, $"InviteFriend friend={request.friendId} room={currentRoom.roomId}");
+        }
+        catch (Exception exception)
+        {
+            Fail(exception.Message);
+        }
     }
 
     public void RequestJoinFriendRoom(string friendId)
@@ -467,59 +477,6 @@ public class LobbyManager : MonoBehaviour
 
     #endregion
 
-    #region Friend stubs
-
-    void SeedMockFriendData()
-    {
-        mockFriends.Clear();
-        mockFriends.Add(new FriendDto
-        {
-            friendId = "1001",
-            displayName = "MimiFan",
-            online = true,
-            isSteamFriend = true,
-            currentRoomId = "RX45"
-        });
-        mockFriends.Add(new FriendDto
-        {
-            friendId = "1002",
-            displayName = "BomberCat",
-            online = true,
-            isSteamFriend = true,
-            currentRoomId = ""
-        });
-        mockFriends.Add(new FriendDto
-        {
-            friendId = "2001",
-            displayName = "LocalBuddy",
-            online = true,
-            isSteamFriend = false,
-            currentRoomId = "MM88"
-        });
-        mockFriends.Add(new FriendDto
-        {
-            friendId = "3001",
-            displayName = "OfflineDog",
-            online = false,
-            isSteamFriend = false,
-            currentRoomId = ""
-        });
-
-        mockFriendRequests.Clear();
-        mockFriendRequests.Add(new FriendRequestDto
-        {
-            friendId = "9001",
-            displayName = "NewBomber",
-            isSteamFriend = false
-        });
-        mockFriendRequests.Add(new FriendRequestDto
-        {
-            friendId = "STEAM42",
-            displayName = "SteamGuest",
-            isSteamFriend = true
-        });
-    }
-
     public static string GenerateRoomCodePreview()
     {
         return GenerateRoomCode();
@@ -538,21 +495,10 @@ public class LobbyManager : MonoBehaviour
 
     FriendDto FindFriend(string friendId)
     {
-        for (int i = 0; i < mockFriends.Count; i++)
+        for (int i = 0; i < friendsCache.Length; i++)
         {
-            if (mockFriends[i].friendId == friendId)
-                return mockFriends[i];
-        }
-
-        return null;
-    }
-
-    FriendRequestDto FindFriendRequest(string friendId)
-    {
-        for (int i = 0; i < mockFriendRequests.Count; i++)
-        {
-            if (mockFriendRequests[i].friendId == friendId)
-                return mockFriendRequests[i];
+            if (friendsCache[i].friendId == friendId)
+                return friendsCache[i];
         }
 
         return null;
@@ -563,6 +509,4 @@ public class LobbyManager : MonoBehaviour
         FlowGuard.Error(FlowGuard.TagSetup, message);
         OperationFailed?.Invoke(message);
     }
-
-    #endregion
 }
