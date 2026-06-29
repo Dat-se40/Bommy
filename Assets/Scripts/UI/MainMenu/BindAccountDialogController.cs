@@ -83,10 +83,13 @@ public class BindAccountDialogController : MonoBehaviour
                 return;
             }
 
+            if (button != null) button.interactable = false;
+
             string token = SteamService.Instance.GetAuthSessionTicket();
             if (string.IsNullOrEmpty(token))
             {
                 SetStatus("Failed to retrieve Steam authentication ticket.");
+                if (button != null) button.interactable = true;
                 return;
             }
 
@@ -95,7 +98,9 @@ public class BindAccountDialogController : MonoBehaviour
 
             if (!result.Success)
             {
+                Debug.LogError($"[BindAccountDialogController] Failed to link Steam: {result.Error}");
                 SetStatus($"Failed to link Steam: {result.Error}");
+                if (button != null) button.interactable = true;
                 return;
             }
         }
@@ -103,12 +108,11 @@ public class BindAccountDialogController : MonoBehaviour
         {
             // TODO[ACCOUNT]: Gọi provider/backend thật.
             SetStatus(provider + " linked.");
+            if (button != null) button.interactable = false;
         }
 
         if (button == null)
             return;
-
-        button.interactable = false;
 
         TMP_Text label = button.GetComponentInChildren<TMP_Text>();
 
