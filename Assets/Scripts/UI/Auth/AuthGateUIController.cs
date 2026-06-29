@@ -59,10 +59,8 @@ public sealed class AuthGateUIController : MonoBehaviour
     [SerializeField] private Color normalFeedbackColor = new(0.66f, 0.7f, 0.68f, 1f);
     [SerializeField] private Color errorFeedbackColor = new(0.9f, 0.3f, 0.26f, 1f);
 
-    [Header("Services")]
-    [SerializeField] private AuthService authService;
-
     private readonly List<Selectable> controls = new();
+    private AuthService authService;
 
     private bool registerMode;
     private bool busy;
@@ -82,7 +80,7 @@ public sealed class AuthGateUIController : MonoBehaviour
 
     private void Start()
     {
-        authService = FindAnyObjectByType<AuthService>();
+        authService = AuthService.GetOrCreate();
 
         if (authService == null)
         {
@@ -340,13 +338,35 @@ public sealed class AuthGateUIController : MonoBehaviour
 
         SetBusy(true, $"Signing in with {provider}…");
 
-        AuthResult result = provider switch
+        AuthResult result;
+        if (provider == "Steam")
         {
-            "Guest" => await authService.LoginGuestAsync(),
-            // "Steam" => await authService.LoginSteamAsync(SteamManager.GetAuthToken()),
-            // "Discord" => await authService.LoginDiscordAsync(DiscordManager.GetAuthToken()),
-            _ => AuthResult.Fail($"{provider} login not implemented yet.")
-        };
+            if (SteamService.Instance == null || !SteamService.Instance.IsInitialized)
+            {
+                result = AuthResult.Fail("Steam client is not running or failed to initialize.");
+            }
+            else
+            {
+                string token = SteamService.Instance.GetAuthSessionTicket();
+                if (string.IsNullOrEmpty(token))
+                {
+                    result = AuthResult.Fail("Failed to retrieve Steam authentication ticket.");
+                }
+                else
+                {
+                    result = await authService.LoginSteamAsync(token);
+                }
+            }
+        }
+        else
+        {
+            result = provider switch
+            {
+                "Guest" => await authService.LoginGuestAsync(),
+                // "Discord" => await authService.LoginDiscordAsync(DiscordManager.GetAuthToken()),
+                _ => AuthResult.Fail($"{provider} login not implemented yet.")
+            };
+        }
 
         SetBusy(false);
 

@@ -73,10 +73,37 @@ public class BindAccountDialogController : MonoBehaviour
             dialogRoot.SetActive(false);
     }
 
-    private void BindProvider(string provider, Button button)
+    private async void BindProvider(string provider, Button button)
     {
-        // TODO[ACCOUNT]: Gọi provider/backend thật.
-        SetStatus(provider + " linked.");
+        if (provider == "Steam")
+        {
+            if (SteamService.Instance == null || !SteamService.Instance.IsInitialized)
+            {
+                SetStatus("Steam client is not running or failed to initialize.");
+                return;
+            }
+
+            string token = SteamService.Instance.GetAuthSessionTicket();
+            if (string.IsNullOrEmpty(token))
+            {
+                SetStatus("Failed to retrieve Steam authentication ticket.");
+                return;
+            }
+
+            SetStatus("Linking Steam account...");
+            AuthResult result = await AuthService.Instance.LinkSteamAsync(token);
+
+            if (!result.Success)
+            {
+                SetStatus($"Failed to link Steam: {result.Error}");
+                return;
+            }
+        }
+        else
+        {
+            // TODO[ACCOUNT]: Gọi provider/backend thật.
+            SetStatus(provider + " linked.");
+        }
 
         if (button == null)
             return;
