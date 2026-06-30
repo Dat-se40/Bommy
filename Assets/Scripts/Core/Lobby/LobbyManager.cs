@@ -24,6 +24,7 @@ public class LobbyManager : MonoBehaviour
     FriendDto[] friendsCache = Array.Empty<FriendDto>();
     CancellationTokenSource matchServerConnectCts;
     bool isConnectingToMatchServer;
+    bool isCreatingRoom;
     string connectingAllocationId;
     NakamaLobbyService LobbyService => NakamaLobbyService.EnsureExists();
     FriendsService FriendService => FriendsService.EnsureExists();
@@ -140,14 +141,22 @@ public class LobbyManager : MonoBehaviour
             return;
         }
 
+        if (isCreatingRoom)
+            return;
+
         try
         {
+            isCreatingRoom = true;
             LobbyRoomDto room = await LobbyService.CreateRoomAsync(request);
             FlowGuard.Info(FlowGuard.TagSetup, $"CreateRoom id={room.roomId} match={room.matchId}");
         }
         catch (Exception exception)
         {
             Fail(exception.Message);
+        }
+        finally
+        {
+            isCreatingRoom = false;
         }
     }
 

@@ -637,21 +637,38 @@ function writeLobbyPresence(
 		return;
 	}
 
-	nk.storageWrite([
-		{
-			collection: LOBBY_PRESENCE_COLLECTION,
-			key: LOBBY_PRESENCE_KEY,
-			userId: userId,
-			value: {
-				roomId: room.roomId,
-				matchId: room.matchId,
-				updatedAtMs: Date.now(),
-			},
-			version: "*",
-			permissionRead: 2,
-			permissionWrite: 0,
-		},
-	]);
+	for (var attempt = 0; attempt < 2; attempt++) {
+		try {
+			var objects = nk.storageRead([
+				{
+					collection: LOBBY_PRESENCE_COLLECTION,
+					key: LOBBY_PRESENCE_KEY,
+					userId: userId,
+				},
+			]);
+			var version = objects.length > 0 ? objects[0].version : "*";
+
+			nk.storageWrite([
+				{
+					collection: LOBBY_PRESENCE_COLLECTION,
+					key: LOBBY_PRESENCE_KEY,
+					userId: userId,
+					value: {
+						roomId: room.roomId,
+						matchId: room.matchId,
+						updatedAtMs: Date.now(),
+					},
+					version: version,
+					permissionRead: 2,
+					permissionWrite: 0,
+				},
+			]);
+			return;
+		} catch (_) {
+			// Presence is best-effort UI metadata. A storage conflict must not fail
+			// lobby creation after the authoritative match already exists.
+		}
+	}
 }
 
 function clearLobbyPresence(nk: nkruntime.Nakama, userId: string): void {
